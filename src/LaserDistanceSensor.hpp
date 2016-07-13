@@ -14,6 +14,9 @@
 
 namespace Model
 {
+	/**
+	 *
+	 */
 	class DistanceStimulus : public AbstractStimulus
 	{
 		public:
@@ -28,6 +31,9 @@ namespace Model
 	};
 	// class DistanceStimulus
 
+	/**
+	 *
+	 */
 	class DistancePercept : public AbstractPercept
 	{
 		public:
@@ -50,6 +56,9 @@ namespace Model
 	class Robot;
 	typedef std::shared_ptr<Robot> RobotPtr;
 
+	/**
+	 *
+	 */
 	class LaserDistanceSensor : public AbstractSensor
 	{
 		public:
@@ -68,11 +77,11 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual std::shared_ptr< AbstractStimulus > getStimulus();
+			virtual std::shared_ptr< AbstractStimulus > getStimulus() const;
 			/**
 			 *
 			 */
-			virtual std::shared_ptr< AbstractPercept > getPerceptFor( std::shared_ptr< AbstractStimulus > anAbstractStimulus);
+			virtual std::shared_ptr< AbstractPercept > getPerceptFor( std::shared_ptr< AbstractStimulus > anAbstractStimulus) const;
 			/**
 			 * @name Debug functions
 			 */
