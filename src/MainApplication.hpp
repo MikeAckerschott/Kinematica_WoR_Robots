@@ -9,6 +9,9 @@
 #include "Widgets.hpp"
 #include "CommandlineArgument.hpp"
 
+/**
+ *
+ */
 #define runGUI wxEntry
 
 namespace Application

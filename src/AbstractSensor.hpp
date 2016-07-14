@@ -66,11 +66,11 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual std::shared_ptr< AbstractStimulus > getStimulus() = 0;
+			virtual std::shared_ptr< AbstractStimulus > getStimulus() const = 0;
 			/**
 			 *
 			 */
-			virtual std::shared_ptr< AbstractPercept > getPerceptFor( std::shared_ptr< AbstractStimulus > anAbstractPercepts) = 0;
+			virtual std::shared_ptr< AbstractPercept > getPerceptFor( std::shared_ptr< AbstractStimulus > anAbstractPercepts) const = 0;
 			/**
 			 *
 			 */

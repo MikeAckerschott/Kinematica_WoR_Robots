@@ -20,7 +20,7 @@ namespace Model
 	/**
 	 *
 	 */
-	LaserDistanceSensor::LaserDistanceSensor( Robot*aRobot) :
+	LaserDistanceSensor::LaserDistanceSensor( Robot* aRobot) :
 								AbstractSensor( aRobot)
 	{
 	}
