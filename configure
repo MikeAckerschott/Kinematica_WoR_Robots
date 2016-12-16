@@ -20009,7 +20009,6 @@ case $host in
 	AM_LDFLAGS="-no-undefined -Wl,--enable-runtime-pseudo-reloc,--enable-auto-import"
 	;;
 *darwin*)
-	ROBOTWORLD_LDFLAGS=""
 	AM_CPPFLAGS="$AM_CPPFLAGS"
 	AM_CFLAGS="$AM_CFLAGS"
 	AM_CXXFLAGS="$AM_CXXFLAGS"
@@ -20031,8 +20030,8 @@ fi
 
 if test "$enable_development" = "yes"; then
 	AM_CPPFLAGS="$AM_CPPFLAGS -DDEVELOPMENT"
-	AM_CFLAGS="$AM_CFLAGS -O0 -p -pg -g3 -Wall -Wextra"
-	AM_CXXFLAGS="$AM_CXXFLAGS -O0 -p -pg -g3 -Wall -Wextra"
+	AM_CFLAGS="$AM_CFLAGS -O0 -p -pg -g3 -Wall -Wextra -Wconversion"
+	AM_CXXFLAGS="$AM_CXXFLAGS -O0 -p -pg -g3 -Wall -Wextra -Wconversion"
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: Enabling development tracing" >&5
 $as_echo "Enabling development tracing" >&6; }
 else
