@@ -6,8 +6,8 @@ Note: 	- "\" means that the actual command line continues with the next line!
 		- Adjust all paths to taste
 		- Adjust for any Boost and wxWidgets versions
 		- On Windows, use a MinGW MSys command shell, *NOT* a Windows cmd shell.
-		- Use an "Empty Makefile" project as project template for Eclipse and change the build directory 
-		  to the platform compilation directory in the project settings	 
+		- Use an "Empty Makefile" project (nieuw C++ project --> Makefile project -> empty projct) as project template for Eclipse and change the build directory 
+		  to the platform compilation directory in the project settings	 (right click project -> C++ build -> 'build location')
 		- If the configure script is missing or out of sync with the installed MSys files, run the following commands in the root of the project (or use the autogen.sh script):
 			libtoolize --force --copy
 			aclocal -I ./m4
