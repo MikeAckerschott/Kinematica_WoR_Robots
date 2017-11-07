@@ -288,8 +288,9 @@ namespace Model
 	 */
 	void RobotWorld::populate( int aNumberOfWalls /*= 2*/)
 	{
-		RobotWorld::getRobotWorld().newRobot( "Robot", Point( 50, 50),false);
+		RobotWorld::getRobotWorld().newRobot( "Robot", Point( 221, 111),false);
 
+		/*
 		static Point coordinates[] = { Point( 100, 400), Point( 350, 300),
 									   Point( 300, 100),
 									   Point( 350, 200) };
@@ -298,8 +299,10 @@ namespace Model
 		{
 			RobotWorld::getRobotWorld().newWall( coordinates[i], coordinates[i + 1],false);
 		}
+		*/
 
-		RobotWorld::getRobotWorld().newGoal( "Goal", Point( 450, 450),false);
+		RobotWorld::getRobotWorld().newWall( Point(6,257), Point(406,254) ,false);
+		RobotWorld::getRobotWorld().newGoal( "Goal", Point(315,314),false);
 
 		notifyObservers();
 	}
