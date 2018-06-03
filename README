@@ -1,12 +1,14 @@
 
 
-Note: 	- "\" means that the actual command line continues with the next line!
+Note: 	- This document contains very long lines (> 170 chars)
+		- "\" means that the actual command line continues with the next line!
 		- All command sequences start from the root of the project, $ROBOTWORLD_ROOT in the examples
-		- The exact name of the platform compilation directories are irrelevant but using mingw(native/cross), linux or mac is advised.		
+		- The exact name of the platform compilation directories are irrelevant but using mingw(native/cross), linux or mac as advised.		
 		- Adjust all paths to taste
 		- Adjust for any Boost and wxWidgets versions
+		- This readme uses 3.02 for wxWidgets1 AND 1.62 for Boost (I think..., see OSM-10!!!!) 
 		- On Windows, use a MinGW MSys command shell, *NOT* a Windows cmd shell.
-		- Use an "Empty Makefile" project (nieuw C++ project --> Makefile project -> empty projct) as project template for Eclipse and change the build directory 
+		- Use an "Empty Makefile" project (new C++ project --> Makefile project -> empty projct) as project template for Eclipse and change the build directory 
 		  to the platform compilation directory in the project settings	 (right click project -> C++ build -> 'build location')
 		- If the configure script is missing or out of sync with the installed MSys files, run the following commands in the root of the project (or use the autogen.sh script):
 			libtoolize --force --copy
@@ -14,14 +16,14 @@ Note: 	- "\" means that the actual command line continues with the next line!
 			autoconf -I ./m4
 			automake --force-missing --copy --add-missing --foreign
 
-
 1. Compilation
+
+In the following *installed* means that a library is installed by a system installer (e.g. apt-get install...) or by "make install" or "b2 install" 
 
 *** Compilation on Linux *** 
 
 On Linux, compiling for Linux if both wxWidgets and Boost are *installed* in the OS in their *default* location,
 the configure script finds Boost and wxWidgets automatically:
-
 	cd $ROBOTWORLD_ROOT
 	mkdir linux
 	cd linux
@@ -34,13 +36,13 @@ the configure script must be told where to find Boost and wxWidgets:
 	cd $ROBOTWORLD_ROOT
 	mkdir linux
 	cd linux
-	../configure --with-wx-config=/home/jkr/devlib/wxWidgets-3.0.2/bin/wx-config --with-boost=/home/jkr/devlib/boost_1_56_0
+	../configure --with-wx-config=/home/jkr/devlib/wxWidgets-3.0.2/bin/wx-config --with-boost=/home/jkr/devlib/boost_1_62_0
 	make
 	
 NB: 1. adjust the paths to taste
 	2. The BOOST_ROOT path should point at the root directory of an installed Boost, having the following structure:
 		\include
-			\boost-1_56
+			\boost-1_62
 				\boost (contains headers, e.g. version.hpp,  and the sub-directories of the libraries) 
 		\lib (contains the libraries)
 	3. The --with-wx-config path should point to the wx-config file in the installation directory of wxWidgets 
@@ -52,14 +54,13 @@ the configure script must be told where to find Boost and wxWidgets:
 	cd $ROBOTWORLD_ROOT
 	mkdir linux
 	cd linux
-	export BOOST_ROOT=/home/jkr/src/boost_1_56_0
+	export BOOST_ROOT=/home/jkr/src/boost_1_62_0
 	../configure 	--with-wx-config=/home/jkr/src/wxWidgets-3.0.2/linux/wx-config	\ 
 					--with-boost 
 	make
 	
-
 NB: 1. adjust the paths to taste
-	2. The BOOST_ROOT path should point at the root directory of a "staged" boost, i.e. with a "staged" directory in it.
+	2. The BOOST_ROOT path should point at the root directory of a "staged" boost, i.e. the boost directory with a "staged" directory in it.
 	3. The --with-wx-config path should point to the wx-config file in the bin directory of the installation directory of wxWidgets 
 	
 	
@@ -102,7 +103,7 @@ using the MinGW command prompt:
 NB: 1. adjust the paths to taste
 	2. The BOOST_ROOT path should point at the root directory of an installed Boost, having the following structure:
 		\include
-			\boost-1_56
+			\boost-1_62
 				\boost (contains headers, e.g. version.hpp,  and the sub-directories of the libraries) 
 		\lib (contains the libraries)
 	3. The --with-wx-config path should point to the wx-config file in the bin directory of the installation directory of wxWidgets 
@@ -114,14 +115,14 @@ the configure script must be told where to find Boost and wxWidgets, using the M
 	cd $ROBOTWORLD_ROOT
 	mkdir mingwnative
 	cd mingwnative
-	export BOOST_ROOT=/d/src/boost_1_56_0
+	export BOOST_ROOT=/d/src/boost_1_62_0
 	../configure 	--with-wx-config=/d/src/wxWidgets-3.0.2/mingw/wx-config	\ 
 					--with-boost 
 	make
 	
 NB: 1. This assumes a working fully installed gcc compiler in the path.
 	2. adjust the paths to taste
-	3. The BOOST_ROOT path should point at the root directory of a "staged" boost, i.e. with a "staged" directory in it.
+	3. The BOOST_ROOT path should point at the root directory of a "staged" boost, i.e. the boost directory with a "staged" directory in it.
 	4. The --with-wx-config path should point to the wx-config file in the compilation directory of wxWidgets 
 	
 
