@@ -77,6 +77,12 @@ if test "$wxWin" != 0; then
 	AC_DEFINE(HAVE_WXWIDGETS,1,[define if the wxWidgets 3.0.2. or higher is available])
 fi
 
+# This is needed in case the lib directory of wxWidgets is not in the linker path
+AC_ARG_WITH(wx-config,
+[  --with-wx-config=path_to_wx-config     use wx-config in path_to_wx-config],
+[WX_LDFLAGS="-Wl,-rpath,`$withval --exec-prefix`/lib"],[WX_LDFLAGS=""])
+AC_SUBST([WX_LDFLAGS])
+
 #########################################################################################################
 #                     Windows Sockets, Unix works out of the box.....
 #########################################################################################################
