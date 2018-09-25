@@ -94,6 +94,31 @@ esac
 AC_SUBST([SOCKET_LIBS])
 
 #########################################################################################################
+#                     --with-cxx=11|14|17
+#########################################################################################################
+AC_ARG_WITH(cxx,           [  --with-cxx=11|14|17     use the given C++ dialect], [WITH_CXX="$withval"])
+
+if test -n "$WITH_CXX"; then
+   case "$WITH_CXX" in
+        11)
+            #AX_CXX_COMPILE_STDCXX(11)
+			ROBOTWORLD_STD_CXX="11"
+            ;;
+        14)
+            #AX_CXX_COMPILE_STDCXX(14)
+			ROBOTWORLD_STD_CXX="14"
+            ;;
+        17)
+            #AX_CXX_COMPILE_STDCXX(17)
+			ROBOTWORLD_STD_CXX="17"
+            ;;
+        *)
+            AC_MSG_ERROR([Invalid --with-cxx="$WITH_CXX" option value, only 11, 14 or 17 supported])
+    esac
+	ROBOTWORLD_STD_CXX="-std=gnu"$WITH_CXX
+fi
+
+#########################################################################################################
 #                     Set the preprocessor, c-compiler, c++-compiler and linker option
 #########################################################################################################
 
@@ -114,13 +139,13 @@ AC_SUBST([ROBOTWORLD_CPPFLAGS])
 # set the C options
 case $host in
 *linux*)
-	ROBOTWORLD_CFLAGS="-pipe -std=gnu11"
+	ROBOTWORLD_CFLAGS="-pipe "ROBOTWORLD_STD_CXX
 	;;
 *mingw* | *i686-pc-mingw64* | *i686-pc-mingw32* | *i686-pc-msys* | *x86_64-unknown-msys*)
-	ROBOTWORLD_CFLAGS="-pipe -std=gnu11"
+	ROBOTWORLD_CFLAGS="-pipe "ROBOTWORLD_STD_CXX
 	;;
 *darwin*)
-	ROBOTWORLD_CFLAGS="-pipe -std=gnu11"
+	ROBOTWORLD_CFLAGS="-pipe "ROBOTWORLD_STD_CXX
 	;;
 esac
 AC_SUBST([ROBOTWORLD_CFLAGS])
@@ -128,13 +153,13 @@ AC_SUBST([ROBOTWORLD_CFLAGS])
 # set the C++ options
 case $host in
 *linux*)
-	ROBOTWORLD_CXXFLAGS="-pipe -std=gnu++11"
+	ROBOTWORLD_CXXFLAGS="-pipe "ROBOTWORLD_STD_CXX
 	;;
 *mingw* | *i686-pc-mingw64* | *i686-pc-mingw32* | *i686-pc-msys* | *x86_64-unknown-msys*)
-	ROBOTWORLD_CXXFLAGS="-pipe -std=gnu++11"
+	ROBOTWORLD_CXXFLAGS="-pipe "ROBOTWORLD_STD_CXX
 	;;
 *darwin*)
-	ROBOTWORLD_CXXFLAGS="-pipe -std=gnu++11"
+	ROBOTWORLD_CXXFLAGS="-pipe "ROBOTWORLD_STD_CXX
 	;;
 esac
 AC_SUBST([ROBOTWORLD_CXXFLAGS])
