@@ -27,15 +27,12 @@ AC_ARG_WITH(cxx,           [  --with-cxx=11|14|17     (mandatory) use the given 
 if test -n "$WITH_CXX"; then
    case "$WITH_CXX" in
         11)
-            #AX_CXX_COMPILE_STDCXX(11)
 			ROBOTWORLD_STD_CXX="11"
             ;;
         14)
-            #AX_CXX_COMPILE_STDCXX(14)
 			ROBOTWORLD_STD_CXX="14"
             ;;
         17)
-            #AX_CXX_COMPILE_STDCXX(17)
 			ROBOTWORLD_STD_CXX="17"
             ;;
         *)
@@ -144,13 +141,13 @@ AC_SUBST([ROBOTWORLD_CPPFLAGS])
 # set the C options
 case $host in
 *linux*)
-	ROBOTWORLD_CFLAGS="-pipe "$ROBOTWORLD_STD_CXX
+	ROBOTWORLD_CFLAGS="-pipe -std=gnu11"
 	;;
 *mingw* | *i686-pc-mingw64* | *i686-pc-mingw32* | *i686-pc-msys* | *x86_64-unknown-msys*)
-	ROBOTWORLD_CFLAGS="-pipe "$ROBOTWORLD_STD_CXX
+	ROBOTWORLD_CFLAGS="-pipe -std=gnu11"
 	;;
 *darwin*)
-	ROBOTWORLD_CFLAGS="-pipe "$ROBOTWORLD_STD_CXX
+	ROBOTWORLD_CFLAGS="-pipe -std=gnu11"
 	;;
 esac
 AC_SUBST([ROBOTWORLD_CFLAGS])
