@@ -19,6 +19,31 @@ AC_CONFIG_MACRO_DIR(./m4)
 
 # Check for programs
 
+#########################################################################################################
+#                     --with-cxx=11|14|17 (mandatory option, so check it first)
+#########################################################################################################
+AC_ARG_WITH(cxx,           [  --with-cxx=11|14|17     (mandatory) use the given C++ dialect], [WITH_CXX="$withval"])
+
+if test -n "$WITH_CXX"; then
+   case "$WITH_CXX" in
+        11)
+			ROBOTWORLD_STD_CXX="11"
+            ;;
+        14)
+			ROBOTWORLD_STD_CXX="14"
+            ;;
+        17)
+			ROBOTWORLD_STD_CXX="17"
+            ;;
+        *)
+            AC_MSG_ERROR([Invalid --with-cxx="$WITH_CXX" option value, only 11, 14 or 17 supported])
+    esac
+	ROBOTWORLD_STD_CXX="-std=gnu++"$WITH_CXX
+else
+	AC_MSG_ERROR([Option --with-cxx= not given, read help for information])
+fi
+
+
 LT_INIT
 
 AC_PROG_MAKE_SET
@@ -30,6 +55,7 @@ AC_LANG([C])
 AC_LANG([C++])
 
 AC_CANONICAL_HOST
+
 
 # Check for libraries
 
@@ -93,6 +119,7 @@ case $host in
 esac
 AC_SUBST([SOCKET_LIBS])
 
+
 #########################################################################################################
 #                     Set the preprocessor, c-compiler, c++-compiler and linker option
 #########################################################################################################
@@ -128,13 +155,13 @@ AC_SUBST([ROBOTWORLD_CFLAGS])
 # set the C++ options
 case $host in
 *linux*)
-	ROBOTWORLD_CXXFLAGS="-pipe -std=gnu++11"
+	ROBOTWORLD_CXXFLAGS="-pipe "$ROBOTWORLD_STD_CXX
 	;;
 *mingw* | *i686-pc-mingw64* | *i686-pc-mingw32* | *i686-pc-msys* | *x86_64-unknown-msys*)
-	ROBOTWORLD_CXXFLAGS="-pipe -std=gnu++11"
+	ROBOTWORLD_CXXFLAGS="-pipe "$ROBOTWORLD_STD_CXX
 	;;
 *darwin*)
-	ROBOTWORLD_CXXFLAGS="-pipe -std=gnu++11"
+	ROBOTWORLD_CXXFLAGS="-pipe "$ROBOTWORLD_STD_CXX
 	;;
 esac
 AC_SUBST([ROBOTWORLD_CXXFLAGS])
