@@ -23,7 +23,7 @@ namespace Messaging
 	 *
 	 */
 	void CommunicationService::runRequestHandler( 	RequestHandlerPtr aRequestHandler,
-													short aPort /* = 12345*/)
+													unsigned short aPort /* = 12345*/)
 	{
 		std::thread newRequestHandlerThread( [this,aRequestHandler,aPort]
 											 {
@@ -47,7 +47,7 @@ namespace Messaging
 	 *
 	 */
 	void CommunicationService::runRequestHandlerWorker(	RequestHandlerPtr aRequestHandler,
-														short aPort)
+														unsigned short aPort)
 	{
 		try
 		{

@@ -8,7 +8,7 @@ namespace Model
 	/**
 	 *
 	 */
-	float BoundedVector::getMagnitude()
+	double BoundedVector::getMagnitude()
 	{
 		return std::sqrt( x * x + y * y);
 	}
@@ -17,7 +17,7 @@ namespace Model
 	 */
 	void BoundedVector::normalise()
 	{
-		float magnitude = getMagnitude();
+		double magnitude = getMagnitude();
 
 		if (magnitude <= Utils::ALMOST_ZERO)
 			magnitude = 1;
@@ -132,7 +132,7 @@ Model::BoundedVector operator-(	const Model::BoundedVector& lhs,
 /**
  *
  */
-float operator*(	const Model::BoundedVector& lhs,
+double operator*(	const Model::BoundedVector& lhs,
 					const Model::BoundedVector& rhs)
 {
 	return (lhs.x * rhs.x) + (lhs.y * rhs.y);
@@ -140,7 +140,7 @@ float operator*(	const Model::BoundedVector& lhs,
 /**
  *
  */
-Model::BoundedVector operator*( 	float s,
+Model::BoundedVector operator*( float s,
 								const Model::BoundedVector& rhs)
 {
 	return rhs * s;

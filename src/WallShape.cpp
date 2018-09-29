@@ -109,10 +109,10 @@ namespace View
 	{
 		if (isSelected())
 		{
-			dc.SetPen( wxPen( WXSTRING( "RED"), getLineWidth(), wxSOLID));
+			dc.SetPen( wxPen( WXSTRING( "RED"), getLineWidth(), wxPENSTYLE_SOLID));
 		} else
 		{
-			dc.SetPen( wxPen( WXSTRING( "BLACK"), getLineWidth(), wxSOLID));
+			dc.SetPen( wxPen( WXSTRING( "BLACK"), getLineWidth(), wxPENSTYLE_SOLID));
 		}
 
 		dc.DrawLine( getNode1()->getCentre().x, getNode1()->getCentre().y, getNode2()->getCentre().x, getNode2()->getCentre().y);

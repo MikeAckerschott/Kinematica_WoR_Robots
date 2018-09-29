@@ -26,8 +26,8 @@ class BoundedVector
 		/**
 		 *
 		 */
-		BoundedVector( float anX,
-					float anY) :
+		BoundedVector( double anX,
+					   double anY) :
 						x( anX),
 						y( anY)
 		{
@@ -36,7 +36,7 @@ class BoundedVector
 		 *
 		 */
 		BoundedVector( const Point& aPoint1,
-					const Point& aPoint2) :
+					   const Point& aPoint2) :
 						x( aPoint1.x - aPoint2.x),
 						y( aPoint1.y - aPoint2.y)
 		{
@@ -58,7 +58,7 @@ class BoundedVector
 		/**
 		 *
 		 */
-		float getMagnitude();
+		double getMagnitude();
 		/**
 		 *
 		 */
@@ -107,8 +107,8 @@ class BoundedVector
 		//@}
 
 		// No need for accessors and mutators?
-		float x;
-		float y;
+		double x;
+		double y;
 };
 // class PolarCoord
 } //namespace Model
@@ -118,7 +118,7 @@ Model::BoundedVector operator+(	const Model::BoundedVector& lhs,
 								const Model::BoundedVector& rhs);
 Model::BoundedVector operator-(	const Model::BoundedVector& lhs,
 								const Model::BoundedVector& rhs);
-float operator*(	const Model::BoundedVector& lhs,
+double operator*(	const Model::BoundedVector& lhs,
 					const Model::BoundedVector& rhs);
 
 Model::BoundedVector operator*( 	float s,

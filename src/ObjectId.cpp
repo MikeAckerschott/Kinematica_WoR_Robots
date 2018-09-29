@@ -64,7 +64,8 @@ namespace Base
 			throw std::invalid_argument("timeStruct is nullptr");
 		}
 
-		char objectIdBuffer[27] = {'\0'};
+		// We actually only use 27 chars but it could be 93, based on the maximum int values....
+		char objectIdBuffer[93] = {'\0'};
 		sprintf( objectIdBuffer, "%04d-%02d-%02d-%02d-%02d-%02d-%06lu", timeStruct->tm_year + 1900, timeStruct->tm_mon + 1, timeStruct->tm_mday, timeStruct->tm_hour, timeStruct->tm_min, timeStruct->tm_sec, fraction);
 		std::string objectIdString(ObjectId::objectIdNamespace);
 		objectIdString.append(objectIdBuffer);

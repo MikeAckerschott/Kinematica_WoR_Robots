@@ -31,7 +31,7 @@ namespace Messaging
 			 * @see ServerSession::handleMessageRead( Message& aMessage) for the implementation.
 			 */
 			void runRequestHandler(	RequestHandlerPtr aRequestHandler,
-									short aPort = 12345);
+									unsigned short aPort = 12345);
 			/**
 			 * Uses std::stoi for string to *int* conversion. Throws the exceptions that std::stoi may throw.
 			 * If int > max short you lose...
@@ -39,7 +39,7 @@ namespace Messaging
 			void runRequestHandler(	RequestHandlerPtr aRequestHandler,
 									const std::string& aPort)
 			{
-				runRequestHandler(aRequestHandler,std::stoi(aPort));
+				runRequestHandler(aRequestHandler,static_cast<unsigned short>(std::stoi(aPort)));
 			}
 		private:
 			/**
@@ -54,7 +54,7 @@ namespace Messaging
 			 *
 			 */
 			void runRequestHandlerWorker( 	RequestHandlerPtr aRequestHandler,
-											short aPort);
+											unsigned short aPort);
 			/**
 			 *
 			 */

@@ -30,7 +30,7 @@ namespace Utils
 	 */
 	/* static */double Shape2DUtils::getAngle( const Model::BoundedVector& aVector)
 	{
-		return GetAngle( Point( 0, 0), Point( aVector.x, aVector.y));
+		return GetAngle( Point( 0, 0), Point( static_cast<int>(aVector.x), static_cast<int>(aVector.y)));
 	}
 	/**
 	 *
@@ -49,25 +49,25 @@ namespace Utils
 												const Point& aStartLine2,
 												const Point& anEndLine2)
 	{
-		float x1 = aStartLine1.x;
-		float x2 = aEndLine1.x;
-		float x3 = aStartLine2.x;
-		float x4 = anEndLine2.x;
-		float y1 = aStartLine1.y;
-		float y2 = aEndLine1.y;
-		float y3 = aStartLine2.y;
-		float y4 = anEndLine2.y;
+		double x1 = aStartLine1.x;
+		double x2 = aEndLine1.x;
+		double x3 = aStartLine2.x;
+		double x4 = anEndLine2.x;
+		double y1 = aStartLine1.y;
+		double y2 = aEndLine1.y;
+		double y3 = aStartLine2.y;
+		double y4 = anEndLine2.y;
 
-		float d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+		double d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 		// If d is zero, there is no intersection
 		if (d == 0)
 			return false;
 
 		// Get the x and y
-		float pre = (x1 * y2 - y1 * x2);
-		float post = (x3 * y4 - y3 * x4);
-		float x = (pre * (x3 - x4) - (x1 - x2) * post) / d;
-		float y = (pre * (y3 - y4) - (y1 - y2) * post) / d;
+		double pre = (x1 * y2 - y1 * x2);
+		double post = (x3 * y4 - y3 * x4);
+		double x = (pre * (x3 - x4) - (x1 - x2) * post) / d;
+		double y = (pre * (y3 - y4) - (y1 - y2) * post) / d;
 
 		// Check if the x and y coordinates are within both lines
 		if (x < std::min( x1, x2) || x > std::max( x1, x2) || x < std::min( x3, x4) || x > std::max( x3, x4))
@@ -89,24 +89,24 @@ namespace Utils
 														const Point& aStartLine2,
 														const Point& anEndLine2)
 	{
-		float x1 = aStartLine1.x;
-		float x2 = aEndLine1.x;
-		float x3 = aStartLine2.x;
-		float x4 = anEndLine2.x;
-		float y1 = aStartLine1.y;
-		float y2 = aEndLine1.y;
-		float y3 = aStartLine2.y;
-		float y4 = anEndLine2.y;
+		double x1 = aStartLine1.x;
+		double x2 = aEndLine1.x;
+		double x3 = aStartLine2.x;
+		double x4 = anEndLine2.x;
+		double y1 = aStartLine1.y;
+		double y2 = aEndLine1.y;
+		double y3 = aStartLine2.y;
+		double y4 = anEndLine2.y;
 
-		float d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+		double d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 		// If d is zero, there is no intersection
 		if (d == 0)
 			return DefaultPosition;
 
 		// Get the x and y
-		float pre = (x1 * y2 - y1 * x2), post = (x3 * y4 - y3 * x4);
-		float x = (pre * (x3 - x4) - (x1 - x2) * post) / d;
-		float y = (pre * (y3 - y4) - (y1 - y2) * post) / d;
+		double pre = (x1 * y2 - y1 * x2), post = (x3 * y4 - y3 * x4);
+		double x = (pre * (x3 - x4) - (x1 - x2) * post) / d;
+		double y = (pre * (y3 - y4) - (y1 - y2) * post) / d;
 
 		// Check if the x and y coordinates are within both lines
 		if (x < std::min( x1, x2) || x > std::max( x1, x2) || x < std::min( x3, x4) || x > std::max( x3, x4))
@@ -119,7 +119,7 @@ namespace Utils
 		}
 
 		// Return the point of intersection
-		return Point( x, y);
+		return Point( static_cast<int>(x), static_cast<int>(y));
 	}
 	/**
 	 *
@@ -265,7 +265,7 @@ namespace Utils
 	/* static */Point Shape2DUtils::rotate( const Point& aPoint,
 											double anAngle)
 	{
-		return Point( Shape2DUtils::rotateX( aPoint, anAngle), rotateY( aPoint, anAngle));
+		return Point( static_cast<int>(Shape2DUtils::rotateX( aPoint, anAngle)), static_cast<int>(rotateY( aPoint, anAngle)));
 	}
 	/**
 	 *
