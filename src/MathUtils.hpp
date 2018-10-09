@@ -23,11 +23,11 @@ namespace Utils
 			/**
 			 *
 			 */
-			static float toRadians( float aDegrees);
+			static double toRadians( double aDegrees);
 			/**
 			 *
 			 */
-			static float toDegrees( float aRadian);
+			static double toDegrees( double aRadian);
 	};
 	//	class Math
 } // namespace Utils

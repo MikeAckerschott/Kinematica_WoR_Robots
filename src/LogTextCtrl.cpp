@@ -17,7 +17,8 @@ namespace Application
 								const Size& aSize /* = DefaultSize */) :
 								wxTextCtrl( aParent, aWindowId, WXSTRING( anInitialText), aPoint, aSize, aStyle)
 	{
-		Connect( ROBOTWORLD_TRACE_EVENT, wxCommandEventHandler( LogTextCtrl::OnCommandEvent));
+		Bind(ROBOTWORLD_TRACE_EVENT,
+			 [this](CommandEvent& anEvent){ this->OnCommandEvent(anEvent);});
 	}
 	/**
 	 *

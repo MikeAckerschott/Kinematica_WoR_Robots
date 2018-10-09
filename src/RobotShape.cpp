@@ -14,7 +14,8 @@ namespace View
 	 *
 	 */
 	RobotShape::RobotShape( Model::RobotPtr aRobot) :
-								RectangleShape( std::dynamic_pointer_cast<Model::ModelObject>(aRobot), aRobot->getPosition(), aRobot->getName())
+								RectangleShape( std::dynamic_pointer_cast<Model::ModelObject>(aRobot), aRobot->getPosition(), aRobot->getName()),
+								robotWorldCanvas(nullptr)
 	{
 	}
 	/**
@@ -94,7 +95,7 @@ namespace View
 		PathAlgorithm::OpenSet openSet = getRobot()->getOpenSet();
 		if (openSet.size() != 0)
 		{
-			dc.SetPen( wxPen( WXSTRING( "PALE GREEN"), borderWidth, wxSOLID));
+			dc.SetPen( wxPen( WXSTRING( "PALE GREEN"), borderWidth, wxPENSTYLE_SOLID));
 			for (const PathAlgorithm::Vertex& vertex : openSet)
 			{
 				dc.DrawPoint( vertex.asPoint());
@@ -104,7 +105,7 @@ namespace View
 		PathAlgorithm::Path path = getRobot()->getPath();
 		if (path.size() != 0)
 		{
-			dc.SetPen( wxPen( WXSTRING( "BLACK"), borderWidth, wxSOLID));
+			dc.SetPen( wxPen( WXSTRING( "BLACK"), borderWidth, wxPENSTYLE_SOLID));
 			for (const PathAlgorithm::Vertex& vertex : path)
 			{
 				dc.DrawPoint( vertex.asPoint());
@@ -115,28 +116,31 @@ namespace View
 		dc.SetBrush( *wxWHITE_BRUSH);
 		if (isSelected())
 		{
-			dc.SetPen( wxPen( WXSTRING( getSelectionColour()), borderWidth, wxSOLID));
+			dc.SetPen( wxPen( WXSTRING( getSelectionColour()), borderWidth, wxPENSTYLE_SOLID));
 		} else
 		{
-			dc.SetPen( wxPen( WXSTRING( getNormalColour()), borderWidth, wxSOLID));
+			dc.SetPen( wxPen( WXSTRING( getNormalColour()), borderWidth, wxPENSTYLE_SOLID));
 		}
 
 		Point cornerPoints[] = { getRobot()->getFrontRight(), getRobot()->getFrontLeft(), getRobot()->getBackLeft(), getRobot()->getBackRight() };
 		dc.DrawPolygon( 4, cornerPoints);
 
-		dc.SetPen( wxPen( WXSTRING( "RED"), borderWidth, wxSOLID));
+		dc.SetPen( wxPen( WXSTRING( "RED"), borderWidth, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[1]);
-		dc.SetPen( wxPen( WXSTRING( "GREEN"), borderWidth, wxSOLID));
+		dc.SetPen( wxPen( WXSTRING( "GREEN"), borderWidth, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[0]);
-		dc.SetPen( wxPen( WXSTRING( "INDIAN RED"), borderWidth, wxSOLID));
+		dc.SetPen( wxPen( WXSTRING( "INDIAN RED"), borderWidth, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[2]);
-		dc.SetPen( wxPen( WXSTRING( "PALE GREEN"), borderWidth, wxSOLID));
+		dc.SetPen( wxPen( WXSTRING( "PALE GREEN"), borderWidth, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[3]);
 
 		double angle = Utils::Shape2DUtils::getAngle( getRobot()->getFront()) + 0.5 * Utils::PI;
 
-		dc.SetPen( wxPen( WXSTRING( "BLACK"), 1, wxSOLID));
-		dc.DrawLine( centre.x, centre.y, centre.x + std::cos( angle - 0.5 * Utils::PI) * 25, centre.y + std::sin( angle - 0.5 * Utils::PI) * 25);
+		dc.SetPen( wxPen( WXSTRING( "BLACK"), 1, wxPENSTYLE_SOLID));
+		dc.DrawLine( centre.x,
+					 centre.y,
+					 static_cast<int>(centre.x + std::cos( angle - 0.5 * Utils::PI) * 25),
+					 static_cast<int>(centre.y + std::sin( angle - 0.5 * Utils::PI) * 25));
 
 		// Bounty of 0.25 points for anyone who makes the name turn
 		// with the front of the robot, while text centre being displayed in the

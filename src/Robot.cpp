@@ -221,7 +221,8 @@ namespace Model
 			}
 
 			Messaging::CommunicationService::getCommunicationService().runRequestHandler( toPtr<Robot>(),
-																						  std::stoi(localPort));
+																						  static_cast<unsigned short>(std::stoi(localPort)));
+
 		}
 	}
 	/**
@@ -275,8 +276,8 @@ namespace Model
 		Point originalFrontLeft( x, y);
 		double angle = Utils::Shape2DUtils::getAngle( front) + 0.5 * Utils::PI;
 
-		Point frontLeft( (originalFrontLeft.x - position.x) * std::cos( angle) - (originalFrontLeft.y - position.y) * std::sin( angle) + position.x, (originalFrontLeft.y - position.y) * std::cos( angle)
-		+ (originalFrontLeft.x - position.x) * std::sin( angle) + position.y);
+		Point frontLeft( static_cast<int>((originalFrontLeft.x - position.x) * std::cos( angle) - (originalFrontLeft.y - position.y) * std::sin( angle) + position.x),
+						 static_cast<int>((originalFrontLeft.y - position.y) * std::cos( angle) + (originalFrontLeft.x - position.x) * std::sin( angle) + position.y));
 
 		return frontLeft;
 	}
@@ -292,8 +293,8 @@ namespace Model
 		Point originalFrontRight( x + size.x, y);
 		double angle = Utils::Shape2DUtils::getAngle( front) + 0.5 * Utils::PI;
 
-		Point frontRight( (originalFrontRight.x - position.x) * std::cos( angle) - (originalFrontRight.y - position.y) * std::sin( angle) + position.x, (originalFrontRight.y - position.y)
-						  * std::cos( angle) + (originalFrontRight.x - position.x) * std::sin( angle) + position.y);
+		Point frontRight( static_cast<int>((originalFrontRight.x - position.x) * std::cos( angle) - (originalFrontRight.y - position.y) * std::sin( angle) + position.x),
+						  static_cast<int>((originalFrontRight.y - position.y) * std::cos( angle) + (originalFrontRight.x - position.x) * std::sin( angle) + position.y));
 
 		return frontRight;
 	}
@@ -310,8 +311,8 @@ namespace Model
 
 		double angle = Utils::Shape2DUtils::getAngle( front) + 0.5 * Utils::PI;
 
-		Point backLeft( (originalBackLeft.x - position.x) * std::cos( angle) - (originalBackLeft.y - position.y) * std::sin( angle) + position.x, (originalBackLeft.y - position.y) * std::cos( angle)
-		+ (originalBackLeft.x - position.x) * std::sin( angle) + position.y);
+		Point backLeft( static_cast<int>((originalBackLeft.x - position.x) * std::cos( angle) - (originalBackLeft.y - position.y) * std::sin( angle) + position.x),
+						static_cast<int>((originalBackLeft.y - position.y) * std::cos( angle) + (originalBackLeft.x - position.x) * std::sin( angle) + position.y));
 
 		return backLeft;
 
@@ -329,8 +330,8 @@ namespace Model
 
 		double angle = Utils::Shape2DUtils::getAngle( front) + 0.5 * Utils::PI;
 
-		Point backRight( (originalBackRight.x - position.x) * std::cos( angle) - (originalBackRight.y - position.y) * std::sin( angle) + position.x, (originalBackRight.y - position.y) * std::cos( angle)
-		+ (originalBackRight.x - position.x) * std::sin( angle) + position.y);
+		Point backRight( static_cast<int>((originalBackRight.x - position.x) * std::cos( angle) - (originalBackRight.y - position.y) * std::sin( angle) + position.x),
+						 static_cast<int>((originalBackRight.y - position.y) * std::cos( angle) + (originalBackRight.x - position.x) * std::sin( angle) + position.y));
 
 		return backRight;
 	}
@@ -435,7 +436,7 @@ namespace Model
 			unsigned pathPoint = 0;
 			while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size())
 			{
-				const PathAlgorithm::Vertex& vertex = path[pathPoint+=speed];
+				const PathAlgorithm::Vertex& vertex = path[pathPoint+=static_cast<int>(speed)];
 				front = BoundedVector( vertex.asPoint(), position);
 				position.x = vertex.x;
 				position.y = vertex.y;

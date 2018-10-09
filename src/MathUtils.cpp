@@ -5,14 +5,14 @@ namespace Utils
 	/**
 	 *
 	 */
-	/* static */float MathUtils::toRadians( float aDegrees)
+	/* static */ double MathUtils::toRadians( double aDegrees)
 	{
 		return aDegrees * PI / 180.0;
 	}
 	/**
 	 *
 	 */
-	/* static */float MathUtils::toDegrees( float aRadian)
+	/* static */ double MathUtils::toDegrees( double aRadian)
 	{
 		return aRadian * 180.0 / PI;
 	}

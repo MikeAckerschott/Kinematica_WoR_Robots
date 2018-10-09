@@ -33,6 +33,91 @@ namespace Messaging
 			}
 			/**
 			 *	Handle any incoming connections
+			 *
+			 * @startuml
+			 * -> server: handleAccept
+			 * activate server
+			 * server -->> session
+			 * server -> session : getSocket
+			 * activate session
+			 * server <-- session : socket
+			 * deactivate session
+			 *
+			 * server -\ acceptor : asyn_accept(socket,Server::handleAccept)
+			 * server -> session : start
+			 * deactivate server
+			 * activate session
+			 *
+			 * == Reading the request ==
+			 *
+			 * session -\ session: readMessage
+			 * activate session
+			 *
+			 * session -\ socket: async_read(header,Session::handleHeaderRead)
+			 * deactivate session
+			 * activate socket
+			 * server <-- session
+			 * deactivate session
+			 * deactivate session
+			 * deactivate session
+			 *
+			 * session <- socket : handleHeaderRead(message,error)
+			 * deactivate socket
+			 * activate session
+			 *
+			 * session -\ socket: async_read(body,Session::handleBodyRead)
+			 * deactivate session
+			 * activate socket
+			 *
+			 * session <- socket : handleBodyRead(message,error)
+			 * deactivate socket
+			 * activate session
+			 *
+			 * session -> session : handleMessageRead(message,error)
+			 * activate session
+			 * session -> session : handleMessageRead(message)
+			 * activate session
+			 *
+			 * == Handling the request ==
+			 *
+			 * session -> requestHandler : handleRequest(message)
+			 * activate requestHandler
+			 * session <-- requestHandler
+			 * deactivate requestHandler
+			 *
+			 * == Writing the response ==
+			 *
+			 * session -> session: writeMessage(message)
+			 * activate session
+			 * session -\ socket: async_write(header,Session::handleHeaderWriten)
+			 * deactivate session
+			 * activate socket
+			 * deactivate session
+			 * deactivate session
+			 * deactivate session
+			 *
+			 * session <- socket : handleHeaderWriten(message,error)
+			 * deactivate socket
+			 * activate session
+			 *
+			 * session -\ socket: async_write(body,Session::handleBodyWriten)
+			 * deactivate session
+			 * activate socket
+			 *
+			 * session <- socket : handleBodyWriten(message,error)
+			 * deactivate socket
+			 * activate session
+			 *
+			 * session -> session : handleMessageWriten(message,error)
+			 * activate session
+			 * session -> session : handleMessageWritten(message)
+			 * activate session
+			 * deactivate session
+			 * deactivate session
+			 *
+			 * destroy session
+			 *
+			 * @enduml
 			 */
 			void handleAccept( 	ServerSession* aSession,
 								const boost::system::error_code& error)

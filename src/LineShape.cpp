@@ -58,10 +58,10 @@ namespace View
 	{
 		if (isSelected())
 		{
-			dc.SetPen( wxPen( WXSTRING( "RED"), lineWidth, wxSOLID));
+			dc.SetPen( wxPen( WXSTRING( "RED"), lineWidth, wxPENSTYLE_SOLID));
 		} else
 		{
-			dc.SetPen( wxPen( WXSTRING( "BLACK"), lineWidth, wxSOLID));
+			dc.SetPen( wxPen( WXSTRING( "BLACK"), lineWidth, wxPENSTYLE_SOLID));
 		}
 
 		dc.DrawLine( node1->getCentre().x,
@@ -85,8 +85,8 @@ namespace View
 		double dX = (getLength() / 2 - textSize.x / 2) * sin( angle);
 		double dY = (getLength() / 2 - textSize.x / 2) * cos( angle);
 
-		textPoint.x += dX;
-		textPoint.y -= dY;
+		textPoint.x += static_cast<int>(dX);
+		textPoint.y -= static_cast<int>(dY);
 
 		double degreeAngle = angle * (180.0 / Utils::PI);
 		double rotationAngle = 90 - degreeAngle;
@@ -107,8 +107,8 @@ namespace View
 		// Than we move the centre of the triangle to the end of the line, but outside the node
 
 		top = Point( 0, -arrowHeadSize);
-		right = Point( arrowHeadSize * std::sin( PI / 3), arrowHeadSize * std::cos( PI / 3));
-		left = Point( -arrowHeadSize * std::sin( PI / 3), arrowHeadSize * std::cos( PI / 3));
+		right = Point( static_cast<int>(arrowHeadSize * std::sin( PI / 3)), static_cast<int>(arrowHeadSize * std::cos( PI / 3)));
+		left = Point( static_cast<int>(-arrowHeadSize * std::sin( PI / 3)), static_cast<int>(arrowHeadSize * std::cos( PI / 3)));
 
 		//double angle = getAngle();
 		double angle = Utils::Shape2DUtils::getAngle( node1->getCentre(), node2->getCentre()) + 0.5 * PI;
@@ -175,7 +175,7 @@ namespace View
 		double dX = (getLength() - shortenLine) * sin( angle);
 		double dY = (getLength() - shortenLine) * cos( angle);
 
-		Point triangleCentre( getBegin().x + dX, getBegin().y - dY);
+		Point triangleCentre( static_cast<int>(getBegin().x + dX), static_cast<int>(getBegin().y - dY));
 
 		top += triangleCentre;
 		right += triangleCentre;
@@ -185,23 +185,23 @@ namespace View
 
 		if (isSelected())
 		{
-			dc.SetPen( wxPen( WXSTRING( "RED"), lineWidth, wxSOLID));
+			dc.SetPen( wxPen( WXSTRING( "RED"), lineWidth, wxPENSTYLE_SOLID));
 			dc.SetBrush( wxBrush( wxColour( WXSTRING( "RED"))));
 		} else
 		{
-			dc.SetPen( wxPen( WXSTRING( "BLACK"), lineWidth, wxSOLID));
+			dc.SetPen( wxPen( WXSTRING( "BLACK"), lineWidth, wxPENSTYLE_SOLID));
 			dc.SetBrush( wxBrush( wxColour( WXSTRING( "BLACK"))));
 		}
 		dc.DrawPolygon( 3, triangle);
 
 		// For debugging purposes
-		dc.SetPen( wxPen( WXSTRING( "ORANGE"), 2, wxSOLID));
+		dc.SetPen( wxPen( WXSTRING( "ORANGE"), 2, wxPENSTYLE_SOLID));
 		dc.SetBrush( wxBrush( wxColour( WXSTRING( "ORANGE"))));
 		dc.DrawCircle( top, 2);
-		dc.SetPen( wxPen( WXSTRING( "GREEN"), 2, wxSOLID)); 	// stuuRRRRRRboord RRRRRRechts gRRRRRRoen
+		dc.SetPen( wxPen( WXSTRING( "GREEN"), 2, wxPENSTYLE_SOLID)); 	// stuuRRRRRRboord RRRRRRechts gRRRRRRoen
 		dc.SetBrush( wxBrush( wxColour( WXSTRING( "GREEN"))));
 		dc.DrawCircle( right, 2);
-		dc.SetPen( wxPen( WXSTRING( "RED"), 2, wxSOLID));
+		dc.SetPen( wxPen( WXSTRING( "RED"), 2, wxPENSTYLE_SOLID));
 		dc.SetBrush( wxBrush( wxColour( WXSTRING( "RED"))));
 		dc.DrawCircle( left, 2);
 	}

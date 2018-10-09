@@ -97,6 +97,7 @@ namespace Messaging
 											 boost::bind( &Session::handleBodyRead, this, aMessage, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 				} else
 				{
+					// See https://isocpp.org/wiki/faq/freestore-mgmt#delete-this
 					delete this;
 					throw std::runtime_error( __PRETTY_FUNCTION__ + std::string( ": ") + error.message());
 				}
@@ -117,6 +118,7 @@ namespace Messaging
 					handleMessageRead( aMessage, error, bytes_transferred);
 				} else
 				{
+					// See https://isocpp.org/wiki/faq/freestore-mgmt#delete-this
 					delete this;
 					// Throwing a exception goes wrong if a "stop" message is send in the (limited)
 					// context of this example. If any "strange" things happen, enable the next line.

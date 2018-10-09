@@ -120,10 +120,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_PAINT, wxPaintEventHandler( RobotWorldCanvas::OnPaint));
+			Bind( wxEVT_PAINT, &RobotWorldCanvas::OnPaint, this);
 		} else
 		{
-			Disconnect( wxEVT_PAINT, wxPaintEventHandler( RobotWorldCanvas::OnPaint));
+			Unbind( wxEVT_PAINT, &RobotWorldCanvas::OnPaint, this);
 		}
 	}
 	/**
@@ -133,10 +133,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_SIZE, SizeEventHandler( RobotWorldCanvas::OnSize));
+			Bind( wxEVT_SIZE, &RobotWorldCanvas::OnSize, this);
 		} else
 		{
-			Disconnect( wxEVT_SIZE, SizeEventHandler( RobotWorldCanvas::OnSize));
+			Unbind( wxEVT_SIZE, &RobotWorldCanvas::OnSize, this);
 		}
 	}
 	/**
@@ -146,10 +146,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( RobotWorldCanvas::OnLeftDown));
+			Bind( wxEVT_LEFT_DOWN, &RobotWorldCanvas::OnLeftDown, this);
 		} else
 		{
-			Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( RobotWorldCanvas::OnLeftDown));
+			Unbind( wxEVT_LEFT_DOWN,  &RobotWorldCanvas::OnLeftDown, this);
 		}
 	}
 	/**
@@ -159,10 +159,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_LEFT_UP, wxMouseEventHandler( RobotWorldCanvas::OnLeftUp));
+			Bind( wxEVT_LEFT_UP, &RobotWorldCanvas::OnLeftUp, this);
 		} else
 		{
-			Disconnect( wxEVT_LEFT_UP, wxMouseEventHandler( RobotWorldCanvas::OnLeftUp));
+			Unbind( wxEVT_LEFT_UP, &RobotWorldCanvas::OnLeftUp, this);
 		}
 	}
 	/**
@@ -172,10 +172,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( RobotWorldCanvas::OnLeftDClick));
+			Bind( wxEVT_LEFT_DCLICK, &RobotWorldCanvas::OnLeftDClick, this);
 		} else
 		{
-			Disconnect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( RobotWorldCanvas::OnLeftDClick));
+			Unbind( wxEVT_LEFT_DCLICK, &RobotWorldCanvas::OnLeftDClick, this);
 		}
 	}
 	/**
@@ -185,10 +185,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_MIDDLE_DOWN, wxMouseEventHandler( RobotWorldCanvas::OnMiddleDown));
+			Bind( wxEVT_MIDDLE_DOWN, &RobotWorldCanvas::OnMiddleDown, this);
 		} else
 		{
-			Disconnect( wxEVT_MIDDLE_DOWN, wxMouseEventHandler( RobotWorldCanvas::OnMiddleDown));
+			Unbind( wxEVT_MIDDLE_DOWN, &RobotWorldCanvas::OnMiddleDown, this);
 		}
 	}
 	/**
@@ -198,10 +198,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_MIDDLE_UP, wxMouseEventHandler( RobotWorldCanvas::OnMiddleUp));
+			Bind( wxEVT_MIDDLE_UP, &RobotWorldCanvas::OnMiddleUp, this);
 		} else
 		{
-			Disconnect( wxEVT_MIDDLE_UP, wxMouseEventHandler( RobotWorldCanvas::OnMiddleUp));
+			Unbind( wxEVT_MIDDLE_UP, &RobotWorldCanvas::OnMiddleUp, this);
 		}
 	}
 	/**
@@ -211,10 +211,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_MIDDLE_DCLICK, wxMouseEventHandler( RobotWorldCanvas::OnMiddleDClick));
+			Bind( wxEVT_MIDDLE_DCLICK, &RobotWorldCanvas::OnMiddleDClick, this);
 		} else
 		{
-			Disconnect( wxEVT_MIDDLE_DCLICK, wxMouseEventHandler( RobotWorldCanvas::OnMiddleDClick));
+			Unbind( wxEVT_MIDDLE_DCLICK, &RobotWorldCanvas::OnMiddleDClick, this);
 		}
 	}
 	/**
@@ -224,10 +224,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( RobotWorldCanvas::OnRightDown));
+			Bind( wxEVT_RIGHT_DOWN, &RobotWorldCanvas::OnRightDown, this);
 		} else
 		{
-			Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( RobotWorldCanvas::OnRightDown));
+			Unbind( wxEVT_RIGHT_DOWN, &RobotWorldCanvas::OnRightDown, this);
 		}
 	}
 	/**
@@ -237,10 +237,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_RIGHT_UP, wxMouseEventHandler( RobotWorldCanvas::OnRightUp));
+			Bind( wxEVT_RIGHT_UP, &RobotWorldCanvas::OnRightUp, this);
 		} else
 		{
-			Disconnect( wxEVT_RIGHT_UP, wxMouseEventHandler( RobotWorldCanvas::OnRightUp));
+			Unbind( wxEVT_RIGHT_UP, &RobotWorldCanvas::OnRightUp, this);
 		}
 	}
 	/**
@@ -250,10 +250,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_RIGHT_DCLICK, wxMouseEventHandler( RobotWorldCanvas::OnRightDClick));
+			Bind( wxEVT_RIGHT_DCLICK, &RobotWorldCanvas::OnRightDClick, this);
 		} else
 		{
-			Disconnect( wxEVT_RIGHT_DCLICK, wxMouseEventHandler( RobotWorldCanvas::OnRightDClick));
+			Unbind( wxEVT_RIGHT_DCLICK, &RobotWorldCanvas::OnRightDClick, this);
 		}
 	}
 	/**
@@ -263,10 +263,10 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_MOTION, wxMouseEventHandler( RobotWorldCanvas::OnMouseMotion));
+			Bind( wxEVT_MOTION, &RobotWorldCanvas::OnMouseMotion, this);
 		} else
 		{
-			Disconnect( wxEVT_MOTION, wxMouseEventHandler( RobotWorldCanvas::OnMouseMotion));
+			Unbind( wxEVT_MOTION, &RobotWorldCanvas::OnMouseMotion, this);
 		}
 	}
 	/**
@@ -276,12 +276,14 @@ namespace View
 	{
 		if (enable == true)
 		{
-			Connect( wxEVT_KEY_DOWN, KeyEventHandler(RobotWorldCanvas::OnKeyDown));
-			Connect( wxEVT_CHAR, wxCharEventHandler( RobotWorldCanvas::OnCharDown));
+			//Connect( wxEVT_KEY_DOWN, KeyEventHandler(RobotWorldCanvas::OnKeyDown));
+			Bind( wxEVT_KEY_DOWN, &RobotWorldCanvas::OnKeyDown, this);
+			Bind( wxEVT_CHAR, &RobotWorldCanvas::OnCharDown, this);
 		} else
 		{
-			Disconnect( wxEVT_KEY_DOWN, KeyEventHandler(RobotWorldCanvas::OnKeyDown));
-			Disconnect( wxEVT_CHAR, wxCharEventHandler( RobotWorldCanvas::OnCharDown));
+			//Disconnect( wxEVT_KEY_DOWN, KeyEventHandler(RobotWorldCanvas::OnKeyDown));
+			Unbind( wxEVT_KEY_DOWN, &RobotWorldCanvas::OnKeyDown, this);
+			Unbind( wxEVT_CHAR, &RobotWorldCanvas::OnCharDown, this);
 		}
 	}
 	/**
@@ -458,8 +460,8 @@ namespace View
 		notificationHandler = new Base::NotificationHandler< std::function< void( NotifyEvent&) > >( [this](NotifyEvent& anEvent){this->OnNotificationEvent(anEvent);});
 		PushEventHandler( notificationHandler);
 
-		Connect( wxEVT_PAINT, wxPaintEventHandler( RobotWorldCanvas::OnPaint));
-		Connect( wxEVT_SIZE, SizeEventHandler( RobotWorldCanvas::OnSize));
+		Bind( wxEVT_PAINT, &RobotWorldCanvas::OnPaint, this);
+		Bind( wxEVT_SIZE, &RobotWorldCanvas::OnSize, this);
 
 		SetBackgroundColour( WXSTRING( "WHITE"));
 		SetFocus();
@@ -1071,19 +1073,29 @@ namespace View
 		Menu popupMenu;
 
 		popupMenu.Append( ID_ADD_ROBOT, _T( "Add robot"), _T( "ID_ADD_ROBOT2"));
-		Connect( ID_ADD_ROBOT, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnAddRobot));
+		Bind(wxEVT_COMMAND_MENU_SELECTED,
+			 [this](CommandEvent& anEvent){ this->OnAddRobot(anEvent);},
+			 ID_ADD_ROBOT);
 
 		popupMenu.Append( ID_ADD_WAYPOINT, _T( "Add waypoint"), _T( "ID_ADD_WAYPOINT2"));
-		Connect( ID_ADD_WAYPOINT, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnAddWayPoint));
+		Bind(wxEVT_COMMAND_MENU_SELECTED,
+			 [this](CommandEvent& anEvent){ this->OnAddWayPoint(anEvent);},
+			 ID_ADD_WAYPOINT);
 
 		popupMenu.Append( ID_ADD_GOAL, _T( "Add goal"), _T( "ID_ADD_GOAL2"));
-		Connect( ID_ADD_GOAL, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnAddGoal));
+		Bind(wxEVT_COMMAND_MENU_SELECTED,
+			 [this](CommandEvent& anEvent){ this->OnAddGoal(anEvent);},
+			 ID_ADD_GOAL);
 
 		popupMenu.Append( ID_ADD_WALL, _T( "Add wall"), _T( "ID_ADD_WALL2"));
-		Connect( ID_ADD_WALL, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnAddWall));
+		Bind(wxEVT_COMMAND_MENU_SELECTED,
+			 [this](CommandEvent& anEvent){ this->OnAddWall(anEvent);},
+			 ID_ADD_WALL);
 
 		popupMenu.Append( ID_WORLD_INFO, _T( "World info"), _T( "ID_WORLD_INFO2"));
-		Connect( ID_WORLD_INFO, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnWorldInfo));
+		Bind(wxEVT_COMMAND_MENU_SELECTED,
+			 [this](CommandEvent& anEvent){ this->OnWorldInfo(anEvent);},
+			 ID_WORLD_INFO);
 
 		popupMenu.Append( wxID_ABOUT, _T( "About"), _T( "Show about dialog"));
 		PopupMenu( &popupMenu);
@@ -1099,32 +1111,48 @@ namespace View
 		if(std::dynamic_pointer_cast<RobotShape>(aSelectedShape))
 		{
 			popupMenu.Append( ID_EDIT_ROBOT, _T( "Edit robot"), _T( "ID_EDIT_ROBOT"));
-			Connect( ID_EDIT_ROBOT, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnEditRobot));
+			Bind(wxEVT_COMMAND_MENU_SELECTED,
+				 [this](CommandEvent& anEvent){ this->OnEditRobot(anEvent);},
+				 ID_EDIT_ROBOT);
 			popupMenu.Append( ID_DELETE_ROBOT, _T( "Delete robot"), _T( "ID_DELETE_ROBOT"));
-			Connect( ID_DELETE_ROBOT, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnDeleteRobot));
+			Bind(wxEVT_COMMAND_MENU_SELECTED,
+				 [this](CommandEvent& anEvent){ this->OnDeleteRobot(anEvent);},
+				 ID_DELETE_ROBOT);
 		} else if(std::dynamic_pointer_cast<GoalShape>(aSelectedShape))
 		{
 			popupMenu.Append( ID_EDIT_GOAL, _T( "Edit goal"), _T( "ID_EDIT_GOAL"));
-			Connect( ID_EDIT_GOAL, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnEditGoal));
+			Bind(wxEVT_COMMAND_MENU_SELECTED,
+				 [this](CommandEvent& anEvent){ this->OnEditGoal(anEvent);},
+				 ID_EDIT_GOAL);
 			popupMenu.Append( ID_DELETE_GOAL, _T( "Delete goal"), _T( "ID_DELETE_GOAL"));
-			Connect( ID_DELETE_GOAL, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnDeleteGoal));
+			Bind(wxEVT_COMMAND_MENU_SELECTED,
+				 [this](CommandEvent& anEvent){ this->OnDeleteGoal(anEvent);},
+				 ID_DELETE_GOAL);
 		} else if(std::dynamic_pointer_cast<WayPointShape>(aSelectedShape))
 		{
 			popupMenu.Append( ID_EDIT_WAYPOINT, _T( "Edit waypoint"), _T( "ID_EDIT_WAYPOINT"));
-			Connect( ID_EDIT_WAYPOINT, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnEditWayPoint));
+			Bind(wxEVT_COMMAND_MENU_SELECTED,
+				 [this](CommandEvent& anEvent){ this->OnEditWayPoint(anEvent);},
+				 ID_EDIT_WAYPOINT);
 			popupMenu.Append( ID_DELETE_WAYPOINT, _T( "Delete waypoint"), _T( "ID_DELETE_WAYPOINT"));
-			Connect( ID_DELETE_WAYPOINT, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnDeleteWayPoint));
+			Bind(wxEVT_COMMAND_MENU_SELECTED,
+				 [this](CommandEvent& anEvent){ this->OnDeleteWayPoint(anEvent);},
+				 ID_DELETE_WAYPOINT);
 		} else if(std::dynamic_pointer_cast<WallShape>(aSelectedShape))
 		{
 			popupMenu.Append( ID_DELETE_WALL, _T( "Delete wall"), _T( "ID_DELETE_WALL"));
-			Connect( ID_DELETE_WALL, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnDeleteWall));
+			Bind(wxEVT_COMMAND_MENU_SELECTED,
+				 [this](CommandEvent& anEvent){ this->OnDeleteWall(anEvent);},
+				 ID_DELETE_WALL);
 		} else
 		{
 			Application::Logger::log( "Huh?: " + aSelectedShape->asDebugString());
 		}
 
 		popupMenu.Append( ID_SHAPE_INFO, _T( "Show info"), _T( "ID_SHAPE_INFO"));
-		Connect( ID_SHAPE_INFO, wxEVT_COMMAND_MENU_SELECTED, CommandEventHandler(RobotWorldCanvas::OnShapeInfo));
+		Bind(wxEVT_COMMAND_MENU_SELECTED,
+			 [this](CommandEvent& anEvent){ this->OnShapeInfo(anEvent);},
+			 ID_SHAPE_INFO);
 
 		popupMenu.Append( wxID_ABOUT, _T( "About"), _T( "Show about dialog"));
 		PopupMenu( &popupMenu);

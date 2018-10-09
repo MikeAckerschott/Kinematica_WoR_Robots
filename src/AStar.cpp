@@ -118,7 +118,7 @@ namespace PathAlgorithm
 		getCS().clear();
 		getPM().clear();
 
-		int radius = std::ceil(std::sqrt( (aRobotSize.x / 2.0) * (aRobotSize.x / 2.0) + (aRobotSize.y / 2.0) * (aRobotSize.y / 2.0)));
+		int radius = static_cast<int>(std::ceil(std::sqrt( (aRobotSize.x / 2.0) * (aRobotSize.x / 2.0) + (aRobotSize.y / 2.0) * (aRobotSize.y / 2.0))));
 
 		aStart.actualCost = 0.0; 													// Cost from aStart along the best known path.
 		aStart.heuristicCost = aStart.actualCost + HeuristicCost( aStart, aGoal);	// Estimated total cost from aStart to aGoal through y.

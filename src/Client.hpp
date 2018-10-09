@@ -32,6 +32,95 @@ namespace Messaging
 			}
 			/**
 			 *
+			 *
+			 * @startuml
+			 * -> client: dispatchMessage(message)
+			 *
+			 * activate client
+			 * client -->> session
+			 * client -> session : getSocket
+			 * activate session
+			 * client <-- session : socket
+			 * deactivate session
+			 *
+			 * client -\ socket: async_connect(Client::handleConnect,session)
+			 * <-- client
+			 * deactivate client
+			 * client <- socket : handleConnect(session)
+			 * activate socket
+			 *
+			 * activate client
+			 * client -> session :start
+			 * deactivate client
+			 * deactivate socket
+			 * activate session
+			 *
+			 * == Writing the request ==
+			 *
+			 * session -> session: writeMessage(message)
+			 * activate session
+			 * session -\ socket: async_write(header,Session::handleHeaderWriten)
+			 * deactivate session
+			 * activate socket
+			 * client <-- session
+			 * deactivate session
+			 *
+			 * session <- socket : handleHeaderWriten(message,error)
+			 * deactivate socket
+			 * activate session
+			 *
+			 * session -\ socket: async_write(body,Session::handleBodyWriten)
+			 * deactivate session
+			 * activate socket
+			 *
+			 * session <- socket : handleBodyWriten(message,error)
+			 * deactivate socket
+			 * activate session
+			 *
+			 * session -> session : handleMessageWriten(message,error)
+			 * activate session
+			 * session -> session : handleMessageWritten(message)
+			 * activate session
+			 *
+			 * == Reading the response ==
+			 * session -> session: readMessage
+			 * activate session
+			 *
+			 * session -\ socket: async_read(header,Session::handleHeaderRead)
+			 * deactivate session
+			 * activate socket
+			 * deactivate session
+			 * deactivate session
+			 * deactivate session
+			 *
+			 * session <- socket : handleHeaderRead(message,error)
+			 * deactivate socket
+			 * activate session
+			 *
+			 * session -\ socket: async_read(body,Session::handleBodyRead)
+			 * deactivate session
+			 * activate socket
+			 *
+			 * session <- socket : handleBodyRead(message,error)
+			 * deactivate socket
+			 * activate session
+			 *
+			 * session -> session : handleMessageRead(message,error)
+			 * activate session
+			 * session -> session : handleMessageRead(message)
+			 * activate session
+			 *
+			 * == Handling the response ==
+			 * session -> responseHandler: handleResponse(message)
+			 * activate responseHandler
+			 * session <-- responseHandler
+			 * deactivate responseHandler
+			 * deactivate session
+			 * deactivate session
+			 *
+			 * destroy session
+			 *
+			 * @enduml
 			 */
 			void dispatchMessage( Message& aMessage)
 			{
