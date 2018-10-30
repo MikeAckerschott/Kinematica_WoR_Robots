@@ -3,8 +3,8 @@ RobotWorld building and using (readme)
 
 Notes:
 
--   "`\`" at the and of al line, means that the actual command line continues with the next
-    line!
+-   "`\`" at the and of al line, means that the actual command line
+    continues with the next line!
 
 -   All command sequences start from the root of the project,
     `$ROBOTWORLD_ROOT` in the examples
@@ -175,3 +175,11 @@ Remarks:
 
 -   Use "`Window->Show view->Other->C/C++ index`" to find any unresolved
     header files or unresolved other C/C++ symbols.
+
+### Debugging in Eclipse (windows)
+
+-   Both Boost and wxWidgets lib directory must have been adde to the
+    PATH variable.
+
+-   Change the `C/C++ Application` launch target to `robotworld.exe` in
+    the (hidden) folder `.libs`.
