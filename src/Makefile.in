@@ -263,23 +263,36 @@ BOOST_CHRONO_LDFLAGS = @BOOST_CHRONO_LDFLAGS@
 BOOST_CHRONO_LDPATH = @BOOST_CHRONO_LDPATH@
 BOOST_CHRONO_LIBS = @BOOST_CHRONO_LIBS@
 BOOST_CPPFLAGS = @BOOST_CPPFLAGS@
+BOOST_DATE_TIME_LDFLAGS = @BOOST_DATE_TIME_LDFLAGS@
+BOOST_DATE_TIME_LDPATH = @BOOST_DATE_TIME_LDPATH@
+BOOST_DATE_TIME_LIBS = @BOOST_DATE_TIME_LIBS@
 BOOST_FILESYSTEM_LDFLAGS = @BOOST_FILESYSTEM_LDFLAGS@
 BOOST_FILESYSTEM_LDPATH = @BOOST_FILESYSTEM_LDPATH@
 BOOST_FILESYSTEM_LIBS = @BOOST_FILESYSTEM_LIBS@
 BOOST_LDFLAGS = @BOOST_LDFLAGS@
 BOOST_LDPATH = @BOOST_LDPATH@
 BOOST_LIBS = @BOOST_LIBS@
+BOOST_REGEX_LDFLAGS = @BOOST_REGEX_LDFLAGS@
+BOOST_REGEX_LDPATH = @BOOST_REGEX_LDPATH@
+BOOST_REGEX_LIBS = @BOOST_REGEX_LIBS@
 BOOST_ROOT = @BOOST_ROOT@
+BOOST_SERIALIZATION_LDFLAGS = @BOOST_SERIALIZATION_LDFLAGS@
+BOOST_SERIALIZATION_LDPATH = @BOOST_SERIALIZATION_LDPATH@
+BOOST_SERIALIZATION_LIBS = @BOOST_SERIALIZATION_LIBS@
 BOOST_SYSTEM_LDFLAGS = @BOOST_SYSTEM_LDFLAGS@
 BOOST_SYSTEM_LDPATH = @BOOST_SYSTEM_LDPATH@
 BOOST_SYSTEM_LIBS = @BOOST_SYSTEM_LIBS@
 BOOST_THREAD_LDFLAGS = @BOOST_THREAD_LDFLAGS@
 BOOST_THREAD_LDPATH = @BOOST_THREAD_LDPATH@
 BOOST_THREAD_LIBS = @BOOST_THREAD_LIBS@
+BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS = @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
+BOOST_UNIT_TEST_FRAMEWORK_LDPATH = @BOOST_UNIT_TEST_FRAMEWORK_LDPATH@
+BOOST_UNIT_TEST_FRAMEWORK_LIBS = @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
+CPPCHECK = @CPPCHECK@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
@@ -400,6 +413,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -605,22 +619,25 @@ $(am__depfiles_remade):
 am--depfiles: $(am__depfiles_remade)
 
 .cpp.o:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ $<
 
 .cpp.obj:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 .cpp.lo:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+@am__fastdepCXX_TRUE@	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
