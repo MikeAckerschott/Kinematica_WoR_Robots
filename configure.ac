@@ -160,14 +160,14 @@ BOOST_TEST([$requested_version])
 # Be warned: this piece depends on the "Boost naming transition 1.68/69 hack" because of $minor_boost_version
 # and should therefor be after the "Boost naming transition 1.68/69 hack"!  
 
-# According to the Boost src-ditribution, the Jamroot file, system installed libaries do not encode anything in 
+# According to the Boost src-distribution, the Jamroot file, system installed libaries do not encode anything in 
 # the file name
 
-# If Boost is installed as system library, BOOST_LDFLAGS is empty
+# If Boost is installed as system library, BOOST_CPPFLAGS is empty
 # See https://lists.gnu.org/archive/html/autoconf/2003-04/msg00103.html for the AC_DEFINE solution
 # and why "AC_DEFINE(BOOST_TIMER_LIBS" does not work...  
 AC_DEFINE(BOOST_TIMER_LIBS,"","")
-if test -z $BOOST_LDFLAGS; then 
+if test -z $BOOST_CPPFLAGS; then 
     BOOST_TIMER_LIBS="-lboost_timer" 
 else	
 	if test $minor_boost_version -gt "68"; then 
