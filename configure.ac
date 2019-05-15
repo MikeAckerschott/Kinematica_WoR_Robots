@@ -92,6 +92,20 @@ case $host in
 	;;
 esac
 
+#########################################################################################################
+#		Generic headers
+#########################################################################################################
+# Check for headers
+
+AC_HEADER_STDC
+
+# Check for typedefs, structures and compiler chracteristics
+# Empty for now
+
+# Check for library functions
+# Empty for now
+
+
 # Check for libraries
 
 #########################################################################################################
@@ -337,16 +351,9 @@ case $host in
 esac
 AC_SUBST([ROBOTWORLD_LDFLAGS])
 
-# Check for headers
-
-AC_HEADER_STDC
-
-# Check for typedefs, structures and compiler chracteristics
-
-# Check for library functions
-
 #########################################################################################################
-
+#		General AM stuff
+#########################################################################################################
 AM_CPPFLAGS=
 AM_CFLAGS=
 AM_CXXFLAGS=
@@ -384,8 +391,8 @@ enable_development=$enableval,
 enable_development=$development_default)
 if test "$enable_development" = "yes"; then
 	AM_CPPFLAGS="$AM_CPPFLAGS -DDEVELOPMENT"
-	AM_CFLAGS="$AM_CFLAGS -O0 -p -pg -g3 -Wall -Wextra -Wconversion"
-	AM_CXXFLAGS="$AM_CXXFLAGS -O0 -p -pg -g3 -Wall -Wextra -Wconversion"
+	AM_CFLAGS="$AM_CFLAGS -Og -p -pg -g3 -Wall -Wextra -Wconversion"
+	AM_CXXFLAGS="$AM_CXXFLAGS -Og -p -pg -g3 -Wall -Wextra -Wconversion"
 	AC_MSG_RESULT(Enabling development tracing)
 else
 	AM_CPPFLAGS="$AM_CPPFLAGS -DPRODUCTION"
