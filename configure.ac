@@ -213,7 +213,8 @@ BOOST_LDFLAGS+="$BOOST_FILESYSTEM_LDFLAGS "
 BOOST_LDFLAGS+="$BOOST_CHRONO_LDFLAGS"
 # using tr, split string on ' ', sort unique (because multiple libraries are mentioned multiple times) and, 
 # using tr, resplit (i.e. concatinate) again on '\n'
-BOOST_LDFLAGS=$(echo $BOOST_LDFLAGS | tr ' ' '\n' | sort -u | tr '\n' ' ')
+# the grep is due to a boost.M4 problem that generates spurious stuff
+BOOST_LDFLAGS=$(echo $BOOST_LDFLAGS | tr ' ' '\n' | sort -u | grep -oh "\w*-[[[:print:]]]*\w*" | tr '\n' ' ')
 AC_SUBST([BOOST_LDFLAGS])
 
 AC_CANONICAL_HOST
