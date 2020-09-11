@@ -14,7 +14,7 @@
 
 # If you change anything: tabs and spaces matter. Google it....
 
-AC_INIT([robotworld],[0.1.0],[J.Kraaijeveld@askesis.nl],[robotworld-0.1.0])
+AC_INIT([robotworld],[0.2.0],[J.Kraaijeveld@askesis.nl],[robotworld-0.2.0])
 AC_CONFIG_AUX_DIR(.)
 AM_INIT_AUTOMAKE([subdir-objects])
 AC_CONFIG_MACRO_DIR(./m4)
@@ -40,7 +40,7 @@ AC_LANG([C++])
 #########################################################################################################
 #                     --with-cxx=11|14|17 (mandatory option, so check it first)
 #########################################################################################################
-AC_ARG_WITH(cxx,           [  --with-cxx=11|14|17     (mandatory) use the given C++ dialect], [WITH_CXX="$withval"])
+AC_ARG_WITH(cxx,           [  --with-cxx=11|14|17|20     (mandatory) use the given C++ dialect], [WITH_CXX="$withval"])
 
 if test -n "$WITH_CXX"; then
    case "$WITH_CXX" in
@@ -52,9 +52,12 @@ if test -n "$WITH_CXX"; then
             ;;
         17)
 			ROBOTWORLD_STD_CXX="17"
+			;;
+        20)
+			ROBOTWORLD_STD_CXX="2a"
             ;;
         *)
-            AC_MSG_ERROR([Invalid --with-cxx="$WITH_CXX" option value, only 11, 14 or 17 supported])
+            AC_MSG_ERROR([Invalid --with-cxx="$WITH_CXX" option value, only 11, 14, 17 or 20 are supported])
     esac
 	ROBOTWORLD_STD_CXX="-std=gnu++"$WITH_CXX
 else
@@ -62,7 +65,7 @@ else
 fi
 # The next macro is functional more or less equivalent to the stuff above but
 # for didactical purposes we enforce a manual setting of the C++-version
-# AX_CXX_COMPILE_STDCXX(17, ext)
+# AX_CXX_COMPILE_STDCXX(2a, ext)
 
 AC_CHECK_PROGS([CPPCHECK], [cppcheck], [yes])
 if test -z "$CPPCHECK"; then
@@ -246,7 +249,7 @@ LDFLAGS=""
 #########################################################################################################
 
 AM_OPTIONS_WXCONFIG
-AM_PATH_WXCONFIG(3.0.2, wxWin=1, , ,[--debug=yes])
+AM_PATH_WXCONFIG(3.1.2, wxWin=1, , ,[--debug=yes])
 if test "$wxWin" != 1; then
 	AC_MSG_ERROR([
 				wxWidgets must be installed on your system
