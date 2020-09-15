@@ -134,7 +134,7 @@ BOOST_REQUIRE([1.60])
 
 # If Boost is installed as system library, BOOST_CPPFLAGS is empty
 if test -z $BOOST_CPPFLAGS; then 
-    VERSION_HPP_PATH=/usr/include
+    VERSION_HPP_PATH=/usr/local/include
 else
 	VERSION_HPP_PATH=${BOOST_CPPFLAGS:2} # strip the -I    
 fi
