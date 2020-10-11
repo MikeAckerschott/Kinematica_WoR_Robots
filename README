@@ -125,7 +125,7 @@ a project in Eclipse.
     "`C++ Managed Build`" and click "`Next`"(do not use the CMake or
     other *make* projects).
 
-2.  In the next step ("`Create C++ project of selected type`"\*) doe the
+2.  In the next step ("`Create C++ project of selected type`"\*) do the
     following:
 
     a.  Give the project a name
