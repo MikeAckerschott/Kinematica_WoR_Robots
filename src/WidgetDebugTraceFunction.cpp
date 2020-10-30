@@ -20,7 +20,7 @@ namespace Application
 		CommandEvent event( Application::ROBOTWORLD_TRACE_EVENT);
 		event.SetString( WXSTRING( aText));
 
-		// TODO: should we decide this runtime?
+		// TODO: Should we decide this runtime?
 
 		// If we need synchronous handling of the trace to prevent loosing
 		// messages in case of a crash we must use ProcessEvent. It will

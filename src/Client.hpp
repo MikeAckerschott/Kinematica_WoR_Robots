@@ -141,7 +141,7 @@ namespace Messaging
 			 *
 			 */
 			void handleConnect( ClientSession* aSession,
-								const boost::system::error_code& error)
+								const boost::system::error_code& error) const
 			{
 				if (!error)
 				{

@@ -19,7 +19,7 @@ namespace View
 			/**
 			 *
 			 */
-			GoalShape( Model::GoalPtr aGoal);
+			explicit GoalShape( Model::GoalPtr aGoal);
 			/**
 			 *
 			 */
@@ -40,21 +40,21 @@ namespace View
 			/**
 			 *
 			 */
-			virtual std::string getNormalColour() const
+			virtual std::string getNormalColour() const override
 			{
 				return "GREEN";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getSelectionColour() const
+			virtual std::string getSelectionColour() const override
 			{
 				return "BLUE";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getActivationColour() const
+			virtual std::string getActivationColour() const override
 			{
 				return "BLACK";
 			}
@@ -67,7 +67,7 @@ namespace View
 			 * A Notifier will call this function if this Observer will handle the notifications of that
 			 * Notifier. It is the responsibility of the Observer to filter any events it is interested in.
 			 */
-			virtual void handleNotification();
+			virtual void handleNotification() override;
 			//@}
 			/**
 			 * @name Debug functions
@@ -76,11 +76,11 @@ namespace View
 			/**
 			 * Returns a 1-line description of the object
 			 */
-			virtual std::string asString() const;
+			virtual std::string asString() const override;
 			/**
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
-			virtual std::string asDebugString() const;
+			virtual std::string asDebugString() const override;
 			//@}
 
 	};

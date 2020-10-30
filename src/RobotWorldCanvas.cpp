@@ -363,14 +363,12 @@ namespace View
 	 */
 	bool RobotWorldCanvas::isShapeAt( const Point& aPoint) const
 	{
-		for (ShapePtr shape : shapes)
-		{
-			if (shape->occupies( aPoint))
-			{
-				return true;
-			}
-		}
-		return false;
+		return  std::any_of(shapes.begin(), 
+							shapes.end(), 
+							[&aPoint](ShapePtr aShape)
+							{ 
+								return aShape->occupies( aPoint);
+							});		
 	}
 	/**
 	 *

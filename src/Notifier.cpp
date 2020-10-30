@@ -1,9 +1,10 @@
 #include "Notifier.hpp"
-#include <boost/foreach.hpp>
 #include <sstream>
 #include <typeinfo>
+#include <algorithm>
 #include "Observer.hpp"
 #include "Logger.hpp"
+
 
 namespace Base
 {
@@ -44,25 +45,23 @@ namespace Base
 	/**
 	 *	The implementation of operator== uses pointer comparison!
 	 */
-	void Notifier::addObserver( Observer& aObserver)
+	void Notifier::addObserver( Observer& anObserver)
 	{
-		for (Observer* observer : observers)
+		if( std::any_of(observers.begin(), observers.end(), [&anObserver](Observer* observer){ return *observer == anObserver;}))
 		{
-			if (*observer == aObserver)
-			{
-				return;
-			}
+			return;
 		}
-		observers.push_back( &aObserver);
+
+		observers.push_back( &anObserver);
 	}
 	/**
 	 *	The implementation of operator== uses pointer comparison!
 	 */
-	void Notifier::removeObserver( Observer& aObserver)
+	void Notifier::removeObserver( Observer& anObserver)
 	{
 		for (std::vector< Observer* >::iterator i = observers.begin(); i != observers.end(); ++i)
 		{
-			if (*(*i) == aObserver)
+			if (*(*i) == anObserver)
 			{
 				observers.erase( i);
 				break;

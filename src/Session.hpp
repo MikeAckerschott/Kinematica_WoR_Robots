@@ -26,7 +26,7 @@ namespace Messaging
 			 *
 			 * @param io_service
 			 */
-			Session( boost::asio::io_service& io_service) :
+			explicit Session( boost::asio::io_service& io_service) :
 					socket( io_service)
 			{
 			}
@@ -90,7 +90,7 @@ namespace Messaging
 			{
 				if (!error)
 				{
-					aMessage.setHeader( std::string( headerBuffer.begin(), headerBuffer.end()));
+					aMessage.setHeader( Message::MessageHeader(std::string( headerBuffer.begin(), headerBuffer.end())));
 					bodyBuffer.resize( aMessage.getHeader().getMessageLength());
 					boost::asio::async_read( getSocket(),
 											 boost::asio::buffer( bodyBuffer),
@@ -240,14 +240,14 @@ namespace Messaging
 			/**
 			 * @see Session::start()
 			 */
-			virtual void start()
+			virtual void start() override
 			{
 				readMessage();
 			}
 			/**
 			 * @see Session::handleMessageRead( Message& aMessage)
 			 */
-			virtual void handleMessageRead( Message& aMessage)
+			virtual void handleMessageRead( Message& aMessage) override
 			{
 				requestHandler->handleRequest( aMessage);
 				writeMessage( aMessage);
@@ -262,7 +262,7 @@ namespace Messaging
 			/**
 			 * @see Session::handleMessageWritten( Message& aMessage)
 			 */
-			virtual void handleMessageWritten( Message& UNUSEDPARAM(aMessage))
+			virtual void handleMessageWritten( Message& UNUSEDPARAM(aMessage)) override
 			{
 				delete this;
 			}
@@ -284,7 +284,7 @@ namespace Messaging
 			 * @param io_service
 			 * @param aResponseHandler
 			 */
-			ClientSession( 	Message aMessage,
+			ClientSession( 	const Message& aMessage,
 							boost::asio::io_service& io_service,
 							ResponseHandlerPtr aResponseHandler) :
 							Session( io_service),
@@ -301,14 +301,14 @@ namespace Messaging
 			/**
 			 * @see Session::start()
 			 */
-			virtual void start()
+			virtual void start() override
 			{
 				writeMessage( message);
 			}
 			/**
 			 * @see Session::handleMessageRead( Message& aMessage)
 			 */
-			virtual void handleMessageRead( Message& aMessage)
+			virtual void handleMessageRead( Message& aMessage) override
 			{
 				// This is the place where any reply message from the server should
 				// be handled
@@ -319,7 +319,7 @@ namespace Messaging
 			/**
 			 * @see Session::handleMessageWritten( Message& aMessage)
 			 */
-			virtual void handleMessageWritten( Message& UNUSEDPARAM(aMessage))
+			virtual void handleMessageWritten( Message& UNUSEDPARAM(aMessage)) override
 			{
 				// This *must* be the last function that is called after
 				// sending a message because it will read the response...

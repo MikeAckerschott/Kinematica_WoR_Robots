@@ -31,7 +31,7 @@ namespace PathAlgorithm
 			/**
 			 *
 			 */
-			Vertex( const Point& aPoint) :
+			explicit Vertex( const Point& aPoint) :
 				x( aPoint.x),
 				y( aPoint.y),
 				actualCost( 0.0),

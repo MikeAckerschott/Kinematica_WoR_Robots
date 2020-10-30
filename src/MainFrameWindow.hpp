@@ -28,7 +28,7 @@ namespace Application
 			 *
 			 * @param aTitle The title which is shown in the title bar
 			 */
-			MainFrameWindow( const std::string& aTitle);
+			explicit MainFrameWindow( const std::string& aTitle);
 			/**
 			 *
 			 */

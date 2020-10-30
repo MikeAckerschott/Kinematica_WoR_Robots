@@ -83,7 +83,7 @@ namespace PathAlgorithm
 	 */
 	std::vector< Edge > GetNeighbourConnections(	const Vertex& aVertex,
 													int aFreeRadius /*= 1*/)
-				{
+	{
 		std::vector< Edge > connections;
 
 		const std::vector< Vertex >& neighbours = GetNeighbours( aVertex, aFreeRadius);
@@ -93,7 +93,7 @@ namespace PathAlgorithm
 		}
 
 		return connections;
-				}
+	}
 	/**
 	 *
 	 */

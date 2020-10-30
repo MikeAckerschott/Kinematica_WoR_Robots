@@ -19,9 +19,9 @@ namespace Base
 	 *
 	 */
 	bool Observer::operator==( const Observer& aObserver) const
-				{
+	{
 		return this == &aObserver;
-				}
+	}
 	/**
 	 *
 	 */

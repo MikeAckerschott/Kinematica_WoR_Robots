@@ -48,7 +48,7 @@ namespace Messaging
 					 *
 					 * @param aMessageHeaderBuffer
 					 */
-					MessageHeader(	const std::string& aMessageHeaderBuffer) :
+					explicit MessageHeader(	const std::string& aMessageHeaderBuffer) :
 									messageType( 0),
 									messageLength( 0)
 					{
@@ -135,7 +135,7 @@ namespace Messaging
 			 *
 			 * @param aMessageType
 			 */
-			Message( char aMessageType) :
+			explicit Message( char aMessageType) :
 							messageType( aMessageType)
 			{
 			}

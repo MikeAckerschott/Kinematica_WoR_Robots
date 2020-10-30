@@ -33,7 +33,7 @@ namespace View
 			/**
 			 *
 			 */
-			RobotWorldCanvas( Window* anOwner);
+			explicit RobotWorldCanvas( Window* anOwner);
 			/**
 			 *
 			 */
@@ -154,7 +154,7 @@ namespace View
 			 * Therefore all notifications are routed to handleBackGroundNotification() as a convenience.
 			 *
 			 */
-			virtual void handleNotification();
+			virtual void handleNotification() override;
 			//@}
 			/**
 			 * A Notifier that runs in a background thread should call this function instead of handleNotification().

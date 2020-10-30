@@ -19,9 +19,10 @@ namespace Application
 	 * @param anActionFunction
 	 * @return
 	 */
+	template< typename ActionFunction>
 	Button* makeButton( 	Window* aParent,
 							const std::string& aLabel,
-							const std::function< void( CommandEvent&) >& anActionFunction)
+							const ActionFunction anActionFunction)
 	{
 		Button* button = new Button( aParent, DEFAULT_ID, WXSTRING(aLabel));
 		button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, anActionFunction);

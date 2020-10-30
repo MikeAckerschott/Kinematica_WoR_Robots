@@ -22,7 +22,7 @@ namespace View
 			/**
 			 *
 			 */
-			RobotShape( Model::RobotPtr aRobot);
+			explicit RobotShape( Model::RobotPtr aRobot);
 			/**
 			 *
 			 */
@@ -43,32 +43,32 @@ namespace View
 			/**
 			 *
 			 */
-			virtual std::string getNormalColour() const
+			virtual std::string getNormalColour() const override
 			{
 				return "BLACK";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getSelectionColour() const
+			virtual std::string getSelectionColour() const override
 			{
 				return "GREY";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getActivationColour() const
+			virtual std::string getActivationColour() const override
 			{
 				return "LIGHT GREY";
 			}
 			/**
 			 * This function is called by the RobotWorldCanvas if enableActivation is set.
 			 */
-			virtual void handleActivated();
+			virtual void handleActivated() override;
 			/**
 			 * This function is called by the RobotWorldCanvas if enableSelection is set.
 			 */
-			virtual void handleSelection();
+			virtual void handleSelection() override;
 			/**
 			 * @name Observer functions
 			 */
@@ -77,7 +77,7 @@ namespace View
 			 * A Notifier will call this function if this Observer will handle the notifications of that
 			 * Notifier. It is the responsibility of the Observer to filter any events it is interested in.
 			 */
-			virtual void handleNotification();
+			virtual void handleNotification() override;
 			//@}
 			/**
 			 * @name Pure virtual abstract Shape functions
@@ -86,17 +86,17 @@ namespace View
 			/**
 			 *
 			 */
-			virtual void draw( wxDC& dc);
+			virtual void draw( wxDC& dc) override;
 			/**
 			 *
 			 * @param aPoint
 			 * @return True if the point is in the shape
 			 */
-			virtual bool occupies( const Point& aPoint) const;
+			virtual bool occupies( const Point& aPoint) const override;
 			/**
 			 *
 			 */
-			virtual void setCentre( const Point& aPoint);
+			virtual void setCentre( const Point& aPoint) override;
 			//@}
 			/**
 			 * @name Debug functions
@@ -105,11 +105,11 @@ namespace View
 			/**
 			 * Returns a 1-line description of the object
 			 */
-			virtual std::string asString() const;
+			virtual std::string asString() const override;
 			/**
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
-			virtual std::string asDebugString() const;
+			virtual std::string asDebugString() const override;
 			//@}
 
 			void setRobotWorldCanvas(RobotWorldCanvas* aRobotWorldCanvas)
