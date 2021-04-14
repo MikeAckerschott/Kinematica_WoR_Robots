@@ -15,6 +15,7 @@
 #include "Message.hpp"
 #include "MainApplication.hpp"
 #include "LaserDistanceSensor.hpp"
+#include "MessageTypes.hpp"
 
 namespace Model
 {
@@ -243,7 +244,7 @@ namespace Model
 			Messaging::Client c1ient( 	"localhost",
 										localPort,
 										toPtr<Robot>());
-			Messaging::Message message( 1, "stop");
+			Messaging::Message message( Messaging::StopCommunicatingRequest, "stop");
 			c1ient.dispatchMessage( message);
 		}
 	}
@@ -355,12 +356,20 @@ namespace Model
 	{
 		switch(aMessage.getMessageType())
 		{
-			case EchoRequest:
+			case Messaging::StopCommunicatingRequest:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": EchoRequest"));
+				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": case Messaging::StopCommunicatingRequest"));
 
-				aMessage.setMessageType(EchoResponse);
-				aMessage.setBody( ": case 1 " + aMessage.asString());
+				aMessage.setMessageType(Messaging::StopCommunicatingResponse);
+				aMessage.setBody("stop");
+				break;
+			}
+			case Messaging::EchoRequest:
+			{
+				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": case Messaging::EchoRequest"));
+
+				aMessage.setMessageType(Messaging::EchoResponse);
+				aMessage.setBody( "Messaging::EchoResponse: " + aMessage.asString());
 				break;
 			}
 			default:
@@ -379,9 +388,9 @@ namespace Model
 	{
 		switch(aMessage.getMessageType())
 		{
-			case EchoResponse:
+			case Messaging::EchoResponse:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string( ": case EchoResponse: not implemented, ") + aMessage.asString());
+				Application::Logger::log( __PRETTY_FUNCTION__ + std::string( "case Messaging::EchoResponse: ") + aMessage.asString());
 
 				break;
 			}

@@ -1,5 +1,6 @@
 #include "CommunicationService.hpp"
 #include "Server.hpp"
+#include "Logger.hpp"
 #include <iostream>
 
 namespace Messaging
@@ -49,6 +50,8 @@ namespace Messaging
 	void CommunicationService::runRequestHandlerWorker(	RequestHandlerPtr aRequestHandler,
 														unsigned short aPort)
 	{
+		Application::Logger::log( std::string("> ") + __PRETTY_FUNCTION__);
+
 		try
 		{
 			// Create the server object. This must be alive while the program runs
@@ -66,6 +69,6 @@ namespace Messaging
 		{
 			std::cerr << "Unknown exception" << std::endl;
 		}
-
+		Application::Logger::log( std::string("< ") + __PRETTY_FUNCTION__);
 	}
 } // namespace Messaging

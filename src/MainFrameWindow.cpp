@@ -14,6 +14,7 @@
 #include "Logger.hpp"
 #include "Client.hpp"
 #include "Message.hpp"
+#include "MessageTypes.hpp"
 
 namespace Application
 {
@@ -412,7 +413,7 @@ namespace Application
 			Messaging::Client c1ient( remoteIpAdres,
 									  remotePort,
 									  robot);
-			Messaging::Message message( Model::Robot::MessageType::EchoRequest, "Hello world!");
+			Messaging::Message message( Messaging::EchoRequest, "Hello world!");
 			c1ient.dispatchMessage( message);
 		}
 	}
@@ -421,10 +422,10 @@ namespace Application
 	 */
 	void MainFrameWindow::OnStopListening( CommandEvent& UNUSEDPARAM(anEvent))
 	{
-		Model::RobotPtr thijs = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
-		if (thijs)
+		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
+		if (robot)
 		{
-			thijs->stopCommunicating();
+			robot->stopCommunicating();
 		}
 	}
 } // namespace Application
