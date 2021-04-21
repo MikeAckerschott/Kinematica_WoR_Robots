@@ -3,6 +3,7 @@
 #include <string>
 #include <stdexcept>
 #include "MainApplication.hpp"
+#include "Logger.hpp"
 
 int main( 	int argc,
 			char* argv[])
@@ -16,10 +17,12 @@ int main( 	int argc,
 	}
 	catch (std::exception& e)
 	{
+		Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": ") + e.what());
 		std::cerr << __PRETTY_FUNCTION__ << ": " << e.what() << std::endl;
 	}
 	catch (...)
 	{
+		Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": unknown exception"));
 		std::cerr << __PRETTY_FUNCTION__ << ": unknown exception" << std::endl;
 	}
 	return 0;

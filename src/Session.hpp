@@ -13,6 +13,7 @@
 #include "Message.hpp"
 #include "MessageHandler.hpp"
 #include "CommunicationService.hpp"
+#include "Logger.hpp"
 
 namespace Messaging
 {
@@ -230,12 +231,14 @@ namespace Messaging
 							Session( io_service),
 							requestHandler( aRequestHandler)
 			{
+				Application::Logger::log(__PRETTY_FUNCTION__);
 			}
 			/**
 			 *
 			 */
 			~ServerSession()
 			{
+				Application::Logger::log(__PRETTY_FUNCTION__);
 			}
 			/**
 			 * @see Session::start()
@@ -249,6 +252,7 @@ namespace Messaging
 			 */
 			virtual void handleMessageRead( Message& aMessage)
 			{
+				Application::Logger::log(__PRETTY_FUNCTION__);
 				requestHandler->handleRequest( aMessage);
 				writeMessage( aMessage);
 
@@ -256,7 +260,8 @@ namespace Messaging
 				// just leave this here. Otherwise think something up yourself.
 				if (aMessage.getBody() == "stop")
 				{
-					CommunicationService::getCommunicationService().getIOService().stop();
+					stop = true;
+					//CommunicationService::getCommunicationService().getIOService().stop();
 				}
 			}
 			/**
@@ -264,11 +269,17 @@ namespace Messaging
 			 */
 			virtual void handleMessageWritten( Message& UNUSEDPARAM(aMessage))
 			{
+				Application::Logger::log(__PRETTY_FUNCTION__);
+				if(stop == true)
+				{
+					//CommunicationService::getCommunicationService().getIOService().stop();
+				}
 				delete this;
 			}
 
 		private:
 			RequestHandlerPtr  requestHandler;
+			bool stop = false;
 
 	};
 	// class ServerSession
@@ -291,12 +302,14 @@ namespace Messaging
 							message( aMessage),
 							responseHandler( aResponseHandler)
 			{
+				Application::Logger::log(__PRETTY_FUNCTION__);
 			}
 			/**
 			 *
 			 */
 			~ClientSession()
 			{
+				Application::Logger::log(__PRETTY_FUNCTION__);
 			}
 			/**
 			 * @see Session::start()
@@ -310,6 +323,7 @@ namespace Messaging
 			 */
 			virtual void handleMessageRead( Message& aMessage)
 			{
+				Application::Logger::log(__PRETTY_FUNCTION__);
 				// This is the place where any reply message from the server should
 				// be handled
 				responseHandler->handleResponse( aMessage);
@@ -321,6 +335,7 @@ namespace Messaging
 			 */
 			virtual void handleMessageWritten( Message& UNUSEDPARAM(aMessage))
 			{
+				Application::Logger::log(__PRETTY_FUNCTION__);
 				// This *must* be the last function that is called after
 				// sending a message because it will read the response...
 				readMessage();

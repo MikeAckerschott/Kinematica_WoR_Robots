@@ -4,6 +4,7 @@
 #include "Config.hpp"
 #include "Session.hpp"
 #include "CommunicationService.hpp"
+#include "Logger.hpp"
 
 namespace Messaging
 {
@@ -18,10 +19,12 @@ namespace Messaging
 			 */
 			Server( short port,
 					RequestHandlerPtr aRequestHandler) :
-						io_service( CommunicationService::getCommunicationService().getIOService()),
-						acceptor( io_service, boost::asio::ip::tcp::endpoint( boost::asio::ip::tcp::v4(), port)),
-						requestHandler( aRequestHandler)
+							io_service( CommunicationService::getCommunicationService().getIOService()),
+							acceptor( io_service, boost::asio::ip::tcp::endpoint( boost::asio::ip::tcp::v4(), port)),
+							requestHandler( aRequestHandler)
 			{
+				Application::Logger::log( __PRETTY_FUNCTION__);
+
 				// start handling incoming connections
 				handleAccept( nullptr, boost::system::error_code());
 			}
@@ -30,6 +33,7 @@ namespace Messaging
 			 */
 			~Server()
 			{
+				Application::Logger::log( __PRETTY_FUNCTION__);
 			}
 			/**
 			 *	Handle any incoming connections
@@ -41,7 +45,7 @@ namespace Messaging
 			 * server -> session : getSocket
 			 * activate session
 			 * server <-- session : socket
-			 * deactivate session
+			 * deactivate session(!error)
 			 *
 			 * server -\ acceptor : asyn_accept(socket,Server::handleAccept)
 			 * server -> session : start
@@ -66,7 +70,7 @@ namespace Messaging
 			 * activate session
 			 *
 			 * session -\ socket: async_read(body,Session::handleBodyRead)
-			 * deactivate session
+			 * deactivate session(!error)
 			 * activate socket
 			 *
 			 * session <- socket : handleBodyRead(message,error)
@@ -122,6 +126,29 @@ namespace Messaging
 			void handleAccept( 	ServerSession* aSession,
 								const boost::system::error_code& error)
 			{
+				if (aSession == nullptr)
+				{
+					if (!error)
+					{
+						Application::Logger::log( __PRETTY_FUNCTION__ + std::string( " aSession is nullptr: no error"));
+					} else
+					{
+						Application::Logger::log( __PRETTY_FUNCTION__ + std::string( " aSession is nullptr: ") + error.message());
+					}
+
+					if(acceptor.is_open())
+					{
+						Application::Logger::log( __PRETTY_FUNCTION__ + std::string( " acceptor is open"));
+						//acceptor.close();
+						//acceptor.open(acceptor.open(boost::asio::ip::tcp::v4());
+					}else
+					{
+						Application::Logger::log( __PRETTY_FUNCTION__ + std::string( " acceptor is closed"));
+					}
+				} else
+				{
+					Application::Logger::log( __PRETTY_FUNCTION__ + std::string( " aSession NO nullptr: ") + error.message());
+				}
 				if (!error)
 				{
 					// Create the session that will handle the next incoming connection
@@ -129,7 +156,10 @@ namespace Messaging
 					// Let the acceptor wait for any new incoming connections
 					// and let it call server::handle_accept on the happy occasion
 					acceptor.async_accept( session->getSocket(),
-										   boost::bind( &Server::handleAccept, this, session, boost::asio::placeholders::error));
+										   boost::bind( &Server::handleAccept,
+														this,
+														session,
+														boost::asio::placeholders::error));
 					// If there is a session, start it up....
 					if (aSession)
 					{

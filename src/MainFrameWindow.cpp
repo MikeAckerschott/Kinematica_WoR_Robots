@@ -164,26 +164,26 @@ namespace Application
 	{
 		if (!splitterWindow)
 		{
-			GridBagSizer* sizer = new GridBagSizer();
+//			GridBagSizer* sizer = new GridBagSizer();
 
 			splitterWindow = new SplitterWindow( clientPanel, DEFAULT_ID);
 
 			splitterWindow->SplitVertically( initialiseLhsPanel(), initialiseRhsPanel());
 
-			sizer->Add( 5, 5,
-						GBPosition( 0, 0));
-
-			sizer->Add( splitterWindow,
-						GBPosition( 1, 1),
-						GBSpan( 1, 1), EXPAND);
-			sizer->AddGrowableRow( 1);
-			sizer->AddGrowableCol( 1);
-
-			sizer->Add( 5, 5,
-						GBPosition( 2, 2));
-
-			splitterWindow->SetSizer( sizer);
-			sizer->SetSizeHints( splitterWindow);
+//			sizer->Add( 5, 5,
+//						GBPosition( 0, 0));
+//
+//			sizer->Add( splitterWindow,
+//						GBPosition( 1, 1),
+//						GBSpan( 1, 1), EXPAND);
+//			sizer->AddGrowableRow( 1);
+//			sizer->AddGrowableCol( 1);
+//
+//			sizer->Add( 5, 5,
+//						GBPosition( 2, 2));
+//
+//			splitterWindow->SetSizer( sizer);
+//			sizer->SetSizeHints( splitterWindow);
 
 		}
 		return splitterWindow;
@@ -204,9 +204,7 @@ namespace Application
 
 			sizer->Add( robotWorldCanvas = new View::RobotWorldCanvas( lhsPanel),
 						GBPosition( 1, 1),
-						GBSpan( 1, 1), EXPAND);
-			sizer->AddGrowableCol( 1);
-			sizer->AddGrowableRow( 1);
+						GBSpan( 1, 1)/*, EXPAND*/);
 
 			sizer->Add( 5, 5,
 						GBPosition( 2, 2),

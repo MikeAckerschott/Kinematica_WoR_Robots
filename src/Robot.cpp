@@ -359,7 +359,6 @@ namespace Model
 			case Messaging::StopCommunicatingRequest:
 			{
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": case Messaging::StopCommunicatingRequest"));
-
 				aMessage.setMessageType(Messaging::StopCommunicatingResponse);
 				aMessage.setBody("stop");
 				break;
@@ -374,9 +373,7 @@ namespace Model
 			}
 			default:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": default"));
-
-				aMessage.setBody( " default  Goodbye cruel world!");
+				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": default not implemented"));
 				break;
 			}
 		}
@@ -388,10 +385,15 @@ namespace Model
 	{
 		switch(aMessage.getMessageType())
 		{
+			case Messaging::StopCommunicatingResponse:
+			{
+				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": case Messaging::StopCommunicatingResponse"));
+				Messaging::CommunicationService::getCommunicationService().getIOService().stop();
+				break;
+			}
 			case Messaging::EchoResponse:
 			{
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string( "case Messaging::EchoResponse: ") + aMessage.asString());
-
 				break;
 			}
 			default:
@@ -475,10 +477,12 @@ namespace Model
 		}
 		catch (std::exception& e)
 		{
+			Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": ") + e.what());
 			std::cerr << __PRETTY_FUNCTION__ << ": " << e.what() << std::endl;
 		}
 		catch (...)
 		{
+			Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": unknown exception"));
 			std::cerr << __PRETTY_FUNCTION__ << ": unknown exception" << std::endl;
 		}
 	}

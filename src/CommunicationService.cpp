@@ -30,6 +30,7 @@ namespace Messaging
 											 {
 												runRequestHandlerWorker(aRequestHandler,aPort);
 											 });
+		newRequestHandlerThread.detach();
 		requestHandlerThread.swap( newRequestHandlerThread);
 	}
 	/**
@@ -54,6 +55,12 @@ namespace Messaging
 
 		try
 		{
+			if(getIOService().stopped())
+			{
+				Application::Logger::log( "Restarting the io_service");
+				getIOService().restart();
+			}
+
 			// Create the server object. This must be alive while the program runs
 			Messaging::Server server( aPort, aRequestHandler);
 
@@ -63,11 +70,13 @@ namespace Messaging
 
 		catch (std::exception& e)
 		{
-			std::cerr << e.what() << std::endl;
+			Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": ") + e.what());
+			std::cerr << __PRETTY_FUNCTION__ << ": " << e.what() << std::endl;
 		}
 		catch (...)
 		{
-			std::cerr << "Unknown exception" << std::endl;
+			Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": unknown exception"));
+			std::cerr << __PRETTY_FUNCTION__ << ": unknown exception" << std::endl;
 		}
 		Application::Logger::log( std::string("< ") + __PRETTY_FUNCTION__);
 	}
