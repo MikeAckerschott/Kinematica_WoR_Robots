@@ -231,14 +231,12 @@ namespace Messaging
 							Session( io_service),
 							requestHandler( aRequestHandler)
 			{
-				Application::Logger::log(__PRETTY_FUNCTION__);
 			}
 			/**
 			 *
 			 */
 			~ServerSession()
 			{
-				Application::Logger::log(__PRETTY_FUNCTION__);
 			}
 			/**
 			 * @see Session::start()
@@ -252,7 +250,6 @@ namespace Messaging
 			 */
 			virtual void handleMessageRead( Message& aMessage)
 			{
-				Application::Logger::log(__PRETTY_FUNCTION__);
 				requestHandler->handleRequest( aMessage);
 				writeMessage( aMessage);
 
@@ -261,7 +258,6 @@ namespace Messaging
 				if (aMessage.getBody() == "stop")
 				{
 					stop = true;
-					//CommunicationService::getCommunicationService().getIOService().stop();
 				}
 			}
 			/**
@@ -269,11 +265,6 @@ namespace Messaging
 			 */
 			virtual void handleMessageWritten( Message& UNUSEDPARAM(aMessage))
 			{
-				Application::Logger::log(__PRETTY_FUNCTION__);
-				if(stop == true)
-				{
-					//CommunicationService::getCommunicationService().getIOService().stop();
-				}
 				delete this;
 			}
 
@@ -302,14 +293,12 @@ namespace Messaging
 							message( aMessage),
 							responseHandler( aResponseHandler)
 			{
-				Application::Logger::log(__PRETTY_FUNCTION__);
 			}
 			/**
 			 *
 			 */
 			~ClientSession()
 			{
-				Application::Logger::log(__PRETTY_FUNCTION__);
 			}
 			/**
 			 * @see Session::start()
@@ -323,7 +312,6 @@ namespace Messaging
 			 */
 			virtual void handleMessageRead( Message& aMessage)
 			{
-				Application::Logger::log(__PRETTY_FUNCTION__);
 				// This is the place where any reply message from the server should
 				// be handled
 				responseHandler->handleResponse( aMessage);
@@ -335,7 +323,6 @@ namespace Messaging
 			 */
 			virtual void handleMessageWritten( Message& UNUSEDPARAM(aMessage))
 			{
-				Application::Logger::log(__PRETTY_FUNCTION__);
 				// This *must* be the last function that is called after
 				// sending a message because it will read the response...
 				readMessage();

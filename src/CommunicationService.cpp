@@ -58,13 +58,10 @@ namespace Messaging
 	void CommunicationService::runRequestHandlerWorker(	RequestHandlerPtr aRequestHandler,
 														unsigned short aPort)
 	{
-		Application::Logger::log( std::string("> ") + __PRETTY_FUNCTION__);
-
 		try
 		{
 			if(io_service.stopped())
 			{
-				Application::Logger::log( "Restarting the io_service");
 				io_service.restart();
 			}
 
@@ -85,7 +82,5 @@ namespace Messaging
 			Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": unknown exception"));
 			std::cerr << __PRETTY_FUNCTION__ << ": unknown exception" << std::endl;
 		}
-		Application::Logger::log( std::string("< ") + __PRETTY_FUNCTION__);
-
 	}
 } // namespace Messaging

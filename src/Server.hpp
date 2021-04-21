@@ -24,8 +24,6 @@ namespace Messaging
 							stopping(false),
 							requestHandler( aRequestHandler)
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__);
-
 				// start handling incoming connections
 				handleAccept( nullptr, boost::system::error_code());
 			}
@@ -34,7 +32,6 @@ namespace Messaging
 			 */
 			~Server()
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__);
 			}
 			/**
 			 *	Handle any incoming connections
@@ -46,7 +43,7 @@ namespace Messaging
 			 * server -> session : getSocket
 			 * activate session
 			 * server <-- session : socket
-			 * deactivate session(!error)
+			 * deactivate session
 			 *
 			 * server -\ acceptor : asyn_accept(socket,Server::handleAccept)
 			 * server -> session : start
@@ -71,7 +68,7 @@ namespace Messaging
 			 * activate session
 			 *
 			 * session -\ socket: async_read(body,Session::handleBodyRead)
-			 * deactivate session(!error)
+			 * deactivate session
 			 * activate socket
 			 *
 			 * session <- socket : handleBodyRead(message,error)
