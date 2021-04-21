@@ -36,7 +36,14 @@ namespace Messaging
 	/**
 	 *
 	 */
-	CommunicationService::CommunicationService()
+	void CommunicationService::stop()
+	{
+		server->stop();
+	}
+	/**
+	 *
+	 */
+	CommunicationService::CommunicationService() : server(nullptr)
 	{
 	}
 	/**
@@ -55,19 +62,19 @@ namespace Messaging
 
 		try
 		{
-			if(getIOService().stopped())
+			if(io_service.stopped())
 			{
 				Application::Logger::log( "Restarting the io_service");
-				getIOService().restart();
+				io_service.restart();
 			}
 
-			// Create the server object. This must be alive while the program runs
-			Messaging::Server server( aPort, aRequestHandler);
+			// Create the server object. This must be alive while the program communicates
+			Messaging::Server theServer( aPort, aRequestHandler);
+			server = &theServer;
 
 			// Run the service until further notice
-			getIOService().run();
+			io_service.run();
 		}
-
 		catch (std::exception& e)
 		{
 			Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": ") + e.what());
@@ -79,5 +86,6 @@ namespace Messaging
 			std::cerr << __PRETTY_FUNCTION__ << ": unknown exception" << std::endl;
 		}
 		Application::Logger::log( std::string("< ") + __PRETTY_FUNCTION__);
+
 	}
 } // namespace Messaging

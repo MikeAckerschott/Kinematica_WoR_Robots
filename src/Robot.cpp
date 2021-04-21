@@ -388,7 +388,7 @@ namespace Model
 			case Messaging::StopCommunicatingResponse:
 			{
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": case Messaging::StopCommunicatingResponse"));
-				Messaging::CommunicationService::getCommunicationService().getIOService().stop();
+				Messaging::CommunicationService::getCommunicationService().stop();
 				break;
 			}
 			case Messaging::EchoResponse:
