@@ -14,6 +14,7 @@
 #include "Logger.hpp"
 #include "Client.hpp"
 #include "Message.hpp"
+#include "MessageTypes.hpp"
 
 namespace Application
 {
@@ -183,7 +184,6 @@ namespace Application
 
 			splitterWindow->SetSizer( sizer);
 			sizer->SetSizeHints( splitterWindow);
-
 		}
 		return splitterWindow;
 	}
@@ -203,9 +203,7 @@ namespace Application
 
 			sizer->Add( robotWorldCanvas = new View::RobotWorldCanvas( lhsPanel),
 						GBPosition( 1, 1),
-						GBSpan( 1, 1), EXPAND);
-			sizer->AddGrowableCol( 1);
-			sizer->AddGrowableRow( 1);
+						GBSpan( 1, 1)/*, EXPAND*/);
 
 			sizer->Add( 5, 5,
 						GBPosition( 2, 2),
@@ -412,7 +410,7 @@ namespace Application
 			Messaging::Client c1ient( remoteIpAdres,
 									  remotePort,
 									  robot);
-			Messaging::Message message( Model::Robot::MessageType::EchoRequest, "Hello world!");
+			Messaging::Message message( Messaging::EchoRequest, "Hello world!");
 			c1ient.dispatchMessage( message);
 		}
 	}
@@ -421,10 +419,10 @@ namespace Application
 	 */
 	void MainFrameWindow::OnStopListening( CommandEvent& UNUSEDPARAM(anEvent))
 	{
-		Model::RobotPtr thijs = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
-		if (thijs)
+		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
+		if (robot)
 		{
-			thijs->stopCommunicating();
+			robot->stopCommunicating();
 		}
 	}
 } // namespace Application
