@@ -10,6 +10,10 @@
 
 namespace Messaging
 {
+	/**
+	 *
+	 */
+	class Server;
 	/*
 	 *
 	 */
@@ -30,17 +34,21 @@ namespace Messaging
 			 * returns. In the limited context of RobotWorld this is done by sending a "stop"-message.
 			 * @see ServerSession::handleMessageRead( Message& aMessage) for the implementation.
 			 */
-			void runRequestHandler(	RequestHandlerPtr aRequestHandler,
+			void runRequestHandler( RequestHandlerPtr aRequestHandler,
 									unsigned short aPort = 12345);
 			/**
 			 * Uses std::stoi for string to *int* conversion. Throws the exceptions that std::stoi may throw.
 			 * If int > max short you lose...
 			 */
-			void runRequestHandler(	RequestHandlerPtr aRequestHandler,
+			void runRequestHandler( RequestHandlerPtr aRequestHandler,
 									const std::string& aPort)
 			{
-				runRequestHandler(aRequestHandler,static_cast<unsigned short>(std::stoi(aPort)));
+				runRequestHandler( aRequestHandler, static_cast< unsigned short >( std::stoi( aPort)));
 			}
+			/**
+			 *
+			 */
+			void stop();
 		private:
 			/**
 			 *
@@ -62,9 +70,13 @@ namespace Messaging
 			/**
 			 *
 			 */
+			Server* server;
+			/**
+			 *
+			 */
 			boost::asio::io_service io_service;
 	};
-	// class CommunicationService
-} // namespace Messaging
+// class CommunicationService
+}// namespace Messaging
 
 #endif // COMMUNICATIONSERVICE_HPP_

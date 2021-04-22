@@ -1,5 +1,1 @@
-robotworld-MathUtils.o: ../MathUtils.cpp /usr/include/stdc-predef.h \
- ../MathUtils.hpp ../Config.hpp
-/usr/include/stdc-predef.h:
-../MathUtils.hpp:
-../Config.hpp:
+# dummy

@@ -1,5 +1,6 @@
 #include "CommunicationService.hpp"
 #include "Server.hpp"
+#include "Logger.hpp"
 #include <iostream>
 
 namespace Messaging
@@ -29,12 +30,20 @@ namespace Messaging
 											 {
 												runRequestHandlerWorker(aRequestHandler,aPort);
 											 });
+		newRequestHandlerThread.detach();
 		requestHandlerThread.swap( newRequestHandlerThread);
 	}
 	/**
 	 *
 	 */
-	CommunicationService::CommunicationService()
+	void CommunicationService::stop()
+	{
+		server->stop();
+	}
+	/**
+	 *
+	 */
+	CommunicationService::CommunicationService() : server(nullptr)
 	{
 	}
 	/**
@@ -51,21 +60,27 @@ namespace Messaging
 	{
 		try
 		{
-			// Create the server object. This must be alive while the program runs
-			Messaging::Server server( aPort, aRequestHandler);
+			if(io_service.stopped())
+			{
+				io_service.restart();
+			}
+
+			// Create the server object. This must be alive while the program communicates
+			Messaging::Server theServer( aPort, aRequestHandler);
+			server = &theServer;
 
 			// Run the service until further notice
-			getIOService().run();
+			io_service.run();
 		}
-
 		catch (std::exception& e)
 		{
-			std::cerr << e.what() << std::endl;
+			Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": ") + e.what());
+			std::cerr << __PRETTY_FUNCTION__ << ": " << e.what() << std::endl;
 		}
 		catch (...)
 		{
-			std::cerr << "Unknown exception" << std::endl;
+			Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": unknown exception"));
+			std::cerr << __PRETTY_FUNCTION__ << ": unknown exception" << std::endl;
 		}
-
 	}
 } // namespace Messaging

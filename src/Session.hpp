@@ -13,6 +13,7 @@
 #include "Message.hpp"
 #include "MessageHandler.hpp"
 #include "CommunicationService.hpp"
+#include "Logger.hpp"
 
 namespace Messaging
 {
@@ -256,7 +257,7 @@ namespace Messaging
 				// just leave this here. Otherwise think something up yourself.
 				if (aMessage.getBody() == "stop")
 				{
-					CommunicationService::getCommunicationService().getIOService().stop();
+					stop = true;
 				}
 			}
 			/**
@@ -269,6 +270,7 @@ namespace Messaging
 
 		private:
 			RequestHandlerPtr  requestHandler;
+			bool stop = false;
 
 	};
 	// class ServerSession

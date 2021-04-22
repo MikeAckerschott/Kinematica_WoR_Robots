@@ -4,6 +4,7 @@
 #include "Config.hpp"
 #include "Session.hpp"
 #include "CommunicationService.hpp"
+#include "Logger.hpp"
 
 namespace Messaging
 {
@@ -18,9 +19,10 @@ namespace Messaging
 			 */
 			Server( short port,
 					RequestHandlerPtr aRequestHandler) :
-						io_service( CommunicationService::getCommunicationService().getIOService()),
-						acceptor( io_service, boost::asio::ip::tcp::endpoint( boost::asio::ip::tcp::v4(), port)),
-						requestHandler( aRequestHandler)
+							io_service( CommunicationService::getCommunicationService().getIOService()),
+							acceptor( io_service, boost::asio::ip::tcp::endpoint( boost::asio::ip::tcp::v4(), port)),
+							stopping(false),
+							requestHandler( aRequestHandler)
 			{
 				// start handling incoming connections
 				handleAccept( nullptr, boost::system::error_code());
@@ -122,24 +124,47 @@ namespace Messaging
 			void handleAccept( 	ServerSession* aSession,
 								const boost::system::error_code& error)
 			{
-				if (!error)
+				try
 				{
-					// Create the session that will handle the next incoming connection
-					ServerSession* session = new ServerSession( io_service, requestHandler);
-					// Let the acceptor wait for any new incoming connections
-					// and let it call server::handle_accept on the happy occasion
-					acceptor.async_accept( session->getSocket(),
-										   boost::bind( &Server::handleAccept, this, session, boost::asio::placeholders::error));
-					// If there is a session, start it up....
-					if (aSession)
+					if (!error)
 					{
-						aSession->start();
+						// Create the session that will handle the next incoming connection
+						ServerSession* session = new ServerSession( io_service, requestHandler);
+						// Let the acceptor wait for any new incoming connections
+						// and let it call server::handle_accept on the happy occasion
+						acceptor.async_accept( session->getSocket(),
+										boost::bind( &Server::handleAccept,
+														this,
+														session,
+														boost::asio::placeholders::error));
+						// If there is a session, start it up....
+						if (aSession)
+						{
+							aSession->start();
+						}
+					} else
+					{
+						delete aSession;
+						throw std::runtime_error( __PRETTY_FUNCTION__ + std::string( ": ") + error.message());
 					}
-				} else
-				{
-					delete aSession;
-					throw std::runtime_error( __PRETTY_FUNCTION__ + std::string( ": ") + error.message());
 				}
+				catch (std::exception& e)
+				{
+					// acceptor.async_accept throws an exception when cancelled during stopping the server
+					if(!stopping)
+					{
+						Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": ") + e.what());
+						std::cerr << __PRETTY_FUNCTION__ << ": " << e.what() << std::endl;
+					}
+				}
+			}
+			/**
+			 *
+			 */
+			void stop()
+			{
+				stopping = true;
+				acceptor.close();
 			}
 		private:
 			// Provides core I/O functionality
@@ -148,6 +173,10 @@ namespace Messaging
 			// Provides the ability to accept new connections
 			// @see http://www.boost.org/doc/libs/1_40_0/doc/html/boost_asio/reference/basic_socket_acceptor
 			boost::asio::ip::tcp::acceptor acceptor;
+			/**
+			 *
+			 */
+			bool stopping;
 			/**
 			 *
 			 */
