@@ -536,6 +536,18 @@ namespace Model
 				return true;
 			}
 		}
+		const std::vector< RobotPtr >& robots = RobotWorld::getRobotWorld().getRobots();
+		for (RobotPtr robot : robots)
+		{
+			if ( getObjectId() == robot->getObjectId())
+			{
+				continue;
+			}
+			if(intersects(robot->getRegion()))
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 
