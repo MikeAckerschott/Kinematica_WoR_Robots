@@ -239,16 +239,6 @@ namespace Model
 			virtual std::string asDebugString() const;
 			//@}
 
-			/**
-			 * @name The types of messages a Robot should understand
-			 */
-			//@{
-			enum MessageType
-			{
-				EchoRequest,
-				EchoResponse
-			};
-
 		protected:
 			/**
 			 *
