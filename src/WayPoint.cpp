@@ -1,6 +1,8 @@
 #include "WayPoint.hpp"
-#include <sstream>
+
 #include "Logger.hpp"
+
+#include <sstream>
 
 namespace Model
 {

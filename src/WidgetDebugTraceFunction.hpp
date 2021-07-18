@@ -2,8 +2,9 @@
 #define WIDGETDEBUGTRACEFUNCTION_HPP_
 
 #include "Config.hpp"
-#include "Widgets.hpp"
+
 #include "DebugTraceFunction.hpp"
+#include "Widgets.hpp"
 
 namespace Application
 {

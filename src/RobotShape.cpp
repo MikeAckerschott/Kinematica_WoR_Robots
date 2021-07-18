@@ -1,12 +1,14 @@
 #include "RobotShape.hpp"
-#include <cmath>
-#include "Notifier.hpp"
-#include "Robot.hpp"
+
 #include "Goal.hpp"
 #include "Logger.hpp"
-#include "RobotWorldCanvas.hpp"
+#include "Notifier.hpp"
+#include "Robot.hpp"
 #include "RobotWorld.hpp"
+#include "RobotWorldCanvas.hpp"
 #include "Shape2DUtils.hpp"
+
+#include <cmath>
 
 namespace View
 {

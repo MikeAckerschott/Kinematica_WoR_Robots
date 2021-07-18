@@ -1,21 +1,23 @@
 #include "Robot.hpp"
-#include <sstream>
-#include <ctime>
-#include <chrono>
-#include <thread>
-#include "MathUtils.hpp"
-#include "Logger.hpp"
+
+#include "Client.hpp"
+#include "CommunicationService.hpp"
 #include "Goal.hpp"
-#include "WayPoint.hpp"
-#include "Wall.hpp"
+#include "LaserDistanceSensor.hpp"
+#include "Logger.hpp"
+#include "MainApplication.hpp"
+#include "MathUtils.hpp"
+#include "Message.hpp"
+#include "MessageTypes.hpp"
 #include "RobotWorld.hpp"
 #include "Shape2DUtils.hpp"
-#include "CommunicationService.hpp"
-#include "Client.hpp"
-#include "Message.hpp"
-#include "MainApplication.hpp"
-#include "LaserDistanceSensor.hpp"
-#include "MessageTypes.hpp"
+#include "Wall.hpp"
+#include "WayPoint.hpp"
+
+#include <chrono>
+#include <ctime>
+#include <sstream>
+#include <thread>
 
 namespace Model
 {

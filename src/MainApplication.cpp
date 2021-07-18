@@ -1,9 +1,12 @@
 #include "MainApplication.hpp"
+
+#include "MainFrameWindow.hpp"
+#include "ObjectId.hpp"
+
 #include <stdexcept>
 #include <algorithm>
 #include <cstring>
-#include "MainFrameWindow.hpp"
-#include "ObjectId.hpp"
+
 
 namespace Application
 {

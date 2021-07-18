@@ -2,9 +2,11 @@
 #define ROBOTWORLD_HPP_
 
 #include "Config.hpp"
-#include <vector>
+
 #include "ModelObject.hpp"
 #include "Point.hpp"
+
+#include <vector>
 
 namespace Model
 {

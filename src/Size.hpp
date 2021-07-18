@@ -7,6 +7,7 @@
  *
  * Author: jkr
  */
+#include "Config.hpp"
 
 #include <wx/gdicmn.h>
 

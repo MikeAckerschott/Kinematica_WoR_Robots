@@ -1,6 +1,8 @@
 #include "CommunicationService.hpp"
-#include "Server.hpp"
+
 #include "Logger.hpp"
+#include "Server.hpp"
+
 #include <iostream>
 
 namespace Messaging

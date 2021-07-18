@@ -3,7 +3,9 @@
 
 #include "Config.hpp"
 
-#include <string>
+#include "Point.hpp"
+#include "Size.hpp"
+#include "Region.hpp"
 
 #include <wx/app.h>
 #include <wx/dc.h>
@@ -33,9 +35,7 @@
 #include <wx/validate.h>
 #include <wx/generic/textdlgg.h>
 
-#include "Point.hpp"
-#include "Size.hpp"
-#include "Region.hpp"
+#include <string>
 
 namespace Widgets
 {

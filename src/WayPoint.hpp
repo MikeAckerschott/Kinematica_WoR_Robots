@@ -2,6 +2,7 @@
 #define WAYPOINT_HPP_
 
 #include "Config.hpp"
+
 #include "ModelObject.hpp"
 #include "Point.hpp"
 #include "Size.hpp"

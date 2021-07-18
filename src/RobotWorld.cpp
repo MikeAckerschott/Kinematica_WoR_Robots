@@ -1,9 +1,11 @@
 #include "RobotWorld.hpp"
+
+#include "Goal.hpp"
 #include "Logger.hpp"
 #include "Robot.hpp"
-#include "WayPoint.hpp"
-#include "Goal.hpp"
 #include "Wall.hpp"
+#include "WayPoint.hpp"
+
 #include <algorithm>
 
 namespace Model

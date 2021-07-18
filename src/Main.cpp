@@ -1,9 +1,11 @@
 #include "Config.hpp"
+
+#include "MainApplication.hpp"
+#include "Logger.hpp"
+
 #include <iostream>
 #include <string>
 #include <stdexcept>
-#include "MainApplication.hpp"
-#include "Logger.hpp"
 
 int main( 	int argc,
 			char* argv[])

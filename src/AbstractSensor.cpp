@@ -1,4 +1,5 @@
 #include "AbstractSensor.hpp"
+
 #include "AbstractAgent.hpp"
 #include "Logger.hpp"
 

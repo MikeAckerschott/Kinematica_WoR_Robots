@@ -2,9 +2,10 @@
 #define LOGTEXTCTRL_HPP_
 
 #include "Config.hpp"
-#include "Widgets.hpp"
+
 #include "Point.hpp"
 #include "Size.hpp"
+#include "Widgets.hpp"
 
 namespace Application
 {

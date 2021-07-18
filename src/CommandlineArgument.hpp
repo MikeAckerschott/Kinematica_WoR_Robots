@@ -22,8 +22,8 @@ namespace Application
 				argumentNumber( std::numeric_limits<unsigned long>::max()),
 				variable(),
 				value()
-		{
-		}
+			{
+			}
 			/**
 			 *
 			 * @param anArgumentNumber
