@@ -1,7 +1,7 @@
 #ifndef CONFIG_HPP_
 #define CONFIG_HPP_
 
-#ifdef __MINGW32__
+#ifdef __MINGW32__ // This is also defined for mingw64...
 
 // Disable some warnings in Boost
 #pragma GCC diagnostic ignored "-Wattributes"
@@ -14,11 +14,6 @@
 #define WIN32_LEAN_AND_MEAN
 
 # include <_mingw.h>
-# ifdef __MINGW64_VERSION_MAJOR
-	/* This is a mingw-w64 header-set.  */
-# else
-	/* This is a mingw.org header-set.  */
-# endif
 
 #endif
 

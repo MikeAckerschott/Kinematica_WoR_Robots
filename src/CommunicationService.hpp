@@ -5,7 +5,6 @@
 
 #include <boost/asio.hpp>
 
-#include "Thread.hpp"
 #include "MessageHandler.hpp"
 
 namespace Messaging
@@ -38,7 +37,7 @@ namespace Messaging
 									unsigned short aPort = 12345);
 			/**
 			 * Uses std::stoi for string to *int* conversion. Throws the exceptions that std::stoi may throw.
-			 * If int > max short you lose...
+			 * If value of int > max short you lose...
 			 */
 			void runRequestHandler( RequestHandlerPtr aRequestHandler,
 									const std::string& aPort)

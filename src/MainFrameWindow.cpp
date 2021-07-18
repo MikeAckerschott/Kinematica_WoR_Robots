@@ -10,7 +10,6 @@
 #include "Robot.hpp"
 #include "Shape2DUtils.hpp"
 #include <iostream>
-#include "Thread.hpp"
 #include "Logger.hpp"
 #include "Client.hpp"
 #include "Message.hpp"
