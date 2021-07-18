@@ -2,7 +2,7 @@
 #include <sstream>
 #include <ctime>
 #include <chrono>
-#include "Thread.hpp"
+#include <thread>
 #include "MathUtils.hpp"
 #include "Logger.hpp"
 #include "Goal.hpp"
