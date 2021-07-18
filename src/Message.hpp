@@ -65,7 +65,7 @@ namespace Messaging
 						return os.str();
 					}
 					/**
-					 * Stores a ASCII representaion of a message header into this header
+					 * Stores a ASCII representation of a message header into this header
 					 *
 					 * @param aString
 					 */

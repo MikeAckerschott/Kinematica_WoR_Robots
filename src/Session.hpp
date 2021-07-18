@@ -265,6 +265,7 @@ namespace Messaging
 			 */
 			virtual void handleMessageWritten( Message& UNUSEDPARAM(aMessage)) override
 			{
+				// See https://isocpp.org/wiki/faq/freestore-mgmt#delete-this
 				delete this;
 			}
 
@@ -316,6 +317,7 @@ namespace Messaging
 				// be handled
 				responseHandler->handleResponse( aMessage);
 
+				// See https://isocpp.org/wiki/faq/freestore-mgmt#delete-this
 				delete this;
 			}
 			/**
