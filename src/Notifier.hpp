@@ -3,10 +3,10 @@
 
 #include "Config.hpp"
 
+#include "Observer.hpp"
+
 #include <string>
 #include <vector>
-
-#include "Observer.hpp"
 
 namespace Base
 {

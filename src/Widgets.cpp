@@ -1,4 +1,5 @@
 #include "Widgets.hpp"
+
 #include "Point.hpp"
 
 namespace Widgets

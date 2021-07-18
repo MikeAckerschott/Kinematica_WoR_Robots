@@ -3,10 +3,10 @@
 
 #include "Config.hpp"
 
-#include "Widgets.hpp"
-#include "ViewObject.hpp"
 #include "ObjectId.hpp"
 #include "Point.hpp"
+#include "ViewObject.hpp"
+#include "Widgets.hpp"
 
 namespace View
 {

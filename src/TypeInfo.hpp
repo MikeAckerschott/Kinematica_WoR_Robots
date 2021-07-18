@@ -9,10 +9,11 @@
  */
 
 #include "Config.hpp"
+
 #include <cstdlib>
-#include <typeinfo>
 #include <cxxabi.h>
 #include <string>
+#include <typeinfo>
 
 namespace Utils
 {

@@ -3,12 +3,6 @@
 
 #include "Config.hpp"
 
-#include <iostream>
-#include <memory>
-#include <mutex>
-#include <string>
-#include <thread>
-
 #include "AbstractAgent.hpp"
 #include "AStar.hpp"
 #include "BoundedVector.hpp"
@@ -18,6 +12,12 @@
 #include "Point.hpp"
 #include "Size.hpp"
 #include "Region.hpp"
+
+#include <iostream>
+#include <memory>
+#include <mutex>
+#include <string>
+#include <thread>
 
 namespace Messaging
 {

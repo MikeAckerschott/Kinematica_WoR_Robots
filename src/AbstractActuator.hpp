@@ -2,8 +2,10 @@
 #define ABSTRACTACTUATOR_HPP_
 
 #include "Config.hpp"
-#include <string>
+
 #include "ModelObject.hpp"
+
+#include <string>
 
 namespace Model
 {

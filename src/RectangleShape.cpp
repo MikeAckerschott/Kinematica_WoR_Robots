@@ -1,6 +1,8 @@
 #include "RectangleShape.hpp"
-#include <sstream>
+
 #include "Shape2DUtils.hpp"
+
+#include <sstream>
 
 namespace View
 {

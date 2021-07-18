@@ -6,8 +6,10 @@
  */
 
 #include "ModelObject.hpp"
-#include <sstream>
+
 #include "TypeInfo.hpp"
+
+#include <sstream>
 
 namespace Model
 {

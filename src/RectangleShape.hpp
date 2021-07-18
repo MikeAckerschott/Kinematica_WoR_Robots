@@ -2,11 +2,12 @@
 #define RECTANGLESHAPE_HPP_
 
 #include "Config.hpp"
-#include <string>
-#include <memory>
-#include "Widgets.hpp"
+
 #include "Shape.hpp"
 #include "Size.hpp"
+#include "Widgets.hpp"
+
+#include <string>
 
 namespace View
 {

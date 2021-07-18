@@ -2,13 +2,15 @@
 #define ROBOTWORLDCANVAS_HPP_
 
 #include "Config.hpp"
-#include <vector>
-#include "Widgets.hpp"
-#include "ViewObject.hpp"
+
 #include "NotificationHandler.hpp"
 #include "RobotWorld.hpp"
 #include "Shape.hpp"
 #include "Size.hpp"
+#include "ViewObject.hpp"
+#include "Widgets.hpp"
+
+#include <vector>
 
 namespace View
 {

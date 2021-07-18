@@ -1,8 +1,11 @@
 #include "AbstractAgent.hpp"
-#include "AbstractSensor.hpp"
+
 #include "AbstractActuator.hpp"
+#include "AbstractSensor.hpp"
 #include "Logger.hpp"
+
 #include <sstream>
+
 
 namespace Model
 {

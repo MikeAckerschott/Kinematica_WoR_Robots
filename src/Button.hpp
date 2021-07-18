@@ -3,10 +3,11 @@
 
 #include "Config.hpp"
 
+#include "Widgets.hpp"
+
 #include <functional>
 #include <string>
 
-#include "Widgets.hpp"
 
 namespace Application
 {

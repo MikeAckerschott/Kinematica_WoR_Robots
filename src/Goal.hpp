@@ -3,11 +3,11 @@
 
 #include "Config.hpp"
 
+#include "WayPoint.hpp"
+
 #include <iostream>
 #include <memory>
 #include <string>
-
-#include "WayPoint.hpp"
 
 namespace Model
 {

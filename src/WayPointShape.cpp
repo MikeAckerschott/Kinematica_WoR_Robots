@@ -1,6 +1,8 @@
 #include "WayPointShape.hpp"
-#include "WayPoint.hpp"
+
 #include "Logger.hpp"
+#include "WayPoint.hpp"
+
 #include <sstream>
 
 namespace View

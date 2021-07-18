@@ -3,9 +3,9 @@
 
 #include "Config.hpp"
 
-#include <functional>
-
 #include "Widgets.hpp"
+
+#include <functional>
 
 namespace Base
 {

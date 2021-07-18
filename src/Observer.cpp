@@ -1,4 +1,5 @@
 #include "Observer.hpp"
+
 #include "Notifier.hpp"
 
 namespace Base

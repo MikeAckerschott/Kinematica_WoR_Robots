@@ -1,6 +1,8 @@
 #include "GoalShape.hpp"
+
 #include "Goal.hpp"
 #include "Logger.hpp"
+
 #include <sstream>
 
 namespace View

@@ -2,6 +2,7 @@
 #define WALL_HPP_
 
 #include "Config.hpp"
+
 #include "ModelObject.hpp"
 #include "Point.hpp"
 

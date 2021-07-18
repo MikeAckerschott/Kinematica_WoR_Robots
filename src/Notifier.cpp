@@ -1,10 +1,10 @@
 #include "Notifier.hpp"
-#include <sstream>
-#include <typeinfo>
-#include <algorithm>
+
 #include "Observer.hpp"
 #include "Logger.hpp"
 
+#include <sstream>
+#include <typeinfo>
 
 namespace Base
 {
@@ -45,23 +45,25 @@ namespace Base
 	/**
 	 *	The implementation of operator== uses pointer comparison!
 	 */
-	void Notifier::addObserver( Observer& anObserver)
+	void Notifier::addObserver( Observer& aObserver)
 	{
-		if( std::any_of(observers.begin(), observers.end(), [&anObserver](Observer* observer){ return *observer == anObserver;}))
+		for (Observer* observer : observers)
 		{
-			return;
+			if (*observer == aObserver)
+			{
+				return;
+			}
 		}
-
-		observers.push_back( &anObserver);
+		observers.push_back( &aObserver);
 	}
 	/**
 	 *	The implementation of operator== uses pointer comparison!
 	 */
-	void Notifier::removeObserver( Observer& anObserver)
+	void Notifier::removeObserver( Observer& aObserver)
 	{
 		for (std::vector< Observer* >::iterator i = observers.begin(); i != observers.end(); ++i)
 		{
-			if (*(*i) == anObserver)
+			if (*(*i) == aObserver)
 			{
 				observers.erase( i);
 				break;

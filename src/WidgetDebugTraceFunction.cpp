@@ -1,4 +1,5 @@
 #include "WidgetDebugTraceFunction.hpp"
+
 #include "LogTextCtrl.hpp"
 
 namespace Application

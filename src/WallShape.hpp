@@ -2,6 +2,7 @@
 #define WALLSHAPE_HPP_
 
 #include "Config.hpp"
+
 #include "LineShape.hpp"
 #include "RectangleShape.hpp"
 #include "Wall.hpp"

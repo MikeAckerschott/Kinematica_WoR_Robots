@@ -1,7 +1,9 @@
 #include "Shape2DUtils.hpp"
-#include <sstream>
-#include <algorithm>
+
 #include "Widgets.hpp"
+
+#include <algorithm>
+#include <sstream>
 
 namespace Utils
 {

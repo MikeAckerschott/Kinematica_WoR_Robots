@@ -3,9 +3,11 @@
 
 #include "Config.hpp"
 
-#include <thread>
-#include <mutex>
 #include "ModelObject.hpp"
+
+#include <mutex>
+#include <thread>
+
 
 namespace Model
 {

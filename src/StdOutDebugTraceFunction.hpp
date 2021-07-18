@@ -2,6 +2,7 @@
 #define STDOUTDEBUGTRACEFUNCTION_HPP_
 
 #include "Config.hpp"
+
 #include "DebugTraceFunction.hpp"
 
 namespace Base

@@ -3,9 +3,9 @@
 
 #include "Config.hpp"
 
-#include <string>
-
 #include "Point.hpp"
+
+#include <string>
 
 namespace Model
 {

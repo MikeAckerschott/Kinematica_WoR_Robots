@@ -3,11 +3,11 @@
 
 #include "Config.hpp"
 
-#include <memory>
-#include <vector>
-
 #include "ModelObject.hpp"
 #include "Queue.hpp"
+
+#include <memory>
+#include <vector>
 
 /**
  *

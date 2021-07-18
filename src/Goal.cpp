@@ -1,7 +1,9 @@
 #include "Goal.hpp"
-#include <sstream>
+
 #include "Logger.hpp"
 #include "Shape2DUtils.hpp"
+
+#include <sstream>
 
 namespace Model
 {
