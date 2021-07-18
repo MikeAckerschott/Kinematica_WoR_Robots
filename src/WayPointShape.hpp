@@ -2,6 +2,7 @@
 #define WAYPOINTSHAPE_HPP_
 
 #include "Config.hpp"
+
 #include "RectangleShape.hpp"
 #include "WayPoint.hpp"
 

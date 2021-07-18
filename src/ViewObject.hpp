@@ -9,6 +9,7 @@
  */
 
 #include "Config.hpp"
+
 #include "Observer.hpp"
 #include "ObjectId.hpp"
 #include "ModelObject.hpp"

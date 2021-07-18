@@ -3,10 +3,10 @@
 
 #include "Shape.hpp"
 
-#include <string>
-
 #include "Goal.hpp"
 #include "WayPointShape.hpp"
+
+#include <string>
 
 namespace View
 {

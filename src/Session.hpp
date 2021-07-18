@@ -3,17 +3,19 @@
 
 #include "Config.hpp"
 
-#include <string>
-#include <iostream>
-#include <sstream>
-#include <boost/bind.hpp>
-#include <boost/asio.hpp>
-#include <functional>
-
-#include "Message.hpp"
-#include "MessageHandler.hpp"
 #include "CommunicationService.hpp"
 #include "Logger.hpp"
+#include "Message.hpp"
+#include "MessageHandler.hpp"
+
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
+
+#include <functional>
+#include <iostream>
+#include <sstream>
+#include <string>
+
 
 namespace Messaging
 {

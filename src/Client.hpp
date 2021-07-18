@@ -3,9 +3,9 @@
 
 #include "Config.hpp"
 
-#include <string>
-
 #include "Session.hpp"
+
+#include <string>
 
 namespace Messaging
 {

@@ -1,7 +1,9 @@
 #include "Logger.hpp"
+
+#include "DebugTraceFunction.hpp"
 #include "MainApplication.hpp"
 #include "MainFrameWindow.hpp"
-#include "DebugTraceFunction.hpp"
+
 
 namespace Application
 {

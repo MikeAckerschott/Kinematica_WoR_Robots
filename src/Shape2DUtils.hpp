@@ -2,12 +2,13 @@
 #define SHAPE2DUTILS_HPP_
 
 #include "Config.hpp"
-#include <string>
 
 #include "BoundedVector.hpp"
 #include "MathUtils.hpp"
 #include "Point.hpp"
 #include "Size.hpp"
+
+#include <string>
 
 namespace Utils
 {

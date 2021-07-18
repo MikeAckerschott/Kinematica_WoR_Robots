@@ -1,17 +1,19 @@
 #include "RobotWorldCanvas.hpp"
-#include "Logger.hpp"
-#include "RectangleShape.hpp"
-#include "LineShape.hpp"
-#include "RobotShape.hpp"
-#include "Robot.hpp"
-#include "WayPointShape.hpp"
-#include "WayPoint.hpp"
-#include "GoalShape.hpp"
+
 #include "Goal.hpp"
-#include "WallShape.hpp"
-#include "Wall.hpp"
-#include "RobotWorld.hpp"
+#include "GoalShape.hpp"
+#include "LineShape.hpp"
+#include "Logger.hpp"
 #include "NotificationEvent.hpp"
+#include "RectangleShape.hpp"
+#include "Robot.hpp"
+#include "RobotShape.hpp"
+#include "RobotWorld.hpp"
+#include "Wall.hpp"
+#include "WallShape.hpp"
+#include "WayPoint.hpp"
+#include "WayPointShape.hpp"
+
 #include <algorithm>
 
 namespace View

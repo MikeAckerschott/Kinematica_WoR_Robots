@@ -2,6 +2,7 @@
 #define SERVER_HPP_
 
 #include "Config.hpp"
+
 #include "Session.hpp"
 #include "CommunicationService.hpp"
 #include "Logger.hpp"

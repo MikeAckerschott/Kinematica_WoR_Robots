@@ -10,13 +10,16 @@
 
 #include "Config.hpp"
 
+#include "Notifier.hpp"
+#include "ObjectId.hpp"
+
+#include <boost/noncopyable.hpp>
+
 #include <iostream>
 #include <memory>
 #include <string>
-#include <boost/noncopyable.hpp>
 
-#include "Notifier.hpp"
-#include "ObjectId.hpp"
+
 
 namespace Model
 {

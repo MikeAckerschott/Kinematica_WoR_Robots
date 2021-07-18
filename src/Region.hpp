@@ -8,6 +8,8 @@
  * Author: jkr
  */
 
+#include "Config.hpp"
+
 #include "wx/region.h"
 
 namespace Widgets

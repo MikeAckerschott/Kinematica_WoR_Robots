@@ -1,7 +1,10 @@
 #include "BoundedVector.hpp"
+
+#include "MathUtils.hpp"
+
 #include <cmath>
 #include <sstream>
-#include "MathUtils.hpp"
+
 
 namespace Model
 {

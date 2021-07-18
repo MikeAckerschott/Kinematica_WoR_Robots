@@ -3,11 +3,11 @@
 
 #include "Config.hpp"
 
-#include <string>
-
 #include "RectangleShape.hpp"
 #include "Robot.hpp"
 #include "Widgets.hpp"
+
+#include <string>
 
 namespace View
 {

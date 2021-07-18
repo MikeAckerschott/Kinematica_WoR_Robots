@@ -6,8 +6,9 @@
  */
 
 #include "LaserDistanceSensor.hpp"
-#include "Robot.hpp"
+
 #include "Logger.hpp"
+#include "Robot.hpp"
 
 namespace Model
 {

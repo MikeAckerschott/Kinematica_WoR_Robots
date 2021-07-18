@@ -1,4 +1,5 @@
 #include "StdOutDebugTraceFunction.hpp"
+
 #include <iostream>
 
 namespace Base

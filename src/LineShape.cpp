@@ -1,9 +1,12 @@
 #include "LineShape.hpp"
-#include <algorithm>
-#include <sstream>
+
 #include "Logger.hpp"
 #include "Shape2DUtils.hpp"
 #include "Size.hpp"
+
+#include <algorithm>
+#include <sstream>
+
 
 namespace View
 {

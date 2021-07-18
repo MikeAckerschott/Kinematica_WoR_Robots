@@ -2,6 +2,7 @@
 #define MAINFRAMEWINDOW_HPP_
 
 #include "Config.hpp"
+
 #include "Widgets.hpp"
 
 namespace Base

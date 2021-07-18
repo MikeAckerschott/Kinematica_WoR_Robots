@@ -1,9 +1,10 @@
 #include "Notifier.hpp"
-#include <boost/foreach.hpp>
-#include <sstream>
-#include <typeinfo>
+
 #include "Observer.hpp"
 #include "Logger.hpp"
+
+#include <sstream>
+#include <typeinfo>
 
 namespace Base
 {

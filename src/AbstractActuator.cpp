@@ -1,4 +1,5 @@
 #include "AbstractActuator.hpp"
+
 #include "AbstractAgent.hpp"
 
 namespace Model

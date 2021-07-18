@@ -3,11 +3,12 @@
 
 #include "Config.hpp"
 
+#include "RectangleShape.hpp"
+#include "Shape.hpp"
+
 #include <memory>
 #include <string>
 
-#include "Shape.hpp"
-#include "RectangleShape.hpp"
 
 namespace View
 {

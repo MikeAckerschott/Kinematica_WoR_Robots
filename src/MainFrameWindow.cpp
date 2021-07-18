@@ -1,19 +1,21 @@
-#include <MathUtils.hpp>
 #include "MainFrameWindow.hpp"
-#include "MainApplication.hpp"
-#include "RobotWorldCanvas.hpp"
-#include "LogTextCtrl.hpp"
-#include "WidgetDebugTraceFunction.hpp"
-#include "StdOutDebugTraceFunction.hpp"
+
 #include "Button.hpp"
-#include "RobotWorld.hpp"
-#include "Robot.hpp"
-#include "Shape2DUtils.hpp"
-#include <iostream>
-#include "Logger.hpp"
 #include "Client.hpp"
+#include "Logger.hpp"
+#include "LogTextCtrl.hpp"
+#include "MainApplication.hpp"
+#include "MathUtils.hpp"
 #include "Message.hpp"
 #include "MessageTypes.hpp"
+#include "Robot.hpp"
+#include "RobotWorld.hpp"
+#include "RobotWorldCanvas.hpp"
+#include "Shape2DUtils.hpp"
+#include "StdOutDebugTraceFunction.hpp"
+#include "WidgetDebugTraceFunction.hpp"
+
+#include <iostream>
 
 namespace Application
 {

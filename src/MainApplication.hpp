@@ -3,11 +3,11 @@
 
 #include "Config.hpp"
 
+#include "CommandlineArgument.hpp"
+#include "Widgets.hpp"
+
 #include <string>
 #include <vector>
-
-#include "Widgets.hpp"
-#include "CommandlineArgument.hpp"
 
 /**
  *

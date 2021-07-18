@@ -3,9 +3,9 @@
 
 #include "Config.hpp"
 
-#include <boost/asio.hpp>
-
 #include "MessageHandler.hpp"
+
+#include <boost/asio.hpp>
 
 namespace Messaging
 {

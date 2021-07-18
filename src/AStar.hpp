@@ -3,15 +3,16 @@
 
 #include "Config.hpp"
 
+#include "Notifier.hpp"
+#include "Point.hpp"
+#include "Size.hpp"
+
 #include <iostream>
 #include <map>
 #include <mutex>
 #include <set>
 #include <vector>
 
-#include "Notifier.hpp"
-#include "Point.hpp"
-#include "Size.hpp"
 
 namespace PathAlgorithm
 {
