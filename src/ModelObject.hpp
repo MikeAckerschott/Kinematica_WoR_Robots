@@ -13,8 +13,6 @@
 #include "Notifier.hpp"
 #include "ObjectId.hpp"
 
-#include <boost/noncopyable.hpp>
-
 #include <iostream>
 #include <memory>
 #include <string>
@@ -29,8 +27,7 @@ namespace Model
 	/**
 	 *
 	 */
-	class ModelObject : public boost::noncopyable,
-						public Base::Notifier,
+	class ModelObject : public Base::Notifier,
 						public std::enable_shared_from_this<ModelObject>
 	{
 		public:
@@ -43,6 +40,14 @@ namespace Model
 			 */
 			ModelObject();
 			/**
+			 * ModelObject may not be copied
+			 */
+			ModelObject( const ModelObject& aModelObject) = delete;
+			/**
+			 * ModelObject may not be copied
+			 */
+			ModelObject( ModelObject&& aModelObject) = delete;
+			/**
 			 *
 			 */
 			virtual ~ModelObject();
@@ -51,6 +56,14 @@ namespace Model
 			 * @name Operators
 			 */
 			//@{
+			/**
+			 * ModelObject may not be copied
+			 */
+			ModelObject&operator==( const ModelObject& aModelObject) = delete;
+			/**
+			 * ModelObject may not be copied
+			 */
+			ModelObject&operator==( ModelObject&& aModelObject) = delete;
 			/**
 			 * Equal to operator which compares the objectIds
 			 *

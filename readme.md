@@ -183,3 +183,9 @@ Remarks:
 
 -   Change the `C/C++ Application` launch target to `robotworld.exe` in
     the (hidden) folder `.libs`.
+    
+### Using Sanitizers
+
+- If you compile with "-fsanitize=address -fsanitize=leak -fsanitize=undefined" you must link with "-fsanitize=address -fsanitize=leak -fsanitize=undefined" for linking with the correct libraries.
+- If your IDE does not support that you can link with asan en usan (in that order!)
+- If the LeakSanitizer gives false positives you can add those (after careful inspection!!!) to the LeakSanitizerSuppression.txt

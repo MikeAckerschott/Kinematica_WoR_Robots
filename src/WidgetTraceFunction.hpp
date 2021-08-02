@@ -1,9 +1,9 @@
-#ifndef WIDGETDEBUGTRACEFUNCTION_HPP_
-#define WIDGETDEBUGTRACEFUNCTION_HPP_
+#ifndef WIDGETTRACEFUNCTION_HPP_
+#define WIDGETTRACEFUNCTION_HPP_
 
 #include "Config.hpp"
 
-#include "DebugTraceFunction.hpp"
+#include "ITraceFunction.hpp"
 #include "Widgets.hpp"
 
 namespace Application
@@ -13,14 +13,14 @@ namespace Application
 	/**
 	 *
 	 */
-	class WidgetDebugTraceFunction : public Base::DebugTraceFunction
+	class WidgetTraceFunction : public Base::ITraceFunction
 	{
 		public:
 			/**
 			 * @param aLogTextCtrl The TextCtrl derived class that will receive the trace string as message
 			 * @param useFile If true the trace will also be logged in the file "guitrace.log".
 			 */
-			WidgetDebugTraceFunction( Application::LogTextCtrl* aLogTextCtrl);
+			WidgetTraceFunction( Application::LogTextCtrl* aLogTextCtrl);
 			/**
 			 *
 			 * @param aText The text that will be send to the final trace destination.
@@ -33,4 +33,4 @@ namespace Application
 			Application::LogTextCtrl* outputControl;
 	};
 } // namespace Application
-#endif // WIDGETDEBUGTRACEFUNCTION_HPP_
+#endif // WIDGETTRACEFUNCTION_HPP_

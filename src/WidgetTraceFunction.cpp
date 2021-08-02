@@ -1,4 +1,4 @@
-#include "WidgetDebugTraceFunction.hpp"
+#include "WidgetTraceFunction.hpp"
 
 #include "LogTextCtrl.hpp"
 
@@ -7,14 +7,14 @@ namespace Application
 	/**
 	 *
 	 */
-	WidgetDebugTraceFunction::WidgetDebugTraceFunction( Application::LogTextCtrl* aLogTextCtrl) :
+	WidgetTraceFunction::WidgetTraceFunction( Application::LogTextCtrl* aLogTextCtrl) :
 								outputControl( aLogTextCtrl)
 	{
 	}
 	/**
 	 *
 	 */
-	void WidgetDebugTraceFunction::trace( const std::string& aText)
+	void WidgetTraceFunction::trace( const std::string& aText)
 	{
 		// One can create any type of command event here but we use the
 		// LogTextControl provided things

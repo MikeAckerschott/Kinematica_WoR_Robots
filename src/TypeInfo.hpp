@@ -1,13 +1,6 @@
 #ifndef TYPEINFO_HPP_
 #define TYPEINFO_HPP_
 
-/*
- * Copyright (c) 1997 - 2013 Askesis B.V. See license.txt for details.
- * For information, bug reports and additions send an e-mail to Danu@Askesis.nl.
- *
- * Author: jkr
- */
-
 #include "Config.hpp"
 
 #include <cstdlib>
