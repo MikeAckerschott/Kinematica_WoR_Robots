@@ -3,16 +3,19 @@
 
 #include "Config.hpp"
 
-#include "MessageHandler.hpp"
+#include "Trace.hpp"
 
 #include <boost/asio.hpp>
 
+#include <condition_variable>
+#include <map>
+#include <mutex>
+
 namespace Messaging
 {
-	/**
-	 *
-	 */
 	class Server;
+	typedef std::shared_ptr< Server > ServerPtr;
+
 	/*
 	 *
 	 */
@@ -27,27 +30,58 @@ namespace Messaging
 			 * This function is public because otherwise it the classes Session, Server and Client
 			 * have to be friends
 			 */
-			boost::asio::io_service& getIOService();
-			/**
-			 * Runs the given aRequestHandler at the given port until boost::asio::io_service::io_service.run()
-			 * returns. In the limited context of RobotWorld this is done by sending a "stop"-message.
-			 * @see ServerSession::handleMessageRead( Message& aMessage) for the implementation.
-			 */
-			void runRequestHandler( RequestHandlerPtr aRequestHandler,
-									unsigned short aPort = 12345);
-			/**
-			 * Uses std::stoi for string to *int* conversion. Throws the exceptions that std::stoi may throw.
-			 * If value of int > max short you lose...
-			 */
-			void runRequestHandler( RequestHandlerPtr aRequestHandler,
-									const std::string& aPort)
+			boost::asio::io_context& getIOContext()
 			{
-				runRequestHandler( aRequestHandler, static_cast< unsigned short >( std::stoi( aPort)));
+				return io_context;
 			}
 			/**
 			 *
 			 */
+			void registerServer(ServerPtr aServer,
+								bool start = true);
+			/**
+			 *
+			 */
+			void startServer(	ServerPtr aServer);
+			/**
+			 *
+			 */
+			void startServer(	unsigned short aPort);
+			/**
+			 *
+			 */
+			void stopServer(ServerPtr aServer,
+							bool deregister = true);
+			/**
+			 *
+			 */
+			void stopServer(unsigned short aPort,
+							bool deregister = true);
+			/**
+			 *
+			 */
+			void deregisterServer(	ServerPtr aServer);
+			/**
+			 *
+			 */
+			void deregisterServer(	unsigned short aPort);
+			/**
+			 *
+			 */
 			void stop();
+			/**
+			 *
+			 */
+			bool isStopped();
+			/**
+			 *
+			 */
+			void restart();
+			/**
+			 *
+			 */
+			void wait();
+
 		private:
 			/**
 			 *
@@ -60,22 +94,30 @@ namespace Messaging
 			/**
 			 *
 			 */
-			void runRequestHandlerWorker( 	RequestHandlerPtr aRequestHandler,
-											unsigned short aPort);
+			void start_io_context_thread();
 			/**
 			 *
 			 */
-			std::thread requestHandlerThread;
+			void run_io_context();
 			/**
 			 *
 			 */
-			Server* server;
+			boost::asio::io_context io_context;
 			/**
 			 *
 			 */
-			boost::asio::io_service io_service;
-	};
-// class CommunicationService
-}// namespace Messaging
+			std::thread io_contextThread;
+			/**
+			 *
+			 */
+			std::map<unsigned short, ServerPtr > servers;
+			/**
+			 *
+			 */
+			boost::asio::deadline_timer timer;
 
-#endif // COMMUNICATIONSERVICE_HPP_
+
+	};
+} /* namespace Base */
+
+#endif // COMMUNICATIONSERVICE_HPP_ 

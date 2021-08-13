@@ -5,185 +5,136 @@
 
 #include "Session.hpp"
 #include "CommunicationService.hpp"
-#include "Logger.hpp"
+
+#include <atomic>
+#include <iostream>
+#include <memory>
 
 namespace Messaging
 {
-	/**
+	/*
 	 *
 	 */
-	class Server
+	class Server : public std::enable_shared_from_this< Server >
 	{
 		public:
 			/**
-			 * The server will listen on localhost/ip-address on the port
+			 *
 			 */
-			Server( short port,
-					RequestHandlerPtr aRequestHandler) :
-							io_service( CommunicationService::getCommunicationService().getIOService()),
-							acceptor( io_service, boost::asio::ip::tcp::endpoint( boost::asio::ip::tcp::v4(), port)),
-							stopping(false),
-							requestHandler( aRequestHandler)
+			Server(	unsigned short aPort,
+					RequestHandlerPtr aRequestHandler);
+			/**
+			 *
+			 */
+			virtual ~Server();
+			/**
+			 *
+			 */
+			unsigned short getPort() const
 			{
-				// start handling incoming connections
+				return port;
+			}
+			/**
+			 *
+			 */
+			void startHandlingRequests()
+			{
+				boost::asio::ip::tcp::endpoint ep(boost::asio::ip::tcp::v4(), port);
+				acceptor.open(ep.protocol());
+				acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
+				acceptor.bind(ep);
+				acceptor.listen();
+
+				stopAccepting.store(false);
 				handleAccept( nullptr, boost::system::error_code());
 			}
 			/**
 			 *
 			 */
-			~Server()
+			void stopHandlingRequests()
 			{
+				stopAccepting.store(true);
+
+				timer.expires_from_now(boost::posix_time::seconds(1));
+				timer.async_wait([this](const boost::system::error_code& UNUSEDPARAM(e)) // @suppress("Method cannot be resolved")
+								 {
+									boost::asio::post(	[this]() // @suppress("Invalid arguments")
+														{
+															acceptor.cancel();
+														});
+								 });
 			}
+		private:
 			/**
-			 *	Handle any incoming connections
 			 *
-			 * @startuml
-			 * -> server: handleAccept
-			 * activate server
-			 * server -->> session
-			 * server -> session : getSocket
-			 * activate session
-			 * server <-- session : socket
-			 * deactivate session
-			 *
-			 * server -\ acceptor : asyn_accept(socket,Server::handleAccept)
-			 * server -> session : start
-			 * deactivate server
-			 * activate session
-			 *
-			 * == Reading the request ==
-			 *
-			 * session -\ session: readMessage
-			 * activate session
-			 *
-			 * session -\ socket: async_read(header,Session::handleHeaderRead)
-			 * deactivate session
-			 * activate socket
-			 * server <-- session
-			 * deactivate session
-			 * deactivate session
-			 * deactivate session
-			 *
-			 * session <- socket : handleHeaderRead(message,error)
-			 * deactivate socket
-			 * activate session
-			 *
-			 * session -\ socket: async_read(body,Session::handleBodyRead)
-			 * deactivate session
-			 * activate socket
-			 *
-			 * session <- socket : handleBodyRead(message,error)
-			 * deactivate socket
-			 * activate session
-			 *
-			 * session -> session : handleMessageRead(message,error)
-			 * activate session
-			 * session -> session : handleMessageRead(message)
-			 * activate session
-			 *
-			 * == Handling the request ==
-			 *
-			 * session -> requestHandler : handleRequest(message)
-			 * activate requestHandler
-			 * session <-- requestHandler
-			 * deactivate requestHandler
-			 *
-			 * == Writing the response ==
-			 *
-			 * session -> session: writeMessage(message)
-			 * activate session
-			 * session -\ socket: async_write(header,Session::handleHeaderWriten)
-			 * deactivate session
-			 * activate socket
-			 * deactivate session
-			 * deactivate session
-			 * deactivate session
-			 *
-			 * session <- socket : handleHeaderWriten(message,error)
-			 * deactivate socket
-			 * activate session
-			 *
-			 * session -\ socket: async_write(body,Session::handleBodyWriten)
-			 * deactivate session
-			 * activate socket
-			 *
-			 * session <- socket : handleBodyWriten(message,error)
-			 * deactivate socket
-			 * activate session
-			 *
-			 * session -> session : handleMessageWriten(message,error)
-			 * activate session
-			 * session -> session : handleMessageWritten(message)
-			 * activate session
-			 * deactivate session
-			 * deactivate session
-			 *
-			 * destroy session
-			 *
-			 * @enduml
 			 */
 			void handleAccept( 	ServerSession* aSession,
 								const boost::system::error_code& error)
 			{
-				try
+				if (!error)
 				{
-					if (!error)
+					if(!stopAccepting.load())
 					{
 						// Create the session that will handle the next incoming connection
-						ServerSession* session = new ServerSession( io_service, requestHandler);
+						ServerSession* session = new ServerSession( requestHandler);
 						// Let the acceptor wait for any new incoming connections
 						// and let it call server::handle_accept on the happy occasion
-						acceptor.async_accept( session->getSocket(),
-										boost::bind( &Server::handleAccept,
-														this,
-														session,
-														boost::asio::placeholders::error));
+						acceptor.async_accept(	session->getSocket(), // @suppress("Method cannot be resolved")
+												[this, session](const boost::system::error_code& error)
+												{
+							handleAccept(session,error);
+												});
+
 						// If there is a session, start it up....
 						if (aSession)
 						{
 							aSession->start();
 						}
-					} else
+					}else
+					{
+						TRACE_DEVELOP("Server does not accept any sessions anymore");
+					}
+				} else
+				{
+					if (aSession)
 					{
 						delete aSession;
-						throw std::runtime_error( __PRETTY_FUNCTION__ + std::string( ": ") + error.message());
 					}
-				}
-				catch (std::exception& e)
-				{
-					// acceptor.async_accept throws an exception when cancelled during stopping the server
-					if(!stopping)
+					if(!stopAccepting && error != boost::asio::error::basic_errors::operation_aborted)
 					{
-						Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": ") + e.what());
-						std::cerr << __PRETTY_FUNCTION__ << ": " << e.what() << std::endl;
+						std::ostringstream os;
+						os << "************ " << __PRETTY_FUNCTION__ << ": " << error.message() << ", stopAccepting = " << stopAccepting;
+						TRACE_DEVELOP(os.str());
+						throw std::runtime_error( os.str());
 					}
 				}
 			}
+		private:
 			/**
 			 *
 			 */
-			void stop()
-			{
-				stopping = true;
-				acceptor.close();
-			}
-		private:
-			// Provides core I/O functionality
-			// @see http://www.boost.org/doc/libs/1_40_0/doc/html/boost_asio/reference/io_service
-			boost::asio::io_service& io_service;
-			// Provides the ability to accept new connections
-			// @see http://www.boost.org/doc/libs/1_40_0/doc/html/boost_asio/reference/basic_socket_acceptor
+			unsigned short port;
+			/**
+			 * Provides the ability to accept new connections
+			 */
 			boost::asio::ip::tcp::acceptor acceptor;
 			/**
 			 *
 			 */
-			bool stopping;
+			std::atomic<bool> stopAccepting = false;
 			/**
 			 *
 			 */
 			RequestHandlerPtr requestHandler;
+			/**
+			 *
+			 */
+			boost::asio::deadline_timer timer;
 	};
-// class Server
-}// namespace Messaging
+	/**
+	 *
+	 */
+	typedef std::shared_ptr< Server > ServerPtr;
+} /* namespace Messaging */
 
-#endif // SERVER_HPP_
+#endif // SERVER_HPP_ 

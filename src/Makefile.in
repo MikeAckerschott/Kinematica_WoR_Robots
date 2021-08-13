@@ -110,7 +110,7 @@ am_robotworld_OBJECTS = robotworld-AbstractActuator.$(OBJEXT) \
 	robotworld-AbstractSensor.$(OBJEXT) robotworld-AStar.$(OBJEXT) \
 	robotworld-BoundedVector.$(OBJEXT) \
 	robotworld-CommunicationService.$(OBJEXT) \
-	robotworld-DebugTraceFunction.$(OBJEXT) \
+	robotworld-FileTraceFunction.$(OBJEXT) \
 	robotworld-Goal.$(OBJEXT) robotworld-GoalShape.$(OBJEXT) \
 	robotworld-LaserDistanceSensor.$(OBJEXT) \
 	robotworld-LineShape.$(OBJEXT) robotworld-Logger.$(OBJEXT) \
@@ -126,13 +126,14 @@ am_robotworld_OBJECTS = robotworld-AbstractActuator.$(OBJEXT) \
 	robotworld-RobotShape.$(OBJEXT) \
 	robotworld-RobotWorld.$(OBJEXT) \
 	robotworld-RobotWorldCanvas.$(OBJEXT) \
-	robotworld-Shape2DUtils.$(OBJEXT) \
-	robotworld-StdOutDebugTraceFunction.$(OBJEXT) \
+	robotworld-Server.$(OBJEXT) robotworld-Shape2DUtils.$(OBJEXT) \
+	robotworld-StdOutTraceFunction.$(OBJEXT) \
 	robotworld-SteeringActuator.$(OBJEXT) \
-	robotworld-ViewObject.$(OBJEXT) robotworld-Wall.$(OBJEXT) \
-	robotworld-WallShape.$(OBJEXT) robotworld-WayPoint.$(OBJEXT) \
+	robotworld-Trace.$(OBJEXT) robotworld-ViewObject.$(OBJEXT) \
+	robotworld-Wall.$(OBJEXT) robotworld-WallShape.$(OBJEXT) \
+	robotworld-WayPoint.$(OBJEXT) \
 	robotworld-WayPointShape.$(OBJEXT) \
-	robotworld-WidgetDebugTraceFunction.$(OBJEXT) \
+	robotworld-WidgetTraceFunction.$(OBJEXT) \
 	robotworld-Widgets.$(OBJEXT)
 robotworld_OBJECTS = $(am_robotworld_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -166,7 +167,7 @@ am__depfiles_remade = ./$(DEPDIR)/robotworld-AStar.Po \
 	./$(DEPDIR)/robotworld-AbstractSensor.Po \
 	./$(DEPDIR)/robotworld-BoundedVector.Po \
 	./$(DEPDIR)/robotworld-CommunicationService.Po \
-	./$(DEPDIR)/robotworld-DebugTraceFunction.Po \
+	./$(DEPDIR)/robotworld-FileTraceFunction.Po \
 	./$(DEPDIR)/robotworld-Goal.Po \
 	./$(DEPDIR)/robotworld-GoalShape.Po \
 	./$(DEPDIR)/robotworld-LaserDistanceSensor.Po \
@@ -187,15 +188,17 @@ am__depfiles_remade = ./$(DEPDIR)/robotworld-AStar.Po \
 	./$(DEPDIR)/robotworld-RobotShape.Po \
 	./$(DEPDIR)/robotworld-RobotWorld.Po \
 	./$(DEPDIR)/robotworld-RobotWorldCanvas.Po \
+	./$(DEPDIR)/robotworld-Server.Po \
 	./$(DEPDIR)/robotworld-Shape2DUtils.Po \
-	./$(DEPDIR)/robotworld-StdOutDebugTraceFunction.Po \
+	./$(DEPDIR)/robotworld-StdOutTraceFunction.Po \
 	./$(DEPDIR)/robotworld-SteeringActuator.Po \
+	./$(DEPDIR)/robotworld-Trace.Po \
 	./$(DEPDIR)/robotworld-ViewObject.Po \
 	./$(DEPDIR)/robotworld-Wall.Po \
 	./$(DEPDIR)/robotworld-WallShape.Po \
 	./$(DEPDIR)/robotworld-WayPoint.Po \
 	./$(DEPDIR)/robotworld-WayPointShape.Po \
-	./$(DEPDIR)/robotworld-WidgetDebugTraceFunction.Po \
+	./$(DEPDIR)/robotworld-WidgetTraceFunction.Po \
 	./$(DEPDIR)/robotworld-Widgets.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
@@ -428,7 +431,7 @@ robotworld_SOURCES = AbstractActuator.cpp	\
 						AStar.cpp	\
 						BoundedVector.cpp	\
 						CommunicationService.cpp	\
-						DebugTraceFunction.cpp	\
+						FileTraceFunction.cpp	\
 						Goal.cpp	\
 						GoalShape.cpp	\
 						LaserDistanceSensor.cpp	\
@@ -449,16 +452,18 @@ robotworld_SOURCES = AbstractActuator.cpp	\
 						RobotShape.cpp	\
 						RobotWorld.cpp	\
 						RobotWorldCanvas.cpp	\
+						Server.cpp	\
 						Shape2DUtils.cpp	\
-						StdOutDebugTraceFunction.cpp	\
+						StdOutTraceFunction.cpp	\
 						SteeringActuator.cpp	\
+						Trace.cpp	\
 						ViewObject.cpp	\
 						Wall.cpp	\
 						WallShape.cpp	\
 						WayPoint.cpp	\
 						WayPointShape.cpp	\
-						WidgetDebugTraceFunction.cpp	\
-						Widgets.cpp
+						WidgetTraceFunction.cpp	\
+						Widgets.cpp						
 
 robotworld_CPPFLAGS = $(AM_CPPFLAGS) $(ROBOTWORLD_CPPFLAGS) $(WX_CPPFLAGS)
 robotworld_CFLAGS = $(AM_CFLAGS)   $(ROBOTWORLD_CFLAGS)	  $(WX_CFLAGS)
@@ -580,7 +585,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-AbstractSensor.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-BoundedVector.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-CommunicationService.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-DebugTraceFunction.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-FileTraceFunction.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Goal.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-GoalShape.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-LaserDistanceSensor.Po@am__quote@ # am--include-marker
@@ -601,15 +606,17 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-RobotShape.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-RobotWorld.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-RobotWorldCanvas.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Server.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Shape2DUtils.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-StdOutDebugTraceFunction.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-StdOutTraceFunction.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-SteeringActuator.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Trace.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-ViewObject.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Wall.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-WallShape.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-WayPoint.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-WayPointShape.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-WidgetDebugTraceFunction.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-WidgetTraceFunction.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Widgets.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
@@ -726,19 +733,19 @@ robotworld-CommunicationService.obj: CommunicationService.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-CommunicationService.obj `if test -f 'CommunicationService.cpp'; then $(CYGPATH_W) 'CommunicationService.cpp'; else $(CYGPATH_W) '$(srcdir)/CommunicationService.cpp'; fi`
 
-robotworld-DebugTraceFunction.o: DebugTraceFunction.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-DebugTraceFunction.o -MD -MP -MF $(DEPDIR)/robotworld-DebugTraceFunction.Tpo -c -o robotworld-DebugTraceFunction.o `test -f 'DebugTraceFunction.cpp' || echo '$(srcdir)/'`DebugTraceFunction.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-DebugTraceFunction.Tpo $(DEPDIR)/robotworld-DebugTraceFunction.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='DebugTraceFunction.cpp' object='robotworld-DebugTraceFunction.o' libtool=no @AMDEPBACKSLASH@
+robotworld-FileTraceFunction.o: FileTraceFunction.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-FileTraceFunction.o -MD -MP -MF $(DEPDIR)/robotworld-FileTraceFunction.Tpo -c -o robotworld-FileTraceFunction.o `test -f 'FileTraceFunction.cpp' || echo '$(srcdir)/'`FileTraceFunction.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-FileTraceFunction.Tpo $(DEPDIR)/robotworld-FileTraceFunction.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='FileTraceFunction.cpp' object='robotworld-FileTraceFunction.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-DebugTraceFunction.o `test -f 'DebugTraceFunction.cpp' || echo '$(srcdir)/'`DebugTraceFunction.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-FileTraceFunction.o `test -f 'FileTraceFunction.cpp' || echo '$(srcdir)/'`FileTraceFunction.cpp
 
-robotworld-DebugTraceFunction.obj: DebugTraceFunction.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-DebugTraceFunction.obj -MD -MP -MF $(DEPDIR)/robotworld-DebugTraceFunction.Tpo -c -o robotworld-DebugTraceFunction.obj `if test -f 'DebugTraceFunction.cpp'; then $(CYGPATH_W) 'DebugTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/DebugTraceFunction.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-DebugTraceFunction.Tpo $(DEPDIR)/robotworld-DebugTraceFunction.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='DebugTraceFunction.cpp' object='robotworld-DebugTraceFunction.obj' libtool=no @AMDEPBACKSLASH@
+robotworld-FileTraceFunction.obj: FileTraceFunction.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-FileTraceFunction.obj -MD -MP -MF $(DEPDIR)/robotworld-FileTraceFunction.Tpo -c -o robotworld-FileTraceFunction.obj `if test -f 'FileTraceFunction.cpp'; then $(CYGPATH_W) 'FileTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/FileTraceFunction.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-FileTraceFunction.Tpo $(DEPDIR)/robotworld-FileTraceFunction.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='FileTraceFunction.cpp' object='robotworld-FileTraceFunction.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-DebugTraceFunction.obj `if test -f 'DebugTraceFunction.cpp'; then $(CYGPATH_W) 'DebugTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/DebugTraceFunction.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-FileTraceFunction.obj `if test -f 'FileTraceFunction.cpp'; then $(CYGPATH_W) 'FileTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/FileTraceFunction.cpp'; fi`
 
 robotworld-Goal.o: Goal.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-Goal.o -MD -MP -MF $(DEPDIR)/robotworld-Goal.Tpo -c -o robotworld-Goal.o `test -f 'Goal.cpp' || echo '$(srcdir)/'`Goal.cpp
@@ -1020,6 +1027,20 @@ robotworld-RobotWorldCanvas.obj: RobotWorldCanvas.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-RobotWorldCanvas.obj `if test -f 'RobotWorldCanvas.cpp'; then $(CYGPATH_W) 'RobotWorldCanvas.cpp'; else $(CYGPATH_W) '$(srcdir)/RobotWorldCanvas.cpp'; fi`
 
+robotworld-Server.o: Server.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-Server.o -MD -MP -MF $(DEPDIR)/robotworld-Server.Tpo -c -o robotworld-Server.o `test -f 'Server.cpp' || echo '$(srcdir)/'`Server.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-Server.Tpo $(DEPDIR)/robotworld-Server.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Server.cpp' object='robotworld-Server.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-Server.o `test -f 'Server.cpp' || echo '$(srcdir)/'`Server.cpp
+
+robotworld-Server.obj: Server.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-Server.obj -MD -MP -MF $(DEPDIR)/robotworld-Server.Tpo -c -o robotworld-Server.obj `if test -f 'Server.cpp'; then $(CYGPATH_W) 'Server.cpp'; else $(CYGPATH_W) '$(srcdir)/Server.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-Server.Tpo $(DEPDIR)/robotworld-Server.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Server.cpp' object='robotworld-Server.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-Server.obj `if test -f 'Server.cpp'; then $(CYGPATH_W) 'Server.cpp'; else $(CYGPATH_W) '$(srcdir)/Server.cpp'; fi`
+
 robotworld-Shape2DUtils.o: Shape2DUtils.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-Shape2DUtils.o -MD -MP -MF $(DEPDIR)/robotworld-Shape2DUtils.Tpo -c -o robotworld-Shape2DUtils.o `test -f 'Shape2DUtils.cpp' || echo '$(srcdir)/'`Shape2DUtils.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-Shape2DUtils.Tpo $(DEPDIR)/robotworld-Shape2DUtils.Po
@@ -1034,19 +1055,19 @@ robotworld-Shape2DUtils.obj: Shape2DUtils.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-Shape2DUtils.obj `if test -f 'Shape2DUtils.cpp'; then $(CYGPATH_W) 'Shape2DUtils.cpp'; else $(CYGPATH_W) '$(srcdir)/Shape2DUtils.cpp'; fi`
 
-robotworld-StdOutDebugTraceFunction.o: StdOutDebugTraceFunction.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-StdOutDebugTraceFunction.o -MD -MP -MF $(DEPDIR)/robotworld-StdOutDebugTraceFunction.Tpo -c -o robotworld-StdOutDebugTraceFunction.o `test -f 'StdOutDebugTraceFunction.cpp' || echo '$(srcdir)/'`StdOutDebugTraceFunction.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-StdOutDebugTraceFunction.Tpo $(DEPDIR)/robotworld-StdOutDebugTraceFunction.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='StdOutDebugTraceFunction.cpp' object='robotworld-StdOutDebugTraceFunction.o' libtool=no @AMDEPBACKSLASH@
+robotworld-StdOutTraceFunction.o: StdOutTraceFunction.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-StdOutTraceFunction.o -MD -MP -MF $(DEPDIR)/robotworld-StdOutTraceFunction.Tpo -c -o robotworld-StdOutTraceFunction.o `test -f 'StdOutTraceFunction.cpp' || echo '$(srcdir)/'`StdOutTraceFunction.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-StdOutTraceFunction.Tpo $(DEPDIR)/robotworld-StdOutTraceFunction.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='StdOutTraceFunction.cpp' object='robotworld-StdOutTraceFunction.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-StdOutDebugTraceFunction.o `test -f 'StdOutDebugTraceFunction.cpp' || echo '$(srcdir)/'`StdOutDebugTraceFunction.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-StdOutTraceFunction.o `test -f 'StdOutTraceFunction.cpp' || echo '$(srcdir)/'`StdOutTraceFunction.cpp
 
-robotworld-StdOutDebugTraceFunction.obj: StdOutDebugTraceFunction.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-StdOutDebugTraceFunction.obj -MD -MP -MF $(DEPDIR)/robotworld-StdOutDebugTraceFunction.Tpo -c -o robotworld-StdOutDebugTraceFunction.obj `if test -f 'StdOutDebugTraceFunction.cpp'; then $(CYGPATH_W) 'StdOutDebugTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/StdOutDebugTraceFunction.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-StdOutDebugTraceFunction.Tpo $(DEPDIR)/robotworld-StdOutDebugTraceFunction.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='StdOutDebugTraceFunction.cpp' object='robotworld-StdOutDebugTraceFunction.obj' libtool=no @AMDEPBACKSLASH@
+robotworld-StdOutTraceFunction.obj: StdOutTraceFunction.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-StdOutTraceFunction.obj -MD -MP -MF $(DEPDIR)/robotworld-StdOutTraceFunction.Tpo -c -o robotworld-StdOutTraceFunction.obj `if test -f 'StdOutTraceFunction.cpp'; then $(CYGPATH_W) 'StdOutTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/StdOutTraceFunction.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-StdOutTraceFunction.Tpo $(DEPDIR)/robotworld-StdOutTraceFunction.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='StdOutTraceFunction.cpp' object='robotworld-StdOutTraceFunction.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-StdOutDebugTraceFunction.obj `if test -f 'StdOutDebugTraceFunction.cpp'; then $(CYGPATH_W) 'StdOutDebugTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/StdOutDebugTraceFunction.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-StdOutTraceFunction.obj `if test -f 'StdOutTraceFunction.cpp'; then $(CYGPATH_W) 'StdOutTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/StdOutTraceFunction.cpp'; fi`
 
 robotworld-SteeringActuator.o: SteeringActuator.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-SteeringActuator.o -MD -MP -MF $(DEPDIR)/robotworld-SteeringActuator.Tpo -c -o robotworld-SteeringActuator.o `test -f 'SteeringActuator.cpp' || echo '$(srcdir)/'`SteeringActuator.cpp
@@ -1061,6 +1082,20 @@ robotworld-SteeringActuator.obj: SteeringActuator.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='SteeringActuator.cpp' object='robotworld-SteeringActuator.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-SteeringActuator.obj `if test -f 'SteeringActuator.cpp'; then $(CYGPATH_W) 'SteeringActuator.cpp'; else $(CYGPATH_W) '$(srcdir)/SteeringActuator.cpp'; fi`
+
+robotworld-Trace.o: Trace.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-Trace.o -MD -MP -MF $(DEPDIR)/robotworld-Trace.Tpo -c -o robotworld-Trace.o `test -f 'Trace.cpp' || echo '$(srcdir)/'`Trace.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-Trace.Tpo $(DEPDIR)/robotworld-Trace.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Trace.cpp' object='robotworld-Trace.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-Trace.o `test -f 'Trace.cpp' || echo '$(srcdir)/'`Trace.cpp
+
+robotworld-Trace.obj: Trace.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-Trace.obj -MD -MP -MF $(DEPDIR)/robotworld-Trace.Tpo -c -o robotworld-Trace.obj `if test -f 'Trace.cpp'; then $(CYGPATH_W) 'Trace.cpp'; else $(CYGPATH_W) '$(srcdir)/Trace.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-Trace.Tpo $(DEPDIR)/robotworld-Trace.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Trace.cpp' object='robotworld-Trace.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-Trace.obj `if test -f 'Trace.cpp'; then $(CYGPATH_W) 'Trace.cpp'; else $(CYGPATH_W) '$(srcdir)/Trace.cpp'; fi`
 
 robotworld-ViewObject.o: ViewObject.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-ViewObject.o -MD -MP -MF $(DEPDIR)/robotworld-ViewObject.Tpo -c -o robotworld-ViewObject.o `test -f 'ViewObject.cpp' || echo '$(srcdir)/'`ViewObject.cpp
@@ -1132,19 +1167,19 @@ robotworld-WayPointShape.obj: WayPointShape.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-WayPointShape.obj `if test -f 'WayPointShape.cpp'; then $(CYGPATH_W) 'WayPointShape.cpp'; else $(CYGPATH_W) '$(srcdir)/WayPointShape.cpp'; fi`
 
-robotworld-WidgetDebugTraceFunction.o: WidgetDebugTraceFunction.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-WidgetDebugTraceFunction.o -MD -MP -MF $(DEPDIR)/robotworld-WidgetDebugTraceFunction.Tpo -c -o robotworld-WidgetDebugTraceFunction.o `test -f 'WidgetDebugTraceFunction.cpp' || echo '$(srcdir)/'`WidgetDebugTraceFunction.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-WidgetDebugTraceFunction.Tpo $(DEPDIR)/robotworld-WidgetDebugTraceFunction.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='WidgetDebugTraceFunction.cpp' object='robotworld-WidgetDebugTraceFunction.o' libtool=no @AMDEPBACKSLASH@
+robotworld-WidgetTraceFunction.o: WidgetTraceFunction.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-WidgetTraceFunction.o -MD -MP -MF $(DEPDIR)/robotworld-WidgetTraceFunction.Tpo -c -o robotworld-WidgetTraceFunction.o `test -f 'WidgetTraceFunction.cpp' || echo '$(srcdir)/'`WidgetTraceFunction.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-WidgetTraceFunction.Tpo $(DEPDIR)/robotworld-WidgetTraceFunction.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='WidgetTraceFunction.cpp' object='robotworld-WidgetTraceFunction.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-WidgetDebugTraceFunction.o `test -f 'WidgetDebugTraceFunction.cpp' || echo '$(srcdir)/'`WidgetDebugTraceFunction.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-WidgetTraceFunction.o `test -f 'WidgetTraceFunction.cpp' || echo '$(srcdir)/'`WidgetTraceFunction.cpp
 
-robotworld-WidgetDebugTraceFunction.obj: WidgetDebugTraceFunction.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-WidgetDebugTraceFunction.obj -MD -MP -MF $(DEPDIR)/robotworld-WidgetDebugTraceFunction.Tpo -c -o robotworld-WidgetDebugTraceFunction.obj `if test -f 'WidgetDebugTraceFunction.cpp'; then $(CYGPATH_W) 'WidgetDebugTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/WidgetDebugTraceFunction.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-WidgetDebugTraceFunction.Tpo $(DEPDIR)/robotworld-WidgetDebugTraceFunction.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='WidgetDebugTraceFunction.cpp' object='robotworld-WidgetDebugTraceFunction.obj' libtool=no @AMDEPBACKSLASH@
+robotworld-WidgetTraceFunction.obj: WidgetTraceFunction.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-WidgetTraceFunction.obj -MD -MP -MF $(DEPDIR)/robotworld-WidgetTraceFunction.Tpo -c -o robotworld-WidgetTraceFunction.obj `if test -f 'WidgetTraceFunction.cpp'; then $(CYGPATH_W) 'WidgetTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/WidgetTraceFunction.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-WidgetTraceFunction.Tpo $(DEPDIR)/robotworld-WidgetTraceFunction.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='WidgetTraceFunction.cpp' object='robotworld-WidgetTraceFunction.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-WidgetDebugTraceFunction.obj `if test -f 'WidgetDebugTraceFunction.cpp'; then $(CYGPATH_W) 'WidgetDebugTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/WidgetDebugTraceFunction.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-WidgetTraceFunction.obj `if test -f 'WidgetTraceFunction.cpp'; then $(CYGPATH_W) 'WidgetTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/WidgetTraceFunction.cpp'; fi`
 
 robotworld-Widgets.o: Widgets.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-Widgets.o -MD -MP -MF $(DEPDIR)/robotworld-Widgets.Tpo -c -o robotworld-Widgets.o `test -f 'Widgets.cpp' || echo '$(srcdir)/'`Widgets.cpp
@@ -1299,7 +1334,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/robotworld-AbstractSensor.Po
 	-rm -f ./$(DEPDIR)/robotworld-BoundedVector.Po
 	-rm -f ./$(DEPDIR)/robotworld-CommunicationService.Po
-	-rm -f ./$(DEPDIR)/robotworld-DebugTraceFunction.Po
+	-rm -f ./$(DEPDIR)/robotworld-FileTraceFunction.Po
 	-rm -f ./$(DEPDIR)/robotworld-Goal.Po
 	-rm -f ./$(DEPDIR)/robotworld-GoalShape.Po
 	-rm -f ./$(DEPDIR)/robotworld-LaserDistanceSensor.Po
@@ -1320,15 +1355,17 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/robotworld-RobotShape.Po
 	-rm -f ./$(DEPDIR)/robotworld-RobotWorld.Po
 	-rm -f ./$(DEPDIR)/robotworld-RobotWorldCanvas.Po
+	-rm -f ./$(DEPDIR)/robotworld-Server.Po
 	-rm -f ./$(DEPDIR)/robotworld-Shape2DUtils.Po
-	-rm -f ./$(DEPDIR)/robotworld-StdOutDebugTraceFunction.Po
+	-rm -f ./$(DEPDIR)/robotworld-StdOutTraceFunction.Po
 	-rm -f ./$(DEPDIR)/robotworld-SteeringActuator.Po
+	-rm -f ./$(DEPDIR)/robotworld-Trace.Po
 	-rm -f ./$(DEPDIR)/robotworld-ViewObject.Po
 	-rm -f ./$(DEPDIR)/robotworld-Wall.Po
 	-rm -f ./$(DEPDIR)/robotworld-WallShape.Po
 	-rm -f ./$(DEPDIR)/robotworld-WayPoint.Po
 	-rm -f ./$(DEPDIR)/robotworld-WayPointShape.Po
-	-rm -f ./$(DEPDIR)/robotworld-WidgetDebugTraceFunction.Po
+	-rm -f ./$(DEPDIR)/robotworld-WidgetTraceFunction.Po
 	-rm -f ./$(DEPDIR)/robotworld-Widgets.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -1381,7 +1418,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/robotworld-AbstractSensor.Po
 	-rm -f ./$(DEPDIR)/robotworld-BoundedVector.Po
 	-rm -f ./$(DEPDIR)/robotworld-CommunicationService.Po
-	-rm -f ./$(DEPDIR)/robotworld-DebugTraceFunction.Po
+	-rm -f ./$(DEPDIR)/robotworld-FileTraceFunction.Po
 	-rm -f ./$(DEPDIR)/robotworld-Goal.Po
 	-rm -f ./$(DEPDIR)/robotworld-GoalShape.Po
 	-rm -f ./$(DEPDIR)/robotworld-LaserDistanceSensor.Po
@@ -1402,15 +1439,17 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/robotworld-RobotShape.Po
 	-rm -f ./$(DEPDIR)/robotworld-RobotWorld.Po
 	-rm -f ./$(DEPDIR)/robotworld-RobotWorldCanvas.Po
+	-rm -f ./$(DEPDIR)/robotworld-Server.Po
 	-rm -f ./$(DEPDIR)/robotworld-Shape2DUtils.Po
-	-rm -f ./$(DEPDIR)/robotworld-StdOutDebugTraceFunction.Po
+	-rm -f ./$(DEPDIR)/robotworld-StdOutTraceFunction.Po
 	-rm -f ./$(DEPDIR)/robotworld-SteeringActuator.Po
+	-rm -f ./$(DEPDIR)/robotworld-Trace.Po
 	-rm -f ./$(DEPDIR)/robotworld-ViewObject.Po
 	-rm -f ./$(DEPDIR)/robotworld-Wall.Po
 	-rm -f ./$(DEPDIR)/robotworld-WallShape.Po
 	-rm -f ./$(DEPDIR)/robotworld-WayPoint.Po
 	-rm -f ./$(DEPDIR)/robotworld-WayPointShape.Po
-	-rm -f ./$(DEPDIR)/robotworld-WidgetDebugTraceFunction.Po
+	-rm -f ./$(DEPDIR)/robotworld-WidgetTraceFunction.Po
 	-rm -f ./$(DEPDIR)/robotworld-Widgets.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic

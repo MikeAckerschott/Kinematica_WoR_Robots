@@ -1,16 +1,16 @@
-#ifndef STDOUTDEBUGTRACEFUNCTION_HPP_
-#define STDOUTDEBUGTRACEFUNCTION_HPP_
+#ifndef STDOUTTRACEFUNCTION_HPP_
+#define STDOUTTRACEFUNCTION_HPP_
 
 #include "Config.hpp"
 
-#include "DebugTraceFunction.hpp"
+#include "ITraceFunction.hpp"
 
 namespace Base
 {
 	/**
 	 *
 	 */
-	class StdOutDebugTraceFunction : public DebugTraceFunction
+	class StdOutTraceFunction : public ITraceFunction
 	{
 		public:
 			/**
@@ -22,4 +22,4 @@ namespace Base
 	};
 	// class StdOutDebugTraceFunction
 } // namespace Base
-#endif // STDOUTDEBUGTRACEFUNCTION_HPP_
+#endif // STDOUTTRACEFUNCTION_HPP_

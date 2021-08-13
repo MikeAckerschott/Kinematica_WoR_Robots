@@ -1,15 +1,22 @@
 #include "Config.hpp"
 
 #include "MainApplication.hpp"
+
 #include "Logger.hpp"
+#include "Trace.hpp"
+#include "FileTraceFunction.hpp"
 
 #include <iostream>
 #include <string>
 #include <stdexcept>
 
+
 int main( 	int argc,
 			char* argv[])
 {
+
+	//Base::Trace::setTraceFunction( std::make_unique<Base::FileTraceFunction>("trace", "log", true));
+
 	try
 	{
 		// Call the wxWidgets main variant
