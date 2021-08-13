@@ -54,6 +54,7 @@ namespace Messaging
 														handleConnect(session, error);
 													});
 			}
+		private:
 			/**
 			 *
 			 */
@@ -72,8 +73,6 @@ namespace Messaging
 					TRACE_DEVELOP(os.str());
 				}
 			}
-
-		private:
 			/**
 			 *
 			 */

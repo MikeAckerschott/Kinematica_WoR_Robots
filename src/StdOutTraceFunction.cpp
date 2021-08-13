@@ -1,5 +1,6 @@
+#include "StdOutTraceFunction.hpp"
+
 #include <iostream>
-#include <StdOutTraceFunction.hpp>
 
 namespace Base
 {

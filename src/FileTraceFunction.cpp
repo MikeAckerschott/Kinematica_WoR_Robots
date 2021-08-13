@@ -13,7 +13,7 @@ namespace Base
 										  const std::string& aFileExtension /* = "log" */,
 										  bool timeStamped /* = false */ )
 
-						:	logFile((aFileStem + (timeStamped ? "-" + Utils::TimeStamp() + "." : ".") + aFileExtension).c_str(), std::ios_base::app)
+						:	logFile((aFileStem + (timeStamped ? "-" + Utils::TimeStamp() : "") + "." + aFileExtension).c_str(), std::ios_base::app)
 							{
 		trace( " ******************* START " + Utils::TimeStamp() + " START *******************");
 							}

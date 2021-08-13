@@ -45,8 +45,26 @@ namespace Messaging
 				acceptor.bind(ep);
 				acceptor.listen();
 
+				stopAccepting.store(false);
 				handleAccept( nullptr, boost::system::error_code());
 			}
+			/**
+			 *
+			 */
+			void stopHandlingRequests()
+			{
+				stopAccepting.store(true);
+
+				timer.expires_from_now(boost::posix_time::seconds(1));
+				timer.async_wait([this](const boost::system::error_code& UNUSEDPARAM(e)) // @suppress("Method cannot be resolved")
+								 {
+									boost::asio::post(	[this]() // @suppress("Invalid arguments")
+														{
+															acceptor.cancel();
+														});
+								 });
+			}
+		private:
 			/**
 			 *
 			 */
@@ -87,34 +105,10 @@ namespace Messaging
 						std::ostringstream os;
 						os << "************ " << __PRETTY_FUNCTION__ << ": " << error.message() << ", stopAccepting = " << stopAccepting;
 						TRACE_DEVELOP(os.str());
-						throw std::runtime_error( __PRETTY_FUNCTION__ + std::string( ": ") + error.message());
+						throw std::runtime_error( os.str());
 					}
 				}
 			}
-			/**
-			 *
-			 */
-			void stopHandlingRequests()
-			{
-				stopAccepting.store(true);
-
-				timer.expires_from_now(boost::posix_time::seconds(1));
-				timer.async_wait([this](const boost::system::error_code& UNUSEDPARAM(e)) // @suppress("Method cannot be resolved")
-								 {
-									boost::asio::post(	[this]() // @suppress("Invalid arguments")
-														{
-															acceptor.cancel();
-														});
-								 });
-			}
-			/**
-			 *
-			 */
-			bool isAccepting() const
-			{
-				return stopAccepting;
-			}
-
 		private:
 			/**
 			 *

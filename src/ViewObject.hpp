@@ -1,13 +1,6 @@
 #ifndef VIEWOBJECT_HPP_
 #define VIEWOBJECT_HPP_
 
-/*
- * Copyright (c) 2014 Joost Kraaijeveld. See license.txt for details.
- * For information, bug reports and additions send an e-mail to RobotWorld@Askesis.nl.
- *
- * Author: jkr
- */
-
 #include "Config.hpp"
 
 #include "Observer.hpp"
