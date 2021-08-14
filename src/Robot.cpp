@@ -10,6 +10,7 @@
 #include "Message.hpp"
 #include "MessageTypes.hpp"
 #include "RobotWorld.hpp"
+#include "Server.hpp"
 #include "Shape2DUtils.hpp"
 #include "Wall.hpp"
 #include "WayPoint.hpp"
@@ -216,16 +217,21 @@ namespace Model
 		{
 			communicating = true;
 
-
 			std::string localPort = "12345";
 			if (Application::MainApplication::isArgGiven( "-local_port"))
 			{
 				localPort = Application::MainApplication::getArg( "-local_port").value;
 			}
 
-			Messaging::CommunicationService::getCommunicationService().runRequestHandler( toPtr<Robot>(),
-																						  static_cast<unsigned short>(std::stoi(localPort)));
+			if(Messaging::CommunicationService::getCommunicationService().isStopped())
+			{
+				TRACE_DEVELOP( "Restarting the Communication service");
+				Messaging::CommunicationService::getCommunicationService().restart();
+			}
 
+			server = std::make_shared<Messaging::Server>(	static_cast<unsigned short>(std::stoi(localPort)),
+															toPtr<Robot>());
+			Messaging::CommunicationService::getCommunicationService().registerServer( server);
 		}
 	}
 	/**
@@ -244,7 +250,7 @@ namespace Model
 			}
 
 			Messaging::Client c1ient( 	"localhost",
-										localPort,
+										static_cast<unsigned short>(std::stoi(localPort)),
 										toPtr<Robot>());
 			Messaging::Message message( Messaging::StopCommunicatingRequest, "stop");
 			c1ient.dispatchMessage( message);
@@ -356,26 +362,31 @@ namespace Model
 	 */
 	void Robot::handleRequest( Messaging::Message& aMessage)
 	{
+		FUNCTRACE_TEXT_DEVELOP(aMessage.asString());
+
 		switch(aMessage.getMessageType())
 		{
 			case Messaging::StopCommunicatingRequest:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": case Messaging::StopCommunicatingRequest"));
 				aMessage.setMessageType(Messaging::StopCommunicatingResponse);
-				aMessage.setBody("stop");
+				aMessage.setBody("StopCommunicatingResponse");
+				// Handle the request. In the limited context of this works. I am not sure
+				// whether this works OK in a real application because the handling is time sensitive,
+				// i.e. 2 async timers are involved:
+				// see CommunicationService::stopServer and Server::stopHandlingRequests
+				Messaging::CommunicationService::getCommunicationService().stopServer(12345,true);
+
 				break;
 			}
 			case Messaging::EchoRequest:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": case Messaging::EchoRequest"));
-
 				aMessage.setMessageType(Messaging::EchoResponse);
 				aMessage.setBody( "Messaging::EchoResponse: " + aMessage.asString());
 				break;
 			}
 			default:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": default not implemented"));
+				TRACE_DEVELOP(__PRETTY_FUNCTION__ + std::string(": default not implemented"));
 				break;
 			}
 		}
@@ -385,22 +396,22 @@ namespace Model
 	 */
 	void Robot::handleResponse( const Messaging::Message& aMessage)
 	{
+		FUNCTRACE_TEXT_DEVELOP(aMessage.asString());
+
 		switch(aMessage.getMessageType())
 		{
 			case Messaging::StopCommunicatingResponse:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": case Messaging::StopCommunicatingResponse"));
-				Messaging::CommunicationService::getCommunicationService().stop();
+				//Messaging::CommunicationService::getCommunicationService().stop();
 				break;
 			}
 			case Messaging::EchoResponse:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string( "case Messaging::EchoResponse: ") + aMessage.asString());
 				break;
 			}
 			default:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string( ": default not implemented, ") + aMessage.asString());
+				TRACE_DEVELOP(__PRETTY_FUNCTION__ + std::string( ": default not implemented, ") + aMessage.asString());
 				break;
 			}
 		}

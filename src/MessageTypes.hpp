@@ -9,10 +9,16 @@ namespace Messaging {
 //@{
 enum MessageType
 {
-	GenericRequest,
-	GenericResponse,
+	CommunicationReadError,
+	CommunicationWriteError,
+	ServerSideExceptionRequest,
+	ServerSideExceptionResponse,
+	ApplicationExceptionRequest,
+	ApplicationExceptionResponse,
 	StopCommunicatingRequest,
 	StopCommunicatingResponse,
+	GenericRequest,
+	GenericResponse,
 	EchoRequest,
 	EchoResponse
 };

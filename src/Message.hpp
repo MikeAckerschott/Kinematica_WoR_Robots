@@ -3,7 +3,6 @@
 
 #include "Config.hpp"
 
-#include <cstddef>
 #include <iomanip>
 #include <sstream>
 #include <string>
@@ -55,19 +54,22 @@ namespace Messaging
 						fromString( aMessageHeaderBuffer);
 					}
 					/**
+					 * The ASCII representation is suitable for parsing by MessageHeader::fromString.
 					 *
-					 * @return ASCII string representation of the message header
+					 * @return ASCII string representation of the message header.
 					 */
 					std::string toString() const
 					{
 						std::ostringstream os;
-						os << magicNumber1 << magicNumber2 << magicNumber3 << magicNumber4 << majorVersion << minorVersion << messageType << std::setw(10 /* unsigned long : 4,294,967,295 ergo 10 numbers */) << messageLength;
+						os << magicNumber1 << magicNumber2 << magicNumber3 << magicNumber4 << majorVersion << minorVersion << std::setw(3 /* char : 255, ergo 3 numbers */) << static_cast<int>(messageType) << std::setw(10 /* unsigned long : 4,294,967,295 ergo 10 numbers */) << messageLength;
 						return os.str();
 					}
 					/**
-					 * Stores a ASCII representation of a message header into this header
+					 * Stores a ASCII representation of a message header into this header.
+					 * The format of the ASCII representation by MessageHeader::toString should
+					 * be suitable.
 					 *
-					 * @param aString
+					 * @param aString in the same format as MessageHeader::toString.
 					 */
 					void fromString( const std::string& aString)
 					{
@@ -75,7 +77,7 @@ namespace Messaging
 						char magic[4];
 						char major;
 						char minor;
-						is >> magic[0] >> magic[1] >> magic[2] >> magic[3] >> major >> minor >> messageType >> std::setw( 10 /* unsigned long : 4,294,967,295 ergo 10 numbers */) >> messageLength;
+						is >> magic[0] >> magic[1] >> magic[2] >> magic[3] >> major >> minor >> std::setw(3 /* char : 255, ergo 3 numbers */) >> (int&)messageType >> std::setw( 10 /* unsigned long : 4,294,967,295 ergo 10 numbers */) >> messageLength;
 					}
 					/**
 					 * @return The length of the header in bytes
@@ -83,11 +85,11 @@ namespace Messaging
 					unsigned long getHeaderLength() const
 					{
 						static size_t l = toString().length();
-						return (unsigned long)l;
+						return static_cast<unsigned long>(l);
 					}
 					/**
 					 *
-					 * @return The message tpe
+					 * @return The message type which should be one of the types in MessageTypes.hpp
 					 */
 					char getMessageType() const
 					{
@@ -110,8 +112,15 @@ namespace Messaging
 					std::string asString() const
 					{
 						std::ostringstream os;
-						os << magicNumber1 << magicNumber2 << magicNumber3 << magicNumber4 << " " << majorVersion << " " <<  minorVersion << " " << (int)messageType << " " << messageLength;
+						os << magicNumber1 << magicNumber2 << magicNumber3 << magicNumber4 << " " << majorVersion << " " <<  minorVersion << " " << static_cast<int>(messageType) << " " << messageLength;
 						return os.str();
+					}
+					/**
+					 *
+					 */
+					std::string asDebugString() const
+					{
+						return asString();
 					}
 					//@}
 
@@ -141,8 +150,8 @@ namespace Messaging
 			}
 			/**
 			 *
-			 * @param aMessageType
-			 * @param aMessage
+			 * @param aMessageType, should be one of the values mentioned in MessageTypes.hpp
+			 * @param aMessage, which is in a ordinary OO-RPC a specification of the object, the function and the arguments to call.
 			 */
 			Message( 	char aMessageType,
 						const std::string& aMessage) :
@@ -167,7 +176,7 @@ namespace Messaging
 			}
 			/**
 			 *
-			 * @return
+			 * @return The header of this message
 			 */
 			MessageHeader getHeader() const
 			{
@@ -175,7 +184,7 @@ namespace Messaging
 			}
 			/**
 			 *
-			 * @param aHeader
+			 * @param Sets the header of this message
 			 */
 			void setHeader( const MessageHeader& aHeader)
 			{
@@ -239,14 +248,19 @@ namespace Messaging
 			 */
 			virtual std::string asDebugString() const
 			{
-				return asString();
+				return asDebugString();
 			}
 			//@}
-
+			/**
+			 *
+			 */
 			char messageType;
+			/**
+			 *
+			 */
 			MessageBody message;
 	}; // struct Message
 
 } // namespace Messaging
 
-#endif // MESSAGE_HPP__
+#endif // MESSAGE_HPP_

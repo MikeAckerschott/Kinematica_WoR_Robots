@@ -7,7 +7,7 @@
 
 namespace Base
 {
-	class DebugTraceFunction;
+	class ITraceFunction;
 } // namespace BaseBase
 
 namespace View
@@ -29,15 +29,11 @@ namespace Application
 			 *
 			 * @param aTitle The title which is shown in the title bar
 			 */
-			explicit MainFrameWindow( const std::string& aTitle);
+			MainFrameWindow( const std::string& aTitle);
 			/**
 			 *
 			 */
 			virtual ~MainFrameWindow();
-			/**
-			 *
-			 */
-			Base::DebugTraceFunction& getTraceFunction() const;
 
 		protected:
 			/**
@@ -83,11 +79,10 @@ namespace Application
 			LogTextCtrl* logTextCtrl;
 			Panel* buttonPanel;
 
-			Base::DebugTraceFunction* debugTraceFunction;
-
 			void OnQuit( CommandEvent& anEvent);
-			void OnWidgetDebugTraceFunction( CommandEvent& anEvent);
-			void OnStdOutDebugTraceFunction( CommandEvent& anEvent);
+			void OnWidgetTraceFunction( CommandEvent& anEvent);
+			void OnStdOutTraceFunction( CommandEvent& anEvent);
+			void OnFileTraceFunction( CommandEvent& anEvent);
 			void OnAbout( CommandEvent& anEvent);
 
 			void OnStartRobot( CommandEvent& anEvent);

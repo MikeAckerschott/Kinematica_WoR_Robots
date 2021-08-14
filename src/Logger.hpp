@@ -14,7 +14,7 @@ namespace Application
 	{
 		public:
 			/**
-			 * If enabled, traces the message to the current DebugTraceFunction
+			 * If enabled, traces the message to the current ITraceFunction
 			 *
 			 * @param aMessage
 			 */
@@ -25,7 +25,10 @@ namespace Application
 			 *
 			 * @param aDisable, by default true
 			 */
-			static void setDisable( bool aDisable = true);
+			static void setDisable( bool aDisable = true)
+			{
+				disable = aDisable;
+			}
 			/**
 			 *
 			 * @return true if enabled, false otherwise

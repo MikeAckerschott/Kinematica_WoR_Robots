@@ -7,7 +7,7 @@
 #include <condition_variable>
 #include <mutex>
 #include <queue>
-
+#include <optional>
 
 namespace Base
 {
@@ -27,15 +27,21 @@ namespace Base
 			/**
 			 *
 			 */
-			QueueContentType dequeue()
+			std::optional< QueueContentType > dequeue()
 			{
 				std::unique_lock< std::mutex > lock( queueBusy);
-				while (queue.empty())
+				while (queue.empty() && stop.load() == false)
 					queueFull.wait( lock);
 
-				QueueContentType front = queue.front();
-				queue.pop();
-				return front;
+				if (queue.empty())
+				{
+					return {};
+				}else
+				{
+					QueueContentType front = queue.front();
+					queue.pop();
+					return front;
+				}
 			}
 			/**
 			 *
@@ -44,11 +50,19 @@ namespace Base
 			{
 				return queue.size();
 			}
+			/**
+			 *
+			 */
+			void shutDown()
+			{
+				stop.store(true);
+			}
 
 		private:
 			std::queue< QueueContentType > queue;
 			std::mutex queueBusy;
 			std::condition_variable queueFull;
+			std::atomic<bool> stop = false;
 	};
 } // namespace Base
 #endif /* QUEUE_HPP_ */

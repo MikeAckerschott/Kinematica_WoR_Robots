@@ -17,9 +17,6 @@
 
 #endif
 
-// Somewhere in the Boost code a deprecated feature is used.
-// Turn of the warning. See boost/bind.hpp for more details.
-#define BOOST_BIND_GLOBAL_PLACEHOLDERS 1
 
 // Additional macros that suppress un-used argument compiler warnings
 #define UNUSEDPARAM(parameter) /* parameter */
