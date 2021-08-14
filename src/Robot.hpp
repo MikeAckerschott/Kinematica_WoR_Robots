@@ -22,6 +22,8 @@
 namespace Messaging
 {
 	class Message;
+	class Server;
+	typedef std::shared_ptr< Server > ServerPtr;
 }
 
 namespace Model
@@ -257,24 +259,62 @@ namespace Model
 			 */
 			bool collision();
 		private:
+			/**
+			 *
+			 */
 			std::string name;
-
+			/**
+			 *
+			 */
 			Size size;
+			/**
+			 *
+			 */
 			Point position;
-
+			/**
+			 *
+			 */
 			BoundedVector front;
+			/**
+			 *
+			 */
 			float speed;
-
+			/**
+			 *
+			 */
 			GoalPtr goal;
+			/**
+			 *
+			 */
 			PathAlgorithm::AStar astar;
+			/**
+			 *
+			 */
 			PathAlgorithm::Path path;
-
+			/**
+			 *
+			 */
 			bool acting;
+			/**
+			 *
+			 */
 			bool driving;
+			/**
+			 *
+			 */
 			bool communicating;
-
+			/**
+			 *
+			 */
 			std::thread robotThread;
+			/**
+			 *
+			 */
 			mutable std::recursive_mutex robotMutex;
+			/**
+			 *
+			 */
+			Messaging::ServerPtr server;
 	};
 } // namespace Model
 #endif // ROBOT_HPP_

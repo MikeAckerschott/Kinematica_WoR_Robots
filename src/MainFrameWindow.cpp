@@ -2,6 +2,7 @@
 
 #include "Button.hpp"
 #include "Client.hpp"
+#include "FileTraceFunction.hpp"
 #include "Logger.hpp"
 #include "LogTextCtrl.hpp"
 #include "MainApplication.hpp"
@@ -12,8 +13,8 @@
 #include "RobotWorld.hpp"
 #include "RobotWorldCanvas.hpp"
 #include "Shape2DUtils.hpp"
-#include "StdOutDebugTraceFunction.hpp"
-#include "WidgetDebugTraceFunction.hpp"
+#include "StdOutTraceFunction.hpp"
+#include "WidgetTraceFunction.hpp"
 
 #include <iostream>
 
@@ -29,8 +30,9 @@ namespace Application
 		ID_QUIT 	= wxID_EXIT,         	//!< ID_QUIT
 		ID_OPTIONS 	= wxID_PROPERTIES,		//!< ID_OPTIONS
 		ID_ABOUT 	= wxID_ABOUT,        	//!< ID_ABOUT
-		ID_WIDGET_DEBUG_TRACE_FUNCTION, 	//!< ID_WIDGET_DEBUG_TRACE_FUNCTION
-		ID_STDCOUT_DEBUG_TRACE_FUNCTION 	//!< ID_STDCOUT_DEBUG_TRACE_FUNCTION
+		ID_WIDGET_TRACE_FUNCTION, 			//!< ID_WIDGET_TRACE_FUNCTION
+		ID_STDCOUT_TRACE_FUNCTION, 			//!< ID_STDCOUT_TRACE_FUNCTION
+		ID_FILE_TRACE_FUNCTION 				//!< ID_FILE_TRACE_FUNCTION
 
 	};
 	/**
@@ -45,8 +47,7 @@ namespace Application
 								robotWorldCanvas( nullptr),
 								rhsPanel( nullptr),
 								logTextCtrl( nullptr),
-								buttonPanel( nullptr),
-								debugTraceFunction( nullptr)
+								buttonPanel( nullptr)
 	{
 		initialise();
 	}
@@ -55,21 +56,6 @@ namespace Application
 	 */
 	MainFrameWindow::~MainFrameWindow()
 	{
-		if (debugTraceFunction)
-		{
-			delete debugTraceFunction;
-		}
-	}
-	/**
-	 *
-	 */
-	Base::DebugTraceFunction& MainFrameWindow::getTraceFunction() const
-	{
-		if(debugTraceFunction)
-		{
-			return *debugTraceFunction;
-		}
-		throw std::runtime_error( __PRETTY_FUNCTION__ + std::string( ": no such debugTraceFunction"));
 	}
 	/**
 	 *
@@ -95,18 +81,17 @@ namespace Application
 			  [this](CommandEvent& anEvent){ this->OnQuit(anEvent);},
 			  ID_QUIT);
 		Bind( wxEVT_COMMAND_MENU_SELECTED,
-			  [this](CommandEvent& anEvent){ this->OnWidgetDebugTraceFunction(anEvent);},
-			  ID_WIDGET_DEBUG_TRACE_FUNCTION);
+			  [this](CommandEvent& anEvent){ this->OnWidgetTraceFunction(anEvent);},
+			  ID_WIDGET_TRACE_FUNCTION);
 		Bind( wxEVT_COMMAND_MENU_SELECTED,
-			  [this](CommandEvent& anEvent){ this->OnStdOutDebugTraceFunction(anEvent);},
-			  ID_STDCOUT_DEBUG_TRACE_FUNCTION);
+			  [this](CommandEvent& anEvent){ this->OnStdOutTraceFunction(anEvent);},
+			  ID_STDCOUT_TRACE_FUNCTION);
 		Bind( wxEVT_COMMAND_MENU_SELECTED,
 			  [this](CommandEvent& anEvent){ this->OnAbout(anEvent);},
 			  ID_ABOUT);
 
-		// By default we initialise the WidgetDebugTraceFunction
-		// as we expect that this is what the user wants....
-		debugTraceFunction = new Application::WidgetDebugTraceFunction( logTextCtrl);
+		// By default we use the WidgettraceFunction as we expect that this is what the user wants....
+		Base::Trace::setTraceFunction( std::make_unique<Application::WidgetTraceFunction>(logTextCtrl));
 	}
 	/**
 	 *
@@ -117,8 +102,9 @@ namespace Application
 		fileMenu->Append( ID_QUIT, WXSTRING( "E&xit\tAlt-X"), WXSTRING( "Exit the application"));
 
 		Menu* debugMenu = new Menu;
-		debugMenu->AppendRadioItem( ID_WIDGET_DEBUG_TRACE_FUNCTION, WXSTRING( "Widget"), WXSTRING( "Widget"));
-		debugMenu->AppendRadioItem( ID_STDCOUT_DEBUG_TRACE_FUNCTION, WXSTRING( "StdOut"), WXSTRING( "StdOut"));
+		debugMenu->AppendRadioItem( ID_WIDGET_TRACE_FUNCTION, WXSTRING( "Widget"), WXSTRING( "Widget"));
+		debugMenu->AppendRadioItem( ID_STDCOUT_TRACE_FUNCTION, WXSTRING( "StdOut"), WXSTRING( "StdOut"));
+		debugMenu->AppendRadioItem( ID_FILE_TRACE_FUNCTION, WXSTRING( "File"), WXSTRING( "File"));
 
 		Menu* helpMenu = new Menu;
 		helpMenu->Append( ID_ABOUT, WXSTRING( "&About...\tF1"), WXSTRING( "Show about dialog"));
@@ -308,41 +294,42 @@ namespace Application
 	 */
 	void MainFrameWindow::OnQuit( CommandEvent& UNUSEDPARAM(anEvent))
 	{
+		Base::Trace::setTraceFunction( std::make_unique<Base::StdOutTraceFunction>());
 		Close( true);
 	}
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnWidgetDebugTraceFunction( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnWidgetTraceFunction( CommandEvent& UNUSEDPARAM(anEvent))
 	{
-		if (debugTraceFunction)
-			delete debugTraceFunction;
-		debugTraceFunction = new WidgetDebugTraceFunction( logTextCtrl);
+		Base::Trace::setTraceFunction( std::make_unique<Application::WidgetTraceFunction>(logTextCtrl));
 	}
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnStdOutDebugTraceFunction( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnStdOutTraceFunction( CommandEvent& UNUSEDPARAM(anEvent))
 	{
-		if (debugTraceFunction)
-			delete debugTraceFunction;
-		debugTraceFunction = new Base::StdOutDebugTraceFunction();
-
+		Base::Trace::setTraceFunction( std::make_unique<Base::StdOutTraceFunction>());
 	}
-
+	/**
+	 *
+	 */
+	void MainFrameWindow::OnFileTraceFunction( CommandEvent& UNUSEDPARAM(anEvent))
+	{
+		Base::Trace::setTraceFunction( std::make_unique<Base::FileTraceFunction>("trace", "log", true));
+	}
 	/**
 	 *
 	 */
 	void MainFrameWindow::OnAbout( CommandEvent& UNUSEDPARAM(anEvent))
 	{
-		wxMessageBox( WXSTRING( "OOSE 2016 RobotWorld.\n"), WXSTRING( "About RobotWorld"), wxOK | wxICON_INFORMATION, this);
+		wxMessageBox( WXSTRING( "ESD 2012-present RobotWorld.\n"), WXSTRING( "About RobotWorld"), wxOK | wxICON_INFORMATION, this);
 	}
 	/**
 	 *
 	 */
 	void MainFrameWindow::OnStartRobot( CommandEvent& UNUSEDPARAM(anEvent))
 	{
-		Logger::log( "Attempting to start Robot...");
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		if (robot && !robot->isActing())
 		{
@@ -354,7 +341,6 @@ namespace Application
 	 */
 	void MainFrameWindow::OnStopRobot( CommandEvent& UNUSEDPARAM(anEvent))
 	{
-		Logger::log( "Attempting to stop Robot...");
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		if (robot && robot->isActing())
 		{
@@ -409,7 +395,7 @@ namespace Application
 			// We will request an echo message. The response will be "Hello World", if all goes OK,
 			// "Goodbye cruel world!" if something went wrong.
 			Messaging::Client c1ient( remoteIpAdres,
-									  remotePort,
+									  static_cast<unsigned short>(std::stoi(remotePort)),
 									  robot);
 			Messaging::Message message( Messaging::EchoRequest, "Hello world!");
 			c1ient.dispatchMessage( message);

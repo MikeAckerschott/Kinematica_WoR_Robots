@@ -5,7 +5,7 @@ robotworld_SOURCES 	= 	AbstractActuator.cpp	\
 						AStar.cpp	\
 						BoundedVector.cpp	\
 						CommunicationService.cpp	\
-						DebugTraceFunction.cpp	\
+						FileTraceFunction.cpp	\
 						Goal.cpp	\
 						GoalShape.cpp	\
 						LaserDistanceSensor.cpp	\
@@ -26,18 +26,19 @@ robotworld_SOURCES 	= 	AbstractActuator.cpp	\
 						RobotShape.cpp	\
 						RobotWorld.cpp	\
 						RobotWorldCanvas.cpp	\
+						Server.cpp	\
 						Shape2DUtils.cpp	\
-						StdOutDebugTraceFunction.cpp	\
+						StdOutTraceFunction.cpp	\
 						SteeringActuator.cpp	\
+						Trace.cpp	\
 						ViewObject.cpp	\
 						Wall.cpp	\
 						WallShape.cpp	\
 						WayPoint.cpp	\
 						WayPointShape.cpp	\
-						WidgetDebugTraceFunction.cpp	\
-						Widgets.cpp
-						
-						
+						WidgetTraceFunction.cpp	\
+						Widgets.cpp						
+
 robotworld_CPPFLAGS 	=	$(AM_CPPFLAGS) $(ROBOTWORLD_CPPFLAGS) $(WX_CPPFLAGS)
 
 robotworld_CFLAGS 		=   $(AM_CFLAGS)   $(ROBOTWORLD_CFLAGS)	  $(WX_CFLAGS)
