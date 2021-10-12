@@ -177,7 +177,11 @@ namespace Base
 			if(Trace::traceThreadId)
 			{
 				std::thread::id currentThreadId = std::this_thread::get_id();
+				#if __cplusplus <= 201703L
+				if(threadIndentionLevels.find(currentThreadId)!=threadIndentionLevels.end())
+				#else
 				if(!threadIndentionLevels.contains(currentThreadId)) // @suppress("Method cannot be resolved")
+				#endif
 				{
 					threadIndentionLevels.insert(std::make_pair(currentThreadId,0));
 				}

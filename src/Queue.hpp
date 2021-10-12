@@ -8,6 +8,7 @@
 #include <mutex>
 #include <queue>
 #include <optional>
+#include <atomic>
 
 namespace Base
 {
