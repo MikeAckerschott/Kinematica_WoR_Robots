@@ -39,7 +39,7 @@ namespace Application
 	 *
 	 */
 	MainFrameWindow::MainFrameWindow( const std::string& aTitle) :
-								Frame( nullptr, DEFAULT_ID, WXSTRING( aTitle), DefaultPosition, Size( 500, 400)),
+								Frame( nullptr, DEFAULT_ID, WXSTRING( aTitle), DefaultPosition, Size( 1200, 600)),
 								clientPanel( nullptr),
 								menuBar( nullptr),
 								splitterWindow( nullptr),

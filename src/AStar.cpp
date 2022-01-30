@@ -79,7 +79,7 @@ namespace PathAlgorithm
 			}
 		}
 		return neighbours;
-				}
+	}
 	/**
 	 *
 	 */
@@ -127,104 +127,83 @@ namespace PathAlgorithm
 
 		addToOpenSet(aStart);
 
-		//		long long begin = std::clock();
-
+		// Keep the timing stuff, please.
+//		clock_t start = std::clock();
 		while (!openSet.empty())
 		{
+			// The openSet should be sorted by cost, least cost must be the first
 			Vertex current = *openSet.begin();
 
 			if (current.equalPoint( aGoal))
 			{
+//				clock_t end = std::clock();
+//				std::cout << "Duration: " << static_cast<double>(end - start)/CLOCKS_PER_SEC <<	", openSet: " << openSet.size() <<  ", closedSet: " << closedSet.size() << ", predecessorMap: " << predecessorMap.size() << std::endl;
 				return ConstructPath( predecessorMap, current);
 			} else
 			{
-				addToClosedSet( current);
 				removeFirstFromOpenSet();
+				addToClosedSet( current);
 
+				// Find all the outgoing connections for the current Vertex
 				const std::vector< Edge >& connections = GetNeighbourConnections( current, radius);
+
 				for (const Edge& connection : connections)
 				{
 					Vertex neighbour = connection.otherSide( current);
 
-					// The new costs
-					double calculatedActualNeighbourCost = current.actualCost + ActualCost( current, neighbour);
-					double totalHeuristicCostNeighbour = calculatedActualNeighbourCost + HeuristicCost( neighbour, aGoal);
+					// Calculate the cost for the newly found neighbour
+					neighbour.actualCost = current.actualCost + ActualCost( current, neighbour);
+					neighbour.heuristicCost = neighbour.actualCost + HeuristicCost( neighbour, aGoal);
 
+					// The neighbour may already be in the openSet because of the previous current Vertex iteration
 					OpenSet::iterator openVertex = findInOpenSet( neighbour);
 					if (openVertex != openSet.end())
 					{
 						// if neighbour is in the openSet we may have found a shorter via-route
-						if ((*openVertex).heuristicCost <= totalHeuristicCostNeighbour)
+						// than via the previous current Vertex
+						if ((*openVertex).heuristicCost <= neighbour.heuristicCost)
 						{
+							// Do nothing
 							continue;
 						} else
 						{
-							removeFromOpenSet( openVertex);
+							// Update the cost
+							(*openVertex).heuristicCost = neighbour.actualCost;
+							(*openVertex).heuristicCost = neighbour.heuristicCost;
+							continue;
 						}
 					}
+
+					// The neighbour may be re-opened because we found a shorter via-route
 					ClosedSet::iterator closedVertex = findInClosedSet( neighbour);
 					if (closedVertex != closedSet.end())
 					{
 						// if neighbour is in the closedSet we may have found a shorter via-route
-						if ((*closedVertex).heuristicCost <= totalHeuristicCostNeighbour)
+						if ((*closedVertex).heuristicCost <= neighbour.heuristicCost)
 						{
+							// Do nothing
 							continue;
 						} else
 						{
+							std::cout << "remove" << std::endl;
+							addToOpenSet( *closedVertex);
 							removeFromClosedSet( closedVertex);
 						}
 					}
 
-					neighbour.actualCost = calculatedActualNeighbourCost;
-					neighbour.heuristicCost = totalHeuristicCostNeighbour;
+					// Add the new found neighbour to the openSet
+					addToOpenSet( neighbour);
 
-					std::pair< VertexMap::iterator, bool > insertResult1 = predecessorMap.insert( std::make_pair( neighbour, current));
-					if (insertResult1.second != true)
+					// Add or replace (assign) the route elements.
+					const auto& [iterator, succes] = predecessorMap.insert_or_assign( neighbour, current);
+					if(!succes)
 					{
-						if (!(*insertResult1.first).first.equalPoint( neighbour))
-						{
-							std::ostringstream os;
-							os << "*** (*insertResult1.first).first != neighbour:\n\t\t" << (*insertResult1.first).first << " <- " << (*insertResult1.first).second << "\n\t\t" << neighbour << " <- " << current;
-							throw std::runtime_error(os.str());
-						}
-
-						if ((*insertResult1.first).first.heuristicCost > neighbour.heuristicCost)
-						{
-							predecessorMap.erase( insertResult1.first);
-							std::pair< VertexMap::iterator, bool > insertResult2 = predecessorMap.insert( std::make_pair( neighbour, current));
-							if (insertResult2.second != true)
-							{
-								std::ostringstream os;
-								os << "**** Failed updating neighbour in the predecessorMap:  " << neighbour << " <- " << current << "\n";
-								if (insertResult2.first != predecessorMap.end())
-								{
-									os << "\tcurrent value in the predecessorMap:  " << (*insertResult2.first).first << " <- " << (*insertResult2.first).second;
-								} else
-								{
-									os << "\tinvalid iterator ";
-								}
-								throw std::runtime_error(os.str());
-							} else
-							{
-							}
-						}
-					} else
-					{
+						std::cerr << "**** Failed adding neighbour to the predecessorMap: " << neighbour << std::endl;
 					}
 
-					// if neighbour is not in openSet, add it to the openSet
-					// which should always be the case?
-					openVertex = findInOpenSet( neighbour);
-					if (openVertex == openSet.end())
-					{
-						addToOpenSet( neighbour);
-					} else
-					{
-						std::cerr << "**** Failed adding neighbour to the openSet:  " << neighbour << std::endl;
-					}
 				} //for(Edge connection : connections)
 
-				//			Improving the performance 28-04-2014.....
+				//			28-04-2014
 				//
 				//			Sorting after the insertion of an individual:
 				//			aRobotSize = (37,29), radius = 23
@@ -251,10 +230,22 @@ namespace PathAlgorithm
 				//			{
 				//				std::sort( openSet.begin(), openSet.end(), VertexLessCostCompare());
 				//			}
+				//
+				//			 28-1-2022:
+				//
+				//			 Some rationalisations (see a diff for the differences) and the size of the window has changed.
+				//			 Don't know if that should have changed the number of nodes though.
+				//			 Timings are without enabling notyfyObservers but with checking if the are enabled. Removing the check
+				//			 did not change the times significantly.
+				//			 The numbers have changed but the essence stays the same: using a vector and searching/swapping
+				//			 is faster than using a (always sorted) set:
+				//			   With profiling information:
+				//			   	Duration: 0.487936, openSet: 1252, closedSet: 83731, predecessorMap: 84982
+				//			   Without profiling information:
+				//			   	Duration: 0.294032, openSet: 1252, closedSet: 83731, predecessorMap: 84982
 				std::iter_swap(openSet.begin(), std::min_element( openSet.begin(), openSet.end(), VertexLessCostCompare()));
 			}
 		}
-		// std::cerr << "Duration: " << (std::clock() - begin) << " openSet: " << getOS().size() << " closedSet: " << getCS().size() << " predecessorMap: " << getPM().size() << std::endl;
 
 		std::cerr << "**** No route from " << aStart << " to " << aGoal << std::endl;
 		return Path();
@@ -264,7 +255,6 @@ namespace PathAlgorithm
 	 */
 	void AStar::addToOpenSet( const Vertex& aVertex)
 	{
-		std::unique_lock< std::recursive_mutex > lock( openSetMutex);
 		openSet.push_back( aVertex);
 		notifyObservers();
 	}
@@ -273,7 +263,6 @@ namespace PathAlgorithm
 	 */
 	void AStar::removeFromOpenSet( const Vertex& aVertex)
 	{
-		std::unique_lock< std::recursive_mutex > lock( openSetMutex);
 		OpenSet::iterator i = findInOpenSet( aVertex);
 		removeFromOpenSet( i);
 	}
@@ -282,7 +271,6 @@ namespace PathAlgorithm
 	 */
 	void AStar::removeFromOpenSet( OpenSet::iterator& i)
 	{
-		std::unique_lock< std::recursive_mutex > lock( openSetMutex);
 		openSet.erase( i);
 		notifyObservers();
 	}
@@ -291,12 +279,11 @@ namespace PathAlgorithm
 	 */
 	OpenSet::iterator AStar::findInOpenSet( const Vertex& aVertex)
 	{
-		std::unique_lock< std::recursive_mutex > lock( openSetMutex);
 		return std::find_if( openSet.begin(),
 							 openSet.end(),
 							 [aVertex](const Vertex& rhs)
 							 {
-			return aVertex.equalPoint(rhs);
+								return aVertex.equalPoint(rhs);
 							 });
 	}
 	/**
@@ -304,7 +291,6 @@ namespace PathAlgorithm
 	 */
 	bool AStar::findRemoveInOpenSet( const Vertex& aVertex)
 	{
-		std::lock_guard< std::recursive_mutex > lock( openSetMutex);
 		OpenSet::iterator i = findInOpenSet( aVertex);
 		if (i != openSet.end())
 		{
@@ -319,7 +305,6 @@ namespace PathAlgorithm
 	 */
 	void AStar::removeFirstFromOpenSet()
 	{
-		std::unique_lock< std::recursive_mutex > lock( openSetMutex);
 		openSet.erase( openSet.begin());
 	}
 	/**
@@ -327,7 +312,6 @@ namespace PathAlgorithm
 	 */
 	void AStar::addToClosedSet( const Vertex& aVertex)
 	{
-		std::unique_lock< std::recursive_mutex > lock( closedSetMutex);
 		closedSet.insert( aVertex);
 		notifyObservers();
 	}
@@ -336,7 +320,6 @@ namespace PathAlgorithm
 	 */
 	void AStar::removeFromClosedSet( const Vertex& aVertex)
 	{
-		std::unique_lock< std::recursive_mutex > lock( closedSetMutex);
 		ClosedSet::iterator i = findInClosedSet( aVertex);
 		removeFromClosedSet( i);
 	}
@@ -345,7 +328,6 @@ namespace PathAlgorithm
 	 */
 	void AStar::removeFromClosedSet( ClosedSet::iterator& i)
 	{
-		std::unique_lock< std::recursive_mutex > lock( closedSetMutex);
 		closedSet.erase( i);
 		notifyObservers();
 	}
@@ -354,8 +336,6 @@ namespace PathAlgorithm
 	 */
 	ClosedSet::iterator AStar::findInClosedSet( const Vertex& aVertex)
 	{
-		std::unique_lock< std::recursive_mutex > lock( closedSetMutex);
-		//return std::find_if(closedSet.begin(),closedSet.end(),[aVertex](const Vertex& rhs){return aVertex.equalPoint(rhs);});
 		return closedSet.find( aVertex);
 	}
 	/**
@@ -363,16 +343,13 @@ namespace PathAlgorithm
 	 */
 	ClosedSet AStar::getClosedSet() const
 	{
-		std::lock_guard< std::recursive_mutex > lock( closedSetMutex);
-		ClosedSet c = getCS();
-		return c;
+		return closedSet;
 	}
 	/**
 	 *
 	 */
 	bool AStar::findRemoveClosedSet( const Vertex& aVertex)
 	{
-		std::lock_guard< std::recursive_mutex > lock( closedSetMutex);
 		ClosedSet::iterator i = findInClosedSet( aVertex);
 		if (i != closedSet.end())
 		{
@@ -386,18 +363,14 @@ namespace PathAlgorithm
 	 */
 	OpenSet AStar::getOpenSet() const
 	{
-		std::lock_guard< std::recursive_mutex > lock( openSetMutex);
-		OpenSet o = getOS();
-		return o;
+		return openSet;
 	}
 	/**
 	 *
 	 */
 	VertexMap AStar::getPredecessorMap() const
 	{
-		std::lock_guard< std::recursive_mutex > lock( predecessorMapMutex);
-		VertexMap p = getPM();
-		return p;
+		return predecessorMap;
 	}
 
 	/**
@@ -405,7 +378,6 @@ namespace PathAlgorithm
 	 */
 	ClosedSet& AStar::getCS()
 	{
-		std::unique_lock< std::recursive_mutex > lock( closedSetMutex);
 		return closedSet;
 	}
 	/**
@@ -413,7 +385,6 @@ namespace PathAlgorithm
 	 */
 	const ClosedSet& AStar::getCS() const
 	{
-		std::unique_lock< std::recursive_mutex > lock( closedSetMutex);
 		return closedSet;
 	}
 	/**
@@ -421,7 +392,6 @@ namespace PathAlgorithm
 	 */
 	OpenSet& AStar::getOS()
 	{
-		std::unique_lock< std::recursive_mutex > lock( openSetMutex);
 		return openSet;
 	}
 	/**
@@ -429,7 +399,6 @@ namespace PathAlgorithm
 	 */
 	const OpenSet& AStar::getOS() const
 	{
-		std::unique_lock< std::recursive_mutex > lock( openSetMutex);
 		return openSet;
 	}
 	/**
@@ -437,7 +406,6 @@ namespace PathAlgorithm
 	 */
 	VertexMap& AStar::getPM()
 	{
-		std::unique_lock< std::recursive_mutex > lock( predecessorMapMutex);
 		return predecessorMap;
 	}
 	/**
@@ -445,7 +413,6 @@ namespace PathAlgorithm
 	 */
 	const VertexMap& AStar::getPM() const
 	{
-		std::unique_lock< std::recursive_mutex > lock( predecessorMapMutex);
 		return predecessorMap;
 	}
 }// namespace PathAlgorithm
