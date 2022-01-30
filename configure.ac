@@ -100,8 +100,6 @@ esac
 #########################################################################################################
 # Check for headers
 
-AC_HEADER_STDC
-
 # Check for typedefs, structures and compiler chracteristics
 # Empty for now
 
@@ -184,7 +182,7 @@ BOOST_TEST([$requested_version])
 # See https://lists.gnu.org/archive/html/autoconf/2003-04/msg00103.html for the AC_DEFINE solution
 # and why "AC_DEFINE(BOOST_TIMER_LIBS" does not work...  
 AC_DEFINE(BOOST_TIMER_LIBS,"","")
-if test -z $BOOST_CPPFLAGS; then 
+if test -z "$BOOST_CPPFLAGS"; then 
     BOOST_TIMER_LIBS="-lboost_timer" 
 else	
 	if test $minor_boost_version -gt "68"; then 
@@ -390,7 +388,7 @@ esac
 
 development_default="yes"
 AC_ARG_ENABLE(development,
-AC_HELP_STRING([--enable-development= no/yes],[if enabled all development features will be on]),
+AS_HELP_STRING([--enable-development= no/yes],[if enabled all development features will be on]),
 enable_development=$enableval,
 enable_development=$development_default)
 if test "$enable_development" = "yes"; then
@@ -417,7 +415,7 @@ AC_SUBST([AM_LIBTOOLFLAGS])
 AC_PROG_INSTALL
 
 # Output files
-AC_CONFIG_HEADER([src/config.h])
+AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_FILES(Makefile src/Makefile)
 AC_OUTPUT
 
