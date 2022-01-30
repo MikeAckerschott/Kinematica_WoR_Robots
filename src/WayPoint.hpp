@@ -23,7 +23,7 @@ namespace Model
 			/**
 			 *
 			 */
-			WayPoint( const std::string& aName);
+			explicit WayPoint( const std::string& aName);
 			/**
 			 *
 			 */
@@ -81,11 +81,11 @@ namespace Model
 			/**
 			 * Returns a 1-line description of the object
 			 */
-			virtual std::string asString() const;
+			virtual std::string asString() const override;
 			/**
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
-			virtual std::string asDebugString() const;
+			virtual std::string asDebugString() const override;
 			//@}
 		protected:
 		private:

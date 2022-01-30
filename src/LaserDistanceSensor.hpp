@@ -30,7 +30,7 @@ namespace Model
 	class DistancePercept : public AbstractPercept
 	{
 		public:
-			DistancePercept( const DistanceStimulus& aDistanceStimulus) :
+			explicit DistancePercept( const DistanceStimulus& aDistanceStimulus) :
 				angle(aDistanceStimulus.angle),
 				distance( aDistanceStimulus.distance)
 		{
@@ -62,7 +62,7 @@ namespace Model
 			/**
 			 *
 			 */
-			LaserDistanceSensor( Robot* aRobot);
+			explicit LaserDistanceSensor( Robot* aRobot);
 			/**
 			 *
 			 */
@@ -70,11 +70,11 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual std::shared_ptr< AbstractStimulus > getStimulus() const;
+			virtual std::shared_ptr< AbstractStimulus > getStimulus() const override;
 			/**
 			 *
 			 */
-			virtual std::shared_ptr< AbstractPercept > getPerceptFor( std::shared_ptr< AbstractStimulus > anAbstractStimulus) const;
+			virtual std::shared_ptr< AbstractPercept > getPerceptFor( std::shared_ptr< AbstractStimulus > anAbstractStimulus) const override;
 			/**
 			 * @name Debug functions
 			 */
@@ -82,11 +82,11 @@ namespace Model
 			/**
 			 * Returns a 1-line description of the object
 			 */
-			virtual std::string asString() const;
+			virtual std::string asString() const override;
 			/**
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
-			virtual std::string asDebugString() const;
+			virtual std::string asDebugString() const override;
 			//@}
 		protected:
 		private:

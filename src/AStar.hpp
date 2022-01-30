@@ -32,13 +32,25 @@ namespace PathAlgorithm
 			/**
 			 *
 			 */
-			Vertex( const Point& aPoint) :
+			explicit Vertex( const Point& aPoint) :
 				x( aPoint.x),
 				y( aPoint.y),
 				actualCost( 0.0),
 				heuristicCost( 0.0)
 			{
 			}
+			/**
+			 *
+			 */
+			 Vertex( const Vertex&) = default;
+			/**
+			 *
+			 */
+			 Vertex( Vertex&&) = default;
+			/**
+			 *
+			 */
+			 Vertex& operator=( const Vertex&) = default;
 			/**
 			 *
 			 */
@@ -297,11 +309,6 @@ namespace PathAlgorithm
 			 *
 			 */
 			VertexMap predecessorMap;
-
-			mutable std::recursive_mutex openSetMutex;
-			mutable std::recursive_mutex closedSetMutex;
-			mutable std::recursive_mutex predecessorMapMutex;
-
 	}; // class AStar
 } // namespace PathAlgorithm
 #endif // ASTAR_HPP_

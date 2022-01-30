@@ -21,7 +21,7 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual void handleCommand( AbstractCommand& anAbstractCommand);
+			virtual void handleCommand( AbstractCommand& anAbstractCommand) override;
 	};
 } // namespace Model
 #endif // STEERINGACTUATOR_HPP_

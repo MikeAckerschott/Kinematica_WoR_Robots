@@ -74,6 +74,10 @@ class BoundedVector
 		/**
 		 *
 		 */
+		BoundedVector& operator=( const BoundedVector& aVector);
+		/**
+		 *
+		 */
 		BoundedVector& operator+=( const BoundedVector& aVector);
 		/**
 		 *

@@ -395,8 +395,8 @@ enable_development=$enableval,
 enable_development=$development_default)
 if test "$enable_development" = "yes"; then
 	AM_CPPFLAGS="$AM_CPPFLAGS -DDEVELOPMENT"
-	AM_CFLAGS="$AM_CFLAGS -Og -g3 -Wall -Wextra -Wconversion"
-	AM_CXXFLAGS="$AM_CXXFLAGS -Og -g3 -Wall -Wextra -Wconversion"
+	AM_CFLAGS="$AM_CFLAGS -Og -pg -g3 -Wall -Wextra -Wconversion"
+	AM_CXXFLAGS="$AM_CXXFLAGS -Og -pg -g3 -Wall -Wextra -Wconversion"
 	AC_MSG_RESULT(Enabling development tracing)
 else
 	AM_CPPFLAGS="$AM_CPPFLAGS -DPRODUCTION"

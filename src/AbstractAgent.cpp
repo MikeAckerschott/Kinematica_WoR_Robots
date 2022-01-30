@@ -48,9 +48,9 @@ namespace Model
 	/**
 	 *
 	 */
-	void AbstractAgent::addPercept( std::shared_ptr< AbstractPercept > aPercept)
+	void AbstractAgent::addPercept( std::shared_ptr< AbstractPercept > anAbstractPercept)
 	{
-		perceptQueue.enqueue( aPercept);
+		perceptQueue.enqueue( anAbstractPercept);
 	}
 	/**
 	 *

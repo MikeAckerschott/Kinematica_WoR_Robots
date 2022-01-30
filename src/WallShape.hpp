@@ -18,7 +18,7 @@ namespace View
 			/**
 			 *
 			 */
-			WallShape( 	Model::WallPtr aWall);
+			explicit WallShape( Model::WallPtr aWall);
 			/**
 			 *
 			 */
@@ -47,7 +47,7 @@ namespace View
 			 *
 			 */
 			virtual void setSelectedAt( const Point& aPoint = DefaultPosition,
-										bool aSelected = true);
+										bool aSelected = true) override;
 			/**
 			 * Return nullptr if the point is inside an end point
 			 */
@@ -67,13 +67,13 @@ namespace View
 			/**
 			 *
 			 */
-			virtual void draw( wxDC& dc);
+			virtual void draw( wxDC& dc) override;
 			/**
 			 *
 			 * @param aPoint
 			 * @return True if the point is in the shape
 			 */
-			virtual bool occupies( const Point& aPoint) const;
+			virtual bool occupies( const Point& aPoint) const override;
 			//@}
 			/**
 			 * @name Debug functions
@@ -82,11 +82,11 @@ namespace View
 			/**
 			 * Returns a 1-line description of the object
 			 */
-			virtual std::string asString() const;
+			virtual std::string asString() const override;
 			/**
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
-			virtual std::string asDebugString() const;
+			virtual std::string asDebugString() const override;
 			//@}
 		private:
 	};

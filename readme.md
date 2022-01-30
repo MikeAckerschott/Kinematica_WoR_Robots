@@ -1,4 +1,5 @@
-# RobotWorld building and using (readme)
+RobotWorld building and using (readme)
+======================================
 
 Notes:
 
@@ -22,7 +23,8 @@ Notes:
     MSys files, run the "`autogen.sh`" script in the root of RobotWorld.
     (use "`./autogen.sh`")
 
-## Compilation
+Compilation
+-----------
 
 This readme assumes that both Boost and wxWidgets are compiled and
 installed using the OSM installation manual (see
@@ -34,17 +36,11 @@ If both Boost and wxWidgets have been compiled and installed as
 described in the installation manual, the following commands can be used
 to configure and build RobotWorld.
 
-First make sure the necessary tools are installed, run
-
-    sudo apt install libtool m4 automake build-essential git
-
 Navigate to the root folder of RobotWorld (for example
 "`~/sources/robotworld/`", where "`~`" stands for the home folder of the
 user.
 
     cd ~/sources/robotworld/
-
-    ./autogen.sh
 
     mkdir linux-build
 
@@ -85,8 +81,6 @@ to the root folder of RobotWorld (for example "`/c/robotworld/`")
 
     cd /c/robotworld/
 
-    ./autogen.sh
-
     mkdir mingw-build 
 
     cd mingw-build/
@@ -118,7 +112,8 @@ Notes:
     should be "`/c/wxWidgets-3.1.1-mingw/build-mingw/wx-config`". Run
     "`../configure --help`" for details on command line options.
 
-## Eclipse instructions
+Eclipse instructions
+--------------------
 
 ### Create Eclipse project
 
@@ -188,16 +183,9 @@ Remarks:
 
 -   Change the `C/C++ Application` launch target to `robotworld.exe` in
     the (hidden) folder `.libs`.
-
+    
 ### Using Sanitizers
 
--   If you compile with "-fsanitize=address -fsanitize=leak
-    -fsanitize=undefined" you must link with "-fsanitize=address
-    -fsanitize=leak -fsanitize=undefined" for linking with the correct
-    libraries.
-
--   If your IDE does not support that you can link with asan en usan (in
-    that order!)
-
--   If the LeakSanitizer gives false positives you can add those (after
-    careful inspection!!!) to the LeakSanitizerSuppression.txt
+- If you compile with "-fsanitize=address -fsanitize=leak -fsanitize=undefined" you must link with "-fsanitize=address -fsanitize=leak -fsanitize=undefined" for linking with the correct libraries.
+- If your IDE does not support that you can link with asan en usan (in that order!)
+- If the LeakSanitizer gives false positives you can add those (after careful inspection!!!) to the LeakSanitizerSuppression.txt

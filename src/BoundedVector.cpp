@@ -22,15 +22,12 @@ namespace Model
 	{
 		double magnitude = getMagnitude();
 
-		if (magnitude <= Utils::ALMOST_ZERO)
-			magnitude = 1;
+		if (magnitude <= Utils::ALMOST_ZERO) magnitude = 1;
 		x /= magnitude;
 		y /= magnitude;
 
-		if (std::fabs( x) < Utils::ALMOST_ZERO)
-			x = 0.0;
-		if (std::fabs( y) < Utils::ALMOST_ZERO)
-			y = 0.0;
+		if (std::fabs( x) < Utils::ALMOST_ZERO) x = 0.0;
+		if (std::fabs( y) < Utils::ALMOST_ZERO) y = 0.0;
 
 	}
 	/**
@@ -53,43 +50,55 @@ namespace Model
 	/**
 	 *
 	 */
+	BoundedVector& BoundedVector::operator=( const BoundedVector& aVector)
+	{
+		if(this != &aVector)
+		{
+			x = aVector.x;
+			y = aVector.y;
+		}
+		return *this;
+	}
+	/**
+	 *
+	 */
 	BoundedVector& BoundedVector::operator+=( const BoundedVector& aVector)
-				{
+	{
 		x += aVector.x;
 		y += aVector.y;
 
 		return *this;
-				}
+	}
 	/**
 	 *
 	 */
 	BoundedVector& BoundedVector::operator-=( const BoundedVector& aVector)
-				{
+	{
 		x -= aVector.x;
 		y -= aVector.y;
 
 		return *this;
-				}
+	}
 	/**
 	 *
 	 */
 	BoundedVector& BoundedVector::operator*=( float aScalar)
-				{
+	{
 		x *= aScalar;
 		y *= aScalar;
 
 		return *this;
-				}
+	}
 	/**
 	 *
 	 */
 	BoundedVector& BoundedVector::operator/=( float aScalar)
-				{
+	{
 		x /= aScalar;
 		y /= aScalar;
 
 		return *this;
-				}
+	}
 	/**
 	 *
 	 */
@@ -119,7 +128,7 @@ namespace Model
 /**
  *
  */
-Model::BoundedVector operator+(	const Model::BoundedVector& lhs,
+Model::BoundedVector operator+( const Model::BoundedVector& lhs,
 								const Model::BoundedVector& rhs)
 {
 	return Model::BoundedVector( lhs.x + rhs.x, lhs.y + rhs.y);
@@ -127,7 +136,7 @@ Model::BoundedVector operator+(	const Model::BoundedVector& lhs,
 /**
  *
  */
-Model::BoundedVector operator-(	const Model::BoundedVector& lhs,
+Model::BoundedVector operator-( const Model::BoundedVector& lhs,
 								const Model::BoundedVector& rhs)
 {
 	return Model::BoundedVector( lhs.x - rhs.x, lhs.y - rhs.y);
@@ -151,7 +160,7 @@ Model::BoundedVector operator*( float s,
 /**
  *
  */
-Model::BoundedVector operator*(	const Model::BoundedVector& lhs,
+Model::BoundedVector operator*( const Model::BoundedVector& lhs,
 								float s)
 {
 	return Model::BoundedVector( lhs.x * s, lhs.y * s);
@@ -159,7 +168,7 @@ Model::BoundedVector operator*(	const Model::BoundedVector& lhs,
 /**
  *
  */
-Model::BoundedVector operator/(	const Model::BoundedVector& lhs,
+Model::BoundedVector operator/( const Model::BoundedVector& lhs,
 								float s)
 {
 	return Model::BoundedVector( lhs.x / s, lhs.y / s);
