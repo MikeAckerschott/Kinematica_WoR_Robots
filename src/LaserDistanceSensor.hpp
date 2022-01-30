@@ -1,10 +1,3 @@
-/*
- * LaserDistanceSensor.hpp
- *
- *  Created on: 15 Oct 2012
- *      Author: jkr
- */
-
 #ifndef LASERDISTANCESENSOR_HPP_
 #define LASERDISTANCESENSOR_HPP_
 

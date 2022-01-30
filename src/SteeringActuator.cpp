@@ -1,10 +1,3 @@
-/*
- * SteeringActuator.cpp
- *
- *  Created on: 15 Oct 2012
- *      Author: jkr
- */
-
 #include "SteeringActuator.hpp"
 
 namespace Model

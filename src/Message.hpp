@@ -1,5 +1,5 @@
-#ifndef MESSAGE_HPP__
-#define MESSAGE_HPP__
+#ifndef MESSAGE_HPP_
+#define MESSAGE_HPP_
 
 #include "Config.hpp"
 
