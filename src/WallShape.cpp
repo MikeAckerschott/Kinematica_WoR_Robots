@@ -1,10 +1,3 @@
-/*
- * WallShape.cpp
- *
- *  Created on: 21 Oct 2012
- *      Author: jkr
- */
-
 #include "WallShape.hpp"
 
 #include "Logger.hpp"

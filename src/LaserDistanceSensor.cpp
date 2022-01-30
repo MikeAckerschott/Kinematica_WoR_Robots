@@ -1,10 +1,3 @@
-/*
- * LaserDistanceSensor.cpp
- *
- *  Created on: 15 Oct 2012
- *      Author: jkr
- */
-
 #include "LaserDistanceSensor.hpp"
 
 #include "Logger.hpp"
