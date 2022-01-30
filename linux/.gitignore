@@ -1,9 +1,7 @@
 /src/
+/.deps/
 /config.log
 /config.status
 /libtool
 /Makefile
-/gmon.out
-/robotworld_devlib.log
-/robotworld_system.log
-/config.log.jorg
+

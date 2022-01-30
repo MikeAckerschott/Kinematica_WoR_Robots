@@ -288,7 +288,7 @@ namespace Model
 	/**
 	 *
 	 */
-	void RobotWorld::populate( int aNumberOfWalls /*= 2*/)
+	void RobotWorld::populate( int /*aNumberOfWalls = 2*/)
 	{
 		RobotWorld::getRobotWorld().newRobot( "Robot", Point(163,111),false);
 

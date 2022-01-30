@@ -17,7 +17,7 @@ namespace View
 			/**
 			 *
 			 */
-			WayPointShape( Model::WayPointPtr aWayPoint);
+			explicit WayPointShape( Model::WayPointPtr aWayPoint);
 			/**
 			 *
 			 */
@@ -74,11 +74,11 @@ namespace View
 			/**
 			 *
 			 */
-			virtual void draw( wxDC& dc);
+			virtual void draw( wxDC& dc) override;
 			/**
 			 *
 			 */
-			virtual void setCentre( const Point& aPoint);
+			virtual void setCentre( const Point& aPoint) override;
 			//@}
 			/**
 			 * @name Debug functions
@@ -87,11 +87,11 @@ namespace View
 			/**
 			 * Returns a 1-line description of the object
 			 */
-			virtual std::string asString() const;
+			virtual std::string asString() const override;
 			/**
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
-			virtual std::string asDebugString() const;
+			virtual std::string asDebugString() const override;
 			//@}
 
 		private:

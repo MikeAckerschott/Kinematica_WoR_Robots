@@ -46,7 +46,7 @@ namespace Model
 			/**
 			 *
 			 */
-			Robot( const std::string& aName);
+			explicit Robot( const std::string& aName);
 			/**
 			 *
 			 */
@@ -118,11 +118,11 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual void startActing();
+			virtual void startActing() override;
 			/**
 			 *
 			 */
-			virtual void stopActing();
+			virtual void stopActing() override;
 			/**
 			 *
 			 * @return true if the robot is driving
@@ -192,7 +192,7 @@ namespace Model
 			 * Notifier. It is the responsibility of the Observer to filter any events it is interested in.
 			 *
 			 */
-			virtual void handleNotification();
+			virtual void handleNotification() override;
 			//@}
 			/**
 			 *
@@ -234,11 +234,11 @@ namespace Model
 			/**
 			 * Returns a 1-line description of the object
 			 */
-			virtual std::string asString() const;
+			virtual std::string asString() const override;
 			/**
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
-			virtual std::string asDebugString() const;
+			virtual std::string asDebugString() const override;
 			//@}
 
 		protected:

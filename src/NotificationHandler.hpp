@@ -16,11 +16,18 @@ namespace Base
 	class NotificationHandler : public EventHandler
 	{
 		public:
-			NotificationHandler( const NotificationFunction& aNotificationFunction) :
+			explicit NotificationHandler( const NotificationFunction& aNotificationFunction) :
 				function( aNotificationFunction)
 		{
+				// TODO: Change this code so we don't have to use the #pragma's nor the reinterpret_cast.
+				// See @https://gcc.gnu.org/onlinedocs/gcc/Diagnostic-Pragmas.html#Diagnostic-Pragmas for the #pragma explanation.
+				#pragma GCC diagnostic push
+				#pragma GCC diagnostic ignored "-Wcast-function-type"
+
 				Connect( EVT_NOTIFICATIONEVENT,
-						 (wxObjectEventFunction)(wxEventFunction)static_cast< NotificationEventFunction >( &NotificationHandler::OnNotificationEvent));
+						 (wxObjectEventFunction)(wxEventFunction)reinterpret_cast< NotificationEventFunction >( &NotificationHandler::OnNotificationEvent));
+
+				#pragma GCC diagnostic pop
 		}
 			virtual ~NotificationHandler()
 			{

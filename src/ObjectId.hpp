@@ -60,7 +60,7 @@ namespace Base
 			 *
 			 * @param max Initial elements reservation
 			 */
-			ObjectId( unsigned long max) :
+			explicit ObjectId( unsigned long max) :
 				base( max)
 			{
 			}
@@ -233,7 +233,7 @@ namespace Base
 			/**
 			 *
 			 */
-			ObjectId( const std::string& anObjectIdString) :
+			explicit ObjectId( const std::string& anObjectIdString) :
 				base( anObjectIdString.begin(), anObjectIdString.end())
 			{
 			}

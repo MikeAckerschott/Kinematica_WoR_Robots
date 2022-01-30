@@ -26,12 +26,12 @@ namespace Application
 			/**
 			 *
 			 */
-			LogTextCtrl( 	Window* aParent,
-							WindowId aWindowId = DEFAULT_ID,
-							long aStyle = wxTE_READONLY | wxTE_MULTILINE | wxTE_DONTWRAP,
-							const std::string& anInitialText = "",
-							const Point& aPoint = DefaultPosition,
-							const Size& aSize = DefaultSize);
+			explicit LogTextCtrl( 	Window* aParent,
+									WindowId aWindowId = DEFAULT_ID,
+									long aStyle = wxTE_READONLY | wxTE_MULTILINE | wxTE_DONTWRAP,
+									const std::string& anInitialText = "",
+									const Point& aPoint = DefaultPosition,
+									const Size& aSize = DefaultSize);
 			virtual ~LogTextCtrl();
 			//@}
 			/**

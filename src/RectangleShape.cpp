@@ -22,12 +22,12 @@ namespace View
 	 *
 	 */
 	RectangleShape::RectangleShape( Model::ModelObjectPtr aModelObject,
-									const Point& aPoint,
+									const Point& aCentrePoint,
 									const std::string& aTitle /*= ""*/,
 									int aBorderWidth /*= 2*/,
 									int aSpacing /*= 2*/) :
 								Shape(aModelObject),
-								centre( aPoint),
+								centre( aCentrePoint),
 								size( 0, 0),
 								title( aTitle),
 								titleSize( 0, 0),
@@ -38,11 +38,11 @@ namespace View
 	/**
 	 *
 	 */
-	RectangleShape::RectangleShape( const Point& aPoint,
+	RectangleShape::RectangleShape( const Point& aCentrePoint,
 									const std::string& aTitle /*= ""*/,
 									int aBorderWidth /*= 2*/,
 									int aSpacing /*= 2*/) :
-								centre( aPoint),
+								centre( aCentrePoint),
 								size( 0, 0),
 								title( aTitle),
 								titleSize( 0, 0),
@@ -68,6 +68,7 @@ namespace View
 			centre = aRectangleShape.centre;
 			size = aRectangleShape.size;
 			title = aRectangleShape.title;
+			titleSize = aRectangleShape.titleSize;
 			borderWidth = aRectangleShape.borderWidth;
 			spacing = aRectangleShape.spacing;
 		}

@@ -65,7 +65,7 @@ namespace View
 			/**
 			 *
 			 */
-			Shape(Model::ModelObjectPtr aModelObject) :
+			explicit Shape(Model::ModelObjectPtr aModelObject) :
 				ViewObject(aModelObject),
 				data( nullptr),
 				selected( false)

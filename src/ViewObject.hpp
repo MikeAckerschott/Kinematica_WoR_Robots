@@ -26,7 +26,7 @@ namespace View
 			/**
 			 * ModelObject constructor
 			 */
-			ViewObject(Model::ModelObjectPtr aModelObject);
+			explicit ViewObject(Model::ModelObjectPtr aModelObject);
 			/**
 			 * Destructor
 			 */
