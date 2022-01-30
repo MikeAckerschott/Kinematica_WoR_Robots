@@ -511,9 +511,9 @@ namespace Model
 			Application::Logger::setDisable();
 
 			front = BoundedVector( aGoal->getPosition(), position);
-			handleNotificationsFor( astar);
+			//handleNotificationsFor( astar);
 			path = astar.search( position, aGoal->getPosition(), size);
-			stopHandlingNotificationsFor( astar);
+			//stopHandlingNotificationsFor( astar);
 
 			Application::Logger::setDisable( false);
 		}
