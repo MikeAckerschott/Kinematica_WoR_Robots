@@ -22097,7 +22097,7 @@ fi
 
 printf "%s\n" "#define BOOST_TIMER_LIBS \"\"" >>confdefs.h
 
-if test -z $BOOST_CPPFLAGS; then
+if test -z "$BOOST_CPPFLAGS"; then
     BOOST_TIMER_LIBS="-lboost_timer"
 else
 	if test $minor_boost_version -gt "68"; then

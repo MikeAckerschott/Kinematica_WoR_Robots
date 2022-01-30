@@ -184,7 +184,7 @@ BOOST_TEST([$requested_version])
 # See https://lists.gnu.org/archive/html/autoconf/2003-04/msg00103.html for the AC_DEFINE solution
 # and why "AC_DEFINE(BOOST_TIMER_LIBS" does not work...  
 AC_DEFINE(BOOST_TIMER_LIBS,"","")
-if test -z $BOOST_CPPFLAGS; then 
+if test -z "$BOOST_CPPFLAGS"; then 
     BOOST_TIMER_LIBS="-lboost_timer" 
 else	
 	if test $minor_boost_version -gt "68"; then 
