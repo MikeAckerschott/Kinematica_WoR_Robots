@@ -181,6 +181,7 @@ namespace Base
 				if(threadIndentionLevels.find(currentThreadId)!=threadIndentionLevels.end())
 				#else
 				if(!threadIndentionLevels.contains(currentThreadId)) // @suppress("Method cannot be resolved")
+				#endif
 				{
 					threadIndentionLevels.insert(std::make_pair(currentThreadId,0));
 				}
