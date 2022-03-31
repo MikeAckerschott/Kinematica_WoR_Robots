@@ -156,7 +156,19 @@ manually.
 
 This must be done in the "Paths and Symbols" part of the project
 settings: "`Project->properties->C/C++ General->Paths and Symbols`" on
-the tabs "`includes`" and "`symbols`"
+the tabs "`includes`" and "`symbols`"`
+
+on the tab includes in my case these needed to be added, make sure you select "add to all configurations" and "add to all languages":
+
+C:\wxWidgets-3.1.4\build-mingw\lib\wx\include\msw-unicode-3.1
+C:\wxWidgets-3.1.4\include
+C:\boost\include
+
+then go to the tab symbols and add these symbols with their values, make sure you select "add to all configurations" and "add to all languages":
+
+__WXMSW__           with no value
+_FILE_OFFSET_BITS   with value 64
+WXUSINGDLL          with no value
 
 Remarks:
 
