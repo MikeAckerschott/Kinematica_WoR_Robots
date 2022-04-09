@@ -31,6 +31,7 @@ namespace Model
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void AbstractSensor::setOn( unsigned long aSleepTime /*= 100*/)
 	{
 		std::unique_lock< std::recursive_mutex > lock( sensorMutex);
@@ -45,6 +46,7 @@ namespace Model
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void AbstractSensor::setOff()
 	{
 		std::unique_lock< std::recursive_mutex > lock( sensorMutex);

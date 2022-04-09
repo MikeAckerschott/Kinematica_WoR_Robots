@@ -36,6 +36,7 @@ namespace Model
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void AbstractAgent::attachActuator( std::shared_ptr< AbstractActuator > anActuator,
 										bool attachActuatorToAgent /*= false*/)
 	{

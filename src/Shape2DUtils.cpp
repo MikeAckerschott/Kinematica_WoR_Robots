@@ -86,6 +86,7 @@ namespace Utils
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	/* static */Point Shape2DUtils::getIntersection(	const Point& aStartLine1,
 														const Point& aEndLine1,
 														const Point& aStartLine2,
@@ -106,7 +107,8 @@ namespace Utils
 			return DefaultPosition;
 
 		// Get the x and y
-		double pre = (x1 * y2 - y1 * x2), post = (x3 * y4 - y3 * x4);
+		double pre = (x1 * y2 - y1 * x2);
+		double post = (x3 * y4 - y3 * x4);
 		double x = (pre * (x3 - x4) - (x1 - x2) * post) / d;
 		double y = (pre * (y3 - y4) - (y1 - y2) * post) / d;
 
@@ -126,7 +128,7 @@ namespace Utils
 	/**
 	 *
 	 */
-	/* static */bool Shape2DUtils::isInsidePolygon( Point* aPolygon,
+	/* static */bool Shape2DUtils::isInsidePolygon( const Point* aPolygon,
 													int aNumberOfPoints,
 													const Point& aPoint)
 	{
@@ -240,7 +242,7 @@ namespace Utils
 	/**
 	 *
 	 */
-	/* static */bool Shape2DUtils::isOnLine( 	Point* aPolygon,
+	/* static */bool Shape2DUtils::isOnLine( 	const Point* aPolygon,
 												int aNumberOfPoints,
 												const Point& aPoint,
 												int aRadius /* = 6 */,
@@ -315,6 +317,7 @@ namespace Utils
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	/* static */bool Shape2DUtils::isCompassPoint(	const Point& aPoint,
 													const Size& aSize,
 													const Point& aBorderPoint,

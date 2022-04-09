@@ -163,12 +163,10 @@ namespace Model
 	 */
 	RobotPtr RobotWorld::getRobot( const std::string& aName) const
 	{
-		for (RobotPtr robot : robots)
+		if(	auto i = std::find_if(robots.begin(),robots.end(),[&aName](RobotPtr robot){return robot->getName() == aName;});
+			i != robots.end())
 		{
-			if (robot->getName() == aName)
-			{
-				return robot;
-			}
+			return *i;
 		}
 		return nullptr;
 	}
@@ -177,12 +175,10 @@ namespace Model
 	 */
 	RobotPtr RobotWorld::getRobot( const Base::ObjectId& anObjectId) const
 	{
-		for (RobotPtr robot : robots)
+		if(	auto i = std::find_if(robots.begin(),robots.end(),[&anObjectId](RobotPtr robot){return robot->getObjectId() == anObjectId;});
+			i != robots.end())
 		{
-			if (robot->getObjectId() == anObjectId)
-			{
-				return robot;
-			}
+			return *i;
 		}
 		return nullptr;
 	}
@@ -191,12 +187,10 @@ namespace Model
 	 */
 	WayPointPtr RobotWorld::getWayPoint( const std::string& aName) const
 	{
-		for (WayPointPtr wayPoint : wayPoints)
+		if(	auto i = std::find_if(wayPoints.begin(),wayPoints.end(),[&aName](WayPointPtr wayPoint){return wayPoint->getName() == aName;});
+			i != wayPoints.end())
 		{
-			if (wayPoint->getName() == aName)
-			{
-				return wayPoint;
-			}
+			return *i;
 		}
 		return nullptr;
 	}
@@ -205,12 +199,10 @@ namespace Model
 	 */
 	WayPointPtr RobotWorld::getWayPoint( const Base::ObjectId& anObjectId) const
 	{
-		for (WayPointPtr wayPoint : wayPoints)
+		if(	auto i = std::find_if(wayPoints.begin(),wayPoints.end(),[&anObjectId](WayPointPtr wayPoint){return wayPoint->getObjectId() == anObjectId;});
+			i != wayPoints.end())
 		{
-			if (wayPoint->getObjectId() == anObjectId)
-			{
-				return wayPoint;
-			}
+			return *i;
 		}
 		return nullptr;
 	}
@@ -219,12 +211,10 @@ namespace Model
 	 */
 	GoalPtr RobotWorld::getGoal( const std::string& aName) const
 	{
-		for (GoalPtr goal : goals)
+		if(	auto i = std::find_if(goals.begin(),goals.end(),[&aName](GoalPtr goal){return goal->getName() == aName;});
+			i != goals.end())
 		{
-			if (goal->getName() == aName)
-			{
-				return goal;
-			}
+			return *i;
 		}
 		return nullptr;
 	}
@@ -233,12 +223,10 @@ namespace Model
 	 */
 	GoalPtr RobotWorld::getGoal( const Base::ObjectId& anObjectId) const
 	{
-		for (GoalPtr goal : goals)
+		if(	auto i = std::find_if(goals.begin(),goals.end(),[&anObjectId](GoalPtr goal){return goal->getObjectId() == anObjectId;});
+			i != goals.end())
 		{
-			if (goal->getObjectId() == anObjectId)
-			{
-				return goal;
-			}
+			return *i;
 		}
 		return nullptr;
 	}
@@ -247,12 +235,10 @@ namespace Model
 	 */
 	WallPtr RobotWorld::getWall( const Base::ObjectId& anObjectId) const
 	{
-		for (WallPtr wall: walls)
+		if(	auto i = std::find_if(walls.begin(),walls.end(),[&anObjectId](WallPtr wall){return wall->getObjectId() == anObjectId;});
+			i != walls.end())
 		{
-			if (wall->getObjectId() == anObjectId)
-			{
-				return wall;
-			}
+			return *i;
 		}
 		return nullptr;
 	}
@@ -290,7 +276,7 @@ namespace Model
 	 */
 	void RobotWorld::populate( int /*aNumberOfWalls = 2*/)
 	{
-		RobotWorld::getRobotWorld().newRobot( "Robot", Point(163,111),false);
+		RobotWorld::getRobotWorld().newRobot( "Robot", Point(163,111),false); // @suppress("Avoid magic numbers")
 
 		/*
 		static Point coordinates[] = { Point( 100, 400), Point( 350, 300),
@@ -303,8 +289,8 @@ namespace Model
 		}
 		*/
 
-		RobotWorld::getRobotWorld().newWall( Point(7,234), Point(419,234) ,false);
-		RobotWorld::getRobotWorld().newGoal( "Goal", Point(320,285),false);
+		RobotWorld::getRobotWorld().newWall( Point(7,234), Point(419,234) ,false); // @suppress("Avoid magic numbers")
+		RobotWorld::getRobotWorld().newGoal( "Goal", Point(320,285),false); // @suppress("Avoid magic numbers")
 
 		notifyObservers();
 	}

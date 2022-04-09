@@ -16,7 +16,7 @@ namespace Base
 	template< typename NotificationFunction >
 	struct NotificationFunctionTypeTraits
 	{
-			void call( 	NotificationFunction& aNotificationFunction,
+			static void call( 	const NotificationFunction& aNotificationFunction,
 						NotifyEvent&)
 			{
 				aNotificationFunction();
@@ -26,7 +26,7 @@ namespace Base
 	template< >
 	struct NotificationFunctionTypeTraits< std::function< void( NotifyEvent&) > >
 	{
-			static void call( 	std::function< void( NotifyEvent&) >& aNotificationFunction,
+			static void call( 	const std::function< void( NotifyEvent&) >& aNotificationFunction,
 								NotifyEvent& event)
 			{
 				aNotificationFunction( event);

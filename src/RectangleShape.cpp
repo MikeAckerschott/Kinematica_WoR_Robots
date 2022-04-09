@@ -120,6 +120,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	bool RectangleShape::isBorderPoint( const Point aPoint,
 										int aRadius /*= 3*/) const
 	{
@@ -185,6 +186,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	int RectangleShape::getBorderWidth() const
 	{
 		return borderWidth;
@@ -192,6 +194,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void RectangleShape::setBorderWidth( int aBorderWidth)
 	{
 		borderWidth = aBorderWidth;
@@ -199,6 +202,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	int RectangleShape::getSpacing() const
 	{
 		return spacing;
@@ -206,6 +210,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void RectangleShape::setSpacing( int aSpacing)
 	{
 		spacing = aSpacing;

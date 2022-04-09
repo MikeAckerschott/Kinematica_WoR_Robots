@@ -56,6 +56,9 @@ namespace View
 								dandEnabled( true),
 								notificationHandler( nullptr)
 	{
+		// TODO: should the enable*() function be virtual?
+		// initialise() calls virtual functions. Both cppcheck and clang-tidy flag this.
+		// Cppcheck only this line, cling-tidy on the all functions called in initialise.
 		initialise();
 	}
 
@@ -81,6 +84,9 @@ namespace View
 									dandEnabled( true),
 									notificationHandler( nullptr)
 	{
+		// TODO: should the enable*() function be virtual?
+		// initialise() calls virtual functions. Both cppcheck and clang-tidy flag this.
+		// Cppcheck only this line, cling-tidy on the all functions called in initialise.
 		initialise();
 	}
 	/**
@@ -100,6 +106,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	Point RobotWorldCanvas::devicePointFor( const Point& aScreenPoint) const
 	{
 		Point devicePoint;
@@ -109,6 +116,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	Point RobotWorldCanvas::screenPointFor( const Point& aDevicePoint) const
 	{
 		Point screenPoint;
@@ -312,6 +320,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void RobotWorldCanvas::enableDragAndDropHandling( bool enable /*= true*/)
 	{
 		dandEnabled = enable;
@@ -377,12 +386,10 @@ namespace View
 	 */
 	ShapePtr RobotWorldCanvas::getShapeAt( const Point& aPoint) const
 	{
-		for (ShapePtr shape : shapes)
+		if(	auto i = std::find_if(shapes.begin(),shapes.end(),[&aPoint](ShapePtr shape){return shape->occupies( aPoint);});
+			i != shapes.end())
 		{
-			if (shape->occupies( aPoint))
-			{
-				return shape;
-			}
+			return *i;
 		}
 		return nullptr;
 	}
@@ -391,13 +398,12 @@ namespace View
 	 */
 	bool RobotWorldCanvas::selectShapeAt( const Point& aPoint)
 	{
-		for (ShapePtr shape : shapes)
+		if(	auto i = std::find_if(shapes.begin(),shapes.end(),[&aPoint](ShapePtr shape){return shape->occupies( aPoint);});
+			i != shapes.end())
 		{
-			if (shape->occupies( aPoint))
-			{
-				setSelectedShape( shape);
-				return true;
-			}
+			setSelectedShape( *i);
+			return true;
+
 		}
 		return false;
 	}
@@ -411,6 +417,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void RobotWorldCanvas::setRobotWorld( Model::RobotWorldPtr aRobotWorld)
 	{
 		setModelObject(std::dynamic_pointer_cast<Model::ModelObject>(aRobotWorld));
@@ -455,7 +462,7 @@ namespace View
 	 */
 	void RobotWorldCanvas::initialise()
 	{
-		SetMinSize( Size( 500, 500));
+		SetMinSize( Size( 500, 500)); // @suppress("Avoid magic numbers")
 
 		notificationHandler = new Base::NotificationHandler< std::function< void( NotifyEvent&) > >( [this](NotifyEvent& anEvent){this->OnNotificationEvent(anEvent);});
 		PushEventHandler( notificationHandler);
@@ -1006,6 +1013,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void RobotWorldCanvas::handleEditWall( CommandEvent& UNUSEDPARAM(event))
 	{
 		Application::Logger::log( __PRETTY_FUNCTION__);
@@ -1054,6 +1062,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void RobotWorldCanvas::handleActivation( ShapePtr aShape)
 	{
 		aShape->handleActivated();
@@ -1425,6 +1434,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void RobotWorldCanvas::OnEditWall( CommandEvent& UNUSEDPARAM(event))
 	{
 

@@ -45,6 +45,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void WallShape::setWall( Model::WallPtr aWall)
 	{
 		setModelObject(std::dynamic_pointer_cast<Model::ModelObject>(aWall));
@@ -52,6 +53,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void WallShape::setSelectedAt(	const Point& aPoint /*= DefaultPosition*/,
 									bool aSelected /*= true*/)
 	{

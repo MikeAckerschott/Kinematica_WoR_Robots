@@ -34,6 +34,7 @@ namespace Model
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void AbstractActuator::detachAgent()
 	{
 		agent = nullptr;

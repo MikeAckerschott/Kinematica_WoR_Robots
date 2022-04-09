@@ -30,6 +30,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void WayPointShape::setWayPoint( Model::WayPointPtr aWayPoint)
 	{
 		setModelObject(std::dynamic_pointer_cast<Model::ModelObject>(aWayPoint));

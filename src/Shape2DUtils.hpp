@@ -48,7 +48,7 @@ namespace Utils
 			 * @param p The point for which to test
 			 * @return True if the point is inside the polygon, false otherwise
 			 */
-			static bool isInsidePolygon( 	Point* aPolygon,
+			static bool isInsidePolygon( 	const Point* aPolygon,
 											int aNumberOfPoints,
 											const Point& aPoint);
 			/**
@@ -73,7 +73,7 @@ namespace Utils
 			 * @param aClosedShape True if the path is a closed, false otherwise
 			 * @return True if aPoint is within aRadius of the given path lines
 			 */
-			static bool isOnLine( 	Point* aPolygon,
+			static bool isOnLine( 	const Point* aPolygon,
 									int aNumberOfPoints,
 									const Point& aPoint,
 									int aRadius = 6,

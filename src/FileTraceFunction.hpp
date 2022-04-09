@@ -20,7 +20,7 @@ namespace Base
 			/**
 			 *
 			 */
-			virtual void trace(	const std::string& aText);
+			virtual void trace(	const std::string& aText) override;
 		private:
 			std::ofstream logFile;
 	}; // class StdOutTraceFunction

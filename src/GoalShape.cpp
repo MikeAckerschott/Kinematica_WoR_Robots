@@ -30,6 +30,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void GoalShape::setGoal( Model::GoalPtr aGoal)
 	{
 		setModelObject(std::dynamic_pointer_cast<Model::ModelObject>(aGoal));

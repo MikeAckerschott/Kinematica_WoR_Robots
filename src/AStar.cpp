@@ -53,9 +53,9 @@ namespace PathAlgorithm
 	 */
 	std::vector< Vertex > GetNeighbours(	const Vertex& aVertex,
 											int aFreeRadius /*= 1*/)
-				{
-		static int xOffset[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
-		static int yOffset[] = { 1, 1, 0, -1, -1, -1, 0, 1 };
+	{
+		static const int xOffset[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+		static const int yOffset[] = { 1, 1, 0, -1, -1, -1, 0, 1 };
 
 		const std::vector< Model::WallPtr >& walls = Model::RobotWorld::getRobotWorld().getWalls();
 		std::vector< Vertex > neighbours;
@@ -91,6 +91,7 @@ namespace PathAlgorithm
 		const std::vector< Vertex >& neighbours = GetNeighbours( aVertex, aFreeRadius);
 		for (const Vertex& vertex : neighbours)
 		{
+			// cppcheck-suppress useStlAlgorithm
 			connections.push_back( Edge( aVertex, vertex));
 		}
 
@@ -168,7 +169,8 @@ namespace PathAlgorithm
 						} else
 						{
 							// Update the cost
-							(*openVertex).heuristicCost = neighbour.actualCost;
+							// TODO: should the actual cost be adjusted if (*openVertex).heuristicCost < neighbour.actualCost?
+							//(*openVertex).actualCost = neighbour.actualCost;
 							(*openVertex).heuristicCost = neighbour.heuristicCost;
 							continue;
 						}
@@ -195,6 +197,7 @@ namespace PathAlgorithm
 					addToOpenSet( neighbour);
 
 					// Add or replace (assign) the route elements.
+					// cppcheck-suppress unusedVariable
 					const auto& [iterator, succes] = predecessorMap.insert_or_assign( neighbour, current);
 					if(!succes)
 					{
@@ -289,6 +292,7 @@ namespace PathAlgorithm
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	bool AStar::findRemoveInOpenSet( const Vertex& aVertex)
 	{
 		OpenSet::iterator i = findInOpenSet( aVertex);
@@ -341,6 +345,7 @@ namespace PathAlgorithm
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	ClosedSet AStar::getClosedSet() const
 	{
 		return closedSet;
@@ -348,6 +353,7 @@ namespace PathAlgorithm
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	bool AStar::findRemoveClosedSet( const Vertex& aVertex)
 	{
 		ClosedSet::iterator i = findInClosedSet( aVertex);
@@ -368,6 +374,7 @@ namespace PathAlgorithm
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	VertexMap AStar::getPredecessorMap() const
 	{
 		return predecessorMap;

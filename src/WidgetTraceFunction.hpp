@@ -20,12 +20,12 @@ namespace Application
 			 * @param aLogTextCtrl The TextCtrl derived class that will receive the trace string as message
 			 * @param useFile If true the trace will also be logged in the file "guitrace.log".
 			 */
-			WidgetTraceFunction( Application::LogTextCtrl* aLogTextCtrl);
+			explicit WidgetTraceFunction( Application::LogTextCtrl* aLogTextCtrl);
 			/**
 			 *
 			 * @param aText The text that will be send to the final trace destination.
 			 */
-			virtual void trace( const std::string& aText);
+			virtual void trace( const std::string& aText) override;
 		private:
 			/**
 			 *

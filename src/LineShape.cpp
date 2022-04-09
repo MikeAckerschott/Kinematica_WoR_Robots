@@ -265,6 +265,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void LineShape::setLineWidth( int aLineWidth)
 	{
 		lineWidth = aLineWidth;
@@ -272,6 +273,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	int LineShape::getArrowHeadSize() const
 	{
 		return arrowHeadSize;
@@ -279,6 +281,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void LineShape::setArrowHeadSize( int anArrowHeadSize)
 	{
 		arrowHeadSize = anArrowHeadSize;
@@ -313,6 +316,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	bool LineShape::connects( RectangleShapePtr aNode) const
 	{
 		return node1 == aNode || node2 == aNode;
