@@ -56,9 +56,8 @@ namespace View
 								dandEnabled( true),
 								notificationHandler( nullptr)
 	{
-		// TODO: should the enable*() function be virtual?
-		// initialise() calls virtual functions. Both cppcheck and clang-tidy flag this.
-		// Cppcheck only this line, cling-tidy on the all functions called in initialise.
+		// CppCheck gives a "virtualCallInConstructor" on initialise(). I don't know why.
+		// It cannot be suppressed by a "cppcheck-suppress virtualCallInConstructor" (10-4-2022)
 		initialise();
 	}
 
@@ -84,9 +83,8 @@ namespace View
 									dandEnabled( true),
 									notificationHandler( nullptr)
 	{
-		// TODO: should the enable*() function be virtual?
-		// initialise() calls virtual functions. Both cppcheck and clang-tidy flag this.
-		// Cppcheck only this line, cling-tidy on the all functions called in initialise.
+		// CppCheck gives a "virtualCallInConstructor" on initialise(). I don't know why.
+		// It cannot be suppressed by a "cppcheck-suppress virtualCallInConstructor" (10-4-2022)
 		initialise();
 	}
 	/**

@@ -79,7 +79,7 @@ namespace Messaging
 						char magic[4];
 						char major;
 						char minor;
-						is >> magic[0] >> magic[1] >> magic[2] >> magic[3] >> major >> minor >> std::setw(charWidth) >> (int&)messageType >> std::setw( intWidth) >> messageLength;
+						is >> magic[0] >> magic[1] >> magic[2] >> magic[3] >> major >> minor >> std::setw(charWidth) >> reinterpret_cast<int&>(messageType) >> std::setw( intWidth) >> messageLength;
 					}
 					/**
 					 * @return The length of the header in bytes

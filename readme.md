@@ -184,6 +184,22 @@ Remarks:
 -   Change the `C/C++ Application` launch target to `robotworld.exe` in
     the (hidden) folder `.libs`.
     
+### Using static code checkers
+
+The configure script checks for the availability of cppcheck and clang-tidy. As clang-tidy needs
+a compilation database the configure script also checks if "bear" or "compiledb" are installed.
+
+If cppcheck is available just run "make cppcheck".
+
+If clang-tidy is available one first has to create a compilation database ("compile_commands.json").
+Depending on having bear of compiledb run "make bear" or "make compiledb". After that run "make clangtidy"
+
+Bear is installable on Debian: "apt install bear"
+More info: https://github.com/rizsotto/Bear
+
+For compiledb: Installation and usage instructions: see https://github.com/nickdiego/compiledb.
+ 
+    
 ### Using Sanitizers
 
 - If you compile with "-fsanitize=address -fsanitize=leak -fsanitize=undefined" you must link with "-fsanitize=address -fsanitize=leak -fsanitize=undefined" for linking with the correct libraries.
