@@ -22,7 +22,7 @@ namespace Utils
 
 		if (angle < 0)
 		{
-			angle = 2.0 * PI + angle;
+			angle = 2.0 * PI + angle; // @suppress("Avoid magic numbers")
 		}
 		return angle;
 	}
@@ -62,7 +62,7 @@ namespace Utils
 
 		double d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 		// If d is zero, there is no intersection
-		if (d == 0)
+		if (std::fabs(d-0.0) <= std::numeric_limits<float>::epsilon())
 			return false;
 
 		// Get the x and y
@@ -103,7 +103,7 @@ namespace Utils
 
 		double d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 		// If d is zero, there is no intersection
-		if (d == 0)
+		if (std::fabs(d-0.0) <= std::numeric_limits<float>::epsilon())
 			return DefaultPosition;
 
 		// Get the x and y

@@ -256,7 +256,6 @@ namespace Messaging
 		public:
 			/**
 			 *
-			 * @param io_service
 			 * @param aRequestHandler
 			 */
 			explicit ServerSession( RequestHandlerPtr aRequestHandler) :

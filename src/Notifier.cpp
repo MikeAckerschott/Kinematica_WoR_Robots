@@ -48,7 +48,6 @@ namespace Base
 	/**
 	 *	The implementation of operator== uses pointer comparison!
 	 */
-
 	void Notifier::addObserver( Observer& anObserver)
 	{
 		if (std::find_if(	observers.begin(),

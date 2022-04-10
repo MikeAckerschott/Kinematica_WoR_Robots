@@ -12,8 +12,10 @@
 
 namespace Base
 {
-	/*
-	 *
+	/**
+	 * This Trace class can be used instead of just using std::cout.
+	 * Most of the time one just uses the tracing MACROs below and not the class itself.
+	 * The tracing is done through an installable trace function.
 	 */
 	class Trace
 	{
@@ -177,11 +179,31 @@ namespace Base
 /**
  * @name Tracing MACROS.
  *
+ * To enable tracing the compile time macro DEVELOPMENT must be defined (e.g. -DDEVELOPMENT).
+ * If DEVELOPMENT is not defined not tracing is possible.
+ *
  */
 //@{
+/**
+ * @def FUNCTRACE_DEVELOP
+ * The constructor and destructor trace the function name. If this is the first thing upon function entry
+ * the start and finish of the function are traced.
+ */
 #define FUNCTRACE_DEVELOP()                 	Base::Trace trc(__PRETTY_FUNCTION__, __LINE__)
+/**
+ * @def FUNCTRACE_TEXT_DEVELOP(a_text)
+ * The constructor and destructor trace the function name, appended with a_text. If this is the first thing upon function entry
+ * the start and finish of the function are traced.
+ */
 #define FUNCTRACE_TEXT_DEVELOP(a_text)   		Base::Trace trc(__PRETTY_FUNCTION__, a_text, __LINE__)
+/**
+ * \def TRACE_DEVELOP()
+ * Traces the text.
+ */
 #define TRACE_DEVELOP(a_text)               	Base::Trace::trace(a_text)
+/**
+ * The TS-variants do the same as the non-TS-variants but prepend a time stamp to the output.
+ */
 #define TSFUNCTRACE_DEVELOP()               	Base::Trace trc(__PRETTY_FUNCTION__, __LINE__,	true)
 #define TSFUNCTRACE_TEXT_DEVELOP(a_text)   		Base::Trace trc( __PRETTY_FUNCTION__, a_text ,	__LINE__,	true)
 #define TSTRACE_DEVELOP(a_text)             	Base::Trace::trace(a_text, true)

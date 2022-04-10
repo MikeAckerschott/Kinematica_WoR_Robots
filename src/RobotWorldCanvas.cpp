@@ -401,7 +401,6 @@ namespace View
 		{
 			setSelectedShape( *i);
 			return true;
-
 		}
 		return false;
 	}
