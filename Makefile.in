@@ -158,8 +158,8 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in AUTHORS COPYING ChangeLog \
-	INSTALL NEWS README compile config.guess config.sub install-sh \
-	ltmain.sh missing
+	INSTALL NEWS README compile config.guess config.sub depcomp \
+	install-sh ltmain.sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -217,6 +217,7 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+BEAR = @BEAR@
 BOOST_CHRONO_LDFLAGS = @BOOST_CHRONO_LDFLAGS@
 BOOST_CHRONO_LDPATH = @BOOST_CHRONO_LDPATH@
 BOOST_CHRONO_LIBS = @BOOST_CHRONO_LIBS@
@@ -249,6 +250,8 @@ BOOST_UNIT_TEST_FRAMEWORK_LIBS = @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
+CLANGTIDY = @CLANGTIDY@
+COMPILEDB = @COMPILEDB@
 CPPCHECK = @CPPCHECK@
 CPPFLAGS = @CPPFLAGS@
 CSCOPE = @CSCOPE@
@@ -262,6 +265,7 @@ DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DISTCHECK_CONFIGURE_FLAGS = @DISTCHECK_CONFIGURE_FLAGS@
 DLLTOOL = @DLLTOOL@
+DOXYGEN = @DOXYGEN@
 DSYMUTIL = @DSYMUTIL@
 DUMPBIN = @DUMPBIN@
 ECHO_C = @ECHO_C@
@@ -860,7 +864,39 @@ uninstall-am:
 
 
 @HAVE_CPPCHECK_TRUE@cppcheck:
-@HAVE_CPPCHECK_TRUE@		$(CPPCHECK) --quiet --template="{file};{line};{severity};{id};{message}" --enable=all --inconclusive --force --inline-suppr --std=c11 --std=c++14 -I Config --suppress=missingIncludeSystem ..
+@HAVE_CPPCHECK_TRUE@		find ../ -type f -name "*.cpp" | $(CPPCHECK) 	--quiet \
+@HAVE_CPPCHECK_TRUE@							--template="{file};{line};{severity};{id};{message}" \
+@HAVE_CPPCHECK_TRUE@							--enable=all \
+@HAVE_CPPCHECK_TRUE@							--inconclusive	\
+@HAVE_CPPCHECK_TRUE@							--force --inline-suppr	\
+@HAVE_CPPCHECK_TRUE@							--std=c11 --std=c++20	\
+@HAVE_CPPCHECK_TRUE@							--suppress=missingIncludeSystem	\
+@HAVE_CPPCHECK_TRUE@							--file-list=-
+
+@HAVE_CPPCHECK_TRUE@cppcheck_checkconfig:														
+@HAVE_CPPCHECK_TRUE@		find ../ -type f -name "*.cpp" | $(CPPCHECK) 	--quiet \
+@HAVE_CPPCHECK_TRUE@							--template="{file};{line};{severity};{id};{message}" \
+@HAVE_CPPCHECK_TRUE@							--enable=all \
+@HAVE_CPPCHECK_TRUE@							--inconclusive	\
+@HAVE_CPPCHECK_TRUE@							--force --inline-suppr	\
+@HAVE_CPPCHECK_TRUE@							--std=c11 --std=c++20	\
+@HAVE_CPPCHECK_TRUE@							--suppress=missingIncludeSystem	\
+@HAVE_CPPCHECK_TRUE@							--check-config	\
+@HAVE_CPPCHECK_TRUE@							--file-list=-
+@HAVE_DOXYGEN_TRUE@doxygen:
+@HAVE_DOXYGEN_TRUE@		mkdir -p ../docs/generated
+@HAVE_DOXYGEN_TRUE@		$(DOXYGEN) ../Doxyfile
+
+@HAVE_CLANGTIDY_TRUE@clangtidy:
+@HAVE_CLANGTIDY_TRUE@		$(CLANGTIDY)
+
+@HAVE_BEAR_TRUE@bear:
+@HAVE_BEAR_TRUE@		make clean
+@HAVE_BEAR_TRUE@		$(BEAR) -- make
+
+@HAVE_COMPILEDB_TRUE@compiledb:
+@HAVE_COMPILEDB_TRUE@		make clean
+@HAVE_COMPILEDB_TRUE@		$(COMPILEDB) -n make --dry-run
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

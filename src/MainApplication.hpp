@@ -51,8 +51,8 @@ namespace Application
 			 * @param argc the count of the arguments
 			 * @param argv the array with the values of the arguments
 			 */
-			static void setCommandlineArguments( 	int argc,
-													char* argv[]);
+			static void setCommandlineArguments( 	int theArgc,
+													char* theArgv[]);
 			/**
 			 *
 			 * @param aVariable The format of the variable is implementation defined.
@@ -89,4 +89,4 @@ namespace Application
 	//	class MainApplication
 } // namespace Application
 
-#endif // MAINAPPLICATION_HPP_
+#endif // MAINAPPLICATION_HPP_

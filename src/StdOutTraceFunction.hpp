@@ -17,7 +17,7 @@ namespace Base
 			 *
 			 * @param aText The text that will be send to the final trace destination.
 			 */
-			virtual void trace( const std::string& aText);
+			virtual void trace( const std::string& aText)  override;
 
 	};
 	// class StdOutDebugTraceFunction

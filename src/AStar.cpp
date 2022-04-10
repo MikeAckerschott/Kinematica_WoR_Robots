@@ -54,8 +54,8 @@ namespace PathAlgorithm
 	std::vector< Vertex > GetNeighbours(	const Vertex& aVertex,
 											int aFreeRadius /*= 1*/)
 				{
-		static int xOffset[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
-		static int yOffset[] = { 1, 1, 0, -1, -1, -1, 0, 1 };
+		static const int xOffset[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+		static const int yOffset[] = { 1, 1, 0, -1, -1, -1, 0, 1 };
 
 		const std::vector< Model::WallPtr >& walls = Model::RobotWorld::getRobotWorld().getWalls();
 		std::vector< Vertex > neighbours;
@@ -168,7 +168,8 @@ namespace PathAlgorithm
 						} else
 						{
 							// Update the cost
-							(*openVertex).heuristicCost = neighbour.actualCost;
+							// TODO: should the actual cost be adjusted if (*openVertex).heuristicCost < neighbour.actualCost?
+							//(*openVertex).actualCost = neighbour.actualCost;
 							(*openVertex).heuristicCost = neighbour.heuristicCost;
 							continue;
 						}

@@ -61,16 +61,19 @@ namespace Application
 		return true;
 	}
 
-	/* static */void MainApplication::setCommandlineArguments( 	int argc,
-																char* argv[])
+	/**
+	 *
+	 */
+	/* static */void MainApplication::setCommandlineArguments( 	int theArgc,
+																char* theArgv[])
 	{
 
 		// argv[0] contains the executable name as one types on the command line (with or without extension)
-		MainApplication::commandlineArguments.push_back( CommandlineArgument( 0, "Executable", argv[0]));
+		MainApplication::commandlineArguments.push_back( CommandlineArgument( 0, "Executable", theArgv[0]));
 
-		for (int i = 1; i < argc; ++i)
+		for (unsigned int i = 1; i < static_cast<unsigned int >(theArgc); ++i)
 		{
-			char* currentArg = argv[i];
+			char* currentArg = theArgv[i];
 			size_t argLength = std::strlen( currentArg);
 
 
@@ -114,10 +117,13 @@ namespace Application
 		}
 	}
 
+	/**
+	 *
+	 */
 	/* static */bool MainApplication::isArgGiven( const std::string& aVariable)
 	{
 		std::vector< CommandlineArgument >::iterator i = std::find( MainApplication::commandlineArguments.begin(), MainApplication::commandlineArguments.end(), aVariable);
-		return i != commandlineArguments.end();
+		return i != MainApplication::commandlineArguments.end();
 	}
 
 	/* static */CommandlineArgument& MainApplication::getArg( const std::string& aVariable)
@@ -129,7 +135,9 @@ namespace Application
 		}
 		return *i;
 	}
-
+	/**
+	 *
+	 */
 	/* static */CommandlineArgument& MainApplication::getArg( unsigned long anArgumentNumber)
 	{
 		if(anArgumentNumber >= MainApplication::commandlineArguments.size())
@@ -139,6 +147,9 @@ namespace Application
 		return MainApplication::commandlineArguments[anArgumentNumber];
 	}
 
+	/**
+	 *
+	 */
 	/* static */std::vector< std::string >& MainApplication::getCommandlineFiles()
 	{
 		return commandlineFiles;

@@ -67,12 +67,51 @@ fi
 # for didactical purposes we enforce a manual setting of the C++-version
 # AX_CXX_COMPILE_STDCXX(2a, ext)
 
+#########################################################################################################
+#		CPPCheck
+#########################################################################################################
 AC_CHECK_PROGS([CPPCHECK], [cppcheck], [yes])
 if test -z "$CPPCHECK"; then
   AC_MSG_WARN([cppcheck not found - continuing without cppcheck support])
 fi
 AM_CONDITIONAL([HAVE_CPPCHECK], [test -n "$CPPCHECK"])
 
+#########################################################################################################
+#		run-clang-tidy
+#########################################################################################################
+AC_CHECK_PROGS([CLANGTIDY], [run-clang-tidy], [yes])
+if test -z "$CLANGTIDY"; then
+  AC_MSG_WARN([run-clang-tidy not found - continuing without run-clang-tidy support])
+fi
+AM_CONDITIONAL([HAVE_CLANGTIDY], [test -n "$CLANGTIDY"])
+
+#########################################################################################################
+#		bear
+#########################################################################################################
+AC_CHECK_PROGS([BEAR], [bear], [yes])
+if test -z "$BEAR"; then
+  AC_MSG_WARN([bear not found - continuing without bear (needed for clang-tidy support)])
+fi
+AM_CONDITIONAL([HAVE_BEAR], [test -n "$BEAR"])
+
+#########################################################################################################
+#		compiledb
+#########################################################################################################
+AC_CHECK_PROGS([COMPILEDB], [compiledb], [yes])
+if test -z "$COMPILEDB"; then
+  AC_MSG_WARN([compiledb not found - continuing without compiledb (needed for clang-tidy support)])
+fi
+AM_CONDITIONAL([HAVE_COMPILEDB], [test -n "$COMPILEDB"])
+
+
+#########################################################################################################
+#		Doxygen
+#########################################################################################################
+AC_CHECK_PROGS([DOXYGEN], [doxygen], [yes])
+if test -z "$DOXYGEN"; then
+   AC_MSG_WARN([Doxygen not found - continue without Doxygen support])
+fi
+AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 AC_CANONICAL_HOST
 
 #########################################################################################################
@@ -99,8 +138,6 @@ esac
 #		Generic headers
 #########################################################################################################
 # Check for headers
-
-AC_HEADER_STDC
 
 # Check for typedefs, structures and compiler chracteristics
 # Empty for now
@@ -390,13 +427,13 @@ esac
 
 development_default="yes"
 AC_ARG_ENABLE(development,
-AC_HELP_STRING([--enable-development= no/yes],[if enabled all development features will be on]),
+AS_HELP_STRING([--enable-development= no/yes],[if enabled all development features will be on]),
 enable_development=$enableval,
 enable_development=$development_default)
 if test "$enable_development" = "yes"; then
 	AM_CPPFLAGS="$AM_CPPFLAGS -DDEVELOPMENT"
-	AM_CFLAGS="$AM_CFLAGS -Og -pg -g3 -Wall -Wextra -Wconversion"
-	AM_CXXFLAGS="$AM_CXXFLAGS -Og -pg -g3 -Wall -Wextra -Wconversion"
+	AM_CFLAGS="$AM_CFLAGS -Og -g3 -Wall -Wextra -Wconversion"
+	AM_CXXFLAGS="$AM_CXXFLAGS -Og -g3 -Wall -Wextra -Wconversion"
 	AC_MSG_RESULT(Enabling development tracing)
 else
 	AM_CPPFLAGS="$AM_CPPFLAGS -DPRODUCTION"
@@ -417,7 +454,7 @@ AC_SUBST([AM_LIBTOOLFLAGS])
 AC_PROG_INSTALL
 
 # Output files
-AC_CONFIG_HEADER([src/config.h])
+AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_FILES(Makefile src/Makefile)
 AC_OUTPUT
 

@@ -63,31 +63,31 @@ namespace View
 			 *
 			 */
 			//@{
-			virtual void enableHandlePaint( bool enable = true);
-			virtual void enableHandleSize( bool enable = true);
+			void enableHandlePaint( bool enable = true);
+			void enableHandleSize( bool enable = true);
 
-			virtual void enableLeftDownHandling( bool enable = true);
-			virtual void enableLeftUpHandling( bool enable = true);
-			virtual void enableLeftDClickHandling( bool enable = true);
+			void enableLeftDownHandling( bool enable = true);
+			void enableLeftUpHandling( bool enable = true);
+			void enableLeftDClickHandling( bool enable = true);
 
-			virtual void enableMiddleDownHandling( bool enable = true);
-			virtual void enableMiddleUpHandling( bool enable = true);
-			virtual void enableMiddleDClickHandling( bool enable = true);
+			void enableMiddleDownHandling( bool enable = true);
+			void enableMiddleUpHandling( bool enable = true);
+			void enableMiddleDClickHandling( bool enable = true);
 
-			virtual void enableRightDownHandling( bool enable = true);
-			virtual void enableRightUpHandling( bool enable = true);
-			virtual void enableRightDClickHandling( bool enable = true);
+			void enableRightDownHandling( bool enable = true);
+			void enableRightUpHandling( bool enable = true);
+			void enableRightDClickHandling( bool enable = true);
 
-			virtual void enableMouseMotionHandling( bool enable = true);
+			void enableMouseMotionHandling( bool enable = true);
 
-			virtual void enableKeyHandling( bool enable = true);
+			void enableKeyHandling( bool enable = true);
 
-			virtual void enableActivationHandling( bool enable = true);
-			virtual void enableSelectionHandling( bool enable = true);
+			void enableActivationHandling( bool enable = true);
+			void enableSelectionHandling( bool enable = true);
 
-			virtual void enableItemMenuHandling( bool enable = true);
+			void enableItemMenuHandling( bool enable = true);
 
-			virtual void enableDragAndDropHandling( bool enable = true);
+			void enableDragAndDropHandling( bool enable = true);
 			//@}
 			/**
 			 *

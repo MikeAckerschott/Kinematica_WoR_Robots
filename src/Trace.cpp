@@ -32,7 +32,7 @@ namespace Base
 	/**
 	 * This map maintains the indention level per thread, based on the thread::id
 	 */
-	std::map< std::thread::id, long > threadIndentionLevels;
+	std::map< std::thread::id, unsigned long > threadIndentionLevels;
 
 	/**
 	 *
