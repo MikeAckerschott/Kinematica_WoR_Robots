@@ -14,15 +14,15 @@ namespace Base
 										  bool timeStamped /* = false */ )
 
 						:	logFile((aFileStem + (timeStamped ? "-" + Utils::TimeStamp() : "") + "." + aFileExtension).c_str(), std::ios_base::app)
-							{
-		trace( " ******************* START " + Utils::TimeStamp() + " START *******************");
-							}
+	{
+		FileTraceFunction::trace( " ******************* START " + Utils::TimeStamp() + " START *******************");
+	}
 	/**
 	 *
 	 */
 	FileTraceFunction::~FileTraceFunction()
 	{
-		trace( " ******************* END " + Utils::TimeStamp() + " END *******************");
+		FileTraceFunction::trace( " ******************* END " + Utils::TimeStamp() + " END *******************");
 		logFile.close();
 	}
 	/**

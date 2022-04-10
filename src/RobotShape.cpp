@@ -36,6 +36,7 @@ namespace View
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void RobotShape::setRobot( Model::RobotPtr aRobot)
 	{
 		setModelObject(std::dynamic_pointer_cast<Model::ModelObject>(aRobot));

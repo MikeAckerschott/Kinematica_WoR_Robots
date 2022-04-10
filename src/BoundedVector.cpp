@@ -33,6 +33,7 @@ namespace Model
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	BoundedVector BoundedVector::getNormalised()
 	{
 		BoundedVector polarCoord( *this);
@@ -42,6 +43,7 @@ namespace Model
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void BoundedVector::reverse()
 	{
 		x = -x;

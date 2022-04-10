@@ -38,21 +38,21 @@ namespace View
 			/**
 			 *
 			 */
-			virtual std::string getNormalColour() const
+			virtual std::string getNormalColour() const  override
 			{
 				return "BLUE";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getSelectionColour() const
+			virtual std::string getSelectionColour() const  override
 			{
 				return "BLUE";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getActivationColour() const
+			virtual std::string getActivationColour() const  override
 			{
 				return "BLACK";
 			}
@@ -65,7 +65,7 @@ namespace View
 			 * A Notifier will call this function if this Observer will handle the notifications of that
 			 * Notifier. It is the responsibility of the Observer to filter any events it is interested in.
 			 */
-			virtual void handleNotification();
+			virtual void handleNotification()  override;
 			//@}
 			/**
 			 * @name Pure virtual abstract Shape functions

@@ -12,6 +12,8 @@
  */
 namespace Messaging
 {
+	const int charWidth = 3; // char : 255, ergo 3 numbers
+	const int intWidth = 10; // unsigned long : 4,294,967,295 ergo 10 numbers
 	/**
 	 *
 	 */
@@ -61,7 +63,7 @@ namespace Messaging
 					std::string toString() const
 					{
 						std::ostringstream os;
-						os << magicNumber1 << magicNumber2 << magicNumber3 << magicNumber4 << majorVersion << minorVersion << std::setw(3 /* char : 255, ergo 3 numbers */) << static_cast<int>(messageType) << std::setw(10 /* unsigned long : 4,294,967,295 ergo 10 numbers */) << messageLength;
+						os << magicNumber1 << magicNumber2 << magicNumber3 << magicNumber4 << majorVersion << minorVersion << std::setw(charWidth) << static_cast<int>(messageType) << std::setw(intWidth) << messageLength;
 						return os.str();
 					}
 					/**
@@ -77,7 +79,7 @@ namespace Messaging
 						char magic[4];
 						char major;
 						char minor;
-						is >> magic[0] >> magic[1] >> magic[2] >> magic[3] >> major >> minor >> std::setw(3 /* char : 255, ergo 3 numbers */) >> (int&)messageType >> std::setw( 10 /* unsigned long : 4,294,967,295 ergo 10 numbers */) >> messageLength;
+						is >> magic[0] >> magic[1] >> magic[2] >> magic[3] >> major >> minor >> std::setw(charWidth) >> reinterpret_cast<int&>(messageType) >> std::setw( intWidth) >> messageLength;
 					}
 					/**
 					 * @return The length of the header in bytes
@@ -171,9 +173,11 @@ namespace Messaging
 			/**
 			 *
 			 */
-			virtual ~Message()
-			{
-			}
+			virtual ~Message() = default;
+			/**
+			 *
+			 */
+			Message& operator=(const Message& aMessage) = default;
 			/**
 			 *
 			 * @return The header of this message

@@ -24,13 +24,13 @@ namespace Utils
 
 		std::ostringstream os;
 		os.fill('0');
-		os 	<< tm.tm_year+1900 << '-'
+		os 	<< tm.tm_year+1900 << '-' // @suppress("Avoid magic numbers")
 			<< std::setw(2) << tm.tm_mon+1 << '-'
 			<< std::setw(2) << tm.tm_mday << "-"
 			<< std::setw(2) << tm.tm_hour << '-'
 			<< std::setw(2) << tm.tm_min << '-'
 			<< std::setw(2) << tm.tm_sec << '-'
-			<< std::setw(6) << std::chrono::duration_cast<std::chrono::microseconds>(microsecs).count();
+			<< std::setw(6) << std::chrono::duration_cast<std::chrono::microseconds>(microsecs).count(); // @suppress("Avoid magic numbers")
 		return os.str();
 	}
 } /* namespace Utils */

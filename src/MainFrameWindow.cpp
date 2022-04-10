@@ -87,6 +87,9 @@ namespace Application
 			  [this](CommandEvent& anEvent){ this->OnStdOutTraceFunction(anEvent);},
 			  ID_STDCOUT_TRACE_FUNCTION);
 		Bind( wxEVT_COMMAND_MENU_SELECTED,
+			  [this](CommandEvent& anEvent){ this->OnFileTraceFunction(anEvent);},
+			  ID_FILE_TRACE_FUNCTION);
+		Bind( wxEVT_COMMAND_MENU_SELECTED,
 			  [this](CommandEvent& anEvent){ this->OnAbout(anEvent);},
 			  ID_ABOUT);
 

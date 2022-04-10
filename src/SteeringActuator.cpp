@@ -19,6 +19,7 @@ namespace Model
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	void SteeringActuator::handleCommand( AbstractCommand& UNUSEDPARAM(anAbstractCommand))
 	{
 	}

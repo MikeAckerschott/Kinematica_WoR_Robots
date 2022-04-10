@@ -78,11 +78,11 @@ namespace Model
 	{
 		if(driving)
 		{
-			stopDriving();
+			Robot::stopDriving();
 		}
 		if(acting)
 		{
-			stopActing();
+			Robot::stopActing();
 		}
 		if(communicating)
 		{
@@ -155,6 +155,7 @@ namespace Model
 	/**
 	 *
 	 */
+	// cppcheck-suppress unusedFunction
 	float Robot::getSpeed() const
 	{
 		return speed;
@@ -262,7 +263,7 @@ namespace Model
 	Region Robot::getRegion() const
 	{
 		Point translatedPoints[] = { getFrontRight(), getFrontLeft(), getBackLeft(), getBackRight() };
-		return Region( 4, translatedPoints);
+		return Region( 4, translatedPoints); // @suppress("Avoid magic numbers")
 	}
 	/**
 	 *
@@ -352,7 +353,7 @@ namespace Model
 		//	std::unique_lock<std::recursive_mutex> lock(robotMutex);
 
 		static int update = 0;
-		if ((++update % 200) == 0)
+		if ((++update % 200) == 0) // @suppress("Avoid magic numbers")
 		{
 			notifyObservers();
 		}
@@ -374,7 +375,7 @@ namespace Model
 				// whether this works OK in a real application because the handling is time sensitive,
 				// i.e. 2 async timers are involved:
 				// see CommunicationService::stopServer and Server::stopHandlingRequests
-				Messaging::CommunicationService::getCommunicationService().stopServer(12345,true);
+				Messaging::CommunicationService::getCommunicationService().stopServer(12345,true); // @suppress("Avoid magic numbers")
 
 				break;
 			}
@@ -449,18 +450,19 @@ namespace Model
 		{
 			for (std::shared_ptr< AbstractSensor > sensor : sensors)
 			{
-				//sensor->setOn();
+				// sensor->setOn();
 			}
 
-			if (speed == 0.0)
+			// Compare a float/double with another float/double: use epsilon...
+			if (std::fabs(speed-0.0) <= std::numeric_limits<float>::epsilon())
 			{
-				speed = 10.0;
+				setSpeed(10.0, false); // @suppress("Avoid magic numbers")
 			}
 
 			unsigned pathPoint = 0;
-			while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size())
+			while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size()) // @suppress("Avoid magic numbers")
 			{
-				const PathAlgorithm::Vertex& vertex = path[pathPoint+=static_cast<int>(speed)];
+				const PathAlgorithm::Vertex& vertex = path[pathPoint+=static_cast<unsigned int>(speed)];
 				front = BoundedVector( vertex.asPoint(), position);
 				position.x = vertex.x;
 				position.y = vertex.y;
@@ -474,7 +476,8 @@ namespace Model
 
 				notifyObservers();
 
-				std::this_thread::sleep_for( std::chrono::milliseconds( 100));
+				// If there is no sleep_for here the robot will immediately be on its destination....
+				std::this_thread::sleep_for( std::chrono::milliseconds( 100)); // @suppress("Avoid magic numbers")
 
 				// this should be the last thing in the loop
 				if(driving == false)
@@ -485,7 +488,7 @@ namespace Model
 
 			for (std::shared_ptr< AbstractSensor > sensor : sensors)
 			{
-				//sensor->setOff();
+				// sensor->setOff();
 			}
 		}
 		catch (std::exception& e)
@@ -542,9 +545,10 @@ namespace Model
 		const std::vector< WallPtr >& walls = RobotWorld::getRobotWorld().getWalls();
 		for (WallPtr wall : walls)
 		{
-			if (Utils::Shape2DUtils::intersect( frontLeft, frontRight, wall->getPoint1(), wall->getPoint2()) ||
-							Utils::Shape2DUtils::intersect( frontLeft, backLeft, wall->getPoint1(), wall->getPoint2())	||
-							Utils::Shape2DUtils::intersect( frontRight, backRight, wall->getPoint1(), wall->getPoint2()))
+			if (Utils::Shape2DUtils::intersect( frontLeft, frontRight, wall->getPoint1(), wall->getPoint2()) 	||
+				Utils::Shape2DUtils::intersect( frontLeft, backLeft, wall->getPoint1(), wall->getPoint2())		||
+				Utils::Shape2DUtils::intersect( frontRight, backRight, wall->getPoint1(), wall->getPoint2()))
+				// cppcheck-suppress useStlAlgorithm
 			{
 				return true;
 			}
