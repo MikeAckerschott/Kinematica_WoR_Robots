@@ -23,6 +23,7 @@ cppcheck_checkconfig:
 							--check-config	\
 							--file-list=-
 endif
+
 if HAVE_DOXYGEN
 doxygen:
 		mkdir -p ../docs/generated
