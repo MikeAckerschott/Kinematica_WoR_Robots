@@ -883,6 +883,7 @@ uninstall-am:
 @HAVE_CPPCHECK_TRUE@							--suppress=missingIncludeSystem	\
 @HAVE_CPPCHECK_TRUE@							--check-config	\
 @HAVE_CPPCHECK_TRUE@							--file-list=-
+
 @HAVE_DOXYGEN_TRUE@doxygen:
 @HAVE_DOXYGEN_TRUE@		mkdir -p ../docs/generated
 @HAVE_DOXYGEN_TRUE@		$(DOXYGEN) ../Doxyfile
