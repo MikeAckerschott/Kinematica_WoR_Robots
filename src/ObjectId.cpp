@@ -1,7 +1,12 @@
 #include "ObjectId.hpp"
 
-#include <sys/timeb.h>  // _ftime(), time_t and struct timeb
-#include <ctime>       // localtime()
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/date_time/local_time/local_time.hpp>
+#include <boost/date_time/time_zone_base.hpp>
+#include <boost/date_time/c_local_time_adjustor.hpp>
+
+#include <sys/timeb.h>
+#include <ctime>
 #include <climits>
 #include <mutex>
 
@@ -9,18 +14,22 @@ namespace Base
 {
 	/**
 	 * newObjectId() uses gmtime() as it is faster than localtime().
-	 * We just calculates our offset to GMT an cache it
+	 * We just calculates our offset to GMT once and cache it
 	 */
 	struct GMTOffset
 	{
 			GMTOffset()
 			{
-				time_t t = time(NULL);
-				struct tm lt;
-				localtime_r(&t, &lt);
-				offset = static_cast<int>(lt.tm_gmtoff / 3600); // @suppress("Avoid magic numbers")
+				// Get the current time in UTC and local form.
+				auto utc_time = boost::posix_time::microsec_clock::universal_time();
+				auto local_time = boost::date_time::c_local_adjustor< boost::posix_time::ptime >::utc_to_local( utc_time);
+
+				// Calculate the difference in milliseconds between local time and the UTC time.
+				auto time_t_diff = boost::posix_time::to_time_t( local_time) - boost::posix_time::to_time_t( utc_time);
+
+				offset = time_t_diff / 3600; // @suppress("Avoid magic numbers")
 			}
-			int offset;
+			long offset;
 
 	};
 	static GMTOffset gmtOffset;
@@ -75,7 +84,7 @@ namespace Base
 		// We actually only use 27 chars but it could be 93, based on the maximum int values....
 		char timestampBuffer[93] = {'\0'};
 		sprintf( timestampBuffer,
-				 "%04d-%02d-%02d-%02d-%02d-%02d-%06lu",
+				 "%04d-%02d-%02d-%02ld-%02d-%02d-%06lu",
 				 tm.tm_year + 1900, // @suppress("Avoid magic numbers")
 				 tm.tm_mon + 1,
 				 tm.tm_mday,

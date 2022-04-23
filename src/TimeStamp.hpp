@@ -3,10 +3,7 @@
 
 #include "Config.hpp"
 
-#include <chrono>
-#include <ctime>
-#include <iomanip>
-#include <sstream>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <string>
 
 namespace Utils
@@ -16,22 +13,8 @@ namespace Utils
 	 */
 	inline std::string TimeStamp()
 	{
-		auto microsecs = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch());
-
-		std::time_t timer  = std::chrono::duration_cast<std::chrono::seconds>(microsecs).count();
-		struct tm tm;
-		localtime_r(&timer, &tm); // thread safe version of std::localtime
-
-		std::ostringstream os;
-		os.fill('0');
-		os 	<< tm.tm_year+1900 << '-' // @suppress("Avoid magic numbers")
-			<< std::setw(2) << tm.tm_mon+1 << '-'
-			<< std::setw(2) << tm.tm_mday << "-"
-			<< std::setw(2) << tm.tm_hour << '-'
-			<< std::setw(2) << tm.tm_min << '-'
-			<< std::setw(2) << tm.tm_sec << '-'
-			<< std::setw(6) << std::chrono::duration_cast<std::chrono::microseconds>(microsecs).count(); // @suppress("Avoid magic numbers")
-		return os.str();
+		auto local_time = boost::posix_time::microsec_clock::local_time();
+		return boost::posix_time::to_simple_string(local_time);
 	}
 } /* namespace Utils */
 
