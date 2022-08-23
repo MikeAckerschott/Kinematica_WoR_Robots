@@ -75,7 +75,6 @@ namespace Application
 		sizer->AddGrowableRow( 0);
 
 		sizer->SetSizeHints( this);
-		SetMinSize( wxSize( 500, 350));
 
 		Bind( wxEVT_COMMAND_MENU_SELECTED,
 			  [this](CommandEvent& anEvent){ this->OnQuit(anEvent);},
@@ -143,7 +142,6 @@ namespace Application
 						GBPosition( 2, 2));
 
 			clientPanel->SetSizer( sizer);
-			sizer->SetSizeHints( clientPanel);
 		}
 		return clientPanel;
 	}
@@ -154,26 +152,8 @@ namespace Application
 	{
 		if (!splitterWindow)
 		{
-			GridBagSizer* sizer = new GridBagSizer();
-
 			splitterWindow = new SplitterWindow( clientPanel, DEFAULT_ID);
-
 			splitterWindow->SplitVertically( initialiseLhsPanel(), initialiseRhsPanel());
-
-			sizer->Add( 5, 5,
-						GBPosition( 0, 0));
-
-			sizer->Add( splitterWindow,
-						GBPosition( 1, 1),
-						GBSpan( 1, 1), EXPAND);
-			sizer->AddGrowableRow( 1);
-			sizer->AddGrowableCol( 1);
-
-			sizer->Add( 5, 5,
-						GBPosition( 2, 2));
-
-			splitterWindow->SetSizer( sizer);
-			sizer->SetSizeHints( splitterWindow);
 		}
 		return splitterWindow;
 	}
@@ -194,6 +174,7 @@ namespace Application
 			sizer->Add( robotWorldCanvas = new View::RobotWorldCanvas( lhsPanel),
 						GBPosition( 1, 1),
 						GBSpan( 1, 1)/*, EXPAND*/);
+			robotWorldCanvas->SetMinSize( wxSize( 500, 500));
 
 			sizer->Add( 5, 5,
 						GBPosition( 2, 2),
