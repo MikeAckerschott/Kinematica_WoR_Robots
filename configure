@@ -22613,7 +22613,7 @@ fi
   if test "$WX_CONFIG_PATH" != "no" ; then
     WX_VERSION=""
 
-    min_wx_version=3.1.2
+    min_wx_version=3.2.0
     if test -z "--debug=yes" ; then
       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for wxWidgets version >= $min_wx_version" >&5
 printf %s "checking for wxWidgets version >= $min_wx_version... " >&6; }
@@ -22766,7 +22766,7 @@ printf "%s\n" "no (version $WX_VERSION is not new enough)" >&6; }
     If you still get this error, then check that 'wx-config' is
     in path, the directory where wxWidgets libraries are installed
     (returned by 'wx-config --libs' command) is in LD_LIBRARY_PATH
-    or equivalent variable and wxWidgets version is 3.1.2 or above."
+    or equivalent variable and wxWidgets version is 3.2.0 or above."
 
        as_fn_error $? "$wx_error_message" "$LINENO" 5
 
@@ -25594,6 +25594,11 @@ fi
 	\"AM_CXXFLAGS\"           : ${AM_CXXFLAGS}
 	\"AM_LDFLAGS\"            : ${AM_LDFLAGS}
 #	\"AM_LDADD\"              : ${AM_LDADD}
+	CPPCHECK                : ${CPPCHECK}
+	CLANGTIDY               : ${CLANGTIDY}
+	BEAR                    : ${BEAR}
+	COMPILEDB               : ${COMPILEDB}
+	DOXYGEN                 : ${DOXYGEN}
 	ROBOTWORLD_CPPFLAGS     : ${ROBOTWORLD_CPPFLAGS}
 	ROBOTWORLD_CFLAGS       : ${ROBOTWORLD_CFLAGS}
 	ROBOTWORLD_CXXFLAGS     : ${ROBOTWORLD_CXXFLAGS}
@@ -25623,6 +25628,11 @@ printf "%s\n" "$as_me:
 	\"AM_CXXFLAGS\"           : ${AM_CXXFLAGS}
 	\"AM_LDFLAGS\"            : ${AM_LDFLAGS}
 #	\"AM_LDADD\"              : ${AM_LDADD}
+	CPPCHECK                : ${CPPCHECK}
+	CLANGTIDY               : ${CLANGTIDY}
+	BEAR                    : ${BEAR}
+	COMPILEDB               : ${COMPILEDB}
+	DOXYGEN                 : ${DOXYGEN}
 	ROBOTWORLD_CPPFLAGS     : ${ROBOTWORLD_CPPFLAGS}
 	ROBOTWORLD_CFLAGS       : ${ROBOTWORLD_CFLAGS}
 	ROBOTWORLD_CXXFLAGS     : ${ROBOTWORLD_CXXFLAGS}

@@ -287,7 +287,7 @@ LDFLAGS=""
 #########################################################################################################
 
 AM_OPTIONS_WXCONFIG
-AM_PATH_WXCONFIG(3.1.2, wxWin=1, , ,[--debug=yes])
+AM_PATH_WXCONFIG(3.2.0, wxWin=1, , ,[--debug=yes])
 if test "$wxWin" != 1; then
 	AC_MSG_ERROR([
 				wxWidgets must be installed on your system
@@ -301,7 +301,7 @@ if test "$wxWin" != 1; then
 		])
 	fi
 if test "$wxWin" != 0; then
-	AC_DEFINE(HAVE_WXWIDGETS,1,[define if the wxWidgets 3.0.2. or higher is available])
+	AC_DEFINE(HAVE_WXWIDGETS,1,[define if the wxWidgets 3.2.0. or higher is available])
 fi
 
 # Replace -I by -isystem to prevent warning generation from the wxWidgets headers (which we can't/won't fix)

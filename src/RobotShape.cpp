@@ -149,6 +149,16 @@ namespace View
 		// with the front of the robot, while text centre being displayed in the
 		// centre of the robot, bottom of the text to the back of the robot.
 		dc.DrawRotatedText( WXSTRING( title), centre.x - titleSize.x / 2, centre.y - titleSize.y / 2, angle - Utils::PI);
+
+		// Paint the radar beam
+		if(getRobot()->isDriving())
+		{
+			dc.SetPen( wxPen( WXSTRING( "RED"), 1, wxPENSTYLE_SOLID));
+			dc.DrawLine( centre.x,
+						 centre.y,
+						 static_cast<int>(centre.x + std::cos( angle - 0.5 * Utils::PI) * 1024),
+						 static_cast<int>(centre.y + std::sin( angle - 0.5 * Utils::PI) * 1024));
+		}
 	}
 	/**
 	 *

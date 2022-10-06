@@ -26,6 +26,19 @@ namespace Model
 			virtual ~AbstractStimulus()
 			{
 			}
+			/**
+			 * @name Debug functions
+			 */
+			//@{
+			/**
+			 * Returns a 1-line description of the object
+			 */
+			virtual std::string asString() const {return "AbstractStimulus";}
+			/**
+			 * Returns a description of the object with all data of the object usable for debugging
+			 */
+			virtual std::string asDebugString() const  {return "AbstractStimulus";}
+
 	};
 	// class AbstractStimulus
 	/**
@@ -40,6 +53,18 @@ namespace Model
 			virtual ~AbstractPercept()
 			{
 			}
+			/**
+			 * @name Debug functions
+			 */
+			//@{
+			/**
+			 * Returns a 1-line description of the object
+			 */
+			virtual std::string asString() const {return "AbstractPercept";}
+			/**
+			 * Returns a description of the object with all data of the object usable for debugging
+			 */
+			virtual std::string asDebugString() const  {return "AbstractPercept";}
 	};
 	// class AbstractPercept
 

@@ -84,7 +84,7 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
-/* define if the wxWidgets 3.0.2. or higher is available */
+/* define if the wxWidgets 3.2.0. or higher is available */
 #undef HAVE_WXWIDGETS
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */

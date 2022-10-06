@@ -450,7 +450,7 @@ namespace Model
 		{
 			for (std::shared_ptr< AbstractSensor > sensor : sensors)
 			{
-				// sensor->setOn();
+				sensor->setOn();
 			}
 
 			// Compare a float/double with another float/double: use epsilon...
@@ -462,16 +462,35 @@ namespace Model
 			unsigned pathPoint = 0;
 			while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size()) // @suppress("Avoid magic numbers")
 			{
+				// Do the update
 				const PathAlgorithm::Vertex& vertex = path[pathPoint+=static_cast<unsigned int>(speed)];
 				front = BoundedVector( vertex.asPoint(), position);
 				position.x = vertex.x;
 				position.y = vertex.y;
 
+				// Do the measurements / handle all percepts
+				// TODO There are race conditions here:
+				//			1. size() is not atomic
+				//			2. any percepts added after leaving the while will not be used during the belief update
+				while(perceptQueue.size() > 0)
+				{
+					std::optional< std::shared_ptr< AbstractPercept >> percept = perceptQueue.dequeue();
+					if(percept)
+					{
+						Application::Logger::log(percept.value()->asString());
+					}else
+					{
+						Application::Logger::log("Huh??");
+					}
+				}
+
+				// Update the belief
+
+				// Stop on arrival or collision
 				if (arrived(goal) || collision())
 				{
 					Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived or collision"));
-					notifyObservers();
-					break;
+					driving = false;
 				}
 
 				notifyObservers();
@@ -482,13 +501,13 @@ namespace Model
 				// this should be the last thing in the loop
 				if(driving == false)
 				{
-					return;
+					break;
 				}
 			} // while
 
 			for (std::shared_ptr< AbstractSensor > sensor : sensors)
 			{
-				// sensor->setOff();
+				sensor->setOff();
 			}
 		}
 		catch (std::exception& e)
