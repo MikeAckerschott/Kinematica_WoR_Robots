@@ -197,7 +197,6 @@ namespace PathAlgorithm
 					addToOpenSet( neighbour);
 
 					// Add or replace (assign) the route elements.
-					// cppcheck-suppress unusedVariable
 					const auto& [iterator, succes] = predecessorMap.insert_or_assign( neighbour, current);
 					if(!succes)
 					{

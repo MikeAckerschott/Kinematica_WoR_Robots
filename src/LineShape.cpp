@@ -103,8 +103,6 @@ namespace View
 	{
 		using Utils::PI;
 
-		int arrowHeadSize = 10;
-
 		// First we draw a triangle at (0.0)
 		// Second we rotate the triangle with the angle the line makes with the Y-axis around it's centre
 		// Than we move the centre of the triangle to the end of the line, but outside the node

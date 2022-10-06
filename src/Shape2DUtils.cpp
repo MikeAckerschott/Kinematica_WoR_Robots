@@ -9,14 +9,15 @@ namespace Utils
 {
 	/**
 	 *
+	 * @param aStartpoint
+	 * @param anEndPoint
+	 * @return the counterclockwise angle in radians between the positive X axis and the line between the points
 	 */
 	double GetAngle(	const Point& aStartpoint,
 						const Point& anEndPoint)
 	{
 		double dX = anEndPoint.x - aStartpoint.x;
 		double dY = anEndPoint.y - aStartpoint.y;
-
-		//double s = std::sqrt( (dX*dX) + (dY*dY));
 
 		double angle = std::atan2( dY, dX);
 
@@ -51,43 +52,12 @@ namespace Utils
 												const Point& aStartLine2,
 												const Point& anEndLine2)
 	{
-		double x1 = aStartLine1.x;
-		double x2 = aEndLine1.x;
-		double x3 = aStartLine2.x;
-		double x4 = anEndLine2.x;
-		double y1 = aStartLine1.y;
-		double y2 = aEndLine1.y;
-		double y3 = aStartLine2.y;
-		double y4 = anEndLine2.y;
-
-		double d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
-		// If d is zero, there is no intersection
-		if (std::fabs(d-0.0) <= std::numeric_limits<float>::epsilon())
-			return false;
-
-		// Get the x and y
-		double pre = (x1 * y2 - y1 * x2);
-		double post = (x3 * y4 - y3 * x4);
-		double x = (pre * (x3 - x4) - (x1 - x2) * post) / d;
-		double y = (pre * (y3 - y4) - (y1 - y2) * post) / d;
-
-		// Check if the x and y coordinates are within both lines
-		if (x < std::min( x1, x2) || x > std::max( x1, x2) || x < std::min( x3, x4) || x > std::max( x3, x4))
-		{
-			return false;
-		}
-		if (y < std::min( y1, y2) || y > std::max( y1, y2) || y < std::min( y3, y4) || y > std::max( y3, y4))
-		{
-			return false;
-		}
-
-		return true;
+		return getIntersection(	aStartLine1,aEndLine1,aStartLine2,anEndLine2) != DefaultPosition;
 	}
 	/**
 	 *
 	 */
-	// cppcheck-suppress unusedFunction
-	/* static */Point Shape2DUtils::getIntersection(	const Point& aStartLine1,
+	/* static */ Point Shape2DUtils::getIntersection(	const Point& aStartLine1,
 														const Point& aEndLine1,
 														const Point& aStartLine2,
 														const Point& anEndLine2)
@@ -124,6 +94,14 @@ namespace Utils
 
 		// Return the point of intersection
 		return Point( static_cast<int>(x), static_cast<int>(y));
+	}
+	/**
+	 *
+	 */
+	/* static */ double Shape2DUtils::distance(	const Point& aPoint1,
+												const Point& aPoint2)
+	{
+		return std::sqrt( (aPoint1.x - aPoint2.x) * (aPoint1.x - aPoint2.x) + (aPoint1.y - aPoint2.y) * (aPoint1.y - aPoint2.y));
 	}
 	/**
 	 *
