@@ -58,9 +58,6 @@ namespace Model
 				{
 					double distance = Utils::Shape2DUtils::distance(robotLocation,interSection);
 					return std::shared_ptr< AbstractStimulus >( new DistanceStimulus( angle,distance));
-				}else
-				{
-					return std::shared_ptr< AbstractStimulus >( new DistanceStimulus( angle,1024));
 				}
 			}
 		}
