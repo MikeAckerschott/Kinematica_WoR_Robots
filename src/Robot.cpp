@@ -4,6 +4,7 @@
 #include "CommunicationService.hpp"
 #include "Goal.hpp"
 #include "LaserDistanceSensor.hpp"
+#include "LidarSensor.hpp"
 #include "Logger.hpp"
 #include "MainApplication.hpp"
 #include "MathUtils.hpp"
@@ -37,6 +38,9 @@ namespace Model
 	{
 		std::shared_ptr< AbstractSensor > laserSensor( new LaserDistanceSensor( this));
 		attachSensor( laserSensor);
+
+		std::shared_ptr< AbstractSensor > lidarSensor( new LidarSensor( this));
+		attachSensor( lidarSensor);
 	}
 	/**
 	 *
@@ -53,6 +57,9 @@ namespace Model
 	{
 		std::shared_ptr< AbstractSensor > laserSensor( new LaserDistanceSensor( this));
 		attachSensor( laserSensor);
+
+		std::shared_ptr< AbstractSensor > lidarSensor( new LidarSensor( this));
+		attachSensor( lidarSensor);
 	}
 	/**
 	 *
@@ -70,6 +77,9 @@ namespace Model
 	{
 		std::shared_ptr< AbstractSensor > laserSensor( new LaserDistanceSensor( this));
 		attachSensor( laserSensor);
+
+		std::shared_ptr< AbstractSensor > lidarSensor( new LidarSensor( this));
+		attachSensor( lidarSensor);
 	}
 	/**
 	 *
@@ -460,7 +470,7 @@ namespace Model
 			}
 
 			unsigned pathPoint = 0;
-			while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size()) // @suppress("Avoid magic numbers")
+			while (position.x > 0 && position.x < robotworldSize.x && position.y > 0 && position.y < robotworldSize.y && pathPoint < path.size()) // @suppress("Avoid magic numbers")
 			{
 				// Do the update
 				const PathAlgorithm::Vertex& vertex = path[pathPoint+=static_cast<unsigned int>(speed)];
@@ -477,7 +487,23 @@ namespace Model
 					std::optional< std::shared_ptr< AbstractPercept >> percept = perceptQueue.dequeue();
 					if(percept)
 					{
-						Application::Logger::log(percept.value()->asString());
+						//Application::Logger::log(percept.value()->asString());
+
+						if( typeid(*percept.value().get()) == typeid(DistancePercept))
+						{
+							//currentRadarPointCloud.clear();
+
+							DistancePercept* distancePercept = dynamic_cast<DistancePercept*>(percept.value().get());
+							currentRadarPointCloud.push_back(*distancePercept);
+						}else if( typeid(*percept.value().get()) == typeid(DistancePercepts))
+						{
+							DistancePercepts* distancePercepts = dynamic_cast<DistancePercepts*>(percept.value().get());
+							currentLidarPointCloud = distancePercepts->pointCloud;
+						}else
+						{
+							Application::Logger::log("Unknown type of percept:");
+							Application::Logger::log(typeid(percept.value()).name());
+						}
 					}else
 					{
 						Application::Logger::log("Huh??");

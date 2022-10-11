@@ -12,6 +12,8 @@
 
 #include <wx/gdicmn.h>
 
+#include <iostream>
+
 namespace Widgets
 {
 	/**
@@ -21,5 +23,9 @@ namespace Widgets
 } // namespace Widgets
 using namespace Widgets;
 
+inline std::ostream& operator<<(std::ostream& os, const Point& aPoint)
+{
+	return os << "(" << aPoint.x << "," << aPoint.y << ")";
+}
 
 #endif // POINT_HPP_
