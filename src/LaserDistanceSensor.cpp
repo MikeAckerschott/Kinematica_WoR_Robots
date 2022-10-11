@@ -35,19 +35,22 @@ namespace Model
 	 */
 	std::shared_ptr< AbstractStimulus > LaserDistanceSensor::getStimulus() const
 	{
-		Robot* robot = dynamic_cast<Robot*>(agent);
-		if(robot)
-		{
-			double angle = Utils::Shape2DUtils::getAngle( robot->getFront());
+		std::vector< WallPtr > walls = RobotWorld::getRobotWorld().getWalls();
 
-			std::vector< WallPtr > walls = RobotWorld::getRobotWorld().getWalls();
-			for (std::shared_ptr< Wall > wall : walls)
+		for (std::shared_ptr< Wall > wall : walls)
+		{
+			Point wallPoint1 = wall->getPoint1();
+			Point wallPoint2 = wall->getPoint2();
+
+			Robot* robot = dynamic_cast<Robot*>(agent);
+			if(robot)
 			{
-				Point wallPoint1 = wall->getPoint1();
-				Point wallPoint2 = wall->getPoint2();
 				Point robotLocation = robot->getPosition();
-				Point laserEndpoint{static_cast<int>(robotLocation.x + std::cos( angle) * laserBeamLength),
-									static_cast<int>(robotLocation.y + std::sin( angle) * laserBeamLength)};
+
+				double angle = Utils::Shape2DUtils::getAngle( robot->getFront()) + 0.5 * Utils::PI;
+
+				Point laserEndpoint{ static_cast<int>(robotLocation.x + std::cos( angle - 0.5 * Utils::PI) * 1024),
+							 	 	 static_cast<int>(robotLocation.y + std::sin( angle - 0.5 * Utils::PI) * 1024)};
 
 				Point interSection = Utils::Shape2DUtils::getIntersection( wallPoint1, wallPoint2, robotLocation, laserEndpoint);
 
@@ -57,10 +60,9 @@ namespace Model
 					return std::shared_ptr< AbstractStimulus >( new DistanceStimulus( angle,distance));
 				}
 			}
-			std::shared_ptr< AbstractStimulus > distanceStimulus( new DistanceStimulus( noAngle,noDistance));
-			return distanceStimulus;
 		}
-		std::shared_ptr< AbstractStimulus > distanceStimulus( new DistanceStimulus( noAngle,noDistance));
+
+		std::shared_ptr< AbstractStimulus > distanceStimulus( new DistanceStimulus( 666,666));
 		return distanceStimulus;
 	}
 	/**
@@ -68,26 +70,12 @@ namespace Model
 	 */
 	std::shared_ptr< AbstractPercept > LaserDistanceSensor::getPerceptFor( std::shared_ptr< AbstractStimulus > anAbstractStimulus) const
 	{
-		Robot* robot = dynamic_cast< Robot* >( agent);
-		if (robot)
+		DistanceStimulus* distanceStimulus = dynamic_cast< DistanceStimulus* >( anAbstractStimulus.get());
+		if(distanceStimulus)
 		{
-			Point robotLocation = robot->getPosition();
-
-			DistanceStimulus* distanceStimulus = dynamic_cast< DistanceStimulus* >( anAbstractStimulus.get());
-			if(distanceStimulus)
-			{
-				if(distanceStimulus->distance == noDistance)
-				{
-					return std::shared_ptr< AbstractPercept > ( new DistancePercept( Point(noObject,noObject)));
-				}
-				Point endpoint{	static_cast< int >( robotLocation.x + std::cos( distanceStimulus->angle)*distanceStimulus->distance),
-								static_cast< int >( robotLocation.y + std::sin( distanceStimulus->angle)*distanceStimulus->distance)};
-
-				return std::shared_ptr< AbstractPercept >( new DistancePercept( endpoint));
-			}
+			return std::shared_ptr< AbstractPercept >( new DistancePercept( distanceStimulus->angle,distanceStimulus->distance));
 		}
-
-		return std::shared_ptr< AbstractPercept > ( new DistancePercept( Point(invalidDistance,invalidDistance)));
+		return std::shared_ptr< AbstractPercept > ( new DistancePercept( 666,666));
 	}
 	/**
 	 *

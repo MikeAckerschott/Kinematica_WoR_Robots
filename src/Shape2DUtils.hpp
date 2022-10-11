@@ -41,7 +41,7 @@ namespace Utils
 			 * @return true if the lines intersect, false otherwise
 			 */
 			static bool intersect(	const Point& aStartLine1,
-									const Point& anEndLine1,
+									const Point& aEndLine1,
 									const Point& aStartLine2,
 									const Point& anEndLine2);
 			/**

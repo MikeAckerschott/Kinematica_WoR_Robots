@@ -174,7 +174,7 @@ namespace Application
 			sizer->Add( robotWorldCanvas = new View::RobotWorldCanvas( lhsPanel),
 						GBPosition( 1, 1),
 						GBSpan( 1, 1)/*, EXPAND*/);
-			robotWorldCanvas->SetMinSize( wxSize( 1024, 1024));
+			robotWorldCanvas->SetMinSize( wxSize( 500, 500));
 
 			sizer->Add( 5, 5,
 						GBPosition( 2, 2),
@@ -336,7 +336,7 @@ namespace Application
 	 */
 	void MainFrameWindow::OnPopulate( CommandEvent& UNUSEDPARAM(anEvent))
 	{
-		robotWorldCanvas->populate( 4);
+		robotWorldCanvas->populate( 2);
 	}
 	/**
 	 *

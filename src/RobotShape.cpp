@@ -1,8 +1,6 @@
 #include "RobotShape.hpp"
 
 #include "Goal.hpp"
-#include "LaserDistanceSensor.hpp"
-#include "LidarSensor.hpp"
 #include "Logger.hpp"
 #include "Notifier.hpp"
 #include "Robot.hpp"
@@ -60,7 +58,6 @@ namespace View
 	 *
 	 */
 	void RobotShape::handleSelection()
-
 	{
 //		if (robotWorldCanvas->isShapeSelected() && robotWorldCanvas->getSelectedShape()->getObjectId() == getObjectId())
 //		{
@@ -140,13 +137,13 @@ namespace View
 		dc.SetPen( wxPen( WXSTRING( "PALE GREEN"), borderWidth, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[3]);
 
-		double angle = Utils::Shape2DUtils::getAngle( getRobot()->getFront());
+		double angle = Utils::Shape2DUtils::getAngle( getRobot()->getFront()) + 0.5 * Utils::PI;
 
 		dc.SetPen( wxPen( WXSTRING( "BLACK"), 1, wxPENSTYLE_SOLID));
 		dc.DrawLine( centre.x,
 					 centre.y,
-					 static_cast<int>(centre.x + std::cos( angle) * 25),
-					 static_cast<int>(centre.y + std::sin( angle) * 25));
+					 static_cast<int>(centre.x + std::cos( angle - 0.5 * Utils::PI) * 25),
+					 static_cast<int>(centre.y + std::sin( angle - 0.5 * Utils::PI) * 25));
 
 		// Bounty of 0.25 points for anyone who makes the name turn
 		// with the front of the robot, while text centre being displayed in the
@@ -156,44 +153,11 @@ namespace View
 		// Paint the radar beam
 		if(getRobot()->isDriving())
 		{
-			// Draw the pointcloud of the lidar
-
-			// We can only draw points and beams with a valid endPoint as we loose the angle in the translation
-			// from stimulus into percept. Therefore we cannot calculate the endpoint of the beam and not
-			// draw the beam...
-
-			for( const Model::DistancePercept& d: getRobot()->currentLidarPointCloud)
-			{
-				if(d.point != DefaultPosition && (d.point.x != Model::noObject && d.point.y != Model::noObject) )
-				{
-					dc.SetPen( wxPen( WXSTRING( "YELLOW"), 1, wxPENSTYLE_SOLID));
-					dc.DrawLine( centre.x,
-								 centre.y,
-								 d.point.x,
-								 d.point.y);
-
-					dc.SetPen( wxPen( WXSTRING( "GREEN"), borderWidth+1, wxPENSTYLE_SOLID));
-					dc.DrawCircle(d.point,1);
-				}
-			}
-
-			// Draw the laser beam
-
 			dc.SetPen( wxPen( WXSTRING( "RED"), 1, wxPENSTYLE_SOLID));
 			dc.DrawLine( centre.x,
 						 centre.y,
-						 static_cast<int>(centre.x + std::cos( angle) * Model::laserBeamLength),
-						 static_cast<int>(centre.y + std::sin( angle) * Model::laserBeamLength));
-
-			// Draw the radar endPoints that are actually touching the walls
-			for( const Model::DistancePercept& d : getRobot()->currentRadarPointCloud)
-			{
-				if(d.point != DefaultPosition || (d.point.x != Model::noObject && d.point.y != Model::noObject) )
-				{
-					dc.SetPen( wxPen( WXSTRING( "RED"), borderWidth+5, wxPENSTYLE_SOLID));
-					dc.DrawCircle(d.point,1);
-				}
-			}
+						 static_cast<int>(centre.x + std::cos( angle - 0.5 * Utils::PI) * 1024),
+						 static_cast<int>(centre.y + std::sin( angle - 0.5 * Utils::PI) * 1024));
 		}
 	}
 	/**

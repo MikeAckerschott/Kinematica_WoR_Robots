@@ -274,22 +274,23 @@ namespace Model
 	/**
 	 *
 	 */
-	void RobotWorld::populate( int aNumberOfWalls)
+	void RobotWorld::populate( int /*aNumberOfWalls = 2*/)
 	{
 		RobotWorld::getRobotWorld().newRobot( "Robot", Point(163,111),false); // @suppress("Avoid magic numbers")
 
-
-		static const Point coordinates[] = {
-			Point( 100, 25), Point( 700, 25),
-			Point( 75, 200), Point( 250, 600),
-			Point( 800, 300), Point( 800, 700),
-			Point( 50, 825), Point( 600, 825)};
+		/*
+		static Point coordinates[] = { Point( 100, 400), Point( 350, 300),
+									   Point( 300, 100),
+									   Point( 350, 200) };
 
 		for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
 		{
 			RobotWorld::getRobotWorld().newWall( coordinates[i], coordinates[i + 1],false);
 		}
-		RobotWorld::getRobotWorld().newGoal( "Goal", Point(850, 500),false); // @suppress("Avoid magic numbers")
+		*/
+
+		RobotWorld::getRobotWorld().newWall( Point(7,234), Point(419,234) ,false); // @suppress("Avoid magic numbers")
+		RobotWorld::getRobotWorld().newGoal( "Goal", Point(320,285),false); // @suppress("Avoid magic numbers")
 
 		notifyObservers();
 	}
