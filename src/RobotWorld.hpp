@@ -10,6 +10,11 @@
 
 namespace Model
 {
+	/**
+	 * Compile time configurable size of the world.
+	 */
+	const Point robotworldSize{1024,1024};
+
 	class Robot;
 	typedef std::shared_ptr<Robot> RobotPtr;
 

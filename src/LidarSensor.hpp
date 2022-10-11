@@ -1,5 +1,5 @@
-#ifndef LASERDISTANCESENSOR_HPP_
-#define LASERDISTANCESENSOR_HPP_
+#ifndef LIDARSENSOR_HPP_
+#define LIDARSENSOR_HPP_
 
 #include "Config.hpp"
 
@@ -11,7 +11,13 @@ namespace Model
 	/**
 	 * Compile time configurable length of the laser beam
 	 */
-	const short int laserBeamLength = 1024;
+	const short int lidarBeamLength = 1024;
+
+	/**
+	 * Compile time configurable number of beams in a circle
+	 */
+	const short int numberOfBeams = 180;
+
 
 	class Robot;
 	typedef std::shared_ptr<Robot> RobotPtr;
@@ -19,27 +25,27 @@ namespace Model
 	/**
 	 *
 	 */
-	class LaserDistanceSensor : public AbstractSensor
+	class LidarSensor : public AbstractSensor
 	{
 		public:
 			/**
 			 *
 			 */
-			LaserDistanceSensor();
+			LidarSensor();
 			/**
 			 *
 			 */
-			explicit LaserDistanceSensor( Robot* aRobot);
+			explicit LidarSensor( Robot* aRobot);
 			/**
 			 *
 			 */
-			virtual ~LaserDistanceSensor();
+			virtual ~LidarSensor();
 			/**
-			 *
+			 * @see AbstractSensor::getStimulus
 			 */
 			virtual std::shared_ptr< AbstractStimulus > getStimulus() const override;
 			/**
-			 *
+			 * @see AbstractSensor::getPerceptFor
 			 */
 			virtual std::shared_ptr< AbstractPercept > getPerceptFor( std::shared_ptr< AbstractStimulus > anAbstractStimulus) const override;
 			/**
@@ -60,4 +66,4 @@ namespace Model
 
 	};
 } // namespace Model
-#endif /* LASERDISTANCESENSOR_HPP_ */
+#endif /* LIDARSENSOR_HPP__HPP_ */

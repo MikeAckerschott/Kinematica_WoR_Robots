@@ -6,12 +6,13 @@
 #include "AbstractAgent.hpp"
 #include "AStar.hpp"
 #include "BoundedVector.hpp"
+#include "DistancePercepts.hpp"
 #include "Message.hpp"
 #include "MessageHandler.hpp"
 #include "Observer.hpp"
 #include "Point.hpp"
-#include "Size.hpp"
 #include "Region.hpp"
+#include "Size.hpp"
 
 #include <iostream>
 #include <memory>
@@ -240,6 +241,9 @@ namespace Model
 			 */
 			virtual std::string asDebugString() const override;
 			//@}
+
+			PointCloud currentRadarPointCloud;
+			PointCloud currentLidarPointCloud;
 
 		protected:
 			/**
