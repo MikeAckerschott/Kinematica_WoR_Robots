@@ -47,10 +47,10 @@ namespace Model
 			{
 				Point robotLocation = robot->getPosition();
 
-				double angle = Utils::Shape2DUtils::getAngle( robot->getFront()) + 0.5 * Utils::PI;
+				double angle = Utils::Shape2DUtils::getAngle( robot->getFront());
 
-				Point laserEndpoint{ static_cast<int>(robotLocation.x + std::cos( angle - 0.5 * Utils::PI) * 1024),
-							 	 	 static_cast<int>(robotLocation.y + std::sin( angle - 0.5 * Utils::PI) * 1024)};
+				Point laserEndpoint{ static_cast<int>(robotLocation.x + std::cos( angle) * 1024),
+							 	 	 static_cast<int>(robotLocation.y + std::sin( angle) * 1024)};
 
 				Point interSection = Utils::Shape2DUtils::getIntersection( wallPoint1, wallPoint2, robotLocation, laserEndpoint);
 
