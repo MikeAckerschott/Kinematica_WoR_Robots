@@ -18267,7 +18267,7 @@ esac
 # Each additional ax_boost_LIBRARY.m4 sets the appropriate LIBRARY name
 
 
-echo "$as_me: this is boost.m4 serial 32" >&5
+echo "$as_me: this is boost.m4 serial 38" >&5
 boost_save_IFS=$IFS
 boost_version_req=1.60
 IFS=.
@@ -18521,6 +18521,13 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
   # I'm not sure about my test for `il' (be careful: Intel's ICC pre-defines
   # the same defines as GCC's).
   for i in \
+    "defined __clang__ && __clang_major__ == 14 && __clang_minor__ == 0 @ clang140" \
+    "defined __clang__ && __clang_major__ == 13 && __clang_minor__ == 0 @ clang130" \
+    "defined __clang__ && __clang_major__ == 12 && __clang_minor__ == 0 @ clang120" \
+    "defined __clang__ && __clang_major__ == 11 && __clang_minor__ == 1 @ clang111" \
+    "defined __clang__ && __clang_major__ == 11 && __clang_minor__ == 0 @ clang110" \
+    "defined __clang__ && __clang_major__ == 10 && __clang_minor__ == 0 @ clang100" \
+    "defined __clang__ && __clang_major__ == 9 && __clang_minor__ == 0 @ clang90" \
     "defined __clang__ && __clang_major__ == 8 && __clang_minor__ == 0 @ clang80" \
     "defined __clang__ && __clang_major__ == 7 && __clang_minor__ == 0 @ clang70" \
     "defined __clang__ && __clang_major__ == 6 && __clang_minor__ == 0 @ clang60" \
@@ -18529,6 +18536,34 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
     "defined __clang__ && __clang_major__ == 3 && __clang_minor__ == 9 @ clang39" \
     "defined __clang__ && __clang_major__ == 3 && __clang_minor__ == 8 @ clang38" \
     "defined __clang__ && __clang_major__ == 3 && __clang_minor__ == 7 @ clang37" \
+    "defined __GNUC__ && __GNUC__ == 11 && __GNUC_MINOR__ == 2 && !defined __ICC && \
+  (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
+         || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw112" \
+    "defined __GNUC__ && __GNUC__ == 11 && __GNUC_MINOR__ == 2 && !defined __ICC @ gcc112" \
+    "defined __GNUC__ && __GNUC__ == 11 && __GNUC_MINOR__ == 1 && !defined __ICC && \
+  (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
+         || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw111" \
+    "defined __GNUC__ && __GNUC__ == 11 && __GNUC_MINOR__ == 1 && !defined __ICC @ gcc111" \
+    "defined __GNUC__ && __GNUC__ == 10 && __GNUC_MINOR__ == 3 && !defined __ICC && \
+  (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
+         || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw103" \
+    "defined __GNUC__ && __GNUC__ == 10 && __GNUC_MINOR__ == 3 && !defined __ICC @ gcc103" \
+    "defined __GNUC__ && __GNUC__ == 10 && __GNUC_MINOR__ == 2 && !defined __ICC && \
+  (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
+         || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw102" \
+    "defined __GNUC__ && __GNUC__ == 10 && __GNUC_MINOR__ == 2 && !defined __ICC @ gcc102" \
+    "defined __GNUC__ && __GNUC__ == 10 && __GNUC_MINOR__ == 1 && !defined __ICC && \
+  (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
+         || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw101" \
+    "defined __GNUC__ && __GNUC__ == 10 && __GNUC_MINOR__ == 1 && !defined __ICC @ gcc101" \
+    "defined __GNUC__ && __GNUC__ == 9 && __GNUC_MINOR__ == 3 && !defined __ICC && \
+  (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
+         || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw93" \
+    "defined __GNUC__ && __GNUC__ == 9 && __GNUC_MINOR__ == 3 && !defined __ICC @ gcc93" \
+    "defined __GNUC__ && __GNUC__ == 9 && __GNUC_MINOR__ == 2 && !defined __ICC && \
+  (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
+         || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw92" \
+    "defined __GNUC__ && __GNUC__ == 9 && __GNUC_MINOR__ == 2 && !defined __ICC @ gcc92" \
     "defined __GNUC__ && __GNUC__ == 9 && __GNUC_MINOR__ == 1 && !defined __ICC && \
   (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
          || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw91" \
@@ -18537,6 +18572,14 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
   (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
          || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw90" \
     "defined __GNUC__ && __GNUC__ == 9 && __GNUC_MINOR__ == 0 && !defined __ICC @ gcc90" \
+    "defined __GNUC__ && __GNUC__ == 8 && __GNUC_MINOR__ == 5 && !defined __ICC && \
+  (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
+         || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw85" \
+    "defined __GNUC__ && __GNUC__ == 8 && __GNUC_MINOR__ == 5 && !defined __ICC @ gcc85" \
+    "defined __GNUC__ && __GNUC__ == 8 && __GNUC_MINOR__ == 4 && !defined __ICC && \
+  (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
+         || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw84" \
+    "defined __GNUC__ && __GNUC__ == 8 && __GNUC_MINOR__ == 4 && !defined __ICC @ gcc84" \
     "defined __GNUC__ && __GNUC__ == 8 && __GNUC_MINOR__ == 3 && !defined __ICC && \
   (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
          || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw83" \
@@ -18553,6 +18596,10 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
   (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
          || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw80" \
     "defined __GNUC__ && __GNUC__ == 8 && __GNUC_MINOR__ == 0 && !defined __ICC @ gcc80" \
+    "defined __GNUC__ && __GNUC__ == 7 && __GNUC_MINOR__ == 4 && !defined __ICC && \
+  (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
+         || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw74" \
+    "defined __GNUC__ && __GNUC__ == 7 && __GNUC_MINOR__ == 4 && !defined __ICC @ gcc74" \
     "defined __GNUC__ && __GNUC__ == 7 && __GNUC_MINOR__ == 3 && !defined __ICC && \
   (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
          || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw73" \
@@ -18569,6 +18616,10 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
   (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
          || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw70" \
     "defined __GNUC__ && __GNUC__ == 7 && __GNUC_MINOR__ == 0 && !defined __ICC @ gcc70" \
+    "defined __GNUC__ && __GNUC__ == 6 && __GNUC_MINOR__ == 5 && !defined __ICC && \
+  (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
+         || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw65" \
+    "defined __GNUC__ && __GNUC__ == 6 && __GNUC_MINOR__ == 5 && !defined __ICC @ gcc65" \
     "defined __GNUC__ && __GNUC__ == 6 && __GNUC_MINOR__ == 4 && !defined __ICC && \
   (defined WIN32 || defined WINNT || defined _WIN32 || defined __WIN32 \
          || defined __WIN32__ || defined __WINNT || defined __WINNT__) @ mgw64" \
@@ -19143,12 +19194,13 @@ else $as_nop
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <pthread.h>
+    void *f(void*){ return 0; }
 int
 main (void)
 {
-pthread_t th; pthread_join(th, 0);
-    pthread_attr_init(0); pthread_cleanup_push(0, 0);
-    pthread_create(0,0,0,0); pthread_cleanup_pop(0);
+pthread_t th; pthread_create(&th,0,f,0); pthread_join(th,0);
+    pthread_attr_t attr; pthread_attr_init(&attr); pthread_cleanup_push(0, 0);
+    pthread_cleanup_pop(0);
   ;
   return 0;
 }
@@ -22663,11 +22715,36 @@ printf %s "checking for wxWidgets version >= $min_wx_version (--debug=yes)... " 
     if test -n "$wx_ver_ok"; then
       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes (version $WX_VERSION)" >&5
 printf "%s\n" "yes (version $WX_VERSION)" >&6; }
-      WX_LIBS=`$WX_CONFIG_WITH_ARGS --libs `
+
+      wx_optional_libs=""
+
+    wx_ver_ok=""
+    if test "x$WX_VERSION" != x ; then
+      if test $wx_config_major_version -gt 2; then
+        wx_ver_ok=yes
+      else
+        if test $wx_config_major_version -eq 2; then
+           if test $wx_config_minor_version -gt 9; then
+              wx_ver_ok=yes
+           else
+              if test $wx_config_minor_version -eq 9; then
+                 if test $wx_config_micro_version -ge 0; then
+                    wx_ver_ok=yes
+                 fi
+              fi
+           fi
+        fi
+      fi
+    fi
+
+      if test -n "$wx_ver_ok" -a -n ""; then
+        wx_optional_libs="--optional-libs "
+      fi
+      WX_LIBS=`$WX_CONFIG_WITH_ARGS --libs  $wx_optional_libs`
 
                               { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for wxWidgets static library" >&5
 printf %s "checking for wxWidgets static library... " >&6; }
-      WX_LIBS_STATIC=`$WX_CONFIG_WITH_ARGS --static --libs  2>/dev/null`
+      WX_LIBS_STATIC=`$WX_CONFIG_WITH_ARGS --static --libs  $wx_optional_libs 2>/dev/null`
       if test "x$WX_LIBS_STATIC" = "x"; then
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
 printf "%s\n" "no" >&6; }
@@ -25593,6 +25670,11 @@ fi
 	\"AM_CXXFLAGS\"           : ${AM_CXXFLAGS}
 	\"AM_LDFLAGS\"            : ${AM_LDFLAGS}
 #	\"AM_LDADD\"              : ${AM_LDADD}
+	CPPCHECK                : ${CPPCHECK}
+	CLANGTIDY               : ${CLANGTIDY}
+	BEAR                    : ${BEAR}
+	COMPILEDB               : ${COMPILEDB}
+	DOXYGEN                 : ${DOXYGEN}
 	ROBOTWORLD_CPPFLAGS     : ${ROBOTWORLD_CPPFLAGS}
 	ROBOTWORLD_CFLAGS       : ${ROBOTWORLD_CFLAGS}
 	ROBOTWORLD_CXXFLAGS     : ${ROBOTWORLD_CXXFLAGS}
@@ -25622,6 +25704,11 @@ printf "%s\n" "$as_me:
 	\"AM_CXXFLAGS\"           : ${AM_CXXFLAGS}
 	\"AM_LDFLAGS\"            : ${AM_LDFLAGS}
 #	\"AM_LDADD\"              : ${AM_LDADD}
+	CPPCHECK                : ${CPPCHECK}
+	CLANGTIDY               : ${CLANGTIDY}
+	BEAR                    : ${BEAR}
+	COMPILEDB               : ${COMPILEDB}
+	DOXYGEN                 : ${DOXYGEN}
 	ROBOTWORLD_CPPFLAGS     : ${ROBOTWORLD_CPPFLAGS}
 	ROBOTWORLD_CFLAGS       : ${ROBOTWORLD_CFLAGS}
 	ROBOTWORLD_CXXFLAGS     : ${ROBOTWORLD_CXXFLAGS}

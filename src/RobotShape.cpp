@@ -144,10 +144,19 @@ namespace View
 					 static_cast<int>(centre.x + std::cos( angle - 0.5 * Utils::PI) * 25),
 					 static_cast<int>(centre.y + std::sin( angle - 0.5 * Utils::PI) * 25));
 
-		// Bounty of 0.25 points for anyone who makes the name turn
-		// with the front of the robot, while text centre being displayed in the
-		// centre of the robot, bottom of the text to the back of the robot.
-		dc.DrawRotatedText( WXSTRING( title), centre.x - titleSize.x / 2, centre.y - titleSize.y / 2, angle - Utils::PI);
+		int textOffsetx = long(cos(-angle) * (titleSize.x/2) + sin(-angle) * (titleSize.y/2));
+		int textOffsety = long(sin(-angle) * (titleSize.x/2) - cos(-angle) * (titleSize.y/2));
+		dc.DrawRotatedText( WXSTRING( title), centre.x-textOffsetx, centre.y+textOffsety, (-angle)/Utils::PI*180);
+
+		// Paint the radar beam
+		if(getRobot()->isDriving())
+		{
+			dc.SetPen( wxPen( WXSTRING( "RED"), 1, wxPENSTYLE_SOLID));
+			dc.DrawLine( centre.x,
+						 centre.y,
+						 static_cast<int>(centre.x + std::cos( angle - 0.5 * Utils::PI) * 1024),
+						 static_cast<int>(centre.y + std::sin( angle - 0.5 * Utils::PI) * 1024));
+		}
 	}
 	/**
 	 *

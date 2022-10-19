@@ -471,6 +471,11 @@ AC_MSG_NOTICE([
 	"AM_CXXFLAGS"           : ${AM_CXXFLAGS}
 	"AM_LDFLAGS"            : ${AM_LDFLAGS}
 #	"AM_LDADD"              : ${AM_LDADD}
+	CPPCHECK                : ${CPPCHECK}
+	CLANGTIDY               : ${CLANGTIDY}
+	BEAR                    : ${BEAR}
+	COMPILEDB               : ${COMPILEDB}
+	DOXYGEN                 : ${DOXYGEN}
 	ROBOTWORLD_CPPFLAGS     : ${ROBOTWORLD_CPPFLAGS}
 	ROBOTWORLD_CFLAGS       : ${ROBOTWORLD_CFLAGS}
 	ROBOTWORLD_CXXFLAGS     : ${ROBOTWORLD_CXXFLAGS}
