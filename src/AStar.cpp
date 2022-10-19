@@ -308,7 +308,8 @@ namespace PathAlgorithm
 	 */
 	void AStar::removeFirstFromOpenSet()
 	{
-		openSet.erase( openSet.begin());
+		std::iter_swap(openSet.begin(), std::prev(openSet.end()));
+		openSet.erase( std::prev(openSet.end()));
 	}
 	/**
 	 *
