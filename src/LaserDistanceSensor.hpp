@@ -4,66 +4,14 @@
 #include "Config.hpp"
 
 #include "AbstractSensor.hpp"
+#include "DistancePercept.hpp"
 
 namespace Model
 {
 	/**
-	 *
+	 * Compile time configurable length of the laser beam
 	 */
-	class DistanceStimulus : public AbstractStimulus
-	{
-		public:
-			DistanceStimulus( 	double anAngle,
-								double aDistance) :
-				angle(anAngle),
-				distance( aDistance)
-		{
-		}
-		double angle;
-		double distance;
-	};
-	// class DistanceStimulus
-
-	/**
-	 *
-	 */
-	class DistancePercept : public AbstractPercept
-	{
-		public:
-			explicit DistancePercept( const DistanceStimulus& aDistanceStimulus) :
-				angle(aDistanceStimulus.angle),
-				distance( aDistanceStimulus.distance)
-		{
-		}
-		DistancePercept(double anAngle,
-						double aDistance) :
-			angle(anAngle),
-			distance( aDistance)
-		{
-		}
-		double angle;
-		double distance;
-		/**
-		 * @name Debug functions
-		 */
-		//@{
-		/**
-		 * Returns a 1-line description of the object
-		 */
-		virtual std::string asString() const override
-		{
-			return "DistancePercept: " + std::to_string(angle) + ", " + std::to_string(distance);
-		}
-		/**
-		 * Returns a description of the object with all data of the object usable for debugging
-		 */
-		virtual std::string asDebugString() const override
-		{
-			return asString();
-		}
-
-	};
-	//	class DistancePercept
+	const short int laserBeamLength = 1024;
 
 	class Robot;
 	typedef std::shared_ptr<Robot> RobotPtr;
@@ -95,6 +43,16 @@ namespace Model
 			 */
 			virtual std::shared_ptr< AbstractPercept > getPerceptFor( std::shared_ptr< AbstractStimulus > anAbstractStimulus) const override;
 			/**
+			 *
+			 */
+			inline
+			static void setStdDev(double aStdDev) {LaserDistanceSensor::stddev = aStdDev;}
+			/**
+			 *
+			 */
+			inline
+			static double getStdDev(){ return stddev;}
+			/**
 			 * @name Debug functions
 			 */
 			//@{
@@ -109,7 +67,10 @@ namespace Model
 			//@}
 		protected:
 		private:
-
+			/**
+			 * Standard deviation of the odometer per 10 pixels
+			 */
+			static double stddev;
 	};
 } // namespace Model
 #endif /* LASERDISTANCESENSOR_HPP_ */

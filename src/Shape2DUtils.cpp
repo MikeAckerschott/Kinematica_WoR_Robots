@@ -1,6 +1,7 @@
 #include "Shape2DUtils.hpp"
 
 #include "Widgets.hpp"
+#include "Logger.hpp"
 
 #include <algorithm>
 #include <sstream>
@@ -48,33 +49,105 @@ namespace Utils
 	 *
 	 */
 	/* static */bool Shape2DUtils::intersect(	const Point& aStartLine1,
-												const Point& aEndLine1,
+												const Point& anEndLine1,
 												const Point& aStartLine2,
 												const Point& anEndLine2)
 	{
-		return getIntersection(	aStartLine1,aEndLine1,aStartLine2,anEndLine2) != DefaultPosition;
+		return Shape2DUtils::getIntersection(	aStartLine1,anEndLine1,aStartLine2,anEndLine2) != DefaultPosition;
 	}
 	/**
 	 *
 	 */
 	/* static */ Point Shape2DUtils::getIntersection(	const Point& aStartLine1,
-														const Point& aEndLine1,
+														const Point& anEndLine1,
 														const Point& aStartLine2,
 														const Point& anEndLine2)
 	{
+		/*
+		// https://www.geeksforgeeks.org/program-for-point-of-intersection-of-two-lines/
+
+		// Line AB represented as a1x + b1y = c1
+		double a1 = anEndLine1.y- aStartLine1.y;
+		double b1 = aStartLine1.x- anEndLine1.x;
+		double c1 = a1*(aStartLine1.x) + b1*(aStartLine1.y);
+
+		// Line CD represented as a2x + b2y = c2
+		double a2 = anEndLine2.y- aStartLine2.y;
+		double b2 = aStartLine2.x- anEndLine2.x;
+		double c2 = a2*(aStartLine2.x) + b2*(aStartLine2.y);
+
+		double determinant = a1*b2 - a2*b1;
+
+		if (determinant == 0)
+		{
+			// The lines are parallel.
+			return DefaultPosition;
+		}
+		else
+		{
+			double x = (b2*c1 - b1*c2)/determinant;
+			double y = (a1*c2 - a2*c1)/determinant;
+			return Point( static_cast<int>(x), static_cast<int>(y));
+		}
+		*/
+
+
+		/*
+		 // https://rosettacode.org/wiki/Find_the_intersection_of_two_lines#C++
+
 		double x1 = aStartLine1.x;
-		double x2 = aEndLine1.x;
+		double x2 = anEndLine1.x;
 		double x3 = aStartLine2.x;
 		double x4 = anEndLine2.x;
 		double y1 = aStartLine1.y;
-		double y2 = aEndLine1.y;
+		double y2 = anEndLine1.y;
+		double y3 = aStartLine2.y;
+		double y4 = anEndLine2.y;
+
+
+		double detL1 = Det(x1, y1, x2, y2);
+		double detL2 = Det(x3, y3, x4, y4);
+		double x1mx2 = x1 - x2;
+		double x3mx4 = x3 - x4;
+		double y1my2 = y1 - y2;
+		double y3my4 = y3 - y4;
+
+		double denom = Det(x1mx2, y1my2, x3mx4, y3my4);
+		if(denom == 0.0) // Lines don't seem to cross
+		{
+			return DefaultPosition;
+		}
+
+		double xnom = Det(detL1, x1mx2, detL2, x3mx4);
+		double ynom = Det(detL1, y1my2, detL2, y3my4);
+		double ixOut = xnom / denom;
+		double iyOut = ynom / denom;
+		if(!isfinite(ixOut) || !isfinite(iyOut)) // Probably a numerical issue
+		{
+			return DefaultPosition;
+		}
+
+		//return DefaultPosition;
+		return Point( static_cast<int>(ixOut), static_cast<int>(iyOut)); //All OK
+	 */
+
+		// I don't know where this is from...
+
+		double x1 = aStartLine1.x;
+		double x2 = anEndLine1.x;
+		double x3 = aStartLine2.x;
+		double x4 = anEndLine2.x;
+		double y1 = aStartLine1.y;
+		double y2 = anEndLine1.y;
 		double y3 = aStartLine2.y;
 		double y4 = anEndLine2.y;
 
 		double d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 		// If d is zero, there is no intersection
 		if (std::fabs(d-0.0) <= std::numeric_limits<float>::epsilon())
+		{
 			return DefaultPosition;
+		}
 
 		// Get the x and y
 		double pre = (x1 * y2 - y1 * x2);
@@ -178,7 +251,7 @@ namespace Utils
 		return distance < aRadius;
 
 		// After trying it myself I found someone who made less errors...
-		// See http://local.wasp.uwa.edu.au/~pbourke/geometry/sphereline/
+		// See http://paulbourke.net/ somewhere
 
 		// Basically it solves
 		// y = ax+b through aStartPoint and anEndPoint

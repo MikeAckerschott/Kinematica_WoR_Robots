@@ -4,36 +4,40 @@
 #include "Config.hpp"
 
 #include "Point.hpp"
-#include "Size.hpp"
 #include "Region.hpp"
+#include "Size.hpp"
 
 #include <wx/app.h>
+#include <wx/brush.h>
+#include <wx/button.h>
+#include <wx/checkbox.h>
+#include <wx/colour.h>
+#include <wx/cursor.h>
 #include <wx/dc.h>
 #include <wx/dcclient.h>
 #include <wx/defs.h>
 #include <wx/dnd.h>
 #include <wx/event.h>
-#include <wx/gbsizer.h>
-#include <wx/gdicmn.h>
-#include <wx/imaglist.h>
-#include <wx/splitter.h>
-#include <wx/brush.h>
-#include <wx/button.h>
-#include <wx/colour.h>
-#include <wx/cursor.h>
 #include <wx/font.h>
 #include <wx/frame.h>
+#include <wx/gbsizer.h>
+#include <wx/gdicmn.h>
+#include <wx/generic/textdlgg.h>
+#include <wx/imaglist.h>
+#include <wx/listbase.h>
 #include <wx/menu.h>
 #include <wx/msgdlg.h>
-#include <wx/statline.h>
-#include <wx/toolbar.h>
-#include <wx/listbase.h>
+#include <wx/radiobox.h>
 #include <wx/scrolwin.h>
 #include <wx/sizer.h>
+#include <wx/spinctrl.h>
+#include <wx/splitter.h>
+#include <wx/statline.h>
+#include <wx/stattext.h>
 #include <wx/string.h>
+#include <wx/toolbar.h>
 #include <wx/treebase.h>
 #include <wx/validate.h>
-#include <wx/generic/textdlgg.h>
 
 #include <string>
 
@@ -60,7 +64,11 @@ typedef wxActivateEvent ActivateEvent;
 	 */
 	typedef wxButton Button;
 	/**
-	 * @see http://docs.wxwidgets.org/stable/classwx_colour
+	 * @see http://docs.wxwidgets.org/stable/
+	 */
+	typedef wxCheckBox Checkbox;
+	/**
+	 * @see http://docs.wxwidgets.org/stable/
 	 */
 	typedef wxColour Colour;
 	/**
@@ -172,6 +180,10 @@ typedef wxActivateEvent ActivateEvent;
 	 */
 	typedef wxMenu Menu;
 	/**
+	 * @see http://docs.wxwidgets.org/stable/
+	 */
+	typedef wxMenuItem MenuItem;
+	/**
 	 * @see http://docs.wxwidgets.org/stable/classwx_mouse_event
 	 */
 	typedef wxMouseEvent MouseEvent;
@@ -200,6 +212,10 @@ typedef wxActivateEvent ActivateEvent;
 	 */
 	typedef wxPanel Panel;
 	/**
+	 * @see http://docs.wxwidgets.org/stable/panel
+	 */
+	typedef wxRadioBox Radiobox;
+	/**
 	 * @see http://docs.wxwidgets.org/stable/classwx_scrolled
 	 */
 	typedef wxScrolledCanvas ScrolledCanvas;
@@ -224,6 +240,10 @@ typedef wxActivateEvent ActivateEvent;
 	 */
 	typedef wxSizerFlags SizerFlags;
 	/**
+	 * @see http://docs.wxwidgets.org/stable/
+	 */
+	typedef wxSpinCtrl SpinCtrl;
+	/**
 	 * @see http://docs.wxwidgets.org/stable/classwx_splitter_window
 	 */
 	typedef wxSplitterWindow SplitterWindow;
@@ -235,6 +255,10 @@ typedef wxActivateEvent ActivateEvent;
 	 * @see http://docs.wxwidgets.org/stable/classwx_static_line
 	 */
 	typedef wxStaticLine StaticLine;
+	/**
+	 * @see http://docs.wxwidgets.org/stable/classwx_static_line
+	 */
+	typedef wxStaticText StaticText;
 	/**
 	 * @see http://docs.wxwidgets.org/stable/classwx_text_entry_dialog
 	 */

@@ -6,6 +6,7 @@
 #include "AbstractAgent.hpp"
 #include "AStar.hpp"
 #include "BoundedVector.hpp"
+#include "DistancePercepts.hpp"
 #include "Message.hpp"
 #include "MessageHandler.hpp"
 #include "Observer.hpp"
@@ -239,6 +240,14 @@ namespace Model
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
 			virtual std::string asDebugString() const override;
+			//@}
+
+			/**
+			 * @name Variables for painting the sensor activity on the screen
+			 */
+			//@{
+			// Radar
+			PointCloud currentRadarPointCloud; // The latest radar point cloud
 			//@}
 
 		protected:
