@@ -455,7 +455,14 @@ namespace Model
 					std::optional< std::shared_ptr< AbstractPercept >> percept = perceptQueue.dequeue();
 					if(percept)
 					{
-						Application::Logger::log(percept.value()->asString());
+						if( typeid(*percept.value().get()) == typeid(DistancePercept)) // single percept, this comes from the laser
+						{
+							DistancePercept* distancePercept = dynamic_cast<DistancePercept*>(percept.value().get());
+							currentRadarPointCloud.push_back(*distancePercept);
+						}else
+						{
+							Application::Logger::log(std::string("Unknown type of percept:") + typeid(percept.value()).name());
+						}
 					}else
 					{
 						Application::Logger::log("Huh??");

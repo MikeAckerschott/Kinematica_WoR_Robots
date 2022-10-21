@@ -1,12 +1,14 @@
 #include "RobotShape.hpp"
 
 #include "Goal.hpp"
+#include "LaserDistanceSensor.hpp"
 #include "Logger.hpp"
 #include "Notifier.hpp"
 #include "Robot.hpp"
 #include "RobotWorld.hpp"
 #include "RobotWorldCanvas.hpp"
 #include "Shape2DUtils.hpp"
+#include "Trace.hpp"
 
 #include <cmath>
 
@@ -149,6 +151,23 @@ namespace View
 		int textOffsetx = static_cast< int >( std::cos( -angle - 0.5 * Utils::PI) * (titleSize.x / 2) + std::sin( -angle - 0.5 * Utils::PI) * (titleSize.y / 2));
 		int textOffsety = static_cast< int >( std::sin( -angle - 0.5 * Utils::PI) * (titleSize.x / 2) - std::cos( -angle - 0.5 * Utils::PI) * (titleSize.y / 2));
 		dc.DrawRotatedText( WXSTRING( title), centre.x-textOffsetx, centre.y+textOffsety, (-angle - 0.5 * Utils::PI)/Utils::PI*180);
+
+		// Draw the laser beam
+		dc.SetPen( wxPen( WXSTRING( "RED"), 1, wxPENSTYLE_SOLID));
+		dc.DrawLine( centre.x,
+					 centre.y,
+					 static_cast<int>(centre.x + std::cos( angle) * Model::laserBeamLength),
+					 static_cast<int>(centre.y + std::sin( angle) * Model::laserBeamLength));
+
+		// Draw the radar endPoints that are actually touching the walls
+		for( const Model::DistancePercept& d : getRobot()->currentRadarPointCloud)
+		{
+			if(d.point != DefaultPosition || (d.point.x != Model::noObject && d.point.y != Model::noObject) )
+			{
+				dc.SetPen( wxPen( WXSTRING( "RED"), borderWidth, wxPENSTYLE_SOLID));
+				dc.DrawCircle(d.point,1);
+			}
+		}
 	}
 	/**
 	 *
