@@ -25,34 +25,14 @@ namespace Model
 	/**
 	 *
 	 */
-	Robot::Robot() :
-								name( ""),
-								size( DefaultSize),
-								position( DefaultPosition),
-								front( 0, 0),
-								speed( 0.0),
-								acting(false),
-								driving(false),
-								communicating(false)
+	Robot::Robot() : Robot("", DefaultPosition)
 	{
-		std::shared_ptr< AbstractSensor > laserSensor( new LaserDistanceSensor( this));
-		attachSensor( laserSensor);
 	}
 	/**
 	 *
 	 */
-	Robot::Robot( const std::string& aName) :
-								name( aName),
-								size( DefaultSize),
-								position( DefaultPosition),
-								front( 0, 0),
-								speed( 0.0),
-								acting(false),
-								driving(false),
-								communicating(false)
+	Robot::Robot( const std::string& aName) : Robot(aName,DefaultPosition)
 	{
-		std::shared_ptr< AbstractSensor > laserSensor( new LaserDistanceSensor( this));
-		attachSensor( laserSensor);
 	}
 	/**
 	 *
@@ -100,7 +80,6 @@ namespace Model
 		{
 			notifyObservers();
 		}
-
 	}
 	/**
 	 *
@@ -325,7 +304,6 @@ namespace Model
 						static_cast<int>((originalBackLeft.y - position.y) * std::cos( angle) + (originalBackLeft.x - position.x) * std::sin( angle) + position.y));
 
 		return backLeft;
-
 	}
 	/**
 	 *
