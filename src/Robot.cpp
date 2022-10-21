@@ -25,34 +25,14 @@ namespace Model
 	/**
 	 *
 	 */
-	Robot::Robot() :
-								name( ""),
-								size( DefaultSize),
-								position( DefaultPosition),
-								front( 0, 0),
-								speed( 0.0),
-								acting(false),
-								driving(false),
-								communicating(false)
+	Robot::Robot() : Robot("", DefaultPosition)
 	{
-		std::shared_ptr< AbstractSensor > laserSensor( new LaserDistanceSensor( this));
-		attachSensor( laserSensor);
 	}
 	/**
 	 *
 	 */
-	Robot::Robot( const std::string& aName) :
-								name( aName),
-								size( DefaultSize),
-								position( DefaultPosition),
-								front( 0, 0),
-								speed( 0.0),
-								acting(false),
-								driving(false),
-								communicating(false)
+	Robot::Robot( const std::string& aName) : Robot(aName,DefaultPosition)
 	{
-		std::shared_ptr< AbstractSensor > laserSensor( new LaserDistanceSensor( this));
-		attachSensor( laserSensor);
 	}
 	/**
 	 *
@@ -100,7 +80,6 @@ namespace Model
 		{
 			notifyObservers();
 		}
-
 	}
 	/**
 	 *
@@ -324,7 +303,6 @@ namespace Model
 						static_cast<int>((originalBackLeft.y - position.y) * std::cos( angle) + (originalBackLeft.x - position.x) * std::sin( angle) + position.y));
 
 		return backLeft;
-
 	}
 	/**
 	 *
@@ -474,12 +452,13 @@ namespace Model
 
 				notifyObservers();
 
-				std::this_thread::sleep_for( std::chrono::milliseconds( 100));
+				// If there is no sleep_for here the robot will immediately be on its destination....
+				std::this_thread::sleep_for( std::chrono::milliseconds( 100)); // @suppress("Avoid magic numbers")
 
 				// this should be the last thing in the loop
 				if(driving == false)
 				{
-					return;
+					break;
 				}
 			} // while
 

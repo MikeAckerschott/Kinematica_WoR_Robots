@@ -866,7 +866,7 @@ namespace View
 				}
 			}
 		}
-		/*aShape->handleEndDrag();*/
+		//aShape->handleEndDrag();
 	}
 	/**
 	 *

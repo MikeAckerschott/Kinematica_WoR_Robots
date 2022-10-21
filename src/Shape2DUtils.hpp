@@ -20,27 +20,50 @@ namespace Utils
 		public:
 			/**
 			 *
+			 * @param aVector
+			 * @return the counterclockwise angle in radians between the positive X axis and the given vector.
 			 */
 			static double getAngle( const Model::BoundedVector& aVector);
 			/**
 			 *
+			 * @param aStartpoint
+			 * @param anEndPoint
+			 * @return the counterclockwise angle in radians between the positive X axis and the line between the points
 			 */
 			static double getAngle( const Point& aStartpoint,
 									const Point& anEndPoint);
 			/**
 			 *
+			 * @param aStartLine1
+			 * @param aEndLine1
+			 * @param aStartLine2
+			 * @param anEndLine2
+			 * @return true if the lines intersect, false otherwise
 			 */
 			static bool intersect(	const Point& aStartLine1,
-									const Point& aEndLine1,
+									const Point& anEndLine1,
 									const Point& aStartLine2,
 									const Point& anEndLine2);
 			/**
 			 *
+			 * @param aStartLine1
+			 * @param aEndLine1
+			 * @param aStartLine2
+			 * @param anEndLine2
+			 * @return a valid Point it the ;lines intersect, DefaultPosition otherwise
 			 */
 			static Point getIntersection(	const Point& aStartLine1,
-											const Point& aEndLine1,
+											const Point& anEndLine1,
 											const Point& aStartLine2,
 											const Point& anEndLine2);
+			/**
+			 *
+			 * @param aPoint1
+			 * @param aPoint2
+			 * @return the Cartesian plane distance
+			 */
+			static double distance(const Point& aPoint1,
+								   const Point& aPoint2);
 			/**
 			 *
 			 * @param aPolygon The array of points
@@ -48,7 +71,7 @@ namespace Utils
 			 * @param p The point for which to test
 			 * @return True if the point is inside the polygon, false otherwise
 			 */
-			static bool isInsidePolygon( 	Point* aPolygon,
+			static bool isInsidePolygon( 	const Point* aPolygon,
 											int aNumberOfPoints,
 											const Point& aPoint);
 			/**
@@ -73,7 +96,7 @@ namespace Utils
 			 * @param aClosedShape True if the path is a closed, false otherwise
 			 * @return True if aPoint is within aRadius of the given path lines
 			 */
-			static bool isOnLine( 	Point* aPolygon,
+			static bool isOnLine( 	const Point* aPolygon,
 									int aNumberOfPoints,
 									const Point& aPoint,
 									int aRadius = 6,

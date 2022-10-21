@@ -63,6 +63,10 @@ namespace Application
 			/**
 			 *
 			 */
+			Panel* initialiseLogPanel();
+			/**
+			 *
+			 */
 			Panel* initialiseButtonPanel();
 
 		protected:
@@ -76,7 +80,11 @@ namespace Application
 			View::RobotWorldCanvas* robotWorldCanvas;
 
 			Panel* rhsPanel;
+
+			Panel* logPanel;
 			LogTextCtrl* logTextCtrl;
+			Radiobox* logDestination;
+
 			Panel* buttonPanel;
 
 			void OnQuit( CommandEvent& anEvent);

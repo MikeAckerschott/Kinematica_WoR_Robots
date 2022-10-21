@@ -11,6 +11,23 @@
 
 namespace Model
 {
+	/**
+	 * Invalid angle
+	 */
+	const double noAngle = std::numeric_limits<double>::infinity();
+	/**
+	 * No distance measured, i.e. the noObject distance
+	 */
+	const int noDistance = -1;
+	/**
+	 * No object detected
+	 */
+	const int noObject = -2;
+	/**
+	 * Invalid distance
+	 */
+	const int invalidDistance = -3;
+
 	class AbstractAgent;
 	typedef std::shared_ptr< AbstractAgent > AbstractAgentPtr;
 
@@ -26,6 +43,19 @@ namespace Model
 			virtual ~AbstractStimulus()
 			{
 			}
+			/**
+			 * @name Debug functions
+			 */
+			//@{
+			/**
+			 * Returns a 1-line description of the object
+			 */
+			virtual std::string asString() const {return "AbstractStimulus";}
+			/**
+			 * Returns a description of the object with all data of the object usable for debugging
+			 */
+			virtual std::string asDebugString() const  {return "AbstractStimulus";}
+
 	};
 	// class AbstractStimulus
 	/**
@@ -40,6 +70,18 @@ namespace Model
 			virtual ~AbstractPercept()
 			{
 			}
+			/**
+			 * @name Debug functions
+			 */
+			//@{
+			/**
+			 * Returns a 1-line description of the object
+			 */
+			virtual std::string asString() const {return "AbstractPercept";}
+			/**
+			 * Returns a description of the object with all data of the object usable for debugging
+			 */
+			virtual std::string asDebugString() const  {return "AbstractPercept";}
 	};
 	// class AbstractPercept
 
@@ -67,19 +109,19 @@ namespace Model
 			 */
 			virtual void setOff();
 			/**
-			 *
+			 * Get the raw measurements. This typically is done in the low level driver.
 			 */
 			virtual std::shared_ptr< AbstractStimulus > getStimulus() const = 0;
 			/**
-			 *
+			 * Translate the stimulus into a percept. This typically is done in the high level driver.
 			 */
 			virtual std::shared_ptr< AbstractPercept > getPerceptFor( std::shared_ptr< AbstractStimulus > anAbstractPercepts) const = 0;
 			/**
-			 *
+			 * Add the percepts to the AbstractAgent's perceptQueue
 			 */
 			virtual void sendPercept( std::shared_ptr< AbstractPercept > anAbstractPercept);
 			/**
-			 *
+			 * Read the stimulus after aSleepingTime and send it after translating it to a percept to the Agent.
 			 */
 			virtual void run( unsigned long aSleepTime);
 			/**
@@ -90,6 +132,10 @@ namespace Model
 			 *
 			 */
 			virtual void detachAgent();
+			/**
+			 *
+			 */
+			virtual void reset(){}
 			/**
 			 * @name Debug functions
 			 */

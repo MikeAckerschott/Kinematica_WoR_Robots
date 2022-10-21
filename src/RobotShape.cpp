@@ -127,36 +127,27 @@ namespace View
 		Point cornerPoints[] = { getRobot()->getFrontRight(), getRobot()->getFrontLeft(), getRobot()->getBackLeft(), getRobot()->getBackRight() };
 		dc.DrawPolygon( 4, cornerPoints);
 
-		dc.SetPen( wxPen( WXSTRING( "RED"), borderWidth, wxPENSTYLE_SOLID));
+		dc.SetPen( wxPen( WXSTRING( "RED"), borderWidth+2, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[1]);
-		dc.SetPen( wxPen( WXSTRING( "GREEN"), borderWidth, wxPENSTYLE_SOLID));
+		dc.SetPen( wxPen( WXSTRING( "GREEN"), borderWidth+2, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[0]);
-		dc.SetPen( wxPen( WXSTRING( "INDIAN RED"), borderWidth, wxPENSTYLE_SOLID));
+		dc.SetPen( wxPen( WXSTRING( "INDIAN RED"), borderWidth+2, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[2]);
-		dc.SetPen( wxPen( WXSTRING( "PALE GREEN"), borderWidth, wxPENSTYLE_SOLID));
+		dc.SetPen( wxPen( WXSTRING( "PALE GREEN"), borderWidth+2, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[3]);
 
-		double angle = Utils::Shape2DUtils::getAngle( getRobot()->getFront()) + 0.5 * Utils::PI;
+		double angle = Utils::Shape2DUtils::getAngle( getRobot()->getFront());
 
+		// Draw the nose
 		dc.SetPen( wxPen( WXSTRING( "BLACK"), 1, wxPENSTYLE_SOLID));
 		dc.DrawLine( centre.x,
 					 centre.y,
-					 static_cast<int>(centre.x + std::cos( angle - 0.5 * Utils::PI) * 25),
-					 static_cast<int>(centre.y + std::sin( angle - 0.5 * Utils::PI) * 25));
+					 static_cast<int>(centre.x + std::cos( angle) * 25),
+					 static_cast<int>(centre.y + std::sin( angle) * 25));
 
-		int textOffsetx = long(cos(-angle) * (titleSize.x/2) + sin(-angle) * (titleSize.y/2));
-		int textOffsety = long(sin(-angle) * (titleSize.x/2) - cos(-angle) * (titleSize.y/2));
-		dc.DrawRotatedText( WXSTRING( title), centre.x-textOffsetx, centre.y+textOffsety, (-angle)/Utils::PI*180);
-
-		// Paint the radar beam
-		if(getRobot()->isDriving())
-		{
-			dc.SetPen( wxPen( WXSTRING( "RED"), 1, wxPENSTYLE_SOLID));
-			dc.DrawLine( centre.x,
-						 centre.y,
-						 static_cast<int>(centre.x + std::cos( angle - 0.5 * Utils::PI) * 1024),
-						 static_cast<int>(centre.y + std::sin( angle - 0.5 * Utils::PI) * 1024));
-		}
+		int textOffsetx = static_cast< int >( std::cos( -angle - 0.5 * Utils::PI) * (titleSize.x / 2) + std::sin( -angle - 0.5 * Utils::PI) * (titleSize.y / 2));
+		int textOffsety = static_cast< int >( std::sin( -angle - 0.5 * Utils::PI) * (titleSize.x / 2) - std::cos( -angle - 0.5 * Utils::PI) * (titleSize.y / 2));
+		dc.DrawRotatedText( WXSTRING( title), centre.x-textOffsetx, centre.y+textOffsety, (-angle - 0.5 * Utils::PI)/Utils::PI*180);
 	}
 	/**
 	 *

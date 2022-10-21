@@ -1,6 +1,7 @@
 #include "MainFrameWindow.hpp"
 
 #include "Button.hpp"
+#include "Checkbox.hpp"
 #include "Client.hpp"
 #include "FileTraceFunction.hpp"
 #include "Logger.hpp"
@@ -9,6 +10,7 @@
 #include "MathUtils.hpp"
 #include "Message.hpp"
 #include "MessageTypes.hpp"
+#include "Radiobox.hpp"
 #include "Robot.hpp"
 #include "RobotWorld.hpp"
 #include "RobotWorldCanvas.hpp"
@@ -33,7 +35,6 @@ namespace Application
 		ID_WIDGET_TRACE_FUNCTION, 			//!< ID_WIDGET_TRACE_FUNCTION
 		ID_STDCOUT_TRACE_FUNCTION, 			//!< ID_STDCOUT_TRACE_FUNCTION
 		ID_FILE_TRACE_FUNCTION 				//!< ID_FILE_TRACE_FUNCTION
-
 	};
 	/**
 	 *
@@ -47,6 +48,7 @@ namespace Application
 								robotWorldCanvas( nullptr),
 								rhsPanel( nullptr),
 								logTextCtrl( nullptr),
+								logDestination( nullptr),
 								buttonPanel( nullptr)
 	{
 		initialise();
@@ -111,7 +113,7 @@ namespace Application
 		Menu* helpMenu = new Menu;
 		helpMenu->Append( ID_ABOUT, WXSTRING( "&About...\tF1"), WXSTRING( "Show about dialog"));
 
-		menuBar = new wxMenuBar;
+		menuBar = new MenuBar;
 		menuBar->Append( fileMenu, WXSTRING( "&File"));
 		menuBar->Append( debugMenu, WXSTRING( "&Debug"));
 		menuBar->Append( helpMenu, WXSTRING( "&Help"));
@@ -173,8 +175,11 @@ namespace Application
 
 			sizer->Add( robotWorldCanvas = new View::RobotWorldCanvas( lhsPanel),
 						GBPosition( 1, 1),
-						GBSpan( 1, 1)/*, EXPAND*/);
-			robotWorldCanvas->SetMinSize( wxSize( 500, 500));
+						GBSpan( 1, 1),
+						GROW);
+			robotWorldCanvas->SetMinSize( wxSize( 500,500));
+//			sizer->AddGrowableRow( 1);
+//			sizer->AddGrowableCol( 1);
 
 			sizer->Add( 5, 5,
 						GBPosition( 2, 2),
@@ -199,9 +204,10 @@ namespace Application
 						GBPosition( 0, 0),
 						GBSpan( 1, 1), EXPAND);
 
-			sizer->Add( logTextCtrl = new LogTextCtrl( rhsPanel, DEFAULT_ID, wxTE_MULTILINE | wxTE_DONTWRAP),
+			sizer->Add( logPanel = initialiseLogPanel(),
 						GBPosition( 1, 1),
-						GBSpan( 1, 1), EXPAND);
+						GBSpan( 1, 1),
+						GROW);
 			sizer->AddGrowableCol( 1);
 			sizer->AddGrowableRow( 1);
 			logTextCtrl->SetMinSize( Size( 500, 300));
@@ -223,50 +229,140 @@ namespace Application
 	/**
 	 *
 	 */
+	Panel* MainFrameWindow::initialiseLogPanel()
+	{
+		Panel* panel = new Panel( rhsPanel);
+
+		GridBagSizer* sizer = new GridBagSizer();
+
+		sizer->Add( 5, 5,
+					GBPosition( 0, 0),
+					GBSpan( 1, 1), EXPAND);
+
+		wxString choicesArray[] =
+		{
+		 "Window",
+		 "StdOut",
+		 "File"
+		};
+
+		sizer->Add(	logDestination = makeRadiobox(	panel,
+													3,
+													choicesArray,
+													[this](CommandEvent& event)
+													{
+														Radiobox* radiobox = dynamic_cast< Radiobox* >(event.GetEventObject());
+														if(radiobox)
+														{
+															switch(radiobox->GetSelection())
+															{
+																case 0:
+																	{
+																		OnWidgetTraceFunction(event);
+
+																		break;
+																	}
+																case 1:
+																{
+																	OnStdOutTraceFunction(event);
+																	break;
+																}
+																case 2:
+																{
+																	OnFileTraceFunction(event);
+																	break;
+																}
+																default:
+																{
+																	TRACE_DEVELOP("Unknown trace destination");
+																}
+															}
+														}
+													},
+													"Log destination",
+													wxRA_SPECIFY_COLS),
+					GBPosition( 1, 1),
+					GBSpan( 1, 1),
+					ALIGN_CENTER);
+
+		sizer->Add( logTextCtrl = new LogTextCtrl( panel, DEFAULT_ID, wxTE_MULTILINE | wxTE_DONTWRAP),
+					GBPosition( 2, 1),
+					GBSpan( 1, 1),
+					GROW);
+		sizer->AddGrowableCol( 1);
+		sizer->AddGrowableRow( 2);
+		logTextCtrl->SetMinSize( Size( 500, 300));
+
+
+		sizer->Add( makeButton( panel,
+								"Clear log window",
+								[this](CommandEvent& /*anEvent*/){logTextCtrl->Clear();}),
+					GBPosition( 3, 1),
+					GBSpan( 1, 1),
+					ALIGN_CENTER);
+
+		sizer->Add( 5, 5,
+					GBPosition( 4, 2),
+					GBSpan( 1, 1), EXPAND);
+
+
+		panel->SetSizerAndFit( sizer);
+
+		return panel;
+	}
+	/**
+	 *
+	 */
 	Panel* MainFrameWindow::initialiseButtonPanel()
 	{
 		Panel* panel = new Panel( rhsPanel);
 
 		GridBagSizer* sizer = new GridBagSizer();
 
+		sizer->Add( 5, 5,
+					GBPosition( 0, 0),
+					GBSpan( 1, 1), EXPAND);
+
 
 		sizer->Add( makeButton( panel,
 								"Populate",
 								[this](CommandEvent &anEvent){this->OnPopulate(anEvent);}),
-					GBPosition( 0, 0),
+					GBPosition( 1, 1),
 					GBSpan( 1, 1), EXPAND);
 		sizer->Add( makeButton( panel,
 								"Unpopulate",
 								[this](CommandEvent &anEvent){this->OnUnpopulate(anEvent);}),
-					GBPosition( 0, 1),
+					GBPosition( 1, 2),
 					GBSpan( 1, 1), EXPAND);
 
 		sizer->Add( makeButton( panel,
 								"Start robot",
 								[this](CommandEvent &anEvent){this->OnStartRobot(anEvent);}),
-					GBPosition( 1, 0),
+					GBPosition( 3, 1),
 					GBSpan( 1, 1), EXPAND);
 		sizer->Add( makeButton( panel,
 								"Stop robot",
 								[this](CommandEvent &anEvent){this->OnStopRobot(anEvent);}),
-					GBPosition( 1, 1),
+					GBPosition( 3, 2),
 					GBSpan( 1, 1), EXPAND);
-
-
 		sizer->Add( makeButton( panel,
 								"Start listening",
 								[this](CommandEvent &anEvent){this->OnStartListening(anEvent);}),
-					GBPosition( 2, 0),
+					GBPosition( 5, 1),
 					GBSpan( 1, 1), EXPAND);
 		sizer->Add( makeButton( panel,
 								"Send message",
 								[this](CommandEvent &anEvent){this->OnSendMessage(anEvent);}),
-					GBPosition( 2, 1),
+					GBPosition( 5, 2),
 					GBSpan( 1, 1), EXPAND);
 		sizer->Add( makeButton( panel,
 								"Stop listening",
 								[this](CommandEvent &anEvent){this->OnStopListening(anEvent);}),
-					GBPosition( 2, 2),
+					GBPosition( 5, 3),
+					GBSpan( 1, 1), EXPAND);
+
+		sizer->Add( 5, 5,
+					GBPosition( 6, 4),
 					GBSpan( 1, 1), EXPAND);
 
 		panel->SetSizerAndFit( sizer);
@@ -287,6 +383,13 @@ namespace Application
 	void MainFrameWindow::OnWidgetTraceFunction( CommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Base::Trace::setTraceFunction( std::make_unique<Application::WidgetTraceFunction>(logTextCtrl));
+
+		MenuItem* item = menuBar->FindItem(ID_WIDGET_TRACE_FUNCTION);
+		if(item && item->IsRadio() && !item->IsCheck())
+		{
+			item->Check();
+		}
+		logDestination->SetSelection(0);
 	}
 	/**
 	 *
@@ -294,6 +397,13 @@ namespace Application
 	void MainFrameWindow::OnStdOutTraceFunction( CommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Base::Trace::setTraceFunction( std::make_unique<Base::StdOutTraceFunction>());
+
+		MenuItem* item = menuBar->FindItem(ID_STDCOUT_TRACE_FUNCTION);
+		if(item && item->IsRadio() && !item->IsCheck())
+		{
+			item->Check();
+		}
+		logDestination->SetSelection(1);
 	}
 	/**
 	 *
@@ -301,6 +411,13 @@ namespace Application
 	void MainFrameWindow::OnFileTraceFunction( CommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Base::Trace::setTraceFunction( std::make_unique<Base::FileTraceFunction>("trace", "log", true));
+
+		MenuItem* item = menuBar->FindItem(ID_FILE_TRACE_FUNCTION);
+		if(item && item->IsRadio() && !item->IsCheck())
+		{
+			item->Check();
+		}
+		logDestination->SetSelection(2);
 	}
 	/**
 	 *
