@@ -38,21 +38,21 @@ namespace View
 			/**
 			 *
 			 */
-			virtual std::string getNormalColour() const
+			virtual std::string getNormalColour() const  override
 			{
 				return "BLUE";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getSelectionColour() const
+			virtual std::string getSelectionColour() const  override
 			{
 				return "BLUE";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getActivationColour() const
+			virtual std::string getActivationColour() const  override
 			{
 				return "BLACK";
 			}
