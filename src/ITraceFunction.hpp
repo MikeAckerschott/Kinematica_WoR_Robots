@@ -13,7 +13,10 @@ namespace Base
 	class ITraceFunction
 	{
 		public:
-			virtual ~ITraceFunction(){}
+			/**
+			 *
+			 */
+			virtual ~ITraceFunction() = default;
 			/**
 			 *
 			 */

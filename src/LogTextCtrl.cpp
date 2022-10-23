@@ -5,39 +5,33 @@ namespace Application
 	/**
 	 *
 	 */
-	wxDEFINE_EVENT(ROBOTWORLD_TRACE_EVENT, CommandEvent);
+	wxDEFINE_EVENT(ROBOTWORLD_TRACE_EVENT, wxCommandEvent);
 	/**
 	 *
 	 */
-	LogTextCtrl::LogTextCtrl( 	Window* aParent,
-								WindowId aWindowId /*  = DEFAULT_ID */,
+	LogTextCtrl::LogTextCtrl( 	wxWindow* aParent,
+								wxWindowID aWindowID /*  = wxID_ANY */,
 								long aStyle /* = wxTE_READONLY | wxTE_MULTILINE | wxTE_DONTWRAP */,
 								const std::string& anInitialText /* = "" */,
-								const Point& aPoint /* = DefaultPosition */,
-								const Size& aSize /* = DefaultSize */) :
-								wxTextCtrl( aParent, aWindowId, WXSTRING( anInitialText), aPoint, aSize, aStyle)
+								const wxPoint& aPoint /* = wxDefaultPosition */,
+								const wxSize& aSize /* = DefaultSize */) :
+								wxTextCtrl( aParent, aWindowID, anInitialText, aPoint, aSize, aStyle)
 	{
 		Bind(ROBOTWORLD_TRACE_EVENT,
-			 [this](CommandEvent& anEvent){ this->OnCommandEvent(anEvent);});
-	}
-	/**
-	 *
-	 */
-	LogTextCtrl::~LogTextCtrl()
-	{
+			 [this](wxCommandEvent& anEvent){ this->OnCommandEvent(anEvent);});
 	}
 	/**
 	 *
 	 */
 	void LogTextCtrl::log( const std::string& aString)
 	{
-		AppendText( WXSTRING( aString + "\n"));
+		AppendText( aString + "\n");
 	}
 	/**
 	 *
 	 */
-	void LogTextCtrl::OnCommandEvent( CommandEvent& anEvent)
+	void LogTextCtrl::OnCommandEvent( wxCommandEvent& anEvent)
 	{
-		log( STDSTRING( anEvent.GetString()));
+		log( anEvent.GetString().ToStdString());
 	}
 } // namespace Application

@@ -22,11 +22,7 @@ namespace Base
 			/**
 			 *
 			 */
-			Observer();
-			/**
-			 *
-			 */
-			virtual ~Observer();
+			virtual ~Observer() = default;
 			//@}
 			/**
 			 * @name Operators

@@ -23,7 +23,6 @@ namespace Application
 	 * @return MainApplication The MainApplication object for this application.
 	 */
 	MainApplication& TheApp();
-
 	/**
 	 *
 	 */
@@ -81,12 +80,17 @@ namespace Application
 			//@}
 
 		private:
-
+			/**
+			 *
+			 */
 			static std::vector< CommandlineArgument > commandlineArguments;
+			/**
+			 *
+			 */
 			static std::vector< std::string > commandlineFiles;
 
 	};
 	//	class MainApplication
 } // namespace Application
 
-#endif // MAINAPPLICATION_HPP_
+#endif // MAINAPPLICATION_HPP_

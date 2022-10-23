@@ -105,14 +105,11 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_robotworld_OBJECTS = robotworld-AbstractActuator.$(OBJEXT) \
-	robotworld-AbstractAgent.$(OBJEXT) \
-	robotworld-AbstractSensor.$(OBJEXT) robotworld-AStar.$(OBJEXT) \
+am_robotworld_OBJECTS = robotworld-AStar.$(OBJEXT) \
 	robotworld-BoundedVector.$(OBJEXT) \
 	robotworld-CommunicationService.$(OBJEXT) \
 	robotworld-FileTraceFunction.$(OBJEXT) \
 	robotworld-Goal.$(OBJEXT) robotworld-GoalShape.$(OBJEXT) \
-	robotworld-LaserDistanceSensor.$(OBJEXT) \
 	robotworld-LineShape.$(OBJEXT) robotworld-Logger.$(OBJEXT) \
 	robotworld-LogTextCtrl.$(OBJEXT) robotworld-Main.$(OBJEXT) \
 	robotworld-MainApplication.$(OBJEXT) \
@@ -128,7 +125,6 @@ am_robotworld_OBJECTS = robotworld-AbstractActuator.$(OBJEXT) \
 	robotworld-RobotWorldCanvas.$(OBJEXT) \
 	robotworld-Server.$(OBJEXT) robotworld-Shape2DUtils.$(OBJEXT) \
 	robotworld-StdOutTraceFunction.$(OBJEXT) \
-	robotworld-SteeringActuator.$(OBJEXT) \
 	robotworld-Trace.$(OBJEXT) robotworld-ViewObject.$(OBJEXT) \
 	robotworld-Wall.$(OBJEXT) robotworld-WallShape.$(OBJEXT) \
 	robotworld-WayPoint.$(OBJEXT) \
@@ -162,15 +158,11 @@ DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/robotworld-AStar.Po \
-	./$(DEPDIR)/robotworld-AbstractActuator.Po \
-	./$(DEPDIR)/robotworld-AbstractAgent.Po \
-	./$(DEPDIR)/robotworld-AbstractSensor.Po \
 	./$(DEPDIR)/robotworld-BoundedVector.Po \
 	./$(DEPDIR)/robotworld-CommunicationService.Po \
 	./$(DEPDIR)/robotworld-FileTraceFunction.Po \
 	./$(DEPDIR)/robotworld-Goal.Po \
 	./$(DEPDIR)/robotworld-GoalShape.Po \
-	./$(DEPDIR)/robotworld-LaserDistanceSensor.Po \
 	./$(DEPDIR)/robotworld-LineShape.Po \
 	./$(DEPDIR)/robotworld-LogTextCtrl.Po \
 	./$(DEPDIR)/robotworld-Logger.Po \
@@ -191,7 +183,6 @@ am__depfiles_remade = ./$(DEPDIR)/robotworld-AStar.Po \
 	./$(DEPDIR)/robotworld-Server.Po \
 	./$(DEPDIR)/robotworld-Shape2DUtils.Po \
 	./$(DEPDIR)/robotworld-StdOutTraceFunction.Po \
-	./$(DEPDIR)/robotworld-SteeringActuator.Po \
 	./$(DEPDIR)/robotworld-Trace.Po \
 	./$(DEPDIR)/robotworld-ViewObject.Po \
 	./$(DEPDIR)/robotworld-Wall.Po \
@@ -430,16 +421,12 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-robotworld_SOURCES = AbstractActuator.cpp	\
-						AbstractAgent.cpp	\
-						AbstractSensor.cpp	\
-						AStar.cpp	\
+robotworld_SOURCES = AStar.cpp	\
 						BoundedVector.cpp	\
 						CommunicationService.cpp	\
 						FileTraceFunction.cpp	\
 						Goal.cpp	\
 						GoalShape.cpp	\
-						LaserDistanceSensor.cpp	\
 						LineShape.cpp	\
 						Logger.cpp	\
 						LogTextCtrl.cpp	\
@@ -460,7 +447,6 @@ robotworld_SOURCES = AbstractActuator.cpp	\
 						Server.cpp	\
 						Shape2DUtils.cpp	\
 						StdOutTraceFunction.cpp	\
-						SteeringActuator.cpp	\
 						Trace.cpp	\
 						ViewObject.cpp	\
 						Wall.cpp	\
@@ -585,15 +571,11 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-AStar.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-AbstractActuator.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-AbstractAgent.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-AbstractSensor.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-BoundedVector.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-CommunicationService.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-FileTraceFunction.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Goal.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-GoalShape.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-LaserDistanceSensor.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-LineShape.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-LogTextCtrl.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Logger.Po@am__quote@ # am--include-marker
@@ -614,7 +596,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Server.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Shape2DUtils.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-StdOutTraceFunction.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-SteeringActuator.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Trace.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-ViewObject.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Wall.Po@am__quote@ # am--include-marker
@@ -653,48 +634,6 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
-
-robotworld-AbstractActuator.o: AbstractActuator.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-AbstractActuator.o -MD -MP -MF $(DEPDIR)/robotworld-AbstractActuator.Tpo -c -o robotworld-AbstractActuator.o `test -f 'AbstractActuator.cpp' || echo '$(srcdir)/'`AbstractActuator.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-AbstractActuator.Tpo $(DEPDIR)/robotworld-AbstractActuator.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='AbstractActuator.cpp' object='robotworld-AbstractActuator.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-AbstractActuator.o `test -f 'AbstractActuator.cpp' || echo '$(srcdir)/'`AbstractActuator.cpp
-
-robotworld-AbstractActuator.obj: AbstractActuator.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-AbstractActuator.obj -MD -MP -MF $(DEPDIR)/robotworld-AbstractActuator.Tpo -c -o robotworld-AbstractActuator.obj `if test -f 'AbstractActuator.cpp'; then $(CYGPATH_W) 'AbstractActuator.cpp'; else $(CYGPATH_W) '$(srcdir)/AbstractActuator.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-AbstractActuator.Tpo $(DEPDIR)/robotworld-AbstractActuator.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='AbstractActuator.cpp' object='robotworld-AbstractActuator.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-AbstractActuator.obj `if test -f 'AbstractActuator.cpp'; then $(CYGPATH_W) 'AbstractActuator.cpp'; else $(CYGPATH_W) '$(srcdir)/AbstractActuator.cpp'; fi`
-
-robotworld-AbstractAgent.o: AbstractAgent.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-AbstractAgent.o -MD -MP -MF $(DEPDIR)/robotworld-AbstractAgent.Tpo -c -o robotworld-AbstractAgent.o `test -f 'AbstractAgent.cpp' || echo '$(srcdir)/'`AbstractAgent.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-AbstractAgent.Tpo $(DEPDIR)/robotworld-AbstractAgent.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='AbstractAgent.cpp' object='robotworld-AbstractAgent.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-AbstractAgent.o `test -f 'AbstractAgent.cpp' || echo '$(srcdir)/'`AbstractAgent.cpp
-
-robotworld-AbstractAgent.obj: AbstractAgent.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-AbstractAgent.obj -MD -MP -MF $(DEPDIR)/robotworld-AbstractAgent.Tpo -c -o robotworld-AbstractAgent.obj `if test -f 'AbstractAgent.cpp'; then $(CYGPATH_W) 'AbstractAgent.cpp'; else $(CYGPATH_W) '$(srcdir)/AbstractAgent.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-AbstractAgent.Tpo $(DEPDIR)/robotworld-AbstractAgent.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='AbstractAgent.cpp' object='robotworld-AbstractAgent.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-AbstractAgent.obj `if test -f 'AbstractAgent.cpp'; then $(CYGPATH_W) 'AbstractAgent.cpp'; else $(CYGPATH_W) '$(srcdir)/AbstractAgent.cpp'; fi`
-
-robotworld-AbstractSensor.o: AbstractSensor.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-AbstractSensor.o -MD -MP -MF $(DEPDIR)/robotworld-AbstractSensor.Tpo -c -o robotworld-AbstractSensor.o `test -f 'AbstractSensor.cpp' || echo '$(srcdir)/'`AbstractSensor.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-AbstractSensor.Tpo $(DEPDIR)/robotworld-AbstractSensor.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='AbstractSensor.cpp' object='robotworld-AbstractSensor.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-AbstractSensor.o `test -f 'AbstractSensor.cpp' || echo '$(srcdir)/'`AbstractSensor.cpp
-
-robotworld-AbstractSensor.obj: AbstractSensor.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-AbstractSensor.obj -MD -MP -MF $(DEPDIR)/robotworld-AbstractSensor.Tpo -c -o robotworld-AbstractSensor.obj `if test -f 'AbstractSensor.cpp'; then $(CYGPATH_W) 'AbstractSensor.cpp'; else $(CYGPATH_W) '$(srcdir)/AbstractSensor.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-AbstractSensor.Tpo $(DEPDIR)/robotworld-AbstractSensor.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='AbstractSensor.cpp' object='robotworld-AbstractSensor.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-AbstractSensor.obj `if test -f 'AbstractSensor.cpp'; then $(CYGPATH_W) 'AbstractSensor.cpp'; else $(CYGPATH_W) '$(srcdir)/AbstractSensor.cpp'; fi`
 
 robotworld-AStar.o: AStar.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-AStar.o -MD -MP -MF $(DEPDIR)/robotworld-AStar.Tpo -c -o robotworld-AStar.o `test -f 'AStar.cpp' || echo '$(srcdir)/'`AStar.cpp
@@ -779,20 +718,6 @@ robotworld-GoalShape.obj: GoalShape.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='GoalShape.cpp' object='robotworld-GoalShape.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-GoalShape.obj `if test -f 'GoalShape.cpp'; then $(CYGPATH_W) 'GoalShape.cpp'; else $(CYGPATH_W) '$(srcdir)/GoalShape.cpp'; fi`
-
-robotworld-LaserDistanceSensor.o: LaserDistanceSensor.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-LaserDistanceSensor.o -MD -MP -MF $(DEPDIR)/robotworld-LaserDistanceSensor.Tpo -c -o robotworld-LaserDistanceSensor.o `test -f 'LaserDistanceSensor.cpp' || echo '$(srcdir)/'`LaserDistanceSensor.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-LaserDistanceSensor.Tpo $(DEPDIR)/robotworld-LaserDistanceSensor.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='LaserDistanceSensor.cpp' object='robotworld-LaserDistanceSensor.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-LaserDistanceSensor.o `test -f 'LaserDistanceSensor.cpp' || echo '$(srcdir)/'`LaserDistanceSensor.cpp
-
-robotworld-LaserDistanceSensor.obj: LaserDistanceSensor.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-LaserDistanceSensor.obj -MD -MP -MF $(DEPDIR)/robotworld-LaserDistanceSensor.Tpo -c -o robotworld-LaserDistanceSensor.obj `if test -f 'LaserDistanceSensor.cpp'; then $(CYGPATH_W) 'LaserDistanceSensor.cpp'; else $(CYGPATH_W) '$(srcdir)/LaserDistanceSensor.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-LaserDistanceSensor.Tpo $(DEPDIR)/robotworld-LaserDistanceSensor.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='LaserDistanceSensor.cpp' object='robotworld-LaserDistanceSensor.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-LaserDistanceSensor.obj `if test -f 'LaserDistanceSensor.cpp'; then $(CYGPATH_W) 'LaserDistanceSensor.cpp'; else $(CYGPATH_W) '$(srcdir)/LaserDistanceSensor.cpp'; fi`
 
 robotworld-LineShape.o: LineShape.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-LineShape.o -MD -MP -MF $(DEPDIR)/robotworld-LineShape.Tpo -c -o robotworld-LineShape.o `test -f 'LineShape.cpp' || echo '$(srcdir)/'`LineShape.cpp
@@ -1074,20 +999,6 @@ robotworld-StdOutTraceFunction.obj: StdOutTraceFunction.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-StdOutTraceFunction.obj `if test -f 'StdOutTraceFunction.cpp'; then $(CYGPATH_W) 'StdOutTraceFunction.cpp'; else $(CYGPATH_W) '$(srcdir)/StdOutTraceFunction.cpp'; fi`
 
-robotworld-SteeringActuator.o: SteeringActuator.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-SteeringActuator.o -MD -MP -MF $(DEPDIR)/robotworld-SteeringActuator.Tpo -c -o robotworld-SteeringActuator.o `test -f 'SteeringActuator.cpp' || echo '$(srcdir)/'`SteeringActuator.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-SteeringActuator.Tpo $(DEPDIR)/robotworld-SteeringActuator.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='SteeringActuator.cpp' object='robotworld-SteeringActuator.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-SteeringActuator.o `test -f 'SteeringActuator.cpp' || echo '$(srcdir)/'`SteeringActuator.cpp
-
-robotworld-SteeringActuator.obj: SteeringActuator.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-SteeringActuator.obj -MD -MP -MF $(DEPDIR)/robotworld-SteeringActuator.Tpo -c -o robotworld-SteeringActuator.obj `if test -f 'SteeringActuator.cpp'; then $(CYGPATH_W) 'SteeringActuator.cpp'; else $(CYGPATH_W) '$(srcdir)/SteeringActuator.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-SteeringActuator.Tpo $(DEPDIR)/robotworld-SteeringActuator.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='SteeringActuator.cpp' object='robotworld-SteeringActuator.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-SteeringActuator.obj `if test -f 'SteeringActuator.cpp'; then $(CYGPATH_W) 'SteeringActuator.cpp'; else $(CYGPATH_W) '$(srcdir)/SteeringActuator.cpp'; fi`
-
 robotworld-Trace.o: Trace.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-Trace.o -MD -MP -MF $(DEPDIR)/robotworld-Trace.Tpo -c -o robotworld-Trace.o `test -f 'Trace.cpp' || echo '$(srcdir)/'`Trace.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-Trace.Tpo $(DEPDIR)/robotworld-Trace.Po
@@ -1333,15 +1244,11 @@ clean-am: clean-binPROGRAMS clean-generic clean-libtool mostlyclean-am
 
 distclean: distclean-am
 		-rm -f ./$(DEPDIR)/robotworld-AStar.Po
-	-rm -f ./$(DEPDIR)/robotworld-AbstractActuator.Po
-	-rm -f ./$(DEPDIR)/robotworld-AbstractAgent.Po
-	-rm -f ./$(DEPDIR)/robotworld-AbstractSensor.Po
 	-rm -f ./$(DEPDIR)/robotworld-BoundedVector.Po
 	-rm -f ./$(DEPDIR)/robotworld-CommunicationService.Po
 	-rm -f ./$(DEPDIR)/robotworld-FileTraceFunction.Po
 	-rm -f ./$(DEPDIR)/robotworld-Goal.Po
 	-rm -f ./$(DEPDIR)/robotworld-GoalShape.Po
-	-rm -f ./$(DEPDIR)/robotworld-LaserDistanceSensor.Po
 	-rm -f ./$(DEPDIR)/robotworld-LineShape.Po
 	-rm -f ./$(DEPDIR)/robotworld-LogTextCtrl.Po
 	-rm -f ./$(DEPDIR)/robotworld-Logger.Po
@@ -1362,7 +1269,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/robotworld-Server.Po
 	-rm -f ./$(DEPDIR)/robotworld-Shape2DUtils.Po
 	-rm -f ./$(DEPDIR)/robotworld-StdOutTraceFunction.Po
-	-rm -f ./$(DEPDIR)/robotworld-SteeringActuator.Po
 	-rm -f ./$(DEPDIR)/robotworld-Trace.Po
 	-rm -f ./$(DEPDIR)/robotworld-ViewObject.Po
 	-rm -f ./$(DEPDIR)/robotworld-Wall.Po
@@ -1417,15 +1323,11 @@ installcheck-am:
 
 maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/robotworld-AStar.Po
-	-rm -f ./$(DEPDIR)/robotworld-AbstractActuator.Po
-	-rm -f ./$(DEPDIR)/robotworld-AbstractAgent.Po
-	-rm -f ./$(DEPDIR)/robotworld-AbstractSensor.Po
 	-rm -f ./$(DEPDIR)/robotworld-BoundedVector.Po
 	-rm -f ./$(DEPDIR)/robotworld-CommunicationService.Po
 	-rm -f ./$(DEPDIR)/robotworld-FileTraceFunction.Po
 	-rm -f ./$(DEPDIR)/robotworld-Goal.Po
 	-rm -f ./$(DEPDIR)/robotworld-GoalShape.Po
-	-rm -f ./$(DEPDIR)/robotworld-LaserDistanceSensor.Po
 	-rm -f ./$(DEPDIR)/robotworld-LineShape.Po
 	-rm -f ./$(DEPDIR)/robotworld-LogTextCtrl.Po
 	-rm -f ./$(DEPDIR)/robotworld-Logger.Po
@@ -1446,7 +1348,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/robotworld-Server.Po
 	-rm -f ./$(DEPDIR)/robotworld-Shape2DUtils.Po
 	-rm -f ./$(DEPDIR)/robotworld-StdOutTraceFunction.Po
-	-rm -f ./$(DEPDIR)/robotworld-SteeringActuator.Po
 	-rm -f ./$(DEPDIR)/robotworld-Trace.Po
 	-rm -f ./$(DEPDIR)/robotworld-ViewObject.Po
 	-rm -f ./$(DEPDIR)/robotworld-Wall.Po

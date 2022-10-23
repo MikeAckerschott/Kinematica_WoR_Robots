@@ -1,14 +1,10 @@
 bin_PROGRAMS = robotworld
-robotworld_SOURCES 	= 	AbstractActuator.cpp	\
-						AbstractAgent.cpp	\
-						AbstractSensor.cpp	\
-						AStar.cpp	\
+robotworld_SOURCES 	= 	AStar.cpp	\
 						BoundedVector.cpp	\
 						CommunicationService.cpp	\
 						FileTraceFunction.cpp	\
 						Goal.cpp	\
 						GoalShape.cpp	\
-						LaserDistanceSensor.cpp	\
 						LineShape.cpp	\
 						Logger.cpp	\
 						LogTextCtrl.cpp	\
@@ -29,7 +25,6 @@ robotworld_SOURCES 	= 	AbstractActuator.cpp	\
 						Server.cpp	\
 						Shape2DUtils.cpp	\
 						StdOutTraceFunction.cpp	\
-						SteeringActuator.cpp	\
 						Trace.cpp	\
 						ViewObject.cpp	\
 						Wall.cpp	\

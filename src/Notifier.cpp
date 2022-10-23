@@ -3,6 +3,7 @@
 #include "Observer.hpp"
 #include "Logger.hpp"
 
+#include <algorithm>
 #include <sstream>
 #include <typeinfo>
 
@@ -13,12 +14,6 @@ namespace Base
 	 */
 	Notifier::Notifier( bool enable /*= true*/) :
 								notify( enable)
-	{
-	}
-	/**
-	 *
-	 */
-	Notifier::~Notifier()
 	{
 	}
 	/**
@@ -45,25 +40,25 @@ namespace Base
 	/**
 	 *	The implementation of operator== uses pointer comparison!
 	 */
-	void Notifier::addObserver( Observer& aObserver)
+	void Notifier::addObserver( Observer& anObserver)
 	{
-		for (Observer* observer : observers)
+		if (std::find_if(	observers.begin(),
+							observers.end(),
+							[&anObserver](const Observer* observer){ return *observer == anObserver;}) != observers.end())
 		{
-			if (*observer == aObserver)
-			{
-				return;
-			}
+			return ;
 		}
-		observers.push_back( &aObserver);
+
+		observers.push_back( &anObserver);
 	}
 	/**
 	 *	The implementation of operator== uses pointer comparison!
 	 */
-	void Notifier::removeObserver( Observer& aObserver)
+	void Notifier::removeObserver( Observer& anObserver)
 	{
 		for (std::vector< Observer* >::iterator i = observers.begin(); i != observers.end(); ++i)
 		{
-			if (*(*i) == aObserver)
+			if (*(*i) == anObserver)
 			{
 				observers.erase( i);
 				break;

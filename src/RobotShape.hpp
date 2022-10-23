@@ -24,10 +24,6 @@ namespace View
 			 */
 			explicit RobotShape( Model::RobotPtr aRobot);
 			/**
-			 *
-			 */
-			virtual ~RobotShape();
-			/**
 			 * @name Type safe accessors and mutators
 			 */
 			//@{
@@ -43,21 +39,21 @@ namespace View
 			/**
 			 *
 			 */
-			virtual std::string getNormalColour() const override
+			virtual wxColour getNormalColour() const override
 			{
 				return "BLACK";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getSelectionColour() const override
+			virtual wxColour getSelectionColour() const override
 			{
 				return "GREY";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getActivationColour() const override
+			virtual wxColour getActivationColour() const override
 			{
 				return "LIGHT GREY";
 			}
@@ -80,7 +76,7 @@ namespace View
 			virtual void handleNotification() override;
 			//@}
 			/**
-			 * @name Pure virtual abstract Shape functions
+			 * @name (Pure) virtual abstract Shape functions
 			 */
 			//@{
 			/**
@@ -92,11 +88,15 @@ namespace View
 			 * @param aPoint
 			 * @return True if the point is in the shape
 			 */
-			virtual bool occupies( const Point& aPoint) const override;
+			virtual bool occupies( const wxPoint& aPoint) const override;
 			/**
 			 *
 			 */
-			virtual void setCentre( const Point& aPoint) override;
+			virtual void setCentre( const wxPoint& aPoint) override;
+			/**
+			 *
+			 */
+			virtual void handleEndDrag() override;
 			//@}
 			/**
 			 * @name Debug functions
@@ -111,7 +111,9 @@ namespace View
 			 */
 			virtual std::string asDebugString() const override;
 			//@}
-
+			/**
+			 *
+			 */
 			void setRobotWorldCanvas(RobotWorldCanvas* aRobotWorldCanvas)
 			{
 				robotWorldCanvas = aRobotWorldCanvas;
@@ -120,6 +122,27 @@ namespace View
 
 		private:
 			RobotWorldCanvas* robotWorldCanvas;
+
+			/**
+			 *
+			 */
+			void updateSizeToTitle( wxDC& dc);
+			/**
+			 *
+			 */
+			void drawStartPosition( wxDC& dc);
+			/**
+			 *
+			 */
+			void drawOpenSet( wxDC& dc);
+			/**
+			 *
+			 */
+			void drawPath( wxDC& dc);
+			/**
+			 *
+			 */
+			void drawRobot( wxDC& dc);
 	};
 } // namespace View
 #endif // ROBOTSHAPE_HPP_

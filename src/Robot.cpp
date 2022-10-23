@@ -3,7 +3,6 @@
 #include "Client.hpp"
 #include "CommunicationService.hpp"
 #include "Goal.hpp"
-#include "LaserDistanceSensor.hpp"
 #include "Logger.hpp"
 #include "MainApplication.hpp"
 #include "MathUtils.hpp"
@@ -25,22 +24,22 @@ namespace Model
 	/**
 	 *
 	 */
-	Robot::Robot() : Robot("", DefaultPosition)
+	Robot::Robot() : Robot("", wxDefaultPosition)
 	{
 	}
 	/**
 	 *
 	 */
-	Robot::Robot( const std::string& aName) : Robot(aName,DefaultPosition)
+	Robot::Robot( const std::string& aName) : Robot(aName, wxDefaultPosition)
 	{
 	}
 	/**
 	 *
 	 */
 	Robot::Robot(	const std::string& aName,
-					const Point& aPosition) :
+					const wxPoint& aPosition) :
 								name( aName),
-								size( DefaultSize),
+								size( wxDefaultSize),
 								position( aPosition),
 								front( 0, 0),
 								speed( 0.0),
@@ -48,8 +47,8 @@ namespace Model
 								driving(false),
 								communicating(false)
 	{
-		std::shared_ptr< AbstractSensor > laserSensor( new LaserDistanceSensor( this));
-		attachSensor( laserSensor);
+		// We use the real position for starters, not an estimated position.
+		startPosition = position;
 	}
 	/**
 	 *
@@ -58,11 +57,11 @@ namespace Model
 	{
 		if(driving)
 		{
-			stopDriving();
+			Robot::stopDriving();
 		}
 		if(acting)
 		{
-			stopActing();
+			Robot::stopActing();
 		}
 		if(communicating)
 		{
@@ -84,14 +83,14 @@ namespace Model
 	/**
 	 *
 	 */
-	Size Robot::getSize() const
+	wxSize Robot::getSize() const
 	{
 		return size;
 	}
 	/**
 	 *
 	 */
-	void Robot::setSize(	const Size& aSize,
+	void Robot::setSize(	const wxSize& aSize,
 							bool aNotifyObservers /*= true*/)
 	{
 		size = aSize;
@@ -103,7 +102,7 @@ namespace Model
 	/**
 	 *
 	 */
-	void Robot::setPosition(	const Point& aPosition,
+	void Robot::setPosition(	const wxPoint& aPosition,
 								bool aNotifyObservers /*= true*/)
 	{
 		position = aPosition;
@@ -238,33 +237,33 @@ namespace Model
 	/**
 	 *
 	 */
-	Region Robot::getRegion() const
+	wxRegion Robot::getRegion() const
 	{
-		Point translatedPoints[] = { getFrontRight(), getFrontLeft(), getBackLeft(), getBackRight() };
-		return Region( 4, translatedPoints);
+		wxPoint translatedPoints[] = { getFrontRight(), getFrontLeft(), getBackLeft(), getBackRight() };
+		return wxRegion( 4, translatedPoints); // @suppress("Avoid magic numbers")
 	}
 	/**
 	 *
 	 */
-	bool Robot::intersects( const Region& aRegion) const
+	bool Robot::intersects( const wxRegion& aRegion) const
 	{
-		Region region = getRegion();
+		wxRegion region = getRegion();
 		region.Intersect( aRegion);
 		return !region.IsEmpty();
 	}
 	/**
 	 *
 	 */
-	Point Robot::getFrontLeft() const
+	wxPoint Robot::getFrontLeft() const
 	{
 		// x and y are pointing to top left now
 		int x = position.x - (size.x / 2);
 		int y = position.y - (size.y / 2);
 
-		Point originalFrontLeft( x, y);
+		wxPoint originalFrontLeft( x, y);
 		double angle = Utils::Shape2DUtils::getAngle( front) + 0.5 * Utils::PI;
 
-		Point frontLeft( static_cast<int>((originalFrontLeft.x - position.x) * std::cos( angle) - (originalFrontLeft.y - position.y) * std::sin( angle) + position.x),
+		wxPoint frontLeft( static_cast<int>((originalFrontLeft.x - position.x) * std::cos( angle) - (originalFrontLeft.y - position.y) * std::sin( angle) + position.x),
 						 static_cast<int>((originalFrontLeft.y - position.y) * std::cos( angle) + (originalFrontLeft.x - position.x) * std::sin( angle) + position.y));
 
 		return frontLeft;
@@ -272,16 +271,16 @@ namespace Model
 	/**
 	 *
 	 */
-	Point Robot::getFrontRight() const
+	wxPoint Robot::getFrontRight() const
 	{
 		// x and y are pointing to top left now
 		int x = position.x - (size.x / 2);
 		int y = position.y - (size.y / 2);
 
-		Point originalFrontRight( x + size.x, y);
+		wxPoint originalFrontRight( x + size.x, y);
 		double angle = Utils::Shape2DUtils::getAngle( front) + 0.5 * Utils::PI;
 
-		Point frontRight( static_cast<int>((originalFrontRight.x - position.x) * std::cos( angle) - (originalFrontRight.y - position.y) * std::sin( angle) + position.x),
+		wxPoint frontRight( static_cast<int>((originalFrontRight.x - position.x) * std::cos( angle) - (originalFrontRight.y - position.y) * std::sin( angle) + position.x),
 						  static_cast<int>((originalFrontRight.y - position.y) * std::cos( angle) + (originalFrontRight.x - position.x) * std::sin( angle) + position.y));
 
 		return frontRight;
@@ -289,17 +288,17 @@ namespace Model
 	/**
 	 *
 	 */
-	Point Robot::getBackLeft() const
+	wxPoint Robot::getBackLeft() const
 	{
 		// x and y are pointing to top left now
 		int x = position.x - (size.x / 2);
 		int y = position.y - (size.y / 2);
 
-		Point originalBackLeft( x, y + size.y);
+		wxPoint originalBackLeft( x, y + size.y);
 
 		double angle = Utils::Shape2DUtils::getAngle( front) + 0.5 * Utils::PI;
 
-		Point backLeft( static_cast<int>((originalBackLeft.x - position.x) * std::cos( angle) - (originalBackLeft.y - position.y) * std::sin( angle) + position.x),
+		wxPoint backLeft( static_cast<int>((originalBackLeft.x - position.x) * std::cos( angle) - (originalBackLeft.y - position.y) * std::sin( angle) + position.x),
 						static_cast<int>((originalBackLeft.y - position.y) * std::cos( angle) + (originalBackLeft.x - position.x) * std::sin( angle) + position.y));
 
 		return backLeft;
@@ -307,17 +306,17 @@ namespace Model
 	/**
 	 *
 	 */
-	Point Robot::getBackRight() const
+	wxPoint Robot::getBackRight() const
 	{
 		// x and y are pointing to top left now
 		int x = position.x - (size.x / 2);
 		int y = position.y - (size.y / 2);
 
-		Point originalBackRight( x + size.x, y + size.y);
+		wxPoint originalBackRight( x + size.x, y + size.y);
 
 		double angle = Utils::Shape2DUtils::getAngle( front) + 0.5 * Utils::PI;
 
-		Point backRight( static_cast<int>((originalBackRight.x - position.x) * std::cos( angle) - (originalBackRight.y - position.y) * std::sin( angle) + position.x),
+		wxPoint backRight( static_cast<int>((originalBackRight.x - position.x) * std::cos( angle) - (originalBackRight.y - position.y) * std::sin( angle) + position.x),
 						 static_cast<int>((originalBackRight.y - position.y) * std::cos( angle) + (originalBackRight.x - position.x) * std::sin( angle) + position.y));
 
 		return backRight;
@@ -330,7 +329,7 @@ namespace Model
 		//	std::unique_lock<std::recursive_mutex> lock(robotMutex);
 
 		static int update = 0;
-		if ((++update % 200) == 0)
+		if ((++update % 200) == 0) // @suppress("Avoid magic numbers")
 		{
 			notifyObservers();
 		}
@@ -352,7 +351,7 @@ namespace Model
 				// whether this works OK in a real application because the handling is time sensitive,
 				// i.e. 2 async timers are involved:
 				// see CommunicationService::stopServer and Server::stopHandlingRequests
-				Messaging::CommunicationService::getCommunicationService().stopServer(12345,true);
+				Messaging::CommunicationService::getCommunicationService().stopServer(12345,true); // @suppress("Avoid magic numbers")
 
 				break;
 			}
@@ -413,7 +412,6 @@ namespace Model
 		std::ostringstream os;
 
 		os << "Robot:\n";
-		os << AbstractAgent::asDebugString();
 		os << "Robot " << name << " at (" << position.x << "," << position.y << ")\n";
 
 		return os.str();
@@ -425,29 +423,29 @@ namespace Model
 	{
 		try
 		{
-			for (std::shared_ptr< AbstractSensor > sensor : sensors)
+			// Compare a float/double with another float/double: use epsilon...
+			if (std::fabs(speed - 0.0) <= std::numeric_limits<float>::epsilon())
 			{
-				//sensor->setOn();
+				setSpeed(10.0, false); // @suppress("Avoid magic numbers")
 			}
 
-			if (speed == 0.0)
-			{
-				speed = 10.0;
-			}
+			// We use the real position for starters, not an estimated position.
+			startPosition = position;
 
 			unsigned pathPoint = 0;
-			while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size())
+			while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size()) // @suppress("Avoid magic numbers")
 			{
-				const PathAlgorithm::Vertex& vertex = path[pathPoint+=static_cast<int>(speed)];
+				// Do the update
+				const PathAlgorithm::Vertex& vertex = path[pathPoint+=static_cast<unsigned int>(speed)];
 				front = BoundedVector( vertex.asPoint(), position);
 				position.x = vertex.x;
 				position.y = vertex.y;
 
+				// Stop on arrival or collision
 				if (arrived(goal) || collision())
 				{
 					Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived or collision"));
-					notifyObservers();
-					break;
+					driving = false;
 				}
 
 				notifyObservers();
@@ -461,11 +459,6 @@ namespace Model
 					break;
 				}
 			} // while
-
-			for (std::shared_ptr< AbstractSensor > sensor : sensors)
-			{
-				//sensor->setOff();
-			}
 		}
 		catch (std::exception& e)
 		{
@@ -513,17 +506,17 @@ namespace Model
 	 */
 	bool Robot::collision()
 	{
-		Point frontLeft = getFrontLeft();
-		Point frontRight = getFrontRight();
-		Point backLeft = getBackLeft();
-		Point backRight = getBackRight();
+		wxPoint frontLeft = getFrontLeft();
+		wxPoint frontRight = getFrontRight();
+		wxPoint backLeft = getBackLeft();
+		wxPoint backRight = getBackRight();
 
 		const std::vector< WallPtr >& walls = RobotWorld::getRobotWorld().getWalls();
 		for (WallPtr wall : walls)
 		{
-			if (Utils::Shape2DUtils::intersect( frontLeft, frontRight, wall->getPoint1(), wall->getPoint2()) ||
-							Utils::Shape2DUtils::intersect( frontLeft, backLeft, wall->getPoint1(), wall->getPoint2())	||
-							Utils::Shape2DUtils::intersect( frontRight, backRight, wall->getPoint1(), wall->getPoint2()))
+			if (Utils::Shape2DUtils::intersect( frontLeft, frontRight, wall->getPoint1(), wall->getPoint2()) 	||
+				Utils::Shape2DUtils::intersect( frontLeft, backLeft, wall->getPoint1(), wall->getPoint2())		||
+				Utils::Shape2DUtils::intersect( frontRight, backRight, wall->getPoint1(), wall->getPoint2()))
 			{
 				return true;
 			}

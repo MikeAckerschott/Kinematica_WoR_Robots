@@ -50,18 +50,6 @@ namespace Model
 	/**
 	 *
 	 */
-	BoundedVector& BoundedVector::operator=( const BoundedVector& aVector)
-	{
-		if(this != &aVector)
-		{
-			x = aVector.x;
-			y = aVector.y;
-		}
-		return *this;
-	}
-	/**
-	 *
-	 */
 	BoundedVector& BoundedVector::operator+=( const BoundedVector& aVector)
 	{
 		x += aVector.x;

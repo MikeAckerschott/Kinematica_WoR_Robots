@@ -22,18 +22,14 @@ namespace Application
 	/**
 	 *
 	 */
-	class MainFrameWindow : public Frame
+	class MainFrameWindow : public wxFrame
 	{
 		public:
 			/**
 			 *
 			 * @param aTitle The title which is shown in the title bar
 			 */
-			MainFrameWindow( const std::string& aTitle);
-			/**
-			 *
-			 */
-			virtual ~MainFrameWindow();
+			explicit MainFrameWindow( const std::string& aTitle);
 
 		protected:
 			/**
@@ -43,63 +39,63 @@ namespace Application
 			/**
 			 *
 			 */
-			MenuBar* initialiseMenuBar();
+			wxMenuBar* initialiseMenuBar();
 			/**
 			 *
 			 */
-			Panel* initialiseClientPanel();
+			wxPanel* initialiseClientPanel();
 			/**
 			 *
 			 */
-			SplitterWindow* initialiseSplitterWindow();
+			wxSplitterWindow* initialiseSplitterWindow();
 			/**
 			 *
 			 */
-			Panel* initialiseLhsPanel();
+			wxPanel* initialiseLhsPanel();
 			/**
 			 *
 			 */
-			Panel* initialiseRhsPanel();
+			wxPanel* initialiseRhsPanel();
 			/**
 			 *
 			 */
-			Panel* initialiseLogPanel();
+			wxPanel* initialiseLogPanel();
 			/**
 			 *
 			 */
-			Panel* initialiseButtonPanel();
+			wxPanel* initialiseButtonPanel();
 
 		protected:
 
 		private:
-			Panel* clientPanel;
-			MenuBar* menuBar;
-			SplitterWindow* splitterWindow;
+			wxPanel* clientPanel;
+			wxMenuBar* menuBar;
+			wxSplitterWindow* splitterWindow;
 
-			Panel* lhsPanel;
+			wxPanel* lhsPanel;
 			View::RobotWorldCanvas* robotWorldCanvas;
 
-			Panel* rhsPanel;
+			wxPanel* rhsPanel;
 
-			Panel* logPanel;
+			wxPanel* logPanel;
 			LogTextCtrl* logTextCtrl;
-			Radiobox* logDestination;
+			wxRadioBox* logDestination;
 
-			Panel* buttonPanel;
+			wxPanel* buttonPanel;
 
-			void OnQuit( CommandEvent& anEvent);
-			void OnWidgetTraceFunction( CommandEvent& anEvent);
-			void OnStdOutTraceFunction( CommandEvent& anEvent);
-			void OnFileTraceFunction( CommandEvent& anEvent);
-			void OnAbout( CommandEvent& anEvent);
+			void OnQuit( wxCommandEvent& anEvent);
+			void OnWidgetTraceFunction( wxCommandEvent& anEvent);
+			void OnStdOutTraceFunction( wxCommandEvent& anEvent);
+			void OnFileTraceFunction( wxCommandEvent& anEvent);
+			void OnAbout( wxCommandEvent& anEvent);
 
-			void OnStartRobot( CommandEvent& anEvent);
-			void OnStopRobot( CommandEvent& anEvent);
-			void OnPopulate( CommandEvent& anEvent);
-			void OnUnpopulate( CommandEvent& anEvent);
-			void OnStartListening( CommandEvent& anEvent);
-			void OnSendMessage( CommandEvent& anEvent);
-			void OnStopListening( CommandEvent& anEvent);
+			void OnStartRobot( wxCommandEvent& anEvent);
+			void OnStopRobot( wxCommandEvent& anEvent);
+			void OnPopulate( wxCommandEvent& anEvent);
+			void OnUnpopulate( wxCommandEvent& anEvent);
+			void OnStartListening( wxCommandEvent& anEvent);
+			void OnSendMessage( wxCommandEvent& anEvent);
+			void OnStopListening( wxCommandEvent& anEvent);
 	};
 	//	class MainFrameWindow
 } //namespace Application

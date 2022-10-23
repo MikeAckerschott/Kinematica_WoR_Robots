@@ -26,10 +26,6 @@ namespace Messaging
 			/**
 			 *
 			 */
-			virtual ~Server();
-			/**
-			 *
-			 */
 			unsigned short getPort() const
 			{
 				return port;

@@ -7,6 +7,7 @@
 #include "RobotWorld.hpp"
 #include "RobotWorldCanvas.hpp"
 #include "Shape2DUtils.hpp"
+#include "Trace.hpp"
 
 #include <cmath>
 
@@ -18,12 +19,6 @@ namespace View
 	RobotShape::RobotShape( Model::RobotPtr aRobot) :
 								RectangleShape( std::dynamic_pointer_cast<Model::ModelObject>(aRobot), aRobot->getPosition(), aRobot->getName()),
 								robotWorldCanvas(nullptr)
-	{
-	}
-	/**
-	 *
-	 */
-	RobotShape::~RobotShape()
 	{
 	}
 	/**
@@ -48,8 +43,8 @@ namespace View
 		Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
 		if (goal)
 		{
-			Point goalPosition = goal->getPosition();
-			Point robotPosition = getRobot()->getPosition();
+			wxPoint goalPosition = goal->getPosition();
+			wxPoint robotPosition = getRobot()->getPosition();
 			getRobot()->setFront( Model::BoundedVector( goalPosition, robotPosition), false);
 		}
 	}
@@ -79,91 +74,38 @@ namespace View
 	 */
 	void RobotShape::draw( wxDC& dc)
 	{
-		// The minimum size of the RectangleShape is the size of the title
-		titleSize = dc.GetTextExtent( WXSTRING( title));
-		if (size.x < (titleSize.x + 2 * spacing + 2 * borderWidth))
-		{
-			size.x = titleSize.x + 2 * spacing + 2 * borderWidth;
-		}
-		if (size.y < (titleSize.y + 2 * spacing + 2 * borderWidth))
-		{
-			size.y = titleSize.y + 2 * spacing + 2 * borderWidth;
-		}
-		if (getRobot()->getSize() != size)
-		{
-			getRobot()->setSize( size, false);
-		}
+		updateSizeToTitle( dc);
 
-		PathAlgorithm::OpenSet openSet = getRobot()->getOpenSet();
-		if (openSet.size() != 0)
-		{
-			dc.SetPen( wxPen( WXSTRING( "PALE GREEN"), borderWidth, wxPENSTYLE_SOLID));
-			for (const PathAlgorithm::Vertex& vertex : openSet)
-			{
-				dc.DrawPoint( vertex.asPoint());
-			}
-		}
+		drawStartPosition( dc);
 
-		PathAlgorithm::Path path = getRobot()->getPath();
-		if (path.size() != 0)
-		{
-			dc.SetPen( wxPen( WXSTRING( "BLACK"), borderWidth, wxPENSTYLE_SOLID));
-			for (const PathAlgorithm::Vertex& vertex : path)
-			{
-				dc.DrawPoint( vertex.asPoint());
-			}
-		}
+		drawOpenSet( dc);
 
-		// Draws a rectangle with the given top left corner, and with the given size.
-		dc.SetBrush( *wxWHITE_BRUSH);
-		if (isSelected())
-		{
-			dc.SetPen( wxPen( WXSTRING( getSelectionColour()), borderWidth, wxPENSTYLE_SOLID));
-		} else
-		{
-			dc.SetPen( wxPen( WXSTRING( getNormalColour()), borderWidth, wxPENSTYLE_SOLID));
-		}
+		drawPath( dc);
 
-		Point cornerPoints[] = { getRobot()->getFrontRight(), getRobot()->getFrontLeft(), getRobot()->getBackLeft(), getRobot()->getBackRight() };
-		dc.DrawPolygon( 4, cornerPoints);
-
-		dc.SetPen( wxPen( WXSTRING( "RED"), borderWidth+2, wxPENSTYLE_SOLID));
-		dc.DrawPoint( cornerPoints[1]);
-		dc.SetPen( wxPen( WXSTRING( "GREEN"), borderWidth+2, wxPENSTYLE_SOLID));
-		dc.DrawPoint( cornerPoints[0]);
-		dc.SetPen( wxPen( WXSTRING( "INDIAN RED"), borderWidth+2, wxPENSTYLE_SOLID));
-		dc.DrawPoint( cornerPoints[2]);
-		dc.SetPen( wxPen( WXSTRING( "PALE GREEN"), borderWidth+2, wxPENSTYLE_SOLID));
-		dc.DrawPoint( cornerPoints[3]);
-
-		double angle = Utils::Shape2DUtils::getAngle( getRobot()->getFront());
-
-		// Draw the nose
-		dc.SetPen( wxPen( WXSTRING( "BLACK"), 1, wxPENSTYLE_SOLID));
-		dc.DrawLine( centre.x,
-					 centre.y,
-					 static_cast<int>(centre.x + std::cos( angle) * 25),
-					 static_cast<int>(centre.y + std::sin( angle) * 25));
-
-		int textOffsetx = static_cast< int >( std::cos( -angle - 0.5 * Utils::PI) * (titleSize.x / 2) + std::sin( -angle - 0.5 * Utils::PI) * (titleSize.y / 2));
-		int textOffsety = static_cast< int >( std::sin( -angle - 0.5 * Utils::PI) * (titleSize.x / 2) - std::cos( -angle - 0.5 * Utils::PI) * (titleSize.y / 2));
-		dc.DrawRotatedText( WXSTRING( title), centre.x-textOffsetx, centre.y+textOffsety, (-angle - 0.5 * Utils::PI)/Utils::PI*180);
+		drawRobot( dc);
 	}
 	/**
 	 *
 	 */
-	bool RobotShape::occupies( const Point& aPoint) const
+	bool RobotShape::occupies( const wxPoint& aPoint) const
 	{
-		Point cornerPoints[] = { getRobot()->getFrontRight(), getRobot()->getFrontLeft(), getRobot()->getBackLeft(), getRobot()->getBackRight() };
+		wxPoint cornerPoints[] = { getRobot()->getFrontRight(), getRobot()->getFrontLeft(), getRobot()->getBackLeft(), getRobot()->getBackRight() };
 		return Utils::Shape2DUtils::isInsidePolygon( cornerPoints, 4, aPoint);
 	}
 	/**
 	 *
 	 */
-	void RobotShape::setCentre( const Point& aPoint)
+	void RobotShape::setCentre( const wxPoint& aPoint)
 	{
 		getRobot()->setPosition( aPoint, false);
 		RectangleShape::setCentre( getRobot()->getPosition());
+	}
+	/**
+	 *
+	 */
+	void RobotShape::handleEndDrag()
+	{
+		FUNCTRACE_DEVELOP();
 	}
 	/**
 	 *
@@ -191,5 +133,100 @@ namespace View
 		}
 
 		return os.str();
+	}
+	/**
+	 *
+	 */
+	void RobotShape::updateSizeToTitle( wxDC& dc)
+	{
+		// The minimum size of the RectangleShape is the size of the title
+		titleSize = dc.GetTextExtent( title);
+		if (size.x < (titleSize.x + 2 * spacing + 2 * borderWidth))
+		{
+			size.x = titleSize.x + 2 * spacing + 2 * borderWidth;
+		}
+		if (size.y < (titleSize.y + 2 * spacing + 2 * borderWidth))
+		{
+			size.y = titleSize.y + 2 * spacing + 2 * borderWidth;
+		}
+		if (getRobot()->getSize() != size)
+		{
+			getRobot()->setSize( size, false);
+		}
+	}
+	/**
+	 *
+	 */
+	void RobotShape::drawStartPosition( wxDC& dc)
+	{
+		// Draw the start position
+		dc.SetPen( wxPen(  "RED", borderWidth + 5, wxPENSTYLE_SOLID));
+		dc.DrawCircle( getRobot()->startPosition, 3);
+	}
+	/**
+	 *
+	 */
+	void RobotShape::drawOpenSet( wxDC& dc)
+	{
+		PathAlgorithm::OpenSet openSet = getRobot()->getOpenSet();
+		if (openSet.size() != 0)
+		{
+			dc.SetPen( wxPen( "PALE GREEN", borderWidth, wxPENSTYLE_SOLID));
+			for (const PathAlgorithm::Vertex &vertex : openSet)
+			{
+				dc.DrawPoint( vertex.asPoint());
+			}
+		}
+	}
+	/**
+	 *
+	 */
+	void RobotShape::drawPath( wxDC& dc)
+	{
+		PathAlgorithm::Path path = getRobot()->getPath();
+		if (path.size() != 0)
+		{
+			dc.SetPen( wxPen(  "BLACK", borderWidth, wxPENSTYLE_SOLID));
+			for (const PathAlgorithm::Vertex &vertex : path)
+			{
+				dc.DrawPoint( vertex.asPoint());
+			}
+		}
+	}
+	/**
+	 *
+	 */
+	void RobotShape::drawRobot( wxDC& dc)
+	{
+		// Draws a rectangle with the given top left corner, and with the given size.
+		dc.SetBrush( *wxWHITE_BRUSH);
+		if (isSelected())
+		{
+			dc.SetPen( wxPen( getSelectionColour(), borderWidth, wxPENSTYLE_SOLID));
+		} else
+		{
+			dc.SetPen( wxPen( getNormalColour(), borderWidth, wxPENSTYLE_SOLID));
+		}
+		wxPoint cornerPoints[] = { getRobot()->getFrontRight(), getRobot()->getFrontLeft(), getRobot()->getBackLeft(), getRobot()->getBackRight() };
+		dc.DrawPolygon( 4, cornerPoints);
+
+		dc.SetPen( wxPen(  "RED", borderWidth + 2, wxPENSTYLE_SOLID));
+		dc.DrawPoint( cornerPoints[1]);
+		dc.SetPen( wxPen(  "GREEN", borderWidth + 2, wxPENSTYLE_SOLID));
+		dc.DrawPoint( cornerPoints[0]);
+		dc.SetPen( wxPen( "INDIAN RED", borderWidth + 2, wxPENSTYLE_SOLID));
+		dc.DrawPoint( cornerPoints[2]);
+		dc.SetPen( wxPen( "PALE GREEN", borderWidth + 2, wxPENSTYLE_SOLID));
+		dc.DrawPoint( cornerPoints[3]);
+
+		double angle = Utils::Shape2DUtils::getAngle( getRobot()->getFront());
+
+		// Draw the nose
+		dc.SetPen( wxPen(  "BLACK", 1, wxPENSTYLE_SOLID));
+		dc.DrawLine( centre.x, centre.y, static_cast< int >( centre.x + std::cos( angle) * 25), static_cast< int >( centre.y + std::sin( angle) * 25));
+
+		int textOffsetx = static_cast< int >( std::cos( -angle - 0.5 * Utils::PI) * (titleSize.x / 2) + std::sin( -angle - 0.5 * Utils::PI) * (titleSize.y / 2));
+		int textOffsety = static_cast< int >( std::sin( -angle - 0.5 * Utils::PI) * (titleSize.x / 2) - std::cos( -angle - 0.5 * Utils::PI) * (titleSize.y / 2));
+		dc.DrawRotatedText( title, centre.x - textOffsetx, centre.y + textOffsety, (-angle - 0.5 * Utils::PI) / Utils::PI * 180);
 	}
 } // namespace View

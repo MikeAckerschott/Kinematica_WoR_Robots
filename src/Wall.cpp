@@ -10,14 +10,8 @@ namespace Model
 	/**
 	 *
 	 */
-	Wall::Wall()
-	{
-	}
-	/**
-	 *
-	 */
-	Wall::Wall( const Point& aPoint1,
-				const Point& aPoint2) :
+	Wall::Wall( const wxPoint& aPoint1,
+				const wxPoint& aPoint2) :
 								point1( aPoint1),
 								point2( aPoint2)
 	{
@@ -25,13 +19,7 @@ namespace Model
 	/**
 	 *
 	 */
-	Wall::~Wall()
-	{
-	}
-	/**
-	 *
-	 */
-	void Wall::setPoint1(	const Point& aPoint1,
+	void Wall::setPoint1(	const wxPoint& aPoint1,
 							bool aNotifyObservers /*= true*/)
 	{
 		point1 = aPoint1;
@@ -43,7 +31,7 @@ namespace Model
 	/**
 	 *
 	 */
-	void Wall::setPoint2(	const Point& aPoint2,
+	void Wall::setPoint2(	const wxPoint& aPoint2,
 							bool aNotifyObservers /*= true*/)
 	{
 		point2 = aPoint2;

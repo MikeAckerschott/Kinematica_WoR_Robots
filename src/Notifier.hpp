@@ -29,11 +29,11 @@ namespace Base
 			 *
 			 * @param enable If true, notification is enabled.
 			 */
-			Notifier( bool enable = true);
+			explicit Notifier( bool enable = true);
 			/**
 			 *
 			 */
-			virtual ~Notifier();
+			virtual ~Notifier() = default;
 			//@}
 
 			/**
@@ -92,7 +92,13 @@ namespace Base
 			//@}
 
 		private:
+			/**
+			 *
+			 */
 			bool notify;
+			/**
+			 *
+			 */
 			std::vector< Observer* > observers;
 
 	};
