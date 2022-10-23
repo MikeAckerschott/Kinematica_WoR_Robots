@@ -19,7 +19,7 @@ namespace Application
 			 */
 			//@{
 			CommandlineArgument() :
-				argumentNumber( std::numeric_limits<unsigned long>::max()),
+				argumentNumber( std::numeric_limits<unsigned long>::max()), // @suppress("Ambiguous problem")
 				variable(),
 				value()
 			{
@@ -48,12 +48,6 @@ namespace Application
 				value( aCommandlineArgument.value)
 			{
 			}
-			/**
-			 *
-			 */
-			virtual ~CommandlineArgument()
-			{
-			}
 			//@}
 
 			/**
@@ -63,37 +57,28 @@ namespace Application
 			/**
 			 *
 			 */
-			CommandlineArgument& operator=( const CommandlineArgument& aCommandlineArgument)
-			{
-				if(this != &aCommandlineArgument)
-				{
-					argumentNumber = aCommandlineArgument.argumentNumber;
-					variable = aCommandlineArgument.variable;
-					value = aCommandlineArgument.value;
-				}
-				return *this;
-			}
+			CommandlineArgument& operator=( const CommandlineArgument& aCommandlineArgument)  = default;
 			/**
 			 *
 			 */
 			bool operator==( const unsigned long anArgumentNumber) const
-						{
+			{
 				return argumentNumber == anArgumentNumber;
-						}
+			}
 			/**
 			 *
 			 */
 			bool operator==( const std::string& aVariable) const
-						{
+			{
 				return variable == aVariable;
-						}
+			}
 			/**
 			 *
 			 */
 			bool operator==( const CommandlineArgument& aCommandlineArgument) const
-						{
+			{
 				return (argumentNumber == aCommandlineArgument.argumentNumber) && (variable == aCommandlineArgument.variable) && (value == aCommandlineArgument.value);
-						}
+			}
 			/**
 			 *	Only compares the argument number.
 			 */

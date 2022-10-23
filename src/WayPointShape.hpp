@@ -19,10 +19,6 @@ namespace View
 			 */
 			explicit WayPointShape( Model::WayPointPtr aWayPoint);
 			/**
-			 *
-			 */
-			virtual ~WayPointShape();
-			/**
 			 * @name Type safe accessors and mutators
 			 */
 			//@{
@@ -38,21 +34,21 @@ namespace View
 			/**
 			 *
 			 */
-			virtual std::string getNormalColour() const  override
+			virtual wxColour getNormalColour() const  override
 			{
 				return "BLUE";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getSelectionColour() const  override
+			virtual wxColour getSelectionColour() const  override
 			{
 				return "BLUE";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getActivationColour() const  override
+			virtual wxColour getActivationColour() const  override
 			{
 				return "BLACK";
 			}
@@ -65,7 +61,7 @@ namespace View
 			 * A Notifier will call this function if this Observer will handle the notifications of that
 			 * Notifier. It is the responsibility of the Observer to filter any events it is interested in.
 			 */
-			virtual void handleNotification();
+			virtual void handleNotification()  override;
 			//@}
 			/**
 			 * @name Pure virtual abstract Shape functions
@@ -78,7 +74,7 @@ namespace View
 			/**
 			 *
 			 */
-			virtual void setCentre( const Point& aPoint) override;
+			virtual void setCentre( const wxPoint& aPoint) override;
 			//@}
 			/**
 			 * @name Debug functions

@@ -14,13 +14,16 @@ namespace Model
 	class Goal;
 	typedef std::shared_ptr<Goal> GoalPtr;
 
+	/**
+	 *
+	 */
 	class Goal : public WayPoint
 	{
 		public:
 			/**
 			 *
 			 */
-			Goal();
+			Goal() = default;
 			/**
 			 *
 			 */
@@ -29,11 +32,11 @@ namespace Model
 			 *
 			 */
 			Goal(	const std::string& aName,
-					const Point& aPosition);
+					const wxPoint& aPosition);
 			/**
 			 *
 			 */
-			virtual ~Goal();
+			virtual ~Goal() = default;
 			/**
 			 * @name Debug functions
 			 */

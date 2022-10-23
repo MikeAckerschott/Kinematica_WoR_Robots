@@ -29,19 +29,16 @@ namespace Base
 			typedef unsigned char& reference;
 			typedef const unsigned char& const_reference;
 			typedef std::vector< unsigned char > base;
-
 			/**
 			 * If an ObjectId should be *really* universal unique every application should have its own namespace
 			 */
 			static std::string objectIdNamespace;
-
 			/**
 			 * This function returns an ObjectId that is guaranteed to be unique in the application it
 			 * is generated in. If multiple application use the same library it is the responsibility of
 			 * the applications to ensure uniqueness between applications.
 			 */
 			static ObjectId newObjectId();
-
 			/**
 			 * @name CORBA required interface for PortableServer::ObjectId and sequence< T >
 			 */
@@ -87,10 +84,6 @@ namespace Base
 				base( anObjectId)
 			{
 			}
-			/**
-			 * Also specified by PortableServer::ObjectId and sequence< T >
-			 */
-			virtual ~ObjectId();
 			/**
 			 * @return The virtual maximum of bytes for this ObjectId. This maximum can safely be ignored.
 			 *

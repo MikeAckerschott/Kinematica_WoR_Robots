@@ -8,6 +8,6 @@
 namespace Base
 {
 	const wxEventType EVT_NOTIFICATIONEVENT = wxNewEventType();
-	typedef void (wxEvtHandler::*NotificationEventFunction)( NotifyEvent&);
+	typedef void (wxEvtHandler::*NotificationEventFunction)( wxNotifyEvent&);
 } // namespace Base
 #endif // NOTIFICATIONEVENT_HPP_

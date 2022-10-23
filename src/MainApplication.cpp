@@ -18,7 +18,7 @@ namespace Application
 	// static object for many reasons) and also implements the accessor function
 	// wxGetApp() which will return the reference of the right type (i.e. MyApp and
 	// not wxApp)
-	wxIMPLEMENT_APP_NO_MAIN( MainApplication);
+	wxIMPLEMENT_APP_NO_MAIN( MainApplication); // @suppress("C-Style cast instead of C++ cast")
 
 	/**
 	 *
@@ -60,7 +60,6 @@ namespace Application
 		// application would exit immediately.
 		return true;
 	}
-
 	/**
 	 *
 	 */
@@ -69,7 +68,10 @@ namespace Application
 	{
 
 		// argv[0] contains the executable name as one types on the command line (with or without extension)
-		MainApplication::commandlineArguments.push_back( CommandlineArgument( 0, "Executable", theArgv[0]));
+		if(theArgv[0])
+		{
+			MainApplication::commandlineArguments.push_back( CommandlineArgument( 0, "Executable", theArgv[0]));
+		}
 
 		for (unsigned int i = 1; i < static_cast<unsigned int >(theArgc); ++i)
 		{
@@ -116,7 +118,6 @@ namespace Application
 			}
 		}
 	}
-
 	/**
 	 *
 	 */
@@ -133,7 +134,7 @@ namespace Application
 		{
 			throw std::invalid_argument( "No such command line argument");
 		}
-		return *i;
+		return *i; // @suppress("Returning the address of a local variable")
 	}
 	/**
 	 *
@@ -146,7 +147,6 @@ namespace Application
 		}
 		return MainApplication::commandlineArguments[anArgumentNumber];
 	}
-
 	/**
 	 *
 	 */

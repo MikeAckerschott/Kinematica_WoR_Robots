@@ -11,45 +11,59 @@
 namespace Application
 {
 	/**
-	 * Utility function that creates a Checkbox with aLabel that binds the given ActionFunction with the
-	 * wxEVT_COMMAND_BUTTON_CLICKED of the button.
+	 * Utility function that creates a RadioBox with aLabel that binds the given ActionFunction with the
+	 * wxEVT_RADIOBOX of the radiobox.
 	 *
 	 * @param aParent
 	 * @param aLabel
 	 * @param anActionFunction
-	 * @return
+	 * @return the created RadioBox
 	 */
 	template< typename ActionFunction >
-	Radiobox* makeRadiobox(	Window* aParent,
-							const std::string& aLabel,
-							const ActionFunction& anActionFunction)
+	wxRadioBox* makeRadiobox(	wxWindow* aParent,
+								const std::string& aLabel,
+								const ActionFunction& anActionFunction)
 	{
-		Radiobox* radiobox= new Radiobox( aParent, DEFAULT_ID, WXSTRING(aLabel));
+		wxRadioBox* radiobox= new wxRadioBox( aParent, wxID_ANY, aLabel);
 		radiobox->Bind(wxEVT_RADIOBOX, anActionFunction);
 		return radiobox;
 	}
-
+	/**
+	 * Utility function that creates a RadioBox with aListOfChoices that binds the given ActionFunction with the
+	 * wxEVT_RADIOBOX of the radiobox.
+	 *
+	 * @tparam ActionFunction
+	 * @param aParent
+	 * @param aNumberOfChoices
+	 * @param aListOfChoices
+	 * @param anActionFunction
+	 * @param aLabel
+	 * @param aStyle
+	 * @param aNumberOfRowsOrColumns
+	 * @return
+	 */
 	template< typename ActionFunction >
-	Radiobox* makeRadiobox(	Window* aParent,
-							int aNumberOfChoices,
-							const wxString aListOfChoices[],
-							const ActionFunction& anActionFunction,
-							const std::string& aLabel = "",
-							long aStyle = wxRA_SPECIFY_ROWS,
-							int aNumberOfRowsOrColumns = 0)
+	wxRadioBox* makeRadiobox(wxWindow* aParent,
+							 const std::array<std::string,4>& aListOfChoices,
+							 const ActionFunction& anActionFunction,
+							 const std::string& aLabel = "",
+							 long aStyle = wxRA_SPECIFY_ROWS,
+							 int aNumberOfRowsOrColumns = 0)
 	{
-		Radiobox* radiobox = new Radiobox(	aParent,
-											DEFAULT_ID,
-											WXSTRING(aLabel),
-											DefaultPosition,
-											DefaultSize,
-											aNumberOfChoices,
-											aListOfChoices,
-											aNumberOfRowsOrColumns,
-											aStyle);
-
+		wxArrayString listOfChoices;
+		for ( auto& choice : aListOfChoices)
+		{
+			listOfChoices.push_back(choice);
+		}
+		wxRadioBox* radiobox = new wxRadioBox(	aParent,
+												wxID_ANY,
+												aLabel,
+												wxDefaultPosition,
+												wxDefaultSize,
+												listOfChoices,
+												aNumberOfRowsOrColumns,
+												aStyle);
 		radiobox->Bind(wxEVT_RADIOBOX, anActionFunction);
-
 		return radiobox;
 	}
 

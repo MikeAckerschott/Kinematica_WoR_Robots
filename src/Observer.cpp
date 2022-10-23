@@ -7,18 +7,6 @@ namespace Base
 	/**
 	 *
 	 */
-	Observer::Observer()
-	{
-	}
-	/**
-	 *
-	 */
-	Observer::~Observer()
-	{
-	}
-	/**
-	 *
-	 */
 	bool Observer::operator==( const Observer& aObserver) const
 	{
 		return this == &aObserver;

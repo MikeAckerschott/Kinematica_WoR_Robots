@@ -18,8 +18,8 @@ namespace Application
 	{
 		// One can create any type of command event here but we use the
 		// LogTextControl provided things
-		CommandEvent event( Application::ROBOTWORLD_TRACE_EVENT);
-		event.SetString( WXSTRING( aText));
+		wxCommandEvent event( Application::ROBOTWORLD_TRACE_EVENT);
+		event.SetString( aText);
 
 		// TODO: should we decide this runtime?
 

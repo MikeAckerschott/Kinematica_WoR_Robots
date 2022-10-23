@@ -9,13 +9,6 @@ namespace Model
 	/**
 	 *
 	 */
-	WayPoint::WayPoint( ) :
-								name( "")
-	{
-	}
-	/**
-	 *
-	 */
 	WayPoint::WayPoint( const std::string& aName) :
 								name( aName)
 	{
@@ -24,15 +17,9 @@ namespace Model
 	 *
 	 */
 	WayPoint::WayPoint( const std::string& aName,
-						const Point& aPosition) :
+						const wxPoint& aPosition) :
 								name( aName),
 								position( aPosition)
-	{
-	}
-	/**
-	 *
-	 */
-	WayPoint::~WayPoint()
 	{
 	}
 	/**
@@ -50,14 +37,14 @@ namespace Model
 	/**
 	 *
 	 */
-	Size WayPoint::getSize() const
+wxSize WayPoint::getSize() const
 	{
 		return size;
 	}
 	/**
 	 *
 	 */
-	void WayPoint::setSize( const Size& aSize,
+	void WayPoint::setSize( const wxSize& aSize,
 							bool aNotifyObservers /*= true*/)
 	{
 		size = aSize;
@@ -69,7 +56,7 @@ namespace Model
 	/**
 	 *
 	 */
-	void WayPoint::setPosition( const Point& aPosition,
+	void WayPoint::setPosition( const wxPoint& aPosition,
 								bool aNotifyObservers /*= true*/)
 	{
 		position = aPosition;
@@ -81,25 +68,25 @@ namespace Model
 	/**
 	 *
 	 */
-	Region WayPoint::getRegion() const
+	wxRegion WayPoint::getRegion() const
 	{
 		// x and y are pointing to top left now
 		int x = position.x - (size.x / 2);
 		int y = position.y - (size.y / 2);
 
-		Point originalUpperLeft( x, y);
-		Point originalUpperRight( x + size.x, y);
-		Point originalBottomLeft( x, y + size.y);
-		Point originalBottomRight( x + size.x, y + size.y);
+		wxPoint originalUpperLeft( x, y);
+		wxPoint originalUpperRight( x + size.x, y);
+		wxPoint originalBottomLeft( x, y + size.y);
+		wxPoint originalBottomRight( x + size.x, y + size.y);
 
-		Point originalPoints[] = { originalUpperRight, originalUpperLeft, originalBottomLeft, originalBottomRight };
+		wxPoint originalPoints[] = { originalUpperRight, originalUpperLeft, originalBottomLeft, originalBottomRight };
 
-		return Region( 4, originalPoints);
+		return wxRegion( 4, originalPoints);
 	}
 	/**
 	 *
 	 */
-	bool WayPoint::intersects( const Region& aRegion) const
+	bool WayPoint::intersects( const wxRegion& aRegion) const
 	{
 		return getRegion().Intersect( aRegion);
 	}

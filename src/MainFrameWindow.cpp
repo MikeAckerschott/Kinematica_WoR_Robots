@@ -16,7 +16,11 @@
 #include "RobotWorldCanvas.hpp"
 #include "Shape2DUtils.hpp"
 #include "StdOutTraceFunction.hpp"
+#include "Trace.hpp"
 #include "WidgetTraceFunction.hpp"
+
+#include <boost/property_tree/ini_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 #include <iostream>
 
@@ -40,7 +44,7 @@ namespace Application
 	 *
 	 */
 	MainFrameWindow::MainFrameWindow( const std::string& aTitle) :
-								Frame( nullptr, DEFAULT_ID, WXSTRING( aTitle), DefaultPosition, Size( 1200, 600)),
+								wxFrame( nullptr, wxID_ANY, aTitle, wxDefaultPosition, wxSize( 1200, 600)),
 								clientPanel( nullptr),
 								menuBar( nullptr),
 								splitterWindow( nullptr),
@@ -56,22 +60,16 @@ namespace Application
 	/**
 	 *
 	 */
-	MainFrameWindow::~MainFrameWindow()
-	{
-	}
-	/**
-	 *
-	 */
 	void MainFrameWindow::initialise()
 	{
 		SetMenuBar( initialiseMenuBar());
 
-		GridBagSizer* sizer = new GridBagSizer( 5, 5);
+		wxGridBagSizer* sizer = new wxGridBagSizer( 5, 5);
 
 		sizer->Add( initialiseClientPanel(),
-					GBPosition( 0, 0), 	// row ,col
-					GBSpan( 1, 1), 		// row ,col
-					EXPAND);
+					wxGBPosition( 0, 0), 	// row ,col
+					wxGBSpan( 1, 1), 		// row ,col
+					wxGROW);
 
 		sizer->AddGrowableCol( 0);
 		sizer->AddGrowableRow( 0);
@@ -79,19 +77,19 @@ namespace Application
 		sizer->SetSizeHints( this);
 
 		Bind( wxEVT_COMMAND_MENU_SELECTED,
-			  [this](CommandEvent& anEvent){ this->OnQuit(anEvent);},
+			  [this](wxCommandEvent& anEvent){ this->OnQuit(anEvent);},
 			  ID_QUIT);
 		Bind( wxEVT_COMMAND_MENU_SELECTED,
-			  [this](CommandEvent& anEvent){ this->OnWidgetTraceFunction(anEvent);},
+			  [this](wxCommandEvent& anEvent){ this->OnWidgetTraceFunction(anEvent);},
 			  ID_WIDGET_TRACE_FUNCTION);
 		Bind( wxEVT_COMMAND_MENU_SELECTED,
-			  [this](CommandEvent& anEvent){ this->OnStdOutTraceFunction(anEvent);},
+			  [this](wxCommandEvent& anEvent){ this->OnStdOutTraceFunction(anEvent);},
 			  ID_STDCOUT_TRACE_FUNCTION);
 		Bind( wxEVT_COMMAND_MENU_SELECTED,
-			  [this](CommandEvent& anEvent){ this->OnFileTraceFunction(anEvent);},
+			  [this](wxCommandEvent& anEvent){ this->OnFileTraceFunction(anEvent);},
 			  ID_FILE_TRACE_FUNCTION);
 		Bind( wxEVT_COMMAND_MENU_SELECTED,
-			  [this](CommandEvent& anEvent){ this->OnAbout(anEvent);},
+			  [this](wxCommandEvent& anEvent){ this->OnAbout(anEvent);},
 			  ID_ABOUT);
 
 		// By default we use the WidgettraceFunction as we expect that this is what the user wants....
@@ -100,48 +98,51 @@ namespace Application
 	/**
 	 *
 	 */
-	MenuBar* MainFrameWindow::initialiseMenuBar()
+	wxMenuBar* MainFrameWindow::initialiseMenuBar()
 	{
-		Menu* fileMenu = new Menu;
-		fileMenu->Append( ID_QUIT, WXSTRING( "E&xit\tAlt-X"), WXSTRING( "Exit the application"));
+		wxMenu* fileMenu = new wxMenu;
+		fileMenu->Append( ID_QUIT, "E&xit\tAlt-X", "Exit the application");
 
-		Menu* debugMenu = new Menu;
-		debugMenu->AppendRadioItem( ID_WIDGET_TRACE_FUNCTION, WXSTRING( "Widget"), WXSTRING( "Widget"));
-		debugMenu->AppendRadioItem( ID_STDCOUT_TRACE_FUNCTION, WXSTRING( "StdOut"), WXSTRING( "StdOut"));
-		debugMenu->AppendRadioItem( ID_FILE_TRACE_FUNCTION, WXSTRING( "File"), WXSTRING( "File"));
+		wxMenu* debugMenu = new wxMenu;
+		debugMenu->AppendRadioItem( ID_WIDGET_TRACE_FUNCTION,  "Widget",  "Widget");
+		debugMenu->AppendRadioItem( ID_STDCOUT_TRACE_FUNCTION,  "StdOut",  "StdOut");
+		debugMenu->AppendRadioItem( ID_FILE_TRACE_FUNCTION,  "File",  "File");
 
-		Menu* helpMenu = new Menu;
-		helpMenu->Append( ID_ABOUT, WXSTRING( "&About...\tF1"), WXSTRING( "Show about dialog"));
+		wxMenu* helpMenu = new wxMenu;
+		helpMenu->Append( ID_ABOUT, "&About...\tF1", "Show about dialog");
 
-		menuBar = new MenuBar;
-		menuBar->Append( fileMenu, WXSTRING( "&File"));
-		menuBar->Append( debugMenu, WXSTRING( "&Debug"));
-		menuBar->Append( helpMenu, WXSTRING( "&Help"));
+		menuBar = new wxMenuBar;
+		menuBar->Append( fileMenu, "&File");
+		menuBar->Append( debugMenu, "&Debug");
+		menuBar->Append( helpMenu, "&Help");
 
 		return menuBar;
 	}
 	/**
 	 *
 	 */
-	Panel* MainFrameWindow::initialiseClientPanel()
+	wxPanel* MainFrameWindow::initialiseClientPanel()
 	{
 		if (!clientPanel)
 		{
-			clientPanel = new Panel( this, DEFAULT_ID);
+			clientPanel = new wxPanel( this);
 
-			GridBagSizer* sizer = new GridBagSizer();
+			wxGridBagSizer* sizer = new wxGridBagSizer();
 
 			sizer->Add( 5, 5,
-						GBPosition( 0, 0));
+						wxGBPosition( 0, 0));
+			sizer->AddGrowableRow( 0);
+			sizer->AddGrowableCol( 0);
+
 
 			sizer->Add( initialiseSplitterWindow(),
-						GBPosition( 1, 1),
-						GBSpan( 1, 1), EXPAND);
-			sizer->AddGrowableRow( 1);
-			sizer->AddGrowableCol( 1);
+						wxGBPosition( 1, 1),
+						wxGBSpan( 1, 1), wxGROW);
 
 			sizer->Add( 5, 5,
-						GBPosition( 2, 2));
+						wxGBPosition( 2, 2));
+			sizer->AddGrowableRow( 2);
+			sizer->AddGrowableCol( 2);
 
 			clientPanel->SetSizer( sizer);
 		}
@@ -150,11 +151,11 @@ namespace Application
 	/**
 	 *
 	 */
-	SplitterWindow* MainFrameWindow::initialiseSplitterWindow()
+	wxSplitterWindow* MainFrameWindow::initialiseSplitterWindow()
 	{
 		if (!splitterWindow)
 		{
-			splitterWindow = new SplitterWindow( clientPanel, DEFAULT_ID);
+			splitterWindow = new wxSplitterWindow( clientPanel);
 			splitterWindow->SplitVertically( initialiseLhsPanel(), initialiseRhsPanel());
 		}
 		return splitterWindow;
@@ -162,28 +163,26 @@ namespace Application
 	/**
 	 *
 	 */
-	Panel* MainFrameWindow::initialiseLhsPanel()
+	wxPanel* MainFrameWindow::initialiseLhsPanel()
 	{
 		if (!lhsPanel)
 		{
-			lhsPanel = new Panel( splitterWindow, DEFAULT_ID);
+			lhsPanel = new wxPanel( splitterWindow, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_SUNKEN);
 
-			GridBagSizer* sizer = new GridBagSizer();
+			wxGridBagSizer* sizer = new wxGridBagSizer();
 			sizer->Add( 5, 5,
-						GBPosition( 0, 0),
-						GBSpan( 1, 1), EXPAND);
+						wxGBPosition( 0, 0),
+						wxGBSpan( 1, 1), wxGROW);
 
 			sizer->Add( robotWorldCanvas = new View::RobotWorldCanvas( lhsPanel),
-						GBPosition( 1, 1),
-						GBSpan( 1, 1),
-						GROW);
+						wxGBPosition( 1, 1),
+						wxGBSpan( 1, 1),
+						wxGROW);
 			robotWorldCanvas->SetMinSize( wxSize( 500,500));
-//			sizer->AddGrowableRow( 1);
-//			sizer->AddGrowableCol( 1);
 
 			sizer->Add( 5, 5,
-						GBPosition( 2, 2),
-						GBSpan( 1, 1), EXPAND);
+						wxGBPosition( 2, 2),
+						wxGBSpan( 1, 1), wxGROW);
 
 			lhsPanel->SetSizer( sizer);
 			sizer->SetSizeHints( lhsPanel);
@@ -193,33 +192,33 @@ namespace Application
 	/**
 	 *
 	 */
-	Panel* MainFrameWindow::initialiseRhsPanel()
+	wxPanel* MainFrameWindow::initialiseRhsPanel()
 	{
 		if (!rhsPanel)
 		{
-			rhsPanel = new Panel( splitterWindow, DEFAULT_ID);
+			rhsPanel = new wxPanel( splitterWindow);
 
-			GridBagSizer* sizer = new GridBagSizer();
+			wxGridBagSizer* sizer = new wxGridBagSizer();
+
 			sizer->Add( 5, 5,
-						GBPosition( 0, 0),
-						GBSpan( 1, 1), EXPAND);
+						wxGBPosition( 0, 0),
+						wxGBSpan( 1, 1), wxGROW);
 
 			sizer->Add( logPanel = initialiseLogPanel(),
-						GBPosition( 1, 1),
-						GBSpan( 1, 1),
-						GROW);
+						wxGBPosition( 1, 1),
+						wxGBSpan( 1, 1),
+						wxGROW);
 			sizer->AddGrowableCol( 1);
 			sizer->AddGrowableRow( 1);
-			logTextCtrl->SetMinSize( Size( 500, 300));
 
 			sizer->Add( buttonPanel = initialiseButtonPanel(),
-						GBPosition( 2, 1),
-						GBSpan( 1, 1), SHRINK);
-			sizer->AddGrowableRow( 2);
+						wxGBPosition( 2, 1),
+						wxGBSpan( 1, 1),
+						wxSHRINK);
 
 			sizer->Add( 5, 5,
-						GBPosition( 2, 2),
-						GBSpan( 1, 1), EXPAND);
+						wxGBPosition( 3, 2),
+						wxGBSpan( 1, 1), wxGROW);
 
 			rhsPanel->SetSizer( sizer);
 			sizer->SetSizeHints( rhsPanel);
@@ -229,17 +228,17 @@ namespace Application
 	/**
 	 *
 	 */
-	Panel* MainFrameWindow::initialiseLogPanel()
+	wxPanel* MainFrameWindow::initialiseLogPanel()
 	{
-		Panel* panel = new Panel( rhsPanel);
+		wxPanel* panel = new wxPanel( rhsPanel);
 
-		GridBagSizer* sizer = new GridBagSizer();
+		wxGridBagSizer* sizer = new wxGridBagSizer();
 
 		sizer->Add( 5, 5,
-					GBPosition( 0, 0),
-					GBSpan( 1, 1), EXPAND);
+					wxGBPosition( 0, 0),
+					wxGBSpan( 1, 1), wxGROW);
 
-		wxString choicesArray[] =
+		std::array<std::string,4> choicesArray
 		{
 		 "Window",
 		 "StdOut",
@@ -247,11 +246,10 @@ namespace Application
 		};
 
 		sizer->Add(	logDestination = makeRadiobox(	panel,
-													3,
 													choicesArray,
-													[this](CommandEvent& event)
+													[this](wxCommandEvent& event)
 													{
-														Radiobox* radiobox = dynamic_cast< Radiobox* >(event.GetEventObject());
+														wxRadioBox* radiobox = dynamic_cast< wxRadioBox* >(event.GetEventObject());
 														if(radiobox)
 														{
 															switch(radiobox->GetSelection())
@@ -281,29 +279,29 @@ namespace Application
 													},
 													"Log destination",
 													wxRA_SPECIFY_COLS),
-					GBPosition( 1, 1),
-					GBSpan( 1, 1),
-					ALIGN_CENTER);
+					wxGBPosition( 1, 1),
+					wxGBSpan( 1, 1),
+					wxALIGN_CENTER);
 
-		sizer->Add( logTextCtrl = new LogTextCtrl( panel, DEFAULT_ID, wxTE_MULTILINE | wxTE_DONTWRAP),
-					GBPosition( 2, 1),
-					GBSpan( 1, 1),
-					GROW);
+		sizer->Add( logTextCtrl = new LogTextCtrl( panel, wxID_ANY, wxTE_MULTILINE | wxTE_DONTWRAP),
+					wxGBPosition( 2, 1),
+					wxGBSpan( 1, 1),
+					wxGROW);
 		sizer->AddGrowableCol( 1);
 		sizer->AddGrowableRow( 2);
-		logTextCtrl->SetMinSize( Size( 500, 300));
+		logTextCtrl->SetMinSize( wxSize( 500, 300));
 
 
 		sizer->Add( makeButton( panel,
 								"Clear log window",
-								[this](CommandEvent& /*anEvent*/){logTextCtrl->Clear();}),
-					GBPosition( 3, 1),
-					GBSpan( 1, 1),
-					ALIGN_CENTER);
+								[this](wxCommandEvent& /*anEvent*/){logTextCtrl->Clear();}),
+					wxGBPosition( 3, 1),
+					wxGBSpan( 1, 1),
+					wxALIGN_CENTER);
 
 		sizer->Add( 5, 5,
-					GBPosition( 4, 2),
-					GBSpan( 1, 1), EXPAND);
+					wxGBPosition( 4, 2),
+					wxGBSpan( 1, 1), wxGROW);
 
 
 		panel->SetSizerAndFit( sizer);
@@ -313,57 +311,58 @@ namespace Application
 	/**
 	 *
 	 */
-	Panel* MainFrameWindow::initialiseButtonPanel()
+	wxPanel* MainFrameWindow::initialiseButtonPanel()
 	{
-		Panel* panel = new Panel( rhsPanel);
+		wxPanel* panel = new wxPanel( rhsPanel);
 
-		GridBagSizer* sizer = new GridBagSizer();
+		wxGridBagSizer* sizer = new wxGridBagSizer();
 
 		sizer->Add( 5, 5,
-					GBPosition( 0, 0),
-					GBSpan( 1, 1), EXPAND);
+					wxGBPosition( 0, 0),
+					wxGBSpan( 1, 1), wxGROW);
 
 
 		sizer->Add( makeButton( panel,
 								"Populate",
-								[this](CommandEvent &anEvent){this->OnPopulate(anEvent);}),
-					GBPosition( 1, 1),
-					GBSpan( 1, 1), EXPAND);
+								[this](wxCommandEvent& anEvent){this->OnPopulate(anEvent);}),
+					wxGBPosition( 1, 1),
+					wxGBSpan( 1, 1), wxGROW);
 		sizer->Add( makeButton( panel,
 								"Unpopulate",
-								[this](CommandEvent &anEvent){this->OnUnpopulate(anEvent);}),
-					GBPosition( 1, 2),
-					GBSpan( 1, 1), EXPAND);
+								[this](wxCommandEvent& anEvent){this->OnUnpopulate(anEvent);}),
+					wxGBPosition( 1, 2),
+					wxGBSpan( 1, 1), wxGROW);
 
 		sizer->Add( makeButton( panel,
 								"Start robot",
-								[this](CommandEvent &anEvent){this->OnStartRobot(anEvent);}),
-					GBPosition( 3, 1),
-					GBSpan( 1, 1), EXPAND);
+								[this](wxCommandEvent& anEvent){this->OnStartRobot(anEvent);}),
+					wxGBPosition( 3, 1),
+					wxGBSpan( 1, 1), wxGROW);
 		sizer->Add( makeButton( panel,
 								"Stop robot",
-								[this](CommandEvent &anEvent){this->OnStopRobot(anEvent);}),
-					GBPosition( 3, 2),
-					GBSpan( 1, 1), EXPAND);
+								[this](wxCommandEvent& anEvent){this->OnStopRobot(anEvent);}),
+					wxGBPosition( 3, 2),
+					wxGBSpan( 1, 1), wxGROW);
 		sizer->Add( makeButton( panel,
 								"Start listening",
-								[this](CommandEvent &anEvent){this->OnStartListening(anEvent);}),
-					GBPosition( 5, 1),
-					GBSpan( 1, 1), EXPAND);
+								[this](wxCommandEvent& anEvent){this->OnStartListening(anEvent);}),
+					wxGBPosition( 5, 1),
+					wxGBSpan( 1, 1), wxGROW);
 		sizer->Add( makeButton( panel,
 								"Send message",
-								[this](CommandEvent &anEvent){this->OnSendMessage(anEvent);}),
-					GBPosition( 5, 2),
-					GBSpan( 1, 1), EXPAND);
+								[this](wxCommandEvent& anEvent){this->OnSendMessage(anEvent);}),
+					wxGBPosition( 5, 2),
+					wxGBSpan( 1, 1), wxGROW);
 		sizer->Add( makeButton( panel,
 								"Stop listening",
-								[this](CommandEvent &anEvent){this->OnStopListening(anEvent);}),
-					GBPosition( 5, 3),
-					GBSpan( 1, 1), EXPAND);
+								[this](wxCommandEvent& anEvent){this->OnStopListening(anEvent);}),
+					wxGBPosition( 5, 3),
+					wxGBSpan( 1, 1), wxGROW);
 
 		sizer->Add( 5, 5,
-					GBPosition( 6, 4),
-					GBSpan( 1, 1), EXPAND);
+					wxGBPosition( 6, 4),
+					wxGBSpan( 1, 1), wxGROW);
+
 
 		panel->SetSizerAndFit( sizer);
 
@@ -372,7 +371,7 @@ namespace Application
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnQuit( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnQuit( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Base::Trace::setTraceFunction( std::make_unique<Base::StdOutTraceFunction>());
 		Close( true);
@@ -380,11 +379,11 @@ namespace Application
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnWidgetTraceFunction( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnWidgetTraceFunction( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Base::Trace::setTraceFunction( std::make_unique<Application::WidgetTraceFunction>(logTextCtrl));
 
-		MenuItem* item = menuBar->FindItem(ID_WIDGET_TRACE_FUNCTION);
+		wxMenuItem* item = menuBar->FindItem(ID_WIDGET_TRACE_FUNCTION);
 		if(item && item->IsRadio() && !item->IsCheck())
 		{
 			item->Check();
@@ -394,11 +393,11 @@ namespace Application
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnStdOutTraceFunction( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnStdOutTraceFunction( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Base::Trace::setTraceFunction( std::make_unique<Base::StdOutTraceFunction>());
 
-		MenuItem* item = menuBar->FindItem(ID_STDCOUT_TRACE_FUNCTION);
+		wxMenuItem* item = menuBar->FindItem(ID_STDCOUT_TRACE_FUNCTION);
 		if(item && item->IsRadio() && !item->IsCheck())
 		{
 			item->Check();
@@ -408,11 +407,11 @@ namespace Application
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnFileTraceFunction( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnFileTraceFunction( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Base::Trace::setTraceFunction( std::make_unique<Base::FileTraceFunction>("trace", "log", true));
 
-		MenuItem* item = menuBar->FindItem(ID_FILE_TRACE_FUNCTION);
+		wxMenuItem* item = menuBar->FindItem(ID_FILE_TRACE_FUNCTION);
 		if(item && item->IsRadio() && !item->IsCheck())
 		{
 			item->Check();
@@ -422,14 +421,14 @@ namespace Application
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnAbout( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnAbout( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
-		wxMessageBox( WXSTRING( "ESD 2012-present RobotWorld.\n"), WXSTRING( "About RobotWorld"), wxOK | wxICON_INFORMATION, this);
+		wxMessageBox( "ESD 2012-present RobotWorld.\n", "About RobotWorld", wxOK | wxICON_INFORMATION, this);
 	}
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnStartRobot( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnStartRobot( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		if (robot && !robot->isActing())
@@ -440,7 +439,7 @@ namespace Application
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnStopRobot( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnStopRobot( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		if (robot && robot->isActing())
@@ -451,21 +450,23 @@ namespace Application
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnPopulate( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnPopulate( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
-		robotWorldCanvas->populate( 2);
+		robotWorldCanvas->populate( 4);
 	}
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnUnpopulate( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnUnpopulate( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
 		robotWorldCanvas->unpopulate();
+
+		logTextCtrl->Clear();
 	}
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnStartListening( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnStartListening( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		if (robot)
@@ -476,7 +477,7 @@ namespace Application
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnSendMessage( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnSendMessage( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		if (robot)
@@ -505,7 +506,7 @@ namespace Application
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnStopListening( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnStopListening( wxCommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		if (robot)

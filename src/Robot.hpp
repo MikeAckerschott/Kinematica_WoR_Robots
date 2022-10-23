@@ -3,15 +3,15 @@
 
 #include "Config.hpp"
 
-#include "AbstractAgent.hpp"
 #include "AStar.hpp"
 #include "BoundedVector.hpp"
 #include "Message.hpp"
 #include "MessageHandler.hpp"
+#include "ModelObject.hpp"
 #include "Observer.hpp"
 #include "Point.hpp"
-#include "Size.hpp"
 #include "Region.hpp"
+#include "Size.hpp"
 
 #include <iostream>
 #include <memory>
@@ -29,12 +29,15 @@ namespace Messaging
 namespace Model
 {
 	class Robot;
-	typedef std::shared_ptr<Robot> RobotPtr;
+	typedef std::shared_ptr< Robot > RobotPtr;
 
 	class Goal;
-	typedef std::shared_ptr<Goal> GoalPtr;
+	typedef std::shared_ptr< Goal > GoalPtr;
 
-	class Robot :	public AbstractAgent,
+	/**
+	 *
+	 */
+	class Robot :	public ModelObject,
 					public Messaging::MessageHandler,
 					public Base::Observer
 	{
@@ -51,7 +54,7 @@ namespace Model
 			 *
 			 */
 			Robot(	const std::string& aName,
-					const Point& aPosition);
+					const wxPoint& aPosition);
 			/**
 			 *
 			 */
@@ -66,28 +69,28 @@ namespace Model
 			/**
 			 *
 			 */
-			void setName( const std::string& aName,
-						  bool aNotifyObservers = true);
-			/**
-			 *
-			 */
-			Size getSize() const;
-			/**
-			 *
-			 */
-			void setSize(	const Size& aSize,
+			void setName(	const std::string& aName,
 							bool aNotifyObservers = true);
 			/**
 			 *
 			 */
-			Point getPosition() const
+			wxSize getSize() const;
+			/**
+			 *
+			 */
+			void setSize(	const wxSize& aSize,
+							bool aNotifyObservers = true);
+			/**
+			 *
+			 */
+			wxPoint getPosition() const
 			{
 				return position;
 			}
 			/**
 			 *
 			 */
-			void setPosition(	const Point& aPosition,
+			void setPosition(	const wxPoint& aPosition,
 								bool aNotifyObservers = true);
 			/**
 			 *
@@ -105,8 +108,8 @@ namespace Model
 			/**
 			 *
 			 */
-			void setSpeed( float aNewSpeed,
-						   bool aNotifyObservers = true);
+			void setSpeed( 	float aNewSpeed,
+							bool aNotifyObservers = true);
 			/**
 			 *
 			 * @return true if the robot is acting, i.e. either planning or driving
@@ -118,11 +121,11 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual void startActing() override;
+			virtual void startActing();
 			/**
 			 *
 			 */
-			virtual void stopActing() override;
+			virtual void stopActing();
 			/**
 			 *
 			 * @return true if the robot is driving
@@ -162,27 +165,27 @@ namespace Model
 			/**
 			 *
 			 */
-			Region getRegion() const;
+			wxRegion getRegion() const;
 			/**
 			 *
 			 */
-			bool intersects( const Region& aRegion) const;
+			bool intersects( const wxRegion& aRegion) const;
 			/**
 			 *
 			 */
-			Point getFrontLeft() const;
+			wxPoint getFrontLeft() const;
 			/**
 			 *
 			 */
-			Point getFrontRight() const;
+			wxPoint getFrontRight() const;
 			/**
 			 *
 			 */
-			Point getBackLeft() const;
+			wxPoint getBackLeft() const;
 			/**
 			 *
 			 */
-			Point getBackRight() const;
+			wxPoint getBackRight() const;
 			/**
 			 * @name Observer functions
 			 */
@@ -241,6 +244,14 @@ namespace Model
 			virtual std::string asDebugString() const override;
 			//@}
 
+			/**
+			 * @name Variables for painting the sensor activity on the screen
+			 */
+			//@{
+			// The start point of this run
+			wxPoint startPosition;
+			//@}
+
 		protected:
 			/**
 			 *
@@ -249,11 +260,11 @@ namespace Model
 			/**
 			 *
 			 */
-			void calculateRoute(GoalPtr aGoal);
+			void calculateRoute( GoalPtr aGoal);
 			/**
 			 *
 			 */
-			bool arrived(GoalPtr aGoal);
+			bool arrived( GoalPtr aGoal);
 			/**
 			 *
 			 */
@@ -266,11 +277,11 @@ namespace Model
 			/**
 			 *
 			 */
-			Size size;
+			wxSize size;
 			/**
 			 *
 			 */
-			Point position;
+			wxPoint position;
 			/**
 			 *
 			 */

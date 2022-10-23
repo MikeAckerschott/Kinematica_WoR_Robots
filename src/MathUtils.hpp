@@ -28,7 +28,6 @@ namespace Utils
 			 *
 			 */
 			static double toDegrees( double aRadian);
-	};
-	//	class Math
-} // namespace Utils
+	}; // class Math
+}// namespace Utils
 #endif // MATHUTILS_HPP_

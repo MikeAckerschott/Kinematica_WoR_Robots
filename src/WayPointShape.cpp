@@ -17,12 +17,6 @@ namespace View
 	/**
 	 *
 	 */
-	WayPointShape::~WayPointShape()
-	{
-	}
-	/**
-	 *
-	 */
 	Model::WayPointPtr WayPointShape::getWayPoint() const
 	{
 		return std::dynamic_pointer_cast<Model::WayPoint>(getModelObject());
@@ -48,7 +42,7 @@ namespace View
 	void WayPointShape::draw( wxDC& dc)
 	{
 		// The minimum size of the RectangleShape is the size of the title
-		titleSize = dc.GetTextExtent( WXSTRING( title));
+		titleSize = dc.GetTextExtent( title);
 		if (size.x < (titleSize.x + 2 * spacing + 2 * borderWidth))
 		{
 			size.x = titleSize.x + 2 * spacing + 2 * borderWidth;
@@ -67,23 +61,23 @@ namespace View
 		dc.SetBrush( *wxWHITE_BRUSH);
 		if (isSelected())
 		{
-			dc.SetPen( wxPen( WXSTRING( getSelectionColour()), borderWidth, wxPENSTYLE_SOLID));
+			dc.SetPen( wxPen( getSelectionColour(), borderWidth, wxPENSTYLE_SOLID));
 		} else
 		{
-			dc.SetPen( wxPen( WXSTRING( getNormalColour()), borderWidth, wxPENSTYLE_SOLID));
+			dc.SetPen( wxPen( getNormalColour(), borderWidth, wxPENSTYLE_SOLID));
 		}
 
 		int x = centre.x - (size.x / 2);
 		int y = centre.y - (size.y / 2);
 		dc.DrawRectangle( x, y, size.x, size.y);
 
-		dc.SetPen( wxPen( WXSTRING( "BLACK"), borderWidth, wxPENSTYLE_SOLID));
-		dc.DrawText( WXSTRING( title), centre.x - titleSize.x / 2, y + spacing + borderWidth);
+		dc.SetPen( wxPen(  "BLACK", borderWidth, wxPENSTYLE_SOLID));
+		dc.DrawText( title, centre.x - titleSize.x / 2, y + spacing + borderWidth);
 	}
 	/**
 	 *
 	 */
-	void WayPointShape::setCentre( const Point& aPoint)
+	void WayPointShape::setCentre( const wxPoint& aPoint)
 	{
 		getWayPoint()->setPosition( aPoint, false);
 		RectangleShape::setCentre( getWayPoint()->getPosition());

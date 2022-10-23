@@ -40,13 +40,13 @@ namespace View
 	/**
 	 *
 	 */
-	RobotWorldCanvas::RobotWorldCanvas( Window* anOwner) :
-								ScrolledCanvas( anOwner, DEFAULT_ID),
-								popupPoint( DefaultPosition),
-								startActionPoint( DefaultPosition),
-								endActionPoint( DefaultPosition),
-								actionOffset( DefaultPosition),
-								startActionSize( DefaultSize),
+	RobotWorldCanvas::RobotWorldCanvas( wxWindow* anOwner) :
+								wxScrolledCanvas( anOwner, wxID_ANY),
+								popupPoint( wxDefaultPosition),
+								startActionPoint( wxDefaultPosition),
+								endActionPoint( wxDefaultPosition),
+								actionOffset( wxDefaultPosition),
+								startActionSize( wxDefaultSize),
 								startActionShape( nullptr),
 								endActionShape( nullptr),
 								selectedShape( nullptr),
@@ -56,22 +56,24 @@ namespace View
 								dandEnabled( true),
 								notificationHandler( nullptr)
 	{
+		// CppCheck gives a "virtualCallInConstructor" on initialise(). I don't know why.
+		// It cannot be suppressed by a "cppcheck-suppress virtualCallInConstructor" (10-4-2022)
 		initialise();
 	}
 
 	/**
 	 *
 	 */
-	RobotWorldCanvas::RobotWorldCanvas( Window* anOwner,
+	RobotWorldCanvas::RobotWorldCanvas( wxWindow* anOwner,
 										Model::ModelObjectPtr aModelObject) :
 
-									ScrolledCanvas( anOwner, DEFAULT_ID),
+									wxScrolledCanvas( anOwner, wxID_ANY),
 									ViewObject(aModelObject),
-									popupPoint( DefaultPosition),
-									startActionPoint( DefaultPosition),
-									endActionPoint( DefaultPosition),
-									actionOffset( DefaultPosition),
-									startActionSize( DefaultSize),
+									popupPoint( wxDefaultPosition),
+									startActionPoint( wxDefaultPosition),
+									endActionPoint( wxDefaultPosition),
+									actionOffset( wxDefaultPosition),
+									startActionSize( wxDefaultSize),
 									startActionShape( nullptr),
 									endActionShape( nullptr),
 									selectedShape( nullptr),
@@ -81,6 +83,8 @@ namespace View
 									dandEnabled( true),
 									notificationHandler( nullptr)
 	{
+		// CppCheck gives a "virtualCallInConstructor" on initialise(). I don't know why.
+		// It cannot be suppressed by a "cppcheck-suppress virtualCallInConstructor" (10-4-2022)
 		initialise();
 	}
 	/**
@@ -100,18 +104,18 @@ namespace View
 	/**
 	 *
 	 */
-	Point RobotWorldCanvas::devicePointFor( const Point& aScreenPoint) const
+	wxPoint RobotWorldCanvas::devicePointFor( const wxPoint& aScreenPoint) const
 	{
-		Point devicePoint;
+		wxPoint devicePoint;
 		/*owner->getCanvas()->*/CalcUnscrolledPosition( aScreenPoint.x, aScreenPoint.y, &devicePoint.x, &devicePoint.y);
 		return devicePoint;
 	}
 	/**
 	 *
 	 */
-	Point RobotWorldCanvas::screenPointFor( const Point& aDevicePoint) const
+	wxPoint RobotWorldCanvas::screenPointFor( const wxPoint& aDevicePoint) const
 	{
-		Point screenPoint;
+		wxPoint screenPoint;
 		CalcScrolledPosition( aDevicePoint.x, aDevicePoint.y, &screenPoint.x, &screenPoint.y);
 		return screenPoint;
 	}
@@ -363,7 +367,7 @@ namespace View
 	/**
 	 *
 	 */
-	bool RobotWorldCanvas::isShapeAt( const Point& aPoint) const
+	bool RobotWorldCanvas::isShapeAt( const wxPoint& aPoint) const
 	{
 		return  std::any_of(shapes.begin(), 
 							shapes.end(), 
@@ -375,29 +379,25 @@ namespace View
 	/**
 	 *
 	 */
-	ShapePtr RobotWorldCanvas::getShapeAt( const Point& aPoint) const
+	ShapePtr RobotWorldCanvas::getShapeAt( const wxPoint& aPoint) const
 	{
-		for (ShapePtr shape : shapes)
+		if(	auto i = std::find_if(shapes.begin(),shapes.end(),[&aPoint](ShapePtr shape){return shape->occupies( aPoint);});
+			i != shapes.end())
 		{
-			if (shape->occupies( aPoint))
-			{
-				return shape;
-			}
+			return *i;
 		}
 		return nullptr;
 	}
 	/**
 	 *
 	 */
-	bool RobotWorldCanvas::selectShapeAt( const Point& aPoint)
+	bool RobotWorldCanvas::selectShapeAt( const wxPoint& aPoint)
 	{
-		for (ShapePtr shape : shapes)
+		if(	auto i = std::find_if(shapes.begin(),shapes.end(),[&aPoint](ShapePtr shape){return shape->occupies( aPoint);});
+			i != shapes.end())
 		{
-			if (shape->occupies( aPoint))
-			{
-				setSelectedShape( shape);
-				return true;
-			}
+			setSelectedShape( *i);
+			return true;
 		}
 		return false;
 	}
@@ -429,7 +429,7 @@ namespace View
 	{
 		// Posting the message will put the notification event in the applications
 		// message loop, hence making sure it is handled in the main thread.
-		NotifyEvent event( Base::EVT_NOTIFICATIONEVENT, 1000);
+		wxNotifyEvent event( Base::EVT_NOTIFICATIONEVENT, 1000);
 		wxPostEvent( notificationHandler, event);
 		//notificationHandler->ProcessEvent(event);
 	}
@@ -455,15 +455,13 @@ namespace View
 	 */
 	void RobotWorldCanvas::initialise()
 	{
-		SetMinSize( Size( 500, 500));
-
-		notificationHandler = new Base::NotificationHandler< std::function< void( NotifyEvent&) > >( [this](NotifyEvent& anEvent){this->OnNotificationEvent(anEvent);});
+		notificationHandler = new Base::NotificationHandler< std::function< void( wxNotifyEvent&) > >( [this](wxNotifyEvent& anEvent){this->OnNotificationEvent(anEvent);});
 		PushEventHandler( notificationHandler);
 
 		Bind( wxEVT_PAINT, &RobotWorldCanvas::OnPaint, this);
 		Bind( wxEVT_SIZE, &RobotWorldCanvas::OnSize, this);
 
-		SetBackgroundColour( WXSTRING( "WHITE"));
+		SetBackgroundColour(  "WHITE");
 		SetFocus();
 
 		enableHandlePaint();
@@ -512,7 +510,7 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handlePaint( PaintEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handlePaint( wxPaintEvent& UNUSEDPARAM(event))
 	{
 		wxPaintDC dc( this);
 		render( dc);
@@ -520,19 +518,16 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleSize( SizeEvent& event)
+	void RobotWorldCanvas::handleSize( wxSizeEvent& event)
 	{
-		//	wxClientDC dc(const_cast<RobotWorldCanvas*>(this));
-		//	timeTextSize = dc.GetTextExtent( _T("00:00"));
-		//	Refresh();
 		event.Skip();
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleLeftDown( MouseEvent& event)
+	void RobotWorldCanvas::handleLeftDown( wxMouseEvent& event)
 	{
-		Point screenPoint = event.GetPosition();
+		wxPoint screenPoint = event.GetPosition();
 
 		startActionPoint = screenPoint;
 		endActionPoint = startActionPoint;
@@ -579,7 +574,7 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleLeftUp( MouseEvent& event)
+	void RobotWorldCanvas::handleLeftUp( wxMouseEvent& event)
 	{
 		RectangleShapePtr startRectangleShape = std::dynamic_pointer_cast<RectangleShape>( startActionShape);
 		RectangleShapePtr endRectangeShape = std::dynamic_pointer_cast<RectangleShape>( getShapeAt( event.GetPosition()));
@@ -594,7 +589,7 @@ namespace View
 			{
 				if (startRectangleShape && endRectangeShape)
 				{
-					ShapePtr lineShape( new LineShape( startRectangleShape, endRectangeShape));
+					ShapePtr lineShape = std::make_shared<LineShape>( startRectangleShape, endRectangeShape);
 					shapes.push_back( lineShape);
 				}
 				break;
@@ -620,8 +615,8 @@ namespace View
 				break;
 			}
 		}
-		startActionPoint = DefaultPosition;
-		endActionPoint = DefaultPosition;
+		startActionPoint = wxDefaultPosition;
+		endActionPoint = wxDefaultPosition;
 
 		startActionShape = nullptr;
 		endActionShape = nullptr;
@@ -632,9 +627,9 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleLeftDClick( MouseEvent& event)
+	void RobotWorldCanvas::handleLeftDClick( wxMouseEvent& event)
 	{
-		Point screenPoint = event.GetPosition();
+		wxPoint screenPoint = event.GetPosition();
 		if (isShapeAt( screenPoint))
 		{
 			ShapePtr shape = getShapeAt( screenPoint);
@@ -648,35 +643,35 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleMiddleDown( MouseEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleMiddleDown( wxMouseEvent& UNUSEDPARAM(event))
 	{
 		// We must set the focus or any keyboard events will get lost
 		//SetFocus();
 
-		//Point devicePoint = devicePointFor(event.GetPosition());
+		//wxPoint devicewxPoint = devicePointFor(event.GetPosition());
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleMiddleUp( MouseEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleMiddleUp( wxMouseEvent& UNUSEDPARAM(event))
 	{
 		Application::Logger::log( __PRETTY_FUNCTION__);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleMiddleDClick( MouseEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleMiddleDClick( wxMouseEvent& UNUSEDPARAM(event))
 	{
 		Application::Logger::log( __PRETTY_FUNCTION__);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleRightDown( MouseEvent& event)
+	void RobotWorldCanvas::handleRightDown( wxMouseEvent& event)
 	{
 		// We must set the focus or any keyboard events will get lost
 		SetFocus();
-		Point screenPoint = event.GetPosition();
+		wxPoint screenPoint = event.GetPosition();
 		actionStatus = IDLE;
 
 		if (selectShapeAt( screenPoint))
@@ -688,7 +683,7 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleRightUp( MouseEvent& event)
+	void RobotWorldCanvas::handleRightUp( wxMouseEvent& event)
 	{
 		actionStatus = IDLE;
 
@@ -710,14 +705,14 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleRightDClick( MouseEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleRightDClick( wxMouseEvent& UNUSEDPARAM(event))
 	{
 		Application::Logger::log( __PRETTY_FUNCTION__);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleMouseMotion( MouseEvent& event)
+	void RobotWorldCanvas::handleMouseMotion( wxMouseEvent& event)
 	{
 		if (event.Moving() == true && event.Dragging() == false)
 		{
@@ -737,9 +732,9 @@ namespace View
 			{
 				case RESIZING:
 				{
-//					Size size = startActionSize;
+//				wxSize size = startActionSize;
 //
-//					Point mousePosition = ScreenToClient(wxGetMousePosition());
+//					wxPoint mousePosition = ScreenToClient(wxGetMousePosition());
 //					int dx = mousePosition.x - startActionPoint.x;
 //					int dy = mousePosition.y - startActionPoint.y;
 //					if( mousePosition.x < startActionShape->getCentre().x)
@@ -781,7 +776,7 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleKey( KeyEvent& event)
+	void RobotWorldCanvas::handleKey( wxKeyEvent& event)
 	{
 		Application::Logger::log( __PRETTY_FUNCTION__);
 
@@ -871,16 +866,16 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleAddRobot( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleAddRobot( wxCommandEvent& UNUSEDPARAM(event))
 	{
-		RobotShapePtr robot( new RobotShape( Model::RobotWorld::getRobotWorld().newRobot( "Robot", popupPoint)));
+		RobotShapePtr robot = std::make_shared<RobotShape>( Model::RobotWorld::getRobotWorld().newRobot( "Robot", popupPoint));
 		addShape(robot);
 		Refresh();
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleEditRobot( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleEditRobot( wxCommandEvent& UNUSEDPARAM(event))
 	{
 		RobotShapePtr shape = std::dynamic_pointer_cast<RobotShape>( getSelectedShape());
 		if (shape)
@@ -898,7 +893,7 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleDeleteRobot( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleDeleteRobot( wxCommandEvent& UNUSEDPARAM(event))
 	{
 		RobotShapePtr shape = std::dynamic_pointer_cast<RobotShape>( getSelectedShape());
 		if (shape)
@@ -910,16 +905,16 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleAddWayPoint( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleAddWayPoint( wxCommandEvent& UNUSEDPARAM(event))
 	{
-		WayPointShapePtr wayPoint( new WayPointShape( Model::RobotWorld::getRobotWorld().newWayPoint( "Joost", popupPoint)));
+		WayPointShapePtr wayPoint = std::make_shared<WayPointShape>( Model::RobotWorld::getRobotWorld().newWayPoint( "Joost", popupPoint));
 		addShape(wayPoint);
 		Refresh();
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleEditWayPoint( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleEditWayPoint( wxCommandEvent& UNUSEDPARAM(event))
 	{
 		WayPointShapePtr shape = std::dynamic_pointer_cast<WayPointShape>( getSelectedShape());
 		if (shape)
@@ -937,7 +932,7 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleDeleteWayPoint( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleDeleteWayPoint( wxCommandEvent& UNUSEDPARAM(event))
 	{
 		WayPointShapePtr shape = std::dynamic_pointer_cast<WayPointShape>( getSelectedShape());
 		if (shape)
@@ -949,16 +944,16 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleAddGoal( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleAddGoal( wxCommandEvent& UNUSEDPARAM(event))
 	{
-		GoalShapePtr goal( new GoalShape( Model::RobotWorld::getRobotWorld().newGoal( "Goal", popupPoint)));
+		GoalShapePtr goal = std::make_shared<GoalShape>( Model::RobotWorld::getRobotWorld().newGoal( "Goal", popupPoint));
 		addShape(goal);
 		Refresh();
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleEditGoal( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleEditGoal( wxCommandEvent& UNUSEDPARAM(event))
 	{
 		GoalShapePtr shape = std::dynamic_pointer_cast<GoalShape>( getSelectedShape());
 		if (shape)
@@ -976,7 +971,7 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleDeleteGoal( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleDeleteGoal( wxCommandEvent& UNUSEDPARAM(event))
 	{
 		GoalShapePtr shape = std::dynamic_pointer_cast<GoalShape>( getSelectedShape());
 		if (shape)
@@ -988,15 +983,14 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleAddWall( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleAddWall( wxCommandEvent& UNUSEDPARAM(event))
 	{
-		RectangleShapePtr start( new RectangleShape( popupPoint));
-		RectangleShapePtr end( new RectangleShape( popupPoint + Point( 50, 50)));
+		RectangleShapePtr start = std::make_shared<RectangleShape>( popupPoint);
+		RectangleShapePtr end = std::make_shared<RectangleShape>( popupPoint + wxPoint( 50, 50));
 
-		ShapePtr wall( new WallShape( Model::RobotWorld::getRobotWorld().newWall( start->getCentre(), end->getCentre(),false),
-									  start,
-									  end));
-
+		ShapePtr wall = std::make_shared<WallShape>(Model::RobotWorld::getRobotWorld().newWall( start->getCentre(), end->getCentre(),false),
+													start,
+													end);
 		shapes.push_back( wall);
 		shapes.push_back( start);
 		shapes.push_back( end);
@@ -1006,14 +1000,14 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleEditWall( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleEditWall( wxCommandEvent& UNUSEDPARAM(event))
 	{
 		Application::Logger::log( __PRETTY_FUNCTION__);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleDeleteWall( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleDeleteWall( wxCommandEvent& UNUSEDPARAM(event))
 	{
 		WallShapePtr shape = std::dynamic_pointer_cast<WallShape>( getSelectedShape());
 		if (shape)
@@ -1025,7 +1019,7 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleShapeInfo( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::handleShapeInfo( wxCommandEvent& UNUSEDPARAM(event))
 	{
 		if (isShapeSelected())
 		{
@@ -1035,7 +1029,7 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleNotification( NotifyEvent& UNUSEDPARAM(aNotifyEvent))
+	void RobotWorldCanvas::handleNotification( wxNotifyEvent& UNUSEDPARAM(aNotifyEvent))
 	{
 		remove<Model::Robot,View::RobotShape>( Model::RobotWorld::getRobotWorld().getRobots());
 		add<Model::Robot,View::RobotShape>( Model::RobotWorld::getRobotWorld().getRobots());
@@ -1068,33 +1062,33 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::handleMenu( const Point& UNUSEDPARAM(aScreenPoint))
+	void RobotWorldCanvas::handleMenu( const wxPoint& UNUSEDPARAM(aScreenPoint))
 	{
-		Menu popupMenu;
+		wxMenu popupMenu;
 
 		popupMenu.Append( ID_ADD_ROBOT, _T( "Add robot"), _T( "ID_ADD_ROBOT2"));
 		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent& anEvent){ this->OnAddRobot(anEvent);},
+			 [this](wxCommandEvent& anEvent){ this->OnAddRobot(anEvent);},
 			 ID_ADD_ROBOT);
 
 		popupMenu.Append( ID_ADD_WAYPOINT, _T( "Add waypoint"), _T( "ID_ADD_WAYPOINT2"));
 		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent& anEvent){ this->OnAddWayPoint(anEvent);},
+			 [this](wxCommandEvent& anEvent){ this->OnAddWayPoint(anEvent);},
 			 ID_ADD_WAYPOINT);
 
 		popupMenu.Append( ID_ADD_GOAL, _T( "Add goal"), _T( "ID_ADD_GOAL2"));
 		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent& anEvent){ this->OnAddGoal(anEvent);},
+			 [this](wxCommandEvent& anEvent){ this->OnAddGoal(anEvent);},
 			 ID_ADD_GOAL);
 
 		popupMenu.Append( ID_ADD_WALL, _T( "Add wall"), _T( "ID_ADD_WALL2"));
 		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent& anEvent){ this->OnAddWall(anEvent);},
+			 [this](wxCommandEvent& anEvent){ this->OnAddWall(anEvent);},
 			 ID_ADD_WALL);
 
 		popupMenu.Append( ID_WORLD_INFO, _T( "World info"), _T( "ID_WORLD_INFO2"));
 		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent& anEvent){ this->OnWorldInfo(anEvent);},
+			 [this](wxCommandEvent& anEvent){ this->OnWorldInfo(anEvent);},
 			 ID_WORLD_INFO);
 
 		popupMenu.Append( wxID_ABOUT, _T( "About"), _T( "Show about dialog"));
@@ -1104,45 +1098,45 @@ namespace View
 	 *
 	 */
 	void RobotWorldCanvas::handleItemMenu( 	ShapePtr aSelectedShape,
-											const Point& UNUSEDPARAM(aPoint))
+											const wxPoint& UNUSEDPARAM(aPoint))
 	{
-		Menu popupMenu;
+		wxMenu popupMenu;
 
 		if(std::dynamic_pointer_cast<RobotShape>(aSelectedShape))
 		{
 			popupMenu.Append( ID_EDIT_ROBOT, _T( "Edit robot"), _T( "ID_EDIT_ROBOT"));
 			Bind(wxEVT_COMMAND_MENU_SELECTED,
-				 [this](CommandEvent& anEvent){ this->OnEditRobot(anEvent);},
+				 [this](wxCommandEvent& anEvent){ this->OnEditRobot(anEvent);},
 				 ID_EDIT_ROBOT);
 			popupMenu.Append( ID_DELETE_ROBOT, _T( "Delete robot"), _T( "ID_DELETE_ROBOT"));
 			Bind(wxEVT_COMMAND_MENU_SELECTED,
-				 [this](CommandEvent& anEvent){ this->OnDeleteRobot(anEvent);},
+				 [this](wxCommandEvent& anEvent){ this->OnDeleteRobot(anEvent);},
 				 ID_DELETE_ROBOT);
 		} else if(std::dynamic_pointer_cast<GoalShape>(aSelectedShape))
 		{
 			popupMenu.Append( ID_EDIT_GOAL, _T( "Edit goal"), _T( "ID_EDIT_GOAL"));
 			Bind(wxEVT_COMMAND_MENU_SELECTED,
-				 [this](CommandEvent& anEvent){ this->OnEditGoal(anEvent);},
+				 [this](wxCommandEvent& anEvent){ this->OnEditGoal(anEvent);},
 				 ID_EDIT_GOAL);
 			popupMenu.Append( ID_DELETE_GOAL, _T( "Delete goal"), _T( "ID_DELETE_GOAL"));
 			Bind(wxEVT_COMMAND_MENU_SELECTED,
-				 [this](CommandEvent& anEvent){ this->OnDeleteGoal(anEvent);},
+				 [this](wxCommandEvent& anEvent){ this->OnDeleteGoal(anEvent);},
 				 ID_DELETE_GOAL);
 		} else if(std::dynamic_pointer_cast<WayPointShape>(aSelectedShape))
 		{
 			popupMenu.Append( ID_EDIT_WAYPOINT, _T( "Edit waypoint"), _T( "ID_EDIT_WAYPOINT"));
 			Bind(wxEVT_COMMAND_MENU_SELECTED,
-				 [this](CommandEvent& anEvent){ this->OnEditWayPoint(anEvent);},
+				 [this](wxCommandEvent& anEvent){ this->OnEditWayPoint(anEvent);},
 				 ID_EDIT_WAYPOINT);
 			popupMenu.Append( ID_DELETE_WAYPOINT, _T( "Delete waypoint"), _T( "ID_DELETE_WAYPOINT"));
 			Bind(wxEVT_COMMAND_MENU_SELECTED,
-				 [this](CommandEvent& anEvent){ this->OnDeleteWayPoint(anEvent);},
+				 [this](wxCommandEvent& anEvent){ this->OnDeleteWayPoint(anEvent);},
 				 ID_DELETE_WAYPOINT);
 		} else if(std::dynamic_pointer_cast<WallShape>(aSelectedShape))
 		{
 			popupMenu.Append( ID_DELETE_WALL, _T( "Delete wall"), _T( "ID_DELETE_WALL"));
 			Bind(wxEVT_COMMAND_MENU_SELECTED,
-				 [this](CommandEvent& anEvent){ this->OnDeleteWall(anEvent);},
+				 [this](wxCommandEvent& anEvent){ this->OnDeleteWall(anEvent);},
 				 ID_DELETE_WALL);
 		} else
 		{
@@ -1151,7 +1145,7 @@ namespace View
 
 		popupMenu.Append( ID_SHAPE_INFO, _T( "Show info"), _T( "ID_SHAPE_INFO"));
 		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent& anEvent){ this->OnShapeInfo(anEvent);},
+			 [this](wxCommandEvent& anEvent){ this->OnShapeInfo(anEvent);},
 			 ID_SHAPE_INFO);
 
 		popupMenu.Append( wxID_ABOUT, _T( "About"), _T( "Show about dialog"));
@@ -1189,8 +1183,8 @@ namespace View
 	{
 		aWallShape->handleNotificationsFor(*aWallShape->getWall());
 
-		RectangleShapePtr start( new RectangleShape( aWallShape->getWall()->getPoint1()));
-		RectangleShapePtr end( new RectangleShape( aWallShape->getWall()->getPoint2()));
+		RectangleShapePtr start = std::make_shared<RectangleShape>( aWallShape->getWall()->getPoint1());
+		RectangleShapePtr end = std::make_shared<RectangleShape>( aWallShape->getWall()->getPoint2());
 
 		aWallShape->setNode1(start);
 		aWallShape->setNode2(end);
@@ -1257,189 +1251,189 @@ namespace View
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnPaint( PaintEvent& event)
+	void RobotWorldCanvas::OnPaint( wxPaintEvent& event)
 	{
 		handlePaint( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnSize( SizeEvent& event)
+	void RobotWorldCanvas::OnSize( wxSizeEvent& event)
 	{
 		handleSize( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnLeftDown( MouseEvent& event)
+	void RobotWorldCanvas::OnLeftDown( wxMouseEvent& event)
 	{
 		handleLeftDown( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnLeftUp( MouseEvent& event)
+	void RobotWorldCanvas::OnLeftUp( wxMouseEvent& event)
 	{
 		handleLeftUp( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnLeftDClick( MouseEvent& event)
+	void RobotWorldCanvas::OnLeftDClick( wxMouseEvent& event)
 	{
 		handleLeftDClick( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnMiddleDown( MouseEvent& event)
+	void RobotWorldCanvas::OnMiddleDown( wxMouseEvent& event)
 	{
 		handleMiddleDown( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnMiddleUp( MouseEvent& event)
+	void RobotWorldCanvas::OnMiddleUp( wxMouseEvent& event)
 	{
 		handleMiddleUp( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnMiddleDClick( MouseEvent& event)
+	void RobotWorldCanvas::OnMiddleDClick( wxMouseEvent& event)
 	{
 		handleMiddleDClick( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnRightDown( MouseEvent& event)
+	void RobotWorldCanvas::OnRightDown( wxMouseEvent& event)
 	{
 		handleRightDown( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnRightUp( MouseEvent& event)
+	void RobotWorldCanvas::OnRightUp( wxMouseEvent& event)
 	{
 		handleRightUp( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnRightDClick( MouseEvent& event)
+	void RobotWorldCanvas::OnRightDClick( wxMouseEvent& event)
 	{
 		handleRightDClick( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnMouseMotion( MouseEvent& event)
+	void RobotWorldCanvas::OnMouseMotion( wxMouseEvent& event)
 	{
 		handleMouseMotion( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnKeyDown( KeyEvent& event)
+	void RobotWorldCanvas::OnKeyDown( wxKeyEvent& event)
 	{
 		handleKey( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnCharDown( KeyEvent& event)
+	void RobotWorldCanvas::OnCharDown( wxKeyEvent& event)
 	{
 		handleKey( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnAddRobot( CommandEvent& event)
+	void RobotWorldCanvas::OnAddRobot( wxCommandEvent& event)
 	{
 		handleAddRobot( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnEditRobot( CommandEvent& event)
+	void RobotWorldCanvas::OnEditRobot( wxCommandEvent& event)
 	{
 		handleEditRobot( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnDeleteRobot( CommandEvent& event)
+	void RobotWorldCanvas::OnDeleteRobot( wxCommandEvent& event)
 	{
 		handleDeleteRobot( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnAddWayPoint( CommandEvent& event)
+	void RobotWorldCanvas::OnAddWayPoint( wxCommandEvent& event)
 	{
 		handleAddWayPoint( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnEditWayPoint( CommandEvent& event)
+	void RobotWorldCanvas::OnEditWayPoint( wxCommandEvent& event)
 	{
 		handleEditWayPoint( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnDeleteWayPoint( CommandEvent& event)
+	void RobotWorldCanvas::OnDeleteWayPoint( wxCommandEvent& event)
 	{
 		handleDeleteWayPoint( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnAddGoal( CommandEvent& event)
+	void RobotWorldCanvas::OnAddGoal( wxCommandEvent& event)
 	{
 		handleAddGoal( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnEditGoal( CommandEvent& event)
+	void RobotWorldCanvas::OnEditGoal( wxCommandEvent& event)
 	{
 		handleEditGoal( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnDeleteGoal( CommandEvent& event)
+	void RobotWorldCanvas::OnDeleteGoal( wxCommandEvent& event)
 	{
 		handleDeleteGoal( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnAddWall( CommandEvent& event)
+	void RobotWorldCanvas::OnAddWall( wxCommandEvent& event)
 	{
 		handleAddWall( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnEditWall( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::OnEditWall( wxCommandEvent& UNUSEDPARAM(event))
 	{
 
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnDeleteWall( CommandEvent& event)
+	void RobotWorldCanvas::OnDeleteWall( wxCommandEvent& event)
 	{
 		handleDeleteWall( event);
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnShapeInfo( CommandEvent& event)
+	void RobotWorldCanvas::OnShapeInfo( wxCommandEvent& event)
 	{
 		handleShapeInfo( event);
 	}
@@ -1447,14 +1441,14 @@ namespace View
 	 *
 	 *
 	 */
-	void RobotWorldCanvas::OnWorldInfo( CommandEvent& UNUSEDPARAM(event))
+	void RobotWorldCanvas::OnWorldInfo( wxCommandEvent& UNUSEDPARAM(event))
 	{
 		Application::Logger::log( Model::RobotWorld::getRobotWorld().asDebugString());
 	}
 	/**
 	 *
 	 */
-	void RobotWorldCanvas::OnNotificationEvent( NotifyEvent& aNotifyEvent)
+	void RobotWorldCanvas::OnNotificationEvent( wxNotifyEvent& aNotifyEvent)
 	{
 		handleNotification(aNotifyEvent);
 	}

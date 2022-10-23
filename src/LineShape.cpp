@@ -2,7 +2,6 @@
 
 #include "Logger.hpp"
 #include "Shape2DUtils.hpp"
-#include "Size.hpp"
 
 #include <algorithm>
 #include <sstream>
@@ -51,20 +50,14 @@ namespace View
 	/**
 	 *
 	 */
-	LineShape::~LineShape()
-	{
-	}
-	/**
-	 *
-	 */
 	void LineShape::draw( wxDC& dc)
 	{
 		if (isSelected())
 		{
-			dc.SetPen( wxPen( WXSTRING( "RED"), lineWidth, wxPENSTYLE_SOLID));
+			dc.SetPen( wxPen(  "RED", lineWidth, wxPENSTYLE_SOLID));
 		} else
 		{
-			dc.SetPen( wxPen( WXSTRING( "BLACK"), lineWidth, wxPENSTYLE_SOLID));
+			dc.SetPen( wxPen(  "BLACK", lineWidth, wxPENSTYLE_SOLID));
 		}
 
 		dc.DrawLine( node1->getCentre().x,
@@ -81,9 +74,10 @@ namespace View
 		{
 			title = node1->getTitle() + " to " + node2->getTitle();
 		}
-		Size textSize = dc.GetTextExtent( WXSTRING( title));
 
-		Point textPoint = getBegin();
+		wxSize textSize = dc.GetTextExtent( title);
+
+		wxPoint textPoint = getBegin();
 		double angle = Utils::Shape2DUtils::getAngle( node1->getCentre(), node2->getCentre());
 		double dX = (getLength() / 2 - textSize.x / 2) * sin( angle);
 		double dY = (getLength() / 2 - textSize.x / 2) * cos( angle);
@@ -94,7 +88,7 @@ namespace View
 		double degreeAngle = angle * (180.0 / Utils::PI);
 		double rotationAngle = 90 - degreeAngle;
 
-		dc.DrawRotatedText( WXSTRING( title), textPoint, rotationAngle);
+		dc.DrawRotatedText( title, textPoint, rotationAngle);
 	}
 	/**
 	 *
@@ -103,15 +97,13 @@ namespace View
 	{
 		using Utils::PI;
 
-		int arrowHeadSize = 10;
-
 		// First we draw a triangle at (0.0)
 		// Second we rotate the triangle with the angle the line makes with the Y-axis around it's centre
 		// Than we move the centre of the triangle to the end of the line, but outside the node
 
-		top = Point( 0, -arrowHeadSize);
-		right = Point( static_cast<int>(arrowHeadSize * std::sin( PI / 3)), static_cast<int>(arrowHeadSize * std::cos( PI / 3)));
-		left = Point( static_cast<int>(-arrowHeadSize * std::sin( PI / 3)), static_cast<int>(arrowHeadSize * std::cos( PI / 3)));
+		top = wxPoint( 0, -arrowHeadSize);
+		right = wxPoint( static_cast<int>(arrowHeadSize * std::sin( PI / 3)), static_cast<int>(arrowHeadSize * std::cos( PI / 3)));
+		left = wxPoint( static_cast<int>(-arrowHeadSize * std::sin( PI / 3)), static_cast<int>(arrowHeadSize * std::cos( PI / 3)));
 
 		//double angle = getAngle();
 		double angle = Utils::Shape2DUtils::getAngle( node1->getCentre(), node2->getCentre()) + 0.5 * PI;
@@ -178,43 +170,43 @@ namespace View
 		double dX = (getLength() - shortenLine) * sin( angle);
 		double dY = (getLength() - shortenLine) * cos( angle);
 
-		Point triangleCentre( static_cast<int>(getBegin().x + dX), static_cast<int>(getBegin().y - dY));
+		wxPoint triangleCentre( static_cast<int>(getBegin().x + dX), static_cast<int>(getBegin().y - dY));
 
 		top += triangleCentre;
 		right += triangleCentre;
 		left += triangleCentre;
 
-		Point triangle[] = { top, right, left };
+		wxPoint triangle[] = { top, right, left };
 
 		if (isSelected())
 		{
-			dc.SetPen( wxPen( WXSTRING( "RED"), lineWidth, wxPENSTYLE_SOLID));
-			dc.SetBrush( wxBrush( wxColour( WXSTRING( "RED"))));
+			dc.SetPen( wxPen(  "RED", lineWidth, wxPENSTYLE_SOLID));
+			dc.SetBrush( wxBrush( wxColour(  "RED")));
 		} else
 		{
-			dc.SetPen( wxPen( WXSTRING( "BLACK"), lineWidth, wxPENSTYLE_SOLID));
-			dc.SetBrush( wxBrush( wxColour( WXSTRING( "BLACK"))));
+			dc.SetPen( wxPen(  "BLACK", lineWidth, wxPENSTYLE_SOLID));
+			dc.SetBrush( wxBrush( wxColour(  "BLACK")));
 		}
 		dc.DrawPolygon( 3, triangle);
 
 		// For debugging purposes
-		dc.SetPen( wxPen( WXSTRING( "ORANGE"), 2, wxPENSTYLE_SOLID));
-		dc.SetBrush( wxBrush( wxColour( WXSTRING( "ORANGE"))));
+		dc.SetPen( wxPen(  "ORANGE", 2, wxPENSTYLE_SOLID));
+		dc.SetBrush( wxBrush( wxColour(  "ORANGE")));
 		dc.DrawCircle( top, 2);
-		dc.SetPen( wxPen( WXSTRING( "GREEN"), 2, wxPENSTYLE_SOLID)); 	// stuuRRRRRRboord RRRRRRechts gRRRRRRoen
-		dc.SetBrush( wxBrush( wxColour( WXSTRING( "GREEN"))));
+		dc.SetPen( wxPen(  "GREEN", 2, wxPENSTYLE_SOLID)); 	// stuuRRRRRRboord RRRRRRechts gRRRRRRoen
+		dc.SetBrush( wxBrush( wxColour(  "GREEN")));
 		dc.DrawCircle( right, 2);
-		dc.SetPen( wxPen( WXSTRING( "RED"), 2, wxPENSTYLE_SOLID));
-		dc.SetBrush( wxBrush( wxColour( WXSTRING( "RED"))));
+		dc.SetPen( wxPen(  "RED", 2, wxPENSTYLE_SOLID));
+		dc.SetBrush( wxBrush( wxColour(  "RED")));
 		dc.DrawCircle( left, 2);
 	}
 	/**
 	 *
 	 */
-	bool LineShape::occupies( const Point& aPoint) const
+	bool LineShape::occupies( const wxPoint& aPoint) const
 	{
 
-		Point triangle[] = { top, right, left };
+		wxPoint triangle[] = { top, right, left };
 
 		if (Utils::Shape2DUtils::isInsidePolygon( triangle, 3, aPoint))
 		{
@@ -230,14 +222,14 @@ namespace View
 	/**
 	 *
 	 */
-	Point LineShape::getCentre() const
+	wxPoint LineShape::getCentre() const
 	{
 		int x = node1->getCentre().x + node2->getCentre().x;
 		int y = node1->getCentre().y + node2->getCentre().y;
-		return Point( x / 2, y / 2);
+		return wxPoint( x / 2, y / 2);
 	}
 
-	void LineShape::setCentre( const Point& UNUSEDPARAM(aPoint))
+	void LineShape::setCentre( const wxPoint& UNUSEDPARAM(aPoint))
 	{
 	}
 
@@ -287,7 +279,7 @@ namespace View
 	/**
 	 *
 	 */
-	Point LineShape::getBegin() const
+	wxPoint LineShape::getBegin() const
 	{
 		return node1->getCentre();
 	}
@@ -295,7 +287,7 @@ namespace View
 	/**
 	 *
 	 */
-	Point LineShape::getEnd() const
+	wxPoint LineShape::getEnd() const
 	{
 		return node2->getCentre();
 	}

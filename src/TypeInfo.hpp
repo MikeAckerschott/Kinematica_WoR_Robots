@@ -13,7 +13,7 @@ namespace Utils
 	/**
 	 * @return The demangled (human readable) version of the name() string for std::type_info
 	 */
-	inline std::string demangleTypeInfo(const std::type_info& aTypeInfo)
+	std::string demangleTypeInfo(const std::type_info& aTypeInfo)
 	{
 		int status;
 		char* realname;
@@ -25,7 +25,7 @@ namespace Utils
 	/**
 	 * @return The demangled (human readable) version of aTypeInfoString which should contain the name() string for std::type_info
 	 */
-	inline std::string demangleTypeInfo(const std::string& aTypeInfoString)
+	std::string demangleTypeInfo(const std::string& aTypeInfoString)
 	{
 		int status;
 		char* realname;

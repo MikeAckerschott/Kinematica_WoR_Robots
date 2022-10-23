@@ -60,9 +60,21 @@ namespace Base
 			}
 
 		private:
+			/**
+			 *
+			 */
 			std::queue< QueueContentType > queue;
+			/**
+			 *
+			 */
 			std::mutex queueBusy;
+			/**
+			 *
+			 */
 			std::condition_variable queueFull;
+			/**
+			 *
+			 */
 			std::atomic<bool> stop = false;
 	};
 } // namespace Base
