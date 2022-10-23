@@ -23,7 +23,10 @@ namespace Messaging
 	class RequestHandler
 	{
 		public:
-			virtual ~RequestHandler(){}
+			/**
+			 *
+			 */
+			virtual ~RequestHandler() = default;
 			/**
 			 * After this function is called the aMessage is returned as response to the requesting client,
 			 * i.e. it should contain the result/response of/to the request.
@@ -45,7 +48,10 @@ namespace Messaging
 	class ResponseHandler
 	{
 		public:
-			virtual ~ResponseHandler(){}
+			/**
+			*
+			*/
+			virtual ~ResponseHandler() = default;
 			/**
 			 * The given argument contains the result/response of/to a previous request.
 			 *

@@ -4,7 +4,7 @@
 #include "Config.hpp"
 
 #include "NotificationEvent.hpp"
-#include "NotificationFunctionTypeTraits.hpp"
+#include "NotificationFunctionType.hpp"
 #include "Widgets.hpp"
 
 namespace Base
@@ -13,12 +13,15 @@ namespace Base
 	 *
 	 */
 	template< typename NotificationFunction >
-	class NotificationHandler : public EventHandler
+	class NotificationHandler : public wxEvtHandler
 	{
 		public:
+			/**
+			 *
+			 */
 			explicit NotificationHandler( const NotificationFunction& aNotificationFunction) :
 				function( aNotificationFunction)
-		{
+			{
 				// TODO: Change this code so we don't have to use the #pragma's nor the reinterpret_cast.
 				// See @https://gcc.gnu.org/onlinedocs/gcc/Diagnostic-Pragmas.html#Diagnostic-Pragmas for the #pragma explanation.
 				#pragma GCC diagnostic push
@@ -28,19 +31,19 @@ namespace Base
 						 (wxObjectEventFunction)(wxEventFunction)reinterpret_cast< NotificationEventFunction >( &NotificationHandler::OnNotificationEvent));
 
 				#pragma GCC diagnostic pop
-		}
-			virtual ~NotificationHandler()
-			{
 			}
 			/**
 			 *
 			 */
-			void OnNotificationEvent( NotifyEvent& aNotifyEvent)
+			void OnNotificationEvent( wxNotifyEvent& aNotifyEvent)
 			{
-				NotificationFunctionTypeTraits< NotificationFunction > caller;
+				NotificationFunctionType< NotificationFunction > caller;
 				caller.call( function, aNotifyEvent);
 			}
 		private:
+			/**
+			 *
+			 */
 			NotificationFunction function;
 	};
 } //namespace Base

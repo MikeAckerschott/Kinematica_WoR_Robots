@@ -5,7 +5,6 @@
 
 #include "ModelObject.hpp"
 #include "Point.hpp"
-#include "Size.hpp"
 #include "Region.hpp"
 
 namespace Model
@@ -13,26 +12,18 @@ namespace Model
 	class WayPoint;
 	typedef std::shared_ptr<WayPoint> WayPointPtr;
 
+	/**
+	 *
+	 */
 	class WayPoint : 	public ModelObject
 	{
 		public:
-			/**
-			 *
-			 */
-			WayPoint();
-			/**
-			 *
-			 */
 			explicit WayPoint( const std::string& aName);
 			/**
 			 *
 			 */
 			WayPoint(	const std::string& aName,
-						const Point& aPosition);
-			/**
-			 *
-			 */
-			virtual ~WayPoint();
+						const wxPoint& aPosition);
 			/**
 			 *
 			 */
@@ -48,32 +39,32 @@ namespace Model
 			/**
 			 *
 			 */
-			Size getSize() const;
+			wxSize getSize() const;
 			/**
 			 *
 			 */
-			void setSize(	const Size& aSize,
+			void setSize(	const wxSize& aSize,
 							bool aNotifyObservers = true);
 			/**
 			 *
 			 */
-			Point getPosition() const
+			wxPoint getPosition() const
 			{
 				return position;
 			}
 			/**
 			 *
 			 */
-			void setPosition(	const Point& aPosition,
+			void setPosition(	const wxPoint& aPosition,
 								bool aNotifyObservers = true);
 			/**
 			 *
 			 */
-			Region getRegion() const;
+			wxRegion getRegion() const;
 			/**
 			 *
 			 */
-			bool intersects( const Region& aRegion) const;
+			bool intersects( const wxRegion& aRegion) const;
 			/**
 			 * @name Debug functions
 			 */
@@ -90,8 +81,8 @@ namespace Model
 		protected:
 		private:
 			std::string name;
-			Size size;
-			Point position;
+		wxSize size;
+			wxPoint position;
 	};
 } // namespace Model
 #endif // WAYPOINT_HPP_

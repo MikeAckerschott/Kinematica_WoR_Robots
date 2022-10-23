@@ -36,10 +36,6 @@ namespace View
 						int aLineWidth = 1,
 						int anArrowHeadSize = 10);
 			/**
-			 *
-			 */
-			~LineShape();
-			/**
 			 * @name Observer functions
 			 */
 			//@{
@@ -62,15 +58,15 @@ namespace View
 			 * @param aPoint
 			 * @return True if the point is in the shape
 			 */
-			virtual bool occupies( const Point& aPoint) const override;
+			virtual bool occupies( const wxPoint& aPoint) const override;
 			/**
 			 *
 			 */
-			virtual Point getCentre() const override;
+			virtual wxPoint getCentre() const override;
 			/**
 			 *
 			 */
-			virtual void setCentre( const Point& aPoint) override;
+			virtual void setCentre( const wxPoint& aPoint) override;
 			//@}
 			/**
 			 *
@@ -103,11 +99,11 @@ namespace View
 			/**
 			 *
 			 */
-			Point getBegin() const;
+			wxPoint getBegin() const;
 			/**
 			 *
 			 */
-			Point getEnd() const;
+			wxPoint getEnd() const;
 			/**
 			 *
 			 */
@@ -173,9 +169,9 @@ namespace View
 			std::string title;
 			int lineWidth;
 			int arrowHeadSize;
-			Point top;
-			Point right;
-			Point left;
+			wxPoint top;
+			wxPoint right;
+			wxPoint left;
 	};
 	//	class LineShape
 } // namespace View

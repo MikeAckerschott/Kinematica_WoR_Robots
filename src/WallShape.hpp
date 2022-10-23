@@ -26,10 +26,6 @@ namespace View
 						RectangleShapePtr aRectangleShape1,
 						RectangleShapePtr aRectangleShape2);
 			/**
-			 *
-			 */
-			virtual ~WallShape();
-			/**
 			 * @name Type safe accessors and mutators
 			 */
 			//@{
@@ -46,12 +42,12 @@ namespace View
 			/**
 			 *
 			 */
-			virtual void setSelectedAt( const Point& aPoint = DefaultPosition,
+			virtual void setSelectedAt( const wxPoint& aPoint = wxDefaultPosition,
 										bool aSelected = true) override;
 			/**
 			 * Return nullptr if the point is inside an end point
 			 */
-			RectangleShapePtr hasEndPointAt( const Point& aPoint);
+			RectangleShapePtr hasEndPointAt( const wxPoint& aPoint);
 			/**
 			 *
 			 */
@@ -73,7 +69,7 @@ namespace View
 			 * @param aPoint
 			 * @return True if the point is in the shape
 			 */
-			virtual bool occupies( const Point& aPoint) const override;
+			virtual bool occupies( const wxPoint& aPoint) const override;
 			//@}
 			/**
 			 * @name Debug functions

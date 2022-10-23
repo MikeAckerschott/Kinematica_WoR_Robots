@@ -11,45 +11,40 @@ namespace Model
 	class Wall;
 	typedef std::shared_ptr<Wall> WallPtr;
 
+	/**
+	 *
+	 */
 	class Wall :  public ModelObject
 	{
 		public:
 			/**
 			 *
 			 */
-			Wall();
+			Wall(	const wxPoint& aPoint1,
+					const wxPoint& aPoint2);
 			/**
 			 *
 			 */
-			Wall(	const Point& aPoint1,
-					const Point& aPoint2);
-			/**
-			 *
-			 */
-			virtual ~Wall();
-			/**
-			 *
-			 */
-			Point getPoint1() const
+			wxPoint getPoint1() const
 			{
 				return point1;
 			}
 			/**
 			 *
 			 */
-			void setPoint1( const Point& aPoint1,
+			void setPoint1( const wxPoint& aPoint1,
 							bool aNotifyObservers = true);
 			/**
 			 *
 			 */
-			Point getPoint2() const
+			wxPoint getPoint2() const
 			{
 				return point2;
 			}
 			/**
 			 *
 			 */
-			void setPoint2( const Point& aPoint2,
+			void setPoint2( const wxPoint& aPoint2,
 							bool aNotifyObservers = true);
 			/**
 			 * @name Debug functions
@@ -66,8 +61,8 @@ namespace Model
 			//@}
 		protected:
 		private:
-			Point point1;
-			Point point2;
+			wxPoint point1;
+			wxPoint point2;
 	};
 } // namespace Model
 #endif // WALL_HPP_

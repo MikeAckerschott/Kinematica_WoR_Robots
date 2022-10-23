@@ -18,10 +18,13 @@ namespace Model
 	class DistancePercepts : public AbstractPercept
 	{
 		public:
-			DistancePercepts()
-			{
-				std::cerr << __PRETTY_FUNCTION__ <<std::endl;
-			}
+			/**
+			 *
+			 */
+			DistancePercepts() = default;
+			/**
+			 *
+			 */
 			explicit DistancePercepts(const PointCloud& aPointCloud) : pointCloud(aPointCloud)
 			{
 			}

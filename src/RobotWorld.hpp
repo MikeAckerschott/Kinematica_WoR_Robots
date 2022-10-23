@@ -4,7 +4,7 @@
 #include "Config.hpp"
 
 #include "ModelObject.hpp"
-#include "Point.hpp"
+#include "Widgets.hpp"
 
 #include <vector>
 
@@ -39,25 +39,25 @@ namespace Model
 			 *
 			 */
 			RobotPtr newRobot(	const std::string& aName = "New Robot",
-								const Point& aPosition = Point( -1, -1),
+								const wxPoint& aPosition = wxPoint( -1, -1),
 								bool aNotifyObservers = true);
 			/**
 			 *
 			 */
 			WayPointPtr newWayPoint(const std::string& aName = "New WayPoint",
-									const Point& aPosition = Point( -1, -1),
+									const wxPoint& aPosition = wxPoint( -1, -1),
 									bool aNotifyObservers = true);
 			/**
 			 *
 			 */
 			GoalPtr newGoal(const std::string& aName = "New Goal",
-							const Point& aPosition = Point( -1, -1),
+							const wxPoint& aPosition = wxPoint( -1, -1),
 							bool aNotifyObservers = true);
 			/**
 			 *
 			 */
-			WallPtr newWall(const Point& aPoint1,
-							const Point& aPoint2,
+			WallPtr newWall(const wxPoint& aPoint1,
+							const wxPoint& aPoint2,
 							bool aNotifyObservers = true);
 			/**
 			 *
@@ -156,7 +156,7 @@ namespace Model
 			/**
 			 *
 			 */
-			RobotWorld();
+			RobotWorld() = default;
 			/**
 			 *
 			 */

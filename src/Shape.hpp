@@ -4,7 +4,6 @@
 #include "Config.hpp"
 
 #include "ObjectId.hpp"
-#include "Point.hpp"
 #include "ViewObject.hpp"
 #include "Widgets.hpp"
 
@@ -21,9 +20,7 @@ namespace View
 			/**
 			 *
 			 */
-			virtual ~ShapeData()
-			{
-			}
+			virtual ~ShapeData()  = default;
 			/**
 			 * @name Debug functions
 			 */
@@ -75,9 +72,7 @@ namespace View
 			/**
 			 *
 			 */
-			virtual ~Shape()
-			{
-			}
+			virtual ~Shape()  = default;
 			/**
 			 * @name Pure virtual abstract Shape functions
 			 */
@@ -91,15 +86,15 @@ namespace View
 			 * @param aPoint
 			 * @return True if the point is in the shape
 			 */
-			virtual bool occupies( const Point& aPoint) const = 0;
+			virtual bool occupies( const wxPoint& aPoint) const = 0;
 			/**
 			 *
 			 */
-			virtual Point getCentre() const = 0;
+			virtual wxPoint getCentre() const = 0;
 			/**
 			 *
 			 */
-			virtual void setCentre( const Point& aPoint) = 0;
+			virtual void setCentre( const wxPoint& aPoint) = 0;
 			//@}
 			/**
 			 * @name Accessors and mutators
@@ -142,7 +137,7 @@ namespace View
 			 * by default a Shape has no volume or surface and the selection point can be
 			 * assumed to be the centre.
 			 */
-			virtual void setSelectedAt( const Point& aPoint = DefaultPosition,
+			virtual void setSelectedAt( const wxPoint& aPoint = wxDefaultPosition,
 										bool aSelected = true)
 			{
 				UNUSEDCAST( aPoint);
@@ -151,7 +146,7 @@ namespace View
 			/**
 			 *
 			 */
-			virtual Point getSelectedPoint() const
+			virtual wxPoint getSelectedPoint() const
 			{
 				return getCentre();
 			}

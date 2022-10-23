@@ -3,9 +3,9 @@
 
 #include "Config.hpp"
 
+#include "Point.hpp"
 #include "Shape.hpp"
 #include "Size.hpp"
-#include "Widgets.hpp"
 
 #include <string>
 
@@ -15,18 +15,20 @@ namespace View
 	class RectangleShape;
 	typedef std::shared_ptr<RectangleShape> RectangleShapePtr;
 
-
+	/**
+	 *
+	 */
 	class RectangleShape : public Shape
 	{
 		public:
 			/**
 			 *
 			 */
-			RectangleShape( const std::string& aTitle = "");
+			explicit RectangleShape( const std::string& aTitle = "");
 			/**
 			 *
 			 */
-			explicit RectangleShape(const Point& aCentrePoint,
+			explicit RectangleShape(const wxPoint& aCentrePoint,
 									const std::string& aTitle = "",
 									int aBorderWidth = 2,
 									int aSpacing = 2);
@@ -34,14 +36,10 @@ namespace View
 			 *
 			 */
 			RectangleShape( Model::ModelObjectPtr aModelObject,
-							const Point& aCentrePoint,
+							const wxPoint& aCentrePoint,
 							const std::string& aTitle = "",
 							int aBorderWidth = 2,
 							int aSpacing = 2);
-			/**
-			 *
-			 */
-			~RectangleShape();
 			/**
 			 *
 			 */
@@ -69,22 +67,22 @@ namespace View
 			 * @param aPoint
 			 * @return True if the point is in the shape
 			 */
-			virtual bool occupies( const Point& aPoint) const override;
+			virtual bool occupies( const wxPoint& aPoint) const override;
 			//@}
 			/**
 			 *
 			 * @return True if the point is on the border of the shape
 			 */
-			virtual bool isBorderPoint( const Point aPoint,
+			virtual bool isBorderPoint( const wxPoint aPoint,
 										int aRadius = 3) const;
 			/**
 			 *
 			 */
-			virtual Point getCentre() const override;
+			virtual wxPoint getCentre() const override;
 			/**
 			 *
 			 */
-			virtual void setCentre( const Point& aPoint) override;
+			virtual void setCentre( const wxPoint& aPoint) override;
 			/**
 			 *
 			 */
@@ -92,21 +90,21 @@ namespace View
 			/**
 			 *
 			 */
-			virtual std::string getNormalColour() const
+			virtual wxColour getNormalColour() const
 			{
 				return "BLACK";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getSelectionColour() const
+			virtual wxColour getSelectionColour() const
 			{
 				return "RED";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getActivationColour() const
+			virtual wxColour getActivationColour() const
 			{
 				return "BLUE";
 			}
@@ -118,11 +116,11 @@ namespace View
 			/**
 			 *
 			 */
-			virtual Size getSize() const;
+			virtual wxSize getSize() const;
 			/**
 			 *
 			 */
-			virtual void setSize( const Size& aSize);
+			virtual void setSize( const wxSize& aSize);
 			/**
 			 *
 			 */
@@ -161,11 +159,29 @@ namespace View
 			virtual std::string asDebugString() const override;
 			//@}
 		protected:
-			Point centre;
-			Size size;
+			/**
+			 *
+			 */
+			wxPoint centre;
+			/**
+			 *
+			 */
+			wxSize size;
+			/**
+			 *
+			 */
 			std::string title;
-			Size titleSize;
+			/**
+			 *
+			 */
+			wxSize titleSize;
+			/**
+			 *
+			 */
 			int borderWidth;
+			/**
+			 *
+			 */
 			int spacing;
 
 	};

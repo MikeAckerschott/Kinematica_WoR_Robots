@@ -7,29 +7,16 @@ namespace Model
 	/**
 	 *
 	 */
-	AbstractActuator::AbstractActuator() :
-								agent( nullptr)
+	AbstractActuator::AbstractActuator( AbstractAgent& anAgent) :
+					agent { &anAgent }
 	{
 	}
 	/**
 	 *
 	 */
-	AbstractActuator::AbstractActuator( AbstractAgent* anAgent) :
-								agent( anAgent)
+	void AbstractActuator::attachAgent( AbstractAgent& anAgent)
 	{
-	}
-	/**
-	 *
-	 */
-	AbstractActuator::~AbstractActuator()
-	{
-	}
-	/**
-	 *
-	 */
-	void AbstractActuator::attachAgent( AbstractAgent* anAgent)
-	{
-		agent = anAgent;
+		agent = &anAgent;
 	}
 	/**
 	 *

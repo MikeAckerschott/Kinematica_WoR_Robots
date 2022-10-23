@@ -70,7 +70,10 @@ namespace Application
 	{
 
 		// argv[0] contains the executable name as one types on the command line (with or without extension)
-		MainApplication::commandlineArguments.push_back( CommandlineArgument( 0, "Executable", theArgv[0]));
+		if(theArgv[0])
+		{
+			MainApplication::commandlineArguments.push_back( CommandlineArgument( 0, "Executable", theArgv[0]));
+		}
 
 		for (unsigned int i = 1; i < static_cast<unsigned int >(theArgc); ++i)
 		{

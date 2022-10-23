@@ -16,11 +16,14 @@ namespace Model
 	class DistancePercept : public AbstractPercept
 	{
 		public:
-			explicit DistancePercept( const Point& aPoint) :
+			/**
+			 *
+			 */
+			explicit DistancePercept( const wxPoint& aPoint) :
 				point(aPoint)
 			{
 			}
-			Point point;
+			wxPoint point;
 			/**
 			 * @name Debug functions
 			 */

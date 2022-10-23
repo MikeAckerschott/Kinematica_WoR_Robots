@@ -10,8 +10,6 @@
 #include <memory>
 #include <string>
 
-
-
 namespace Model
 {
 	class ModelObject;
@@ -43,7 +41,7 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual ~ModelObject();
+			virtual ~ModelObject()  = default;
 			//@}
 			/**
 			 * @name Operators
@@ -52,11 +50,11 @@ namespace Model
 			/**
 			 * ModelObject may not be copied
 			 */
-			ModelObject&operator==( const ModelObject& aModelObject) = delete;
+			ModelObject& operator=( const ModelObject& aModelObject) = delete;
 			/**
 			 * ModelObject may not be copied
 			 */
-			ModelObject&operator==( ModelObject&& aModelObject) = delete;
+			ModelObject& operator=( ModelObject&& aModelObject) = delete;
 			/**
 			 * Equal to operator which compares the objectIds
 			 *

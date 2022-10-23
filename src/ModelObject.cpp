@@ -15,12 +15,6 @@ namespace Model
 	/**
 	 *
 	 */
-	ModelObject::~ModelObject()
-	{
-	}
-	/**
-	 *
-	 */
 	std::string ModelObject::asString() const
 	{
 		std::ostringstream os;

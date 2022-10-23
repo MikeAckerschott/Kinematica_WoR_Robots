@@ -1,11 +1,8 @@
 #include "ObjectId.hpp"
 
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/date_time/local_time/local_time.hpp>
-#include <boost/date_time/time_zone_base.hpp>
 #include <boost/date_time/c_local_time_adjustor.hpp>
 
-#include <sys/timeb.h>
 #include <ctime>
 #include <climits>
 #include <mutex>
@@ -94,10 +91,6 @@ namespace Base
 				 fraction++);
 
 		return ObjectId(timestampBuffer);
-	}
-
-	ObjectId::~ObjectId()
-	{
 	}
 	/**
 	 *

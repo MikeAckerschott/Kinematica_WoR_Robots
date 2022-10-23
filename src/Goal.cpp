@@ -10,12 +10,6 @@ namespace Model
 	/**
 	 *
 	 */
-	Goal::Goal()
-	{
-	}
-	/**
-	 *
-	 */
 	Goal::Goal( const std::string& aName) :
 								WayPoint( aName)
 	{
@@ -24,16 +18,13 @@ namespace Model
 	 *
 	 */
 	Goal::Goal( const std::string& aName,
-				const Point& aPosition) :
+				const wxPoint& aPosition) :
 								WayPoint( aName, aPosition)
 	{
 	}
 	/**
 	 *
 	 */
-	Goal::~Goal()
-	{
-	}
 	/**
 	 *
 	 */

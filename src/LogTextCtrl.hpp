@@ -3,8 +3,6 @@
 
 #include "Config.hpp"
 
-#include "Point.hpp"
-#include "Size.hpp"
 #include "Widgets.hpp"
 
 namespace Application
@@ -12,7 +10,7 @@ namespace Application
 	/**
 	 *
 	 */
-	wxDECLARE_EVENT(ROBOTWORLD_TRACE_EVENT, CommandEvent);
+	wxDECLARE_EVENT(ROBOTWORLD_TRACE_EVENT, wxCommandEvent);
 	/**
 	 * A text widget that accepts the tracing of a trace function.
 	 */
@@ -26,13 +24,12 @@ namespace Application
 			/**
 			 *
 			 */
-			explicit LogTextCtrl( 	Window* aParent,
-									WindowId aWindowId = DEFAULT_ID,
+			explicit LogTextCtrl( 	wxWindow* aParent,
+									wxWindowID aWindowID = wxID_ANY,
 									long aStyle = wxTE_READONLY | wxTE_MULTILINE | wxTE_DONTWRAP,
 									const std::string& anInitialText = "",
-									const Point& aPoint = DefaultPosition,
-									const Size& aSize = DefaultSize);
-			virtual ~LogTextCtrl();
+									const wxPoint& aPoint = wxDefaultPosition,
+									const wxSize& aSize = wxDefaultSize);
 			//@}
 			/**
 			 *
@@ -44,7 +41,7 @@ namespace Application
 			 *
 			 * @param anEvent
 			 */
-			void OnCommandEvent( CommandEvent& anEvent);
+			void OnCommandEvent( wxCommandEvent& anEvent);
 		private:
 	};
 	// class LogTextCtrl

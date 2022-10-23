@@ -1,32 +1,17 @@
 #include "AbstractSensor.hpp"
 
 #include "AbstractAgent.hpp"
-#include "Logger.hpp"
 
 namespace Model
 {
 	/**
 	 *
 	 */
-	AbstractSensor::AbstractSensor() :
-								agent( nullptr),
-								running( false)
-	{
-	}
-	/**
-	 *
-	 */
-	AbstractSensor::AbstractSensor( AbstractAgent* anAgent) :
-								agent( anAgent),
+	AbstractSensor::AbstractSensor( AbstractAgent& anAgent) :
+								agent{	&anAgent},
 								running( false)
 	{
 
-	}
-	/**
-	 *
-	 */
-	AbstractSensor::~AbstractSensor()
-	{
 	}
 	/**
 	 *
@@ -88,9 +73,9 @@ namespace Model
 	/**
 	 *
 	 */
-	void AbstractSensor::attachAgent( AbstractAgent* anAgent)
+	void AbstractSensor::attachAgent( AbstractAgent& anAgent)
 	{
-		agent = anAgent;
+		agent = &anAgent;
 	}
 	/**
 	 *

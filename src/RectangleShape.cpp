@@ -22,7 +22,7 @@ namespace View
 	 *
 	 */
 	RectangleShape::RectangleShape( Model::ModelObjectPtr aModelObject,
-									const Point& aCentrePoint,
+									const wxPoint& aCentrePoint,
 									const std::string& aTitle /*= ""*/,
 									int aBorderWidth /*= 2*/,
 									int aSpacing /*= 2*/) :
@@ -38,7 +38,7 @@ namespace View
 	/**
 	 *
 	 */
-	RectangleShape::RectangleShape( const Point& aCentrePoint,
+	RectangleShape::RectangleShape( const wxPoint& aCentrePoint,
 									const std::string& aTitle /*= ""*/,
 									int aBorderWidth /*= 2*/,
 									int aSpacing /*= 2*/) :
@@ -48,12 +48,6 @@ namespace View
 								titleSize( 0, 0),
 								borderWidth( aBorderWidth),
 								spacing( aSpacing)
-	{
-	}
-	/**
-	 *
-	 */
-	RectangleShape::~RectangleShape()
 	{
 	}
 	/**
@@ -80,7 +74,7 @@ namespace View
 	void RectangleShape::draw( wxDC& dc)
 	{
 		// The minimum size of the RectangleShape is the size of the title
-		titleSize = dc.GetTextExtent( WXSTRING( title));
+		titleSize = dc.GetTextExtent( title);
 		if (size.x < (titleSize.x + 2 * spacing + 2 * borderWidth))
 		{
 			size.x = titleSize.x + 2 * spacing + 2 * borderWidth;
@@ -93,23 +87,23 @@ namespace View
 		dc.SetBrush( *wxWHITE_BRUSH);
 		if (isSelected())
 		{
-			dc.SetPen( wxPen( WXSTRING( getSelectionColour()), borderWidth, wxPENSTYLE_SOLID));
+			dc.SetPen( wxPen(  getSelectionColour(), borderWidth, wxPENSTYLE_SOLID));
 		} else
 		{
-			dc.SetPen( wxPen( WXSTRING( getNormalColour()), borderWidth, wxPENSTYLE_SOLID));
+			dc.SetPen( wxPen(  getNormalColour(), borderWidth, wxPENSTYLE_SOLID));
 		}
 
 		int x = centre.x - (size.x / 2);
 		int y = centre.y - (size.y / 2);
 		dc.DrawRectangle( x, y, size.x, size.y);
 
-		dc.SetPen( wxPen( WXSTRING( "BLACK"), borderWidth, wxPENSTYLE_SOLID));
-		dc.DrawText( WXSTRING( title), centre.x - titleSize.x / 2, y + spacing + borderWidth);
+		dc.SetPen( wxPen(  "BLACK", borderWidth, wxPENSTYLE_SOLID));
+		dc.DrawText( title, centre.x - titleSize.x / 2, y + spacing + borderWidth);
 	}
 	/**
 	 *
 	 */
-	bool RectangleShape::occupies( const Point& aPoint) const
+	bool RectangleShape::occupies( const wxPoint& aPoint) const
 	{
 		if (centre.x - (size.x / 2) <= aPoint.x && aPoint.x <= centre.x + (size.x / 2) && centre.y - (size.y / 2) <= aPoint.y && aPoint.y <= centre.y + (size.y / 2))
 		{
@@ -121,14 +115,14 @@ namespace View
 	 *
 	 */
 	// cppcheck-suppress unusedFunction
-	bool RectangleShape::isBorderPoint( const Point aPoint,
+	bool RectangleShape::isBorderPoint( const wxPoint aPoint,
 										int aRadius /*= 3*/) const
 	{
-		Point rectanglePoints[] = {
-								   Point( centre.x - (size.x / 2), centre.y - (size.y / 2)), // upper left
-								   Point( centre.x + (size.x / 2), centre.y - (size.y / 2)), // upper right
-								   Point( centre.x + (size.x / 2), centre.y + (size.y / 2)), // right under
-								   Point( centre.x - (size.x / 2), centre.y + (size.y / 2)), // left under
+		wxPoint rectanglePoints[] = {
+								   wxPoint( centre.x - (size.x / 2), centre.y - (size.y / 2)), // upper left
+								   wxPoint( centre.x + (size.x / 2), centre.y - (size.y / 2)), // upper right
+								   wxPoint( centre.x + (size.x / 2), centre.y + (size.y / 2)), // right under
+								   wxPoint( centre.x - (size.x / 2), centre.y + (size.y / 2)), // left under
 		};
 
 		return Utils::Shape2DUtils::isOnLine( rectanglePoints, 4, aPoint, aRadius + borderWidth);
@@ -136,14 +130,14 @@ namespace View
 	/**
 	 *
 	 */
-	Point RectangleShape::getCentre() const
+	wxPoint RectangleShape::getCentre() const
 	{
 		return centre;
 	}
 	/**
 	 *
 	 */
-	void RectangleShape::setCentre( const Point& aPoint)
+	void RectangleShape::setCentre( const wxPoint& aPoint)
 	{
 		centre = aPoint;
 	}
@@ -164,14 +158,14 @@ namespace View
 	/**
 	 *
 	 */
-	Size RectangleShape::getSize() const
+wxSize RectangleShape::getSize() const
 	{
 		return size;
 	}
 	/**
 	 *
 	 */
-	void RectangleShape::setSize( const Size& aSize)
+	void RectangleShape::setSize( const wxSize& aSize)
 	{
 		size = aSize;
 		if (size.x < (titleSize.x + 2 * spacing + 2 * borderWidth))

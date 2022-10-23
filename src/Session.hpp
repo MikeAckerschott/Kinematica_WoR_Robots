@@ -24,7 +24,7 @@ namespace Messaging
 			/**
 			 *
 			 */
-			explicit Session() :
+			Session() :
 					socket( CommunicationService::getCommunicationService().getIOContext())
 			{
 			}
@@ -264,12 +264,6 @@ namespace Messaging
 				sessionNumber = ++sessionCounter;
 			}
 			/**
-			 *
-			 */
-			~ServerSession()
-			{
-			}
-			/**
 			 * @see Session::start()
 			 */
 			virtual void start() override
@@ -339,12 +333,6 @@ namespace Messaging
 							responseHandler( aResponseHandler)
 			{
 				sessionNumber = ++sessionCounter;
-			}
-			/**
-			 *
-			 */
-			~ClientSession()
-			{
 			}
 			/**
 			 * @see Session::start()
