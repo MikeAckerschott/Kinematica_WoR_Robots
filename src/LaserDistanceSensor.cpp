@@ -6,7 +6,6 @@
 #include "Wall.hpp"
 #include "Shape2DUtils.hpp"
 #include "MathUtils.hpp"
-#include "Widgets.hpp"
 
 #include <random>
 
@@ -19,20 +18,8 @@ namespace Model
 	/**
 	 *
 	 */
-	LaserDistanceSensor::LaserDistanceSensor()
-	{
-	}
-	/**
-	 *
-	 */
-	LaserDistanceSensor::LaserDistanceSensor( Robot* aRobot) :
+	LaserDistanceSensor::LaserDistanceSensor( Robot& aRobot) :
 								AbstractSensor( aRobot)
-	{
-	}
-	/**
-	 *
-	 */
-	LaserDistanceSensor::~LaserDistanceSensor()
 	{
 	}
 	/**
@@ -52,25 +39,23 @@ namespace Model
 			std::vector< WallPtr > walls = RobotWorld::getRobotWorld().getWalls();
 			for (std::shared_ptr< Wall > wall : walls)
 			{
-				Point wallPoint1 = wall->getPoint1();
-				Point wallPoint2 = wall->getPoint2();
-				Point robotLocation = robot->getPosition();
-				Point laserEndpoint{static_cast<int>(robotLocation.x + std::cos( angle) * laserBeamLength + noise(gen)) ,
+				wxPoint wallPoint1 = wall->getPoint1();
+				wxPoint wallPoint2 = wall->getPoint2();
+				wxPoint robotLocation = robot->getPosition();
+				wxPoint laserEndpoint{static_cast<int>(robotLocation.x + std::cos( angle) * laserBeamLength + noise(gen)) ,
 									static_cast<int>(robotLocation.y + std::sin( angle) * laserBeamLength + noise(gen))};
 
-				Point interSection = Utils::Shape2DUtils::getIntersection( wallPoint1, wallPoint2, robotLocation, laserEndpoint);
+				wxPoint interSection = Utils::Shape2DUtils::getIntersection( wallPoint1, wallPoint2, robotLocation, laserEndpoint);
 
-				if(interSection != DefaultPosition)
+				if(interSection != wxDefaultPosition)
 				{
 					double distance = Utils::Shape2DUtils::distance(robotLocation,interSection);
-					return std::shared_ptr< AbstractStimulus >( new DistanceStimulus( angle,distance));
+					return std::make_shared< DistanceStimulus >( angle,distance);
 				}
 			}
-			std::shared_ptr< AbstractStimulus > distanceStimulus( new DistanceStimulus( noAngle,noDistance));
-			return distanceStimulus;
+			return std::make_shared< DistanceStimulus >( noAngle,noDistance);
 		}
-		std::shared_ptr< AbstractStimulus > distanceStimulus( new DistanceStimulus( noAngle,noDistance));
-		return distanceStimulus;
+		return std::make_shared< DistanceStimulus >( noAngle,noDistance);
 	}
 	/**
 	 *
@@ -80,23 +65,23 @@ namespace Model
 		Robot* robot = dynamic_cast< Robot* >( agent);
 		if (robot)
 		{
-			Point robotLocation = robot->getPosition();
+			wxPoint robotLocation = robot->getPosition();
 
 			DistanceStimulus* distanceStimulus = dynamic_cast< DistanceStimulus* >( anAbstractStimulus.get());
 			if(distanceStimulus)
 			{
 				if(distanceStimulus->distance == noDistance)
 				{
-					return std::shared_ptr< AbstractPercept > ( new DistancePercept( Point(noObject,noObject)));
+					return std::make_shared<DistancePercept>( wxPoint(noObject,noObject));
 				}
-				Point endpoint{	static_cast< int >( robotLocation.x + std::cos( distanceStimulus->angle)*distanceStimulus->distance),
+				wxPoint endpoint{	static_cast< int >( robotLocation.x + std::cos( distanceStimulus->angle)*distanceStimulus->distance),
 								static_cast< int >( robotLocation.y + std::sin( distanceStimulus->angle)*distanceStimulus->distance)};
 
-				return std::shared_ptr< AbstractPercept >( new DistancePercept( endpoint));
+				return std::make_shared<DistancePercept>( endpoint);
 			}
 		}
 
-		return std::shared_ptr< AbstractPercept > ( new DistancePercept( Point(invalidDistance,invalidDistance)));
+		return std::make_shared<DistancePercept>( wxPoint(invalidDistance,invalidDistance));
 	}
 	/**
 	 *

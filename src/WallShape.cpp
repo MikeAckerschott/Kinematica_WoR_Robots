@@ -32,12 +32,6 @@ namespace View
 	/**
 	 *
 	 */
-	WallShape::~WallShape()
-	{
-	}
-	/**
-	 *
-	 */
 	Model::WallPtr WallShape::getWall() const
 	{
 		return std::dynamic_pointer_cast<Model::Wall>(getModelObject());
@@ -54,7 +48,7 @@ namespace View
 	 *
 	 */
 	// cppcheck-suppress unusedFunction
-	void WallShape::setSelectedAt(	const Point& aPoint /*= DefaultPosition*/,
+	void WallShape::setSelectedAt(	const wxPoint& aPoint /*= wxDefaultPosition*/,
 									bool aSelected /*= true*/)
 	{
 		UNUSEDCAST( aPoint);
@@ -63,7 +57,7 @@ namespace View
 	/**
 	 *
 	 */
-	RectangleShapePtr WallShape::hasEndPointAt( const Point& aPoint)
+	RectangleShapePtr WallShape::hasEndPointAt( const wxPoint& aPoint)
 	{
 		if (getNode1()->occupies( aPoint))
 		{
@@ -106,10 +100,10 @@ namespace View
 	{
 		if (isSelected())
 		{
-			dc.SetPen( wxPen( WXSTRING( "RED"), getLineWidth(), wxPENSTYLE_SOLID));
+			dc.SetPen( wxPen(  "RED", getLineWidth(), wxPENSTYLE_SOLID));
 		} else
 		{
-			dc.SetPen( wxPen( WXSTRING( "BLACK"), getLineWidth(), wxPENSTYLE_SOLID));
+			dc.SetPen( wxPen(  "BLACK", getLineWidth(), wxPENSTYLE_SOLID));
 		}
 
 		dc.DrawLine( getNode1()->getCentre().x, getNode1()->getCentre().y, getNode2()->getCentre().x, getNode2()->getCentre().y);
@@ -117,7 +111,7 @@ namespace View
 	/**
 	 *
 	 */
-	bool WallShape::occupies( const Point& aPoint) const
+	bool WallShape::occupies( const wxPoint& aPoint) const
 	{
 		if (getNode1()->occupies( aPoint) || getNode2()->occupies( aPoint) || Utils::Shape2DUtils::isOnLine( getBegin(), getEnd(), aPoint, 2))
 		{

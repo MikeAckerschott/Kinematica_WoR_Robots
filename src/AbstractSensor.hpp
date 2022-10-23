@@ -40,9 +40,7 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual ~AbstractStimulus()
-			{
-			}
+			virtual ~AbstractStimulus()  = default;
 			/**
 			 * @name Debug functions
 			 */
@@ -67,9 +65,7 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual ~AbstractPercept()
-			{
-			}
+			virtual ~AbstractPercept() = default;
 			/**
 			 * @name Debug functions
 			 */
@@ -91,15 +87,11 @@ namespace Model
 			/**
 			 *
 			 */
-			AbstractSensor();
+			explicit AbstractSensor( AbstractAgent& anAgent);
 			/**
 			 *
 			 */
-			explicit AbstractSensor( AbstractAgent* anAgent);
-			/**
-			 *
-			 */
-			virtual ~AbstractSensor();
+			virtual ~AbstractSensor() = default;
 			/**
 			 * A sensor reads 10 stimuli/second (it sleeps for 100 ms) by default
 			 */
@@ -127,7 +119,7 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual void attachAgent( AbstractAgent* anAgent);
+			virtual void attachAgent( AbstractAgent& anAgent);
 			/**
 			 *
 			 */

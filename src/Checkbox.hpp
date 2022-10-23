@@ -20,13 +20,13 @@ namespace Application
 	 * @return
 	 */
 	template< typename ActionFunction >
-	Checkbox* makeCheckbox(	Window* aParent,
-							const std::string& aLabel,
-							const ActionFunction& anActionFunction)
+	wxCheckBox* makeCheckbox( 	wxWindow* aParent,
+								const std::string& aLabel,
+								const ActionFunction& anActionFunction)
 	{
-		Checkbox* checkbox = new Checkbox( aParent, DEFAULT_ID, WXSTRING(aLabel));
-		checkbox->Bind(wxEVT_CHECKBOX, anActionFunction);
-		return checkbox ;
+		wxCheckBox* checkbox = new wxCheckBox( aParent, wxID_ANY, aLabel);
+		checkbox->Bind( wxEVT_CHECKBOX, anActionFunction);
+		return checkbox;
 	}
 } // namespace Application
 

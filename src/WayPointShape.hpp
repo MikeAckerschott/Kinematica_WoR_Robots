@@ -19,10 +19,6 @@ namespace View
 			 */
 			explicit WayPointShape( Model::WayPointPtr aWayPoint);
 			/**
-			 *
-			 */
-			virtual ~WayPointShape();
-			/**
 			 * @name Type safe accessors and mutators
 			 */
 			//@{
@@ -38,21 +34,21 @@ namespace View
 			/**
 			 *
 			 */
-			virtual std::string getNormalColour() const  override
+			virtual wxColour getNormalColour() const  override
 			{
 				return "BLUE";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getSelectionColour() const  override
+			virtual wxColour getSelectionColour() const  override
 			{
 				return "BLUE";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getActivationColour() const  override
+			virtual wxColour getActivationColour() const  override
 			{
 				return "BLACK";
 			}
@@ -78,7 +74,7 @@ namespace View
 			/**
 			 *
 			 */
-			virtual void setCentre( const Point& aPoint) override;
+			virtual void setCentre( const wxPoint& aPoint) override;
 			//@}
 			/**
 			 * @name Debug functions

@@ -17,24 +17,21 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual ~AbstractCommand()
-			{
-			}
+			virtual ~AbstractCommand() = default;
 	};
 	//	class AbstractCommand
 
-	class AbstractActuator  : public ModelObject
+	class AbstractActuator : public ModelObject
 	{
 		public:
-			AbstractActuator();
 			/**
 			 *
 			 */
-			explicit AbstractActuator( AbstractAgent* anAgent);
+			explicit AbstractActuator( AbstractAgent& anAgent);
 			/**
 			 *
 			 */
-			virtual ~AbstractActuator();
+			virtual ~AbstractActuator() = default;
 			/**
 			 *
 			 */
@@ -42,7 +39,7 @@ namespace Model
 			/**
 			 *
 			 */
-			virtual void attachAgent( AbstractAgent* anAgent);
+			virtual void attachAgent( AbstractAgent& anAgent);
 			/**
 			 *
 			 */
@@ -63,6 +60,6 @@ namespace Model
 		protected:
 			AbstractAgent* agent;
 	};
-	//	class AbstractActuator
-} // namespace Model
+//	class AbstractActuator
+}// namespace Model
 #endif // ABSTRACTACTUATOR_HPP_

@@ -25,15 +25,7 @@ namespace Model
 			/**
 			 *
 			 */
-			LaserDistanceSensor();
-			/**
-			 *
-			 */
-			explicit LaserDistanceSensor( Robot* aRobot);
-			/**
-			 *
-			 */
-			virtual ~LaserDistanceSensor();
+			explicit LaserDistanceSensor( Robot& aRobot);
 			/**
 			 *
 			 */
@@ -45,12 +37,10 @@ namespace Model
 			/**
 			 *
 			 */
-			inline
 			static void setStdDev(double aStdDev) {LaserDistanceSensor::stddev = aStdDev;}
 			/**
 			 *
 			 */
-			inline
 			static double getStdDev(){ return stddev;}
 			/**
 			 * @name Debug functions

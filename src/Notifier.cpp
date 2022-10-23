@@ -19,12 +19,6 @@ namespace Base
 	/**
 	 *
 	 */
-	Notifier::~Notifier()
-	{
-	}
-	/**
-	 *
-	 */
 	// cppcheck-suppress unusedFunction
 	void Notifier::enableNotification( bool enable /* = true */)
 	{

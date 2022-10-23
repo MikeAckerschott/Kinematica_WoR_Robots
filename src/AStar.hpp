@@ -5,7 +5,6 @@
 
 #include "Notifier.hpp"
 #include "Point.hpp"
-#include "Size.hpp"
 
 #include <iostream>
 #include <map>
@@ -32,7 +31,7 @@ namespace PathAlgorithm
 			/**
 			 *
 			 */
-			explicit Vertex( const Point& aPoint) :
+			explicit Vertex( const wxPoint& aPoint) :
 				x( aPoint.x),
 				y( aPoint.y),
 				actualCost( 0.0),
@@ -54,9 +53,9 @@ namespace PathAlgorithm
 			/**
 			 *
 			 */
-			Point asPoint() const
+			wxPoint asPoint() const
 			{
-				return Point( x, y);
+				return wxPoint( x, y);
 			}
 			/**
 			 *
@@ -75,8 +74,8 @@ namespace PathAlgorithm
 			 */
 			bool lessId( const Vertex& aVertex) const
 			{
-				if(x < aVertex.x) return true;
-				if(x == aVertex.x) return y < aVertex.y;
+				if ( x < aVertex.x) return true;
+				if ( x == aVertex.x) return y < aVertex.y;
 				return false;
 			}
 			/**
@@ -204,15 +203,15 @@ namespace PathAlgorithm
 			/**
 			 *
 			 */
-			Path search(const Point& aStartPoint,
-						const Point& aGoalPoint,
-						const Size& aRobotSize);
+			Path search(const wxPoint& aStartPoint,
+						const wxPoint& aGoalPoint,
+						const wxSize& aRobotSize);
 			/**
 			 *
 			 */
 			Path search(Vertex aStart,
 						const Vertex& aGoal,
-						const Size& aRobotSize);
+						const wxSize& aRobotSize);
 			/**
 			 *
 			 */

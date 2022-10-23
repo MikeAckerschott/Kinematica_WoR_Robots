@@ -1,6 +1,5 @@
 #include "Shape2DUtils.hpp"
 
-#include "Widgets.hpp"
 #include "Logger.hpp"
 
 #include <algorithm>
@@ -14,8 +13,8 @@ namespace Utils
 	 * @param anEndPoint
 	 * @return the counterclockwise angle in radians between the positive X axis and the line between the points
 	 */
-	double GetAngle(	const Point& aStartpoint,
-						const Point& anEndPoint)
+	double GetAngle(	const wxPoint& aStartpoint,
+						const wxPoint& anEndPoint)
 	{
 		double dX = anEndPoint.x - aStartpoint.x;
 		double dY = anEndPoint.y - aStartpoint.y;
@@ -34,13 +33,13 @@ namespace Utils
 	 */
 	/* static */double Shape2DUtils::getAngle( const Model::BoundedVector& aVector)
 	{
-		return GetAngle( Point( 0, 0), Point( static_cast<int>(aVector.x), static_cast<int>(aVector.y)));
+		return GetAngle( wxPoint( 0, 0), wxPoint( static_cast<int>(aVector.x), static_cast<int>(aVector.y)));
 	}
 	/**
 	 *
 	 */
-	/* static */double Shape2DUtils::getAngle(	const Point& aStartpoint,
-												const Point& anEndPoint)
+	/* static */double Shape2DUtils::getAngle(	const wxPoint& aStartpoint,
+												const wxPoint& anEndPoint)
 	{
 		return GetAngle( aStartpoint, anEndPoint);
 	}
@@ -48,20 +47,20 @@ namespace Utils
 	/**
 	 *
 	 */
-	/* static */bool Shape2DUtils::intersect(	const Point& aStartLine1,
-												const Point& anEndLine1,
-												const Point& aStartLine2,
-												const Point& anEndLine2)
+	/* static */bool Shape2DUtils::intersect(	const wxPoint& aStartLine1,
+												const wxPoint& anEndLine1,
+												const wxPoint& aStartLine2,
+												const wxPoint& anEndLine2)
 	{
-		return Shape2DUtils::getIntersection(	aStartLine1,anEndLine1,aStartLine2,anEndLine2) != DefaultPosition;
+		return Shape2DUtils::getIntersection(	aStartLine1,anEndLine1,aStartLine2,anEndLine2) != wxDefaultPosition;
 	}
 	/**
 	 *
 	 */
-	/* static */ Point Shape2DUtils::getIntersection(	const Point& aStartLine1,
-														const Point& anEndLine1,
-														const Point& aStartLine2,
-														const Point& anEndLine2)
+	/* static */ wxPoint Shape2DUtils::getIntersection(	const wxPoint& aStartLine1,
+														const wxPoint& anEndLine1,
+														const wxPoint& aStartLine2,
+														const wxPoint& anEndLine2)
 	{
 		/*
 		// https://www.geeksforgeeks.org/program-for-point-of-intersection-of-two-lines/
@@ -81,13 +80,13 @@ namespace Utils
 		if (determinant == 0)
 		{
 			// The lines are parallel.
-			return DefaultPosition;
+			return wxDefaultPosition;
 		}
 		else
 		{
 			double x = (b2*c1 - b1*c2)/determinant;
 			double y = (a1*c2 - a2*c1)/determinant;
-			return Point( static_cast<int>(x), static_cast<int>(y));
+			return wxPoint( static_cast<int>(x), static_cast<int>(y));
 		}
 		*/
 
@@ -115,7 +114,7 @@ namespace Utils
 		double denom = Det(x1mx2, y1my2, x3mx4, y3my4);
 		if(denom == 0.0) // Lines don't seem to cross
 		{
-			return DefaultPosition;
+			return wxDefaultPosition;
 		}
 
 		double xnom = Det(detL1, x1mx2, detL2, x3mx4);
@@ -124,12 +123,12 @@ namespace Utils
 		double iyOut = ynom / denom;
 		if(!isfinite(ixOut) || !isfinite(iyOut)) // Probably a numerical issue
 		{
-			return DefaultPosition;
+			return wxDefaultPosition;
 		}
 
-		//return DefaultPosition;
-		return Point( static_cast<int>(ixOut), static_cast<int>(iyOut)); //All OK
-	 */
+		//return wxDefaultPosition;
+		return wxPoint( static_cast<int>(ixOut), static_cast<int>(iyOut)); //All OK
+		*/
 
 		// I don't know where this is from...
 
@@ -146,7 +145,7 @@ namespace Utils
 		// If d is zero, there is no intersection
 		if (std::fabs(d-0.0) <= std::numeric_limits<float>::epsilon())
 		{
-			return DefaultPosition;
+			return wxDefaultPosition;
 		}
 
 		// Get the x and y
@@ -158,34 +157,34 @@ namespace Utils
 		// Check if the x and y coordinates are within both lines
 		if (x < std::min( x1, x2) || x > std::max( x1, x2) || x < std::min( x3, x4) || x > std::max( x3, x4))
 		{
-			return DefaultPosition;
+			return wxDefaultPosition;
 		}
 		if (y < std::min( y1, y2) || y > std::max( y1, y2) || y < std::min( y3, y4) || y > std::max( y3, y4))
 		{
-			return DefaultPosition;
+			return wxDefaultPosition;
 		}
 
 		// Return the point of intersection
-		return Point( static_cast<int>(x), static_cast<int>(y));
+		return wxPoint( static_cast<int>(x), static_cast<int>(y));
 	}
 	/**
 	 *
 	 */
-	/* static */ double Shape2DUtils::distance(	const Point& aPoint1,
-												const Point& aPoint2)
+	/* static */ double Shape2DUtils::distance(	const wxPoint& aPoint1,
+												const wxPoint& aPoint2)
 	{
 		return std::sqrt( (aPoint1.x - aPoint2.x) * (aPoint1.x - aPoint2.x) + (aPoint1.y - aPoint2.y) * (aPoint1.y - aPoint2.y));
 	}
 	/**
 	 *
 	 */
-	/* static */bool Shape2DUtils::isInsidePolygon( const Point* aPolygon,
+	/* static */bool Shape2DUtils::isInsidePolygon( const wxPoint* aPolygon,
 													int aNumberOfPoints,
-													const Point& aPoint)
+													const wxPoint& aPoint)
 	{
 		int counter = 0;
-		Point p1 = aPolygon[0];
-		Point p2;
+		wxPoint p1 = aPolygon[0];
+		wxPoint p2;
 
 		for (int i = 1; i <= aNumberOfPoints; i++)
 		{
@@ -221,9 +220,9 @@ namespace Utils
 	/**
 	 *
 	 */
-	/* static */bool Shape2DUtils::isOnLine(	const Point& aStartPoint,
-												const Point& anEndPoint,
-												const Point& aPoint,
+	/* static */bool Shape2DUtils::isOnLine(	const wxPoint& aStartPoint,
+												const wxPoint& anEndPoint,
+												const wxPoint& aPoint,
 												int aRadius /* = 6 */)
 	{
 		if (aPoint.x < (std::min( aStartPoint.x, anEndPoint.x) - aRadius))
@@ -246,6 +245,7 @@ namespace Utils
 
 		double normalLength = std::sqrt( (aStartPoint.x - anEndPoint.x) * (aStartPoint.x - anEndPoint.x) + (aStartPoint.y - anEndPoint.y) * (aStartPoint.y - anEndPoint.y));
 
+		// cppcheck-suppress shadowFunction
 		double distance = std::abs( (aPoint.x - anEndPoint.x) * (aStartPoint.y - anEndPoint.y) - (aPoint.y - anEndPoint.y) * (aStartPoint.x - anEndPoint.x)) / normalLength;
 
 		return distance < aRadius;
@@ -254,7 +254,7 @@ namespace Utils
 		// See http://paulbourke.net/ somewhere
 
 		// Basically it solves
-		// y = ax+b through aStartPoint and anEndPoint
+		// y = ax+b through aStartwxPoint and anEndPoint
 		// and
 		// (x^2-p) + (y^2-q) = r^2 at aPoint with aRadius
 		// which, after substitution leads to ax^2+bx+c=0
@@ -293,14 +293,14 @@ namespace Utils
 	/**
 	 *
 	 */
-	/* static */bool Shape2DUtils::isOnLine( 	const Point* aPolygon,
+	/* static */bool Shape2DUtils::isOnLine( 	const wxPoint* aPolygon,
 												int aNumberOfPoints,
-												const Point& aPoint,
+												const wxPoint& aPoint,
 												int aRadius /* = 6 */,
 												bool aClosedShape /* = true */)
 	{
-		Point p1 = aPolygon[0];
-		Point p2;
+		wxPoint p1 = aPolygon[0];
+		wxPoint p2;
 
 		int actualNumberOfPoints = aNumberOfPoints + aClosedShape;
 		for (int i = 1; i < actualNumberOfPoints; i++)
@@ -317,25 +317,25 @@ namespace Utils
 	/**
 	 *
 	 */
-	/* static */Point Shape2DUtils::rotate( const Point& aPoint,
+	/* static */wxPoint Shape2DUtils::rotate( const wxPoint& aPoint,
 											double anAngle)
 	{
-		return Point( static_cast<int>(Shape2DUtils::rotateX( aPoint, anAngle)), static_cast<int>(rotateY( aPoint, anAngle)));
+		return wxPoint( static_cast<int>(Shape2DUtils::rotateX( aPoint, anAngle)), static_cast<int>(rotateY( aPoint, anAngle)));
 	}
 	/**
 	 *
 	 */
-	/* static */Shape2DUtils::CompassPoint Shape2DUtils::getCompassPoint(	const Point& aPoint,
-																			const Size& aSize,
-																			const Point& aBorderPoint,
+	/* static */Shape2DUtils::CompassPoint Shape2DUtils::getCompassPoint(	const wxPoint& aPoint,
+																			const wxSize& aSize,
+																			const wxPoint& aBorderPoint,
 																			int aRadius /*= 3*/)
 	{
-		Point centre = aPoint;
-		Size size = aSize;
-		Point northWest( centre.x - (size.x / 2), centre.y - (size.y / 2)); // upper left
-		Point northEast( centre.x + (size.x / 2), centre.y - (size.y / 2)); // upper right
-		Point southEast( centre.x + (size.x / 2), centre.y + (size.y / 2)); // right under
-		Point southWest( centre.x - (size.x / 2), centre.y + (size.y / 2)); // left under
+		wxPoint centre = aPoint;
+	wxSize size = aSize;
+		wxPoint northWest( centre.x - (size.x / 2), centre.y - (size.y / 2)); // upper left
+		wxPoint northEast( centre.x + (size.x / 2), centre.y - (size.y / 2)); // upper right
+		wxPoint southEast( centre.x + (size.x / 2), centre.y + (size.y / 2)); // right under
+		wxPoint southWest( centre.x - (size.x / 2), centre.y + (size.y / 2)); // left under
 
 		if (aBorderPoint == northWest)
 		{
@@ -369,9 +369,9 @@ namespace Utils
 	 *
 	 */
 	// cppcheck-suppress unusedFunction
-	/* static */bool Shape2DUtils::isCompassPoint(	const Point& aPoint,
-													const Size& aSize,
-													const Point& aBorderPoint,
+	/* static */bool Shape2DUtils::isCompassPoint(	const wxPoint& aPoint,
+													const wxSize& aSize,
+													const wxPoint& aBorderPoint,
 													CompassPoint aCompassPoint,
 													int aRadius /* = 6 */)
 	{
@@ -386,7 +386,7 @@ namespace Utils
 	/**
 	 *
 	 */
-	/* static */std::string Shape2DUtils::asString( const Point& aPoint)
+	/* static */std::string Shape2DUtils::asString( const wxPoint& aPoint)
 	{
 		std::ostringstream os;
 		os << "(" << aPoint.x << "," << aPoint.y << ")";
@@ -395,7 +395,7 @@ namespace Utils
 	/**
 	 *
 	 */
-	/* static */std::string Shape2DUtils::asString( const Size& aSize)
+	/* static */std::string Shape2DUtils::asString( const wxSize& aSize)
 	{
 		std::ostringstream os;
 		os << aSize.x << " x " << aSize.y;
@@ -422,7 +422,7 @@ namespace Utils
 	/**
 	 *
 	 */
-	/* static */double Shape2DUtils::rotateX(	const Point& aPoint,
+	/* static */double Shape2DUtils::rotateX(	const wxPoint& aPoint,
 												double anAngle)
 	{
 		return Shape2DUtils::rotateX( aPoint.x, aPoint.y, anAngle);
@@ -430,7 +430,7 @@ namespace Utils
 	/**
 	 *
 	 */
-	/* static */double Shape2DUtils::rotateY(	const Point& aPoint,
+	/* static */double Shape2DUtils::rotateY(	const wxPoint& aPoint,
 												double anAngle)
 	{
 		return Shape2DUtils::rotateY( aPoint.x, aPoint.y, anAngle);

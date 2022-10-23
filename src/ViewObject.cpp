@@ -2,10 +2,15 @@
 
 namespace View
 {
+	/**
+	 *
+	 */
 	ViewObject::ViewObject() : objectId(Base::ObjectId::newObjectId())
 	{
 	}
-
+	/**
+	 *
+	 */
 	ViewObject::ViewObject(Model::ModelObjectPtr aModelObject) :
 								objectId(Base::ObjectId::newObjectId()),
 								modelObject(aModelObject)
@@ -15,11 +20,6 @@ namespace View
 			handleNotificationsFor(*modelObject);
 		}
 	}
-
-	ViewObject::~ViewObject()
-	{
-	}
-
 	/**
 	 *
 	 */

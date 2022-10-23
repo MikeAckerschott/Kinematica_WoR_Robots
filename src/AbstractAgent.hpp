@@ -38,14 +38,6 @@ namespace Model
 			/**
 			 *
 			 */
-			AbstractAgent();
-			/**
-			 *
-			 */
-			virtual ~AbstractAgent();
-			/**
-			 *
-			 */
 			virtual void attachSensor( 	std::shared_ptr< AbstractSensor > aSensor,
 										bool attachSensorToAgent = false);
 			/**

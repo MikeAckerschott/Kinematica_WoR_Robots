@@ -20,11 +20,11 @@ namespace Application
 	 * @return
 	 */
 	template< typename ActionFunction>
-	Button* makeButton( 	Window* aParent,
-							const std::string& aLabel,
-							const ActionFunction anActionFunction)
+	wxButton* makeButton( wxWindow* aParent,
+						const std::string& aLabel,
+						const ActionFunction anActionFunction)
 	{
-		Button* button = new Button( aParent, DEFAULT_ID, WXSTRING(aLabel));
+		wxButton* button = new wxButton( aParent, wxID_ANY, aLabel);
 		button->Bind(wxEVT_COMMAND_BUTTON_CLICKED, anActionFunction);
 		return button;
 	}

@@ -29,12 +29,6 @@ namespace Messaging
 			/**
 			 *
 			 */
-			~Client()
-			{
-			}
-			/**
-			 *
-			 */
 			void dispatchMessage( const Message& aMessage)
 			{
 				// Create the session that will handle the next outgoing connection
@@ -48,7 +42,7 @@ namespace Messaging
 				boost::asio::ip::tcp::endpoint endpoint = *endpoint_iterator;
 
 				// Let the session handle any outgoing messages
-				session->getSocket().async_connect( endpoint, // @suppress("Method cannot be resolved")
+				session->getSocket().async_connect( endpoint, // @suppress("Method cannot be resolved") // @suppress("Invalid arguments")
 													[this,session](const boost::system::error_code& error)
 													{
 														handleConnect(session, error);

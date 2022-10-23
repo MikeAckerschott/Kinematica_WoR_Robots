@@ -12,25 +12,13 @@ namespace Model
 	/**
 	 *
 	 */
-	AbstractAgent::AbstractAgent()
-	{
-	}
-	/**
-	 *
-	 */
-	AbstractAgent::~AbstractAgent()
-	{
-	}
-	/**
-	 *
-	 */
 	void AbstractAgent::attachSensor( 	std::shared_ptr< AbstractSensor > aSensor,
 										bool attachSensorToAgent /*= false*/)
 	{
 		sensors.push_back( aSensor);
 		if (attachSensorToAgent == true)
 		{
-			aSensor->attachAgent( this);
+			aSensor->attachAgent( *this);
 		}
 	}
 	/**
@@ -43,7 +31,7 @@ namespace Model
 		actuators.push_back( anActuator);
 		if (attachActuatorToAgent == true)
 		{
-			anActuator->attachAgent( this);
+			anActuator->attachAgent( *this);
 		}
 	}
 	/**

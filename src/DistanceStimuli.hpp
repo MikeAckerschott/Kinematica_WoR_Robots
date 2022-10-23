@@ -17,9 +17,13 @@ namespace Model
 	class DistanceStimuli : public AbstractStimulus
 	{
 		public:
-			DistanceStimuli()
-			{
-			}
+			/**
+			 *
+			 */
+			DistanceStimuli() = default;
+			/**
+			 *
+			 */
 			explicit DistanceStimuli(const Stimuli& aStimuli) : stimuli(aStimuli)
 			{
 			}

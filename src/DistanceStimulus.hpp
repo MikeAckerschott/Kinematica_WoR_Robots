@@ -15,6 +15,9 @@ namespace Model
 	class DistanceStimulus : public AbstractStimulus
 	{
 		public:
+			/**
+			 *
+			 */
 			DistanceStimulus( 	double anAngle,
 								double aDistance) :
 				angle(anAngle),

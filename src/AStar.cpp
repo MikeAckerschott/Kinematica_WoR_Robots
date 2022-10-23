@@ -100,9 +100,9 @@ namespace PathAlgorithm
 	/**
 	 *
 	 */
-	Path AStar::search(	const Point& aStartPoint,
-						const Point& aGoalPoint,
-						const Size& aRobotSize)
+	Path AStar::search(	const wxPoint& aStartPoint,
+						const wxPoint& aGoalPoint,
+						const wxSize& aRobotSize)
 	{
 		Vertex start( aStartPoint);
 		Vertex goal( aGoalPoint);
@@ -115,7 +115,7 @@ namespace PathAlgorithm
 	 */
 	Path AStar::search( Vertex aStart,
 						const Vertex& aGoal,
-						const Size& aRobotSize)
+						const wxSize& aRobotSize)
 	{
 		getOS().clear();
 		getCS().clear();
@@ -308,8 +308,7 @@ namespace PathAlgorithm
 	 */
 	void AStar::removeFirstFromOpenSet()
 	{
-		std::iter_swap(openSet.begin(), std::prev(openSet.end()));
-		openSet.erase( std::prev(openSet.end()));
+		openSet.erase( openSet.begin());
 	}
 	/**
 	 *

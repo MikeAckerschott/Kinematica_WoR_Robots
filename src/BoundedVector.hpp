@@ -35,8 +35,8 @@ class BoundedVector
 		/**
 		 *
 		 */
-		BoundedVector( const Point& aPoint1,
-					   const Point& aPoint2) :
+		BoundedVector( const wxPoint& aPoint1,
+					   const wxPoint& aPoint2) :
 						x( aPoint1.x - aPoint2.x),
 						y( aPoint1.y - aPoint2.y)
 		{
@@ -52,9 +52,7 @@ class BoundedVector
 		/**
 		 *
 		 */
-		virtual ~BoundedVector()
-		{
-		}
+		virtual ~BoundedVector()  = default;
 		/**
 		 *
 		 */
@@ -74,7 +72,7 @@ class BoundedVector
 		/**
 		 *
 		 */
-		BoundedVector& operator=( const BoundedVector& aVector);
+		BoundedVector& operator=( const BoundedVector& aVector) = default;
 		/**
 		 *
 		 */
@@ -120,13 +118,16 @@ class BoundedVector
 // Some global operators
 Model::BoundedVector operator+(	const Model::BoundedVector& lhs,
 								const Model::BoundedVector& rhs);
+
 Model::BoundedVector operator-(	const Model::BoundedVector& lhs,
 								const Model::BoundedVector& rhs);
+
 double operator*(	const Model::BoundedVector& lhs,
 					const Model::BoundedVector& rhs);
 
 Model::BoundedVector operator*( 	float s,
 						const Model::BoundedVector& rhs);
+
 Model::BoundedVector operator*(	const Model::BoundedVector& lhs,
 								float s);
 

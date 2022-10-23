@@ -17,12 +17,6 @@ namespace View
 	/**
 	 *
 	 */
-	GoalShape::~GoalShape()
-	{
-	}
-	/**
-	 *
-	 */
 	Model::GoalPtr GoalShape::getGoal() const
 	{
 		return std::dynamic_pointer_cast<Model::Goal>(getModelObject());

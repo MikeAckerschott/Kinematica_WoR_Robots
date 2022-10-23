@@ -4,7 +4,6 @@
 #include "Config.hpp"
 
 #include "ITraceFunction.hpp"
-#include "Widgets.hpp"
 
 namespace Application
 {
@@ -18,7 +17,6 @@ namespace Application
 		public:
 			/**
 			 * @param aLogTextCtrl The TextCtrl derived class that will receive the trace string as message
-			 * @param useFile If true the trace will also be logged in the file "guitrace.log".
 			 */
 			explicit WidgetTraceFunction( Application::LogTextCtrl* aLogTextCtrl);
 			/**

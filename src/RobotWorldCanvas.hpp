@@ -6,7 +6,6 @@
 #include "NotificationHandler.hpp"
 #include "RobotWorld.hpp"
 #include "Shape.hpp"
-#include "Size.hpp"
 #include "ViewObject.hpp"
 #include "Widgets.hpp"
 
@@ -28,18 +27,18 @@ namespace View
 	/**
 	 *
 	 */
-	class RobotWorldCanvas :	public ScrolledCanvas,
+	class RobotWorldCanvas :	public wxScrolledCanvas,
 								public ViewObject
 	{
 		public:
 			/**
 			 *
 			 */
-			explicit RobotWorldCanvas( Window* anOwner);
+			explicit RobotWorldCanvas( wxWindow* anOwner);
 			/**
 			 *
 			 */
-			RobotWorldCanvas( Window* anOwner,
+			RobotWorldCanvas( wxWindow* anOwner,
 							  Model::ModelObjectPtr aModelObject);
 			/**
 			 *
@@ -51,13 +50,13 @@ namespace View
 			 * and translates it to this canvas windows coordinates. It takes into account the number of lines and number of
 			 * pixels between lines.
 			 */
-			Point devicePointFor( const Point& aScreenPoint) const;
+			wxPoint devicePointFor( const wxPoint& aScreenPoint) const;
 			/**
 			 * This function is the opposite of devicePointFor(): it translates canvas coordinates to scrolling window coordinates
 			 *
-			 * @see devicePointFor( const Point&)
+			 * @see devicePointFor( const wxPoint&)
 			 */
-			Point screenPointFor( const Point& aDevicePoint) const;
+			wxPoint screenPointFor( const wxPoint& aDevicePoint) const;
 			/**
 			 * @name Event handling enabling functions
 			 *
@@ -114,22 +113,22 @@ namespace View
 			 * @param 	aPoint
 			 * @return 	True if any Shape returns true for Shape.ocuppies(aPoint), false otherwise.
 			 *
-			 * @see Shape::occupies(const Point&)
+			 * @see Shape::occupies(const wxPoint&)
 			 */
-			virtual bool isShapeAt( const Point& aPoint) const;
+			virtual bool isShapeAt( const wxPoint& aPoint) const;
 			/**
 			 *
 			 * @param 	aPoint A screen point, i.e. a point on the screen, not on the (scrollable) canvas.
 			 * @return 	The first Shape in iteration order that returns true for Shape.ocuppies(aPoint). If
 			 * 			no such Shape exists nullptr will be returned.
 			 */
-			virtual ShapePtr getShapeAt( const Point& aPoint) const;
+			virtual ShapePtr getShapeAt( const wxPoint& aPoint) const;
 			/**
 			 * Selects the Shape that returns true for Shape.ocuppies(aPoint).
 			 * @param aPoint
 			 * @return
 			 */
-			virtual bool selectShapeAt( const Point& aPoint);
+			virtual bool selectShapeAt( const wxPoint& aPoint);
 
 			/**
 			 * @name Type safe accessors and mutators
@@ -186,47 +185,47 @@ namespace View
 			 * Override these functions if the default handling is not what you want
 			 */
 			//@{
-			virtual void handlePaint( PaintEvent& event);
-			virtual void handleSize( SizeEvent& event);
+			virtual void handlePaint( wxPaintEvent& event);
+			virtual void handleSize( wxSizeEvent& event);
 
-			virtual void handleLeftDown( MouseEvent& event);
-			virtual void handleLeftUp( MouseEvent& event);
-			virtual void handleLeftDClick( MouseEvent& event);
+			virtual void handleLeftDown( wxMouseEvent& event);
+			virtual void handleLeftUp( wxMouseEvent& event);
+			virtual void handleLeftDClick( wxMouseEvent& event);
 
-			virtual void handleMiddleDown( MouseEvent& event);
-			virtual void handleMiddleUp( MouseEvent& event);
-			virtual void handleMiddleDClick( MouseEvent& event);
+			virtual void handleMiddleDown( wxMouseEvent& event);
+			virtual void handleMiddleUp( wxMouseEvent& event);
+			virtual void handleMiddleDClick( wxMouseEvent& event);
 
-			virtual void handleRightDown( MouseEvent& event);
-			virtual void handleRightUp( MouseEvent& event);
-			virtual void handleRightDClick( MouseEvent& event);
+			virtual void handleRightDown( wxMouseEvent& event);
+			virtual void handleRightUp( wxMouseEvent& event);
+			virtual void handleRightDClick( wxMouseEvent& event);
 
-			virtual void handleMouseMotion( MouseEvent& event);
+			virtual void handleMouseMotion( wxMouseEvent& event);
 
-			virtual void handleKey( KeyEvent& event);
+			virtual void handleKey( wxKeyEvent& event);
 
 			virtual void handleBeginLeftDrag( ShapePtr aShape);
 			virtual void handleEndDrag( ShapePtr aShape);
 
-			virtual void handleAddRobot( CommandEvent& event);
-			virtual void handleEditRobot( CommandEvent& event);
-			virtual void handleDeleteRobot( CommandEvent& event);
+			virtual void handleAddRobot( wxCommandEvent& event);
+			virtual void handleEditRobot( wxCommandEvent& event);
+			virtual void handleDeleteRobot( wxCommandEvent& event);
 
-			virtual void handleAddWayPoint( CommandEvent& event);
-			virtual void handleEditWayPoint( CommandEvent& event);
-			virtual void handleDeleteWayPoint( CommandEvent& event);
+			virtual void handleAddWayPoint( wxCommandEvent& event);
+			virtual void handleEditWayPoint( wxCommandEvent& event);
+			virtual void handleDeleteWayPoint( wxCommandEvent& event);
 
-			virtual void handleAddGoal( CommandEvent& event);
-			virtual void handleEditGoal( CommandEvent& event);
-			virtual void handleDeleteGoal( CommandEvent& event);
+			virtual void handleAddGoal( wxCommandEvent& event);
+			virtual void handleEditGoal( wxCommandEvent& event);
+			virtual void handleDeleteGoal( wxCommandEvent& event);
 
-			virtual void handleAddWall( CommandEvent& event);
-			virtual void handleEditWall( CommandEvent& event);
-			virtual void handleDeleteWall( CommandEvent& event);
+			virtual void handleAddWall( wxCommandEvent& event);
+			virtual void handleEditWall( wxCommandEvent& event);
+			virtual void handleDeleteWall( wxCommandEvent& event);
 
-			virtual void handleShapeInfo( CommandEvent& event);
+			virtual void handleShapeInfo( wxCommandEvent& event);
 
-			virtual void handleNotification( NotifyEvent& aNotifyEvent);
+			virtual void handleNotification( wxNotifyEvent& aNotifyEvent);
 
 			//@}
 			virtual void handleActivation( ShapePtr aShape);
@@ -234,12 +233,12 @@ namespace View
 			/**
 			 *
 			 */
-			virtual void handleMenu( const Point& aScreenPoint);
+			virtual void handleMenu( const wxPoint& aScreenPoint);
 			/**
 			 *
 			 */
 			virtual void handleItemMenu( 	ShapePtr aSelectedShape,
-											const Point& aPoint);
+											const wxPoint& aPoint);
 			/**
 			 *
 			 */
@@ -282,47 +281,47 @@ namespace View
 			 *
 			 */
 			//@{
-			void OnPaint( PaintEvent& event);
-			void OnSize( SizeEvent& event);
+			void OnPaint( wxPaintEvent& event);
+			void OnSize( wxSizeEvent& event);
 
-			void OnLeftDown( MouseEvent& event);
-			void OnLeftUp( MouseEvent& event);
-			void OnLeftDClick( MouseEvent& event);
+			void OnLeftDown( wxMouseEvent& event);
+			void OnLeftUp( wxMouseEvent& event);
+			void OnLeftDClick( wxMouseEvent& event);
 
-			void OnMiddleDown( MouseEvent& event);
-			void OnMiddleUp( MouseEvent& event);
-			void OnMiddleDClick( MouseEvent& event);
+			void OnMiddleDown( wxMouseEvent& event);
+			void OnMiddleUp( wxMouseEvent& event);
+			void OnMiddleDClick( wxMouseEvent& event);
 
-			void OnRightDown( MouseEvent& event);
-			void OnRightUp( MouseEvent& event);
-			void OnRightDClick( MouseEvent& event);
+			void OnRightDown( wxMouseEvent& event);
+			void OnRightUp( wxMouseEvent& event);
+			void OnRightDClick( wxMouseEvent& event);
 
-			void OnMouseMotion( MouseEvent& event);
+			void OnMouseMotion( wxMouseEvent& event);
 
-			void OnKeyDown( KeyEvent& event);
-			void OnCharDown( KeyEvent& event);
+			void OnKeyDown( wxKeyEvent& event);
+			void OnCharDown( wxKeyEvent& event);
 
-			void OnAddRobot( CommandEvent& event);
-			void OnEditRobot( CommandEvent& event);
-			void OnDeleteRobot( CommandEvent& event);
+			void OnAddRobot( wxCommandEvent& event);
+			void OnEditRobot( wxCommandEvent& event);
+			void OnDeleteRobot( wxCommandEvent& event);
 
-			void OnAddWayPoint( CommandEvent& event);
-			void OnEditWayPoint( CommandEvent& event);
-			void OnDeleteWayPoint( CommandEvent& event);
+			void OnAddWayPoint( wxCommandEvent& event);
+			void OnEditWayPoint( wxCommandEvent& event);
+			void OnDeleteWayPoint( wxCommandEvent& event);
 
-			void OnAddGoal( CommandEvent& event);
-			void OnEditGoal( CommandEvent& event);
-			void OnDeleteGoal( CommandEvent& event);
+			void OnAddGoal( wxCommandEvent& event);
+			void OnEditGoal( wxCommandEvent& event);
+			void OnDeleteGoal( wxCommandEvent& event);
 
-			void OnAddWall( CommandEvent& event);
-			void OnEditWall( CommandEvent& event);
-			void OnDeleteWall( CommandEvent& event);
+			void OnAddWall( wxCommandEvent& event);
+			void OnEditWall( wxCommandEvent& event);
+			void OnDeleteWall( wxCommandEvent& event);
 
-			void OnShapeInfo( CommandEvent& event);
+			void OnShapeInfo( wxCommandEvent& event);
 
-			void OnWorldInfo( CommandEvent& event);
+			void OnWorldInfo( wxCommandEvent& event);
 
-			void OnNotificationEvent( NotifyEvent& aNotifyEvent);
+			void OnNotificationEvent( wxNotifyEvent& aNotifyEvent);
 			//@}
 
 			std::vector< ShapePtr > shapes;
@@ -339,11 +338,11 @@ namespace View
 				CANCELDRAGGING
 			} actionStatus;
 
-			Point popupPoint;
-			Point startActionPoint;
-			Point endActionPoint;
-			Point actionOffset;
-			Size startActionSize;
+			wxPoint popupPoint;
+			wxPoint startActionPoint;
+			wxPoint endActionPoint;
+			wxPoint actionOffset;
+		wxSize startActionSize;
 
 			ShapePtr startActionShape;
 			ShapePtr endActionShape;
@@ -355,7 +354,7 @@ namespace View
 			bool menuItemEnabled;
 			bool dandEnabled;
 
-			Base::NotificationHandler< std::function< void( NotifyEvent&) > > * notificationHandler;
+			Base::NotificationHandler< std::function< void( wxNotifyEvent&) > > * notificationHandler;
 
 			/**
 			 * This function removes all Shapes that look at a ModelObject that is not longer in RobotWorld

@@ -90,7 +90,7 @@ namespace Messaging
 			/**
 			 *
 			 */
-			virtual ~CommunicationService();
+			~CommunicationService();
 			/**
 			 *
 			 */

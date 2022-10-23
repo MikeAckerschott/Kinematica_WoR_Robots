@@ -13,9 +13,15 @@ namespace Base
 	class FileTraceFunction :  public ITraceFunction
 	{
 		public:
-			FileTraceFunction(const std::string& aFileStem= "trace",
-							  const std::string& aFileExtension= "log",
-							  bool timeStamped = false);
+			/**
+			 *
+			 */
+			explicit FileTraceFunction(const std::string& aFileStem= "trace",
+									   const std::string& aFileExtension= "log",
+									   bool timeStamped = false);
+			/**
+			 *
+			 */
 			virtual ~FileTraceFunction();
 			/**
 			 *

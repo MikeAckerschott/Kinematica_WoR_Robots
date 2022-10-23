@@ -22,10 +22,10 @@ namespace Model
 	 *
 	 */
 	RobotPtr RobotWorld::newRobot(	const std::string& aName /*= "New Robot"*/,
-									const Point& aPosition /*= Point(-1,-1)*/,
+									const wxPoint& aPosition /*= wxPoint(-1,-1)*/,
 									bool aNotifyObservers /*= true*/)
 	{
-		RobotPtr robot( new Robot( aName, aPosition));
+		RobotPtr robot = std::make_shared<Robot>( aName, aPosition);
 		robots.push_back( robot);
 		if (aNotifyObservers == true)
 		{
@@ -37,7 +37,7 @@ namespace Model
 	 *
 	 */
 	WayPointPtr RobotWorld::newWayPoint(	const std::string& aName /*= "new WayPoint"*/,
-											const Point& aPosition /*= Point(-1,-1)*/,
+											const wxPoint& aPosition /*= wxPoint(-1,-1)*/,
 											bool aNotifyObservers /*= true*/)
 	{
 		WayPointPtr wayPoint(new WayPoint( aName, aPosition));
@@ -52,10 +52,10 @@ namespace Model
 	 *
 	 */
 	GoalPtr RobotWorld::newGoal(	const std::string& aName /*= "New Goal"*/,
-									const Point& aPosition /*= Point(-1,-1)*/,
+									const wxPoint& aPosition /*= wxPoint(-1,-1)*/,
 									bool aNotifyObservers /*= true*/)
 	{
-		GoalPtr goal( new Goal( aName, aPosition));
+		GoalPtr goal = std::make_shared<Goal>( aName, aPosition);
 		goals.push_back( goal);
 		if (aNotifyObservers == true)
 		{
@@ -66,11 +66,11 @@ namespace Model
 	/**
 	 *
 	 */
-	WallPtr RobotWorld::newWall(const Point& aPoint1,
-								const Point& aPoint2,
+	WallPtr RobotWorld::newWall(const wxPoint& aPoint1,
+								const wxPoint& aPoint2,
 								bool aNotifyObservers /*= true*/)
 	{
-		WallPtr wall( new Wall( aPoint1, aPoint2));
+		WallPtr wall = std::make_shared<Wall>( aPoint1, aPoint2);
 		walls.push_back( wall);
 		if (aNotifyObservers == true)
 		{
@@ -274,23 +274,26 @@ namespace Model
 	/**
 	 *
 	 */
-	void RobotWorld::populate( int /*aNumberOfWalls = 2*/)
+	void RobotWorld::populate( int UNUSEDPARAM(aNumberOfWalls))
 	{
-		RobotWorld::getRobotWorld().newRobot( "Robot", Point(163,111),false); // @suppress("Avoid magic numbers")
+		RobotWorld::getRobotWorld().newRobot( "Robot", wxPoint(163,111),false); // @suppress("Avoid magic numbers")
 
-		/*
-		static Point coordinates[] = { Point( 100, 400), Point( 350, 300),
-									   Point( 300, 100),
-									   Point( 350, 200) };
-
-		for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
-		{
-			RobotWorld::getRobotWorld().newWall( coordinates[i], coordinates[i + 1],false);
-		}
-		*/
-
-		RobotWorld::getRobotWorld().newWall( Point(7,234), Point(419,234) ,false); // @suppress("Avoid magic numbers")
-		RobotWorld::getRobotWorld().newGoal( "Goal", Point(320,285),false); // @suppress("Avoid magic numbers")
+//		static const wxPoint coordinates[] = {
+//			wxPoint( 100, 25), wxPoint( 700, 25),
+//			wxPoint( 75, 200), wxPoint( 250, 600),
+//			wxPoint( 800, 300), wxPoint( 800, 700),
+//			wxPoint( 50, 825), wxPoint( 600, 825)};
+//
+//		for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
+//		{
+//			RobotWorld::getRobotWorld().newWall( coordinates[i], coordinates[i + 1],false);
+//		}
+//
+//		RobotWorld::getRobotWorld().newGoal( "Goal", wxPoint(850, 500),false); // @suppress("Avoid magic numbers")
+		
+		RobotWorld::getRobotWorld().newWall( wxPoint(7,234), wxPoint(419,234) ,false); // @suppress("Avoid magic numbers")
+		RobotWorld::getRobotWorld().newGoal( "Goal", wxPoint(320,285),false); // @suppress("Avoid magic numbers")
+		
 
 		notifyObservers();
 	}
@@ -403,12 +406,6 @@ namespace Model
 		}
 
 		return os.str();
-	}
-	/**
-	 *
-	 */
-	RobotWorld::RobotWorld()
-	{
 	}
 	/**
 	 *

@@ -7,17 +7,20 @@
 
 namespace Model
 {
+	/**
+	 *
+	 */
 	class SteeringActuator : public AbstractActuator
 	{
 		public:
 			/**
 			 *
 			 */
-			SteeringActuator();
+			SteeringActuator() = default;
 			/**
 			 *
 			 */
-			virtual ~SteeringActuator();
+			virtual ~SteeringActuator() = default;
 			/**
 			 *
 			 */

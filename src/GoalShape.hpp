@@ -21,10 +21,6 @@ namespace View
 			 */
 			explicit GoalShape( Model::GoalPtr aGoal);
 			/**
-			 *
-			 */
-			virtual ~GoalShape();
-			/**
 			 * @name Type safe accessors and mutators
 			 */
 			//@{
@@ -40,21 +36,21 @@ namespace View
 			/**
 			 *
 			 */
-			virtual std::string getNormalColour() const override
+			virtual wxColour getNormalColour() const override
 			{
 				return "GREEN";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getSelectionColour() const override
+			virtual wxColour getSelectionColour() const override
 			{
 				return "BLUE";
 			}
 			/**
 			 *
 			 */
-			virtual std::string getActivationColour() const override
+			virtual wxColour getActivationColour() const override
 			{
 				return "BLACK";
 			}
