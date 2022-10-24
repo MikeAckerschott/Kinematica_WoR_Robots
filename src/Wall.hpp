@@ -25,7 +25,7 @@ namespace Model
 			/**
 			 *
 			 */
-			wxPoint getPoint1() const
+			const wxPoint& getPoint1() const
 			{
 				return point1;
 			}
@@ -37,7 +37,7 @@ namespace Model
 			/**
 			 *
 			 */
-			wxPoint getPoint2() const
+			const wxPoint& getPoint2() const
 			{
 				return point2;
 			}
