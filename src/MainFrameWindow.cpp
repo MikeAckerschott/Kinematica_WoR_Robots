@@ -238,7 +238,7 @@ namespace Application
 					wxGBPosition( 0, 0),
 					wxGBSpan( 1, 1), wxGROW);
 
-		std::array<std::string,4> choicesArray
+		std::array<std::string,3> choicesArray
 		{
 		 "Window",
 		 "StdOut",
