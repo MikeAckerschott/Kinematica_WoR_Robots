@@ -73,7 +73,7 @@ namespace View
 			 *
 			 * @return True if the point is on the border of the shape
 			 */
-			virtual bool isBorderPoint( const wxPoint aPoint,
+			virtual bool isBorderPoint( const wxPoint& aPoint,
 										int aRadius = 3) const;
 			/**
 			 *

@@ -149,7 +149,7 @@ namespace View
 			{
 				return node1;
 			}
-			const RectangleShapePtr getNode1() const
+			RectangleShapePtr getNode1() const
 			{
 				return node1;
 			}
@@ -158,7 +158,7 @@ namespace View
 			{
 				return node2;
 			}
-			const RectangleShapePtr getNode2() const
+			RectangleShapePtr getNode2() const
 			{
 				return node2;
 			}

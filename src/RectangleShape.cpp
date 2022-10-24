@@ -115,7 +115,7 @@ namespace View
 	 *
 	 */
 	// cppcheck-suppress unusedFunction
-	bool RectangleShape::isBorderPoint( const wxPoint aPoint,
+	bool RectangleShape::isBorderPoint( const wxPoint& aPoint,
 										int aRadius /*= 3*/) const
 	{
 		wxPoint rectanglePoints[] = {
