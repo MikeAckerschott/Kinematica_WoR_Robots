@@ -179,7 +179,7 @@ namespace Application
 						wxGBPosition( 1, 1),
 						wxGBSpan( 1, 1),
 						wxGROW);
-			robotWorldCanvas->SetMinSize( wxSize( 500,500));
+			robotWorldCanvas->SetMinSize( wxSize( 1000,1000));
 
 			sizer->Add( 5, 5,
 						wxGBPosition( 2, 2),

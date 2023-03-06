@@ -37,7 +37,10 @@ robotworld_SOURCES 	= 	AbstractActuator.cpp	\
 						WayPoint.cpp	\
 						WayPointShape.cpp	\
 						WidgetTraceFunction.cpp	\
-						Widgets.cpp						
+						Widgets.cpp		\
+						LidarDistanceSensor.cpp		\
+						ParticleFilter.cpp		\
+						Particle.cpp
 
 robotworld_CPPFLAGS 	=	$(AM_CPPFLAGS) $(ROBOTWORLD_CPPFLAGS) $(WX_CPPFLAGS)
 
