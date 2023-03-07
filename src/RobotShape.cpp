@@ -237,21 +237,12 @@ void RobotShape::drawLaser(wxDC &dc) {
     }
   }
 
-  // Draw Lidar
-  for (const Model::DistancePercept &d : getRobot()->currentLidarPointCloud) {
-    if (d.point != wxDefaultPosition ||
-        (d.point.x != Model::noObject && d.point.y != Model::noObject)) {
-      dc.SetPen(wxPen("YELLOW", borderWidth, wxPENSTYLE_SOLID));
-      dc.DrawLine(centre.x, centre.y, d.point.x, d.point.y);
-    }
-  }
-
   for (int i = 0; i < getRobot()->particlePositions.size(); ++i) {
     // std::cout << getRobot()->particlePositions.size() << std::endl;
     dc.SetPen(wxPen("BLUE", borderWidth, wxPENSTYLE_SOLID));
     dc.DrawCircle(wxPoint(getRobot()->particlePositions[i].x,
                           getRobot()->particlePositions[i].y),
-                  3);
+                  1);
   }
 }
 
