@@ -39,6 +39,8 @@ public:
 
   std::vector<unsigned long long> getParticleWeights();
 
+  wxPoint getBelievedPosition();
+
   LidarDistanceSensor *lidar;
 
   double totalWeight;

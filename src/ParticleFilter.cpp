@@ -1,5 +1,6 @@
 #include "ParticleFilter.hpp"
 #include "DistancePercept.hpp"
+#include "Particle.hpp"
 #include "Shape2DUtils.hpp"
 
 namespace Model {
@@ -10,8 +11,8 @@ ParticleFilter::ParticleFilter(int numberOfParticles,
   // TODO Auto-generated constructor stub
   srand((unsigned)time(NULL));
   for (int i = 0; i < numberOfParticles; i++) {
-    int x = rand() % 1000;
-    int y = rand() % 1000;
+    int x = rand() % 1024;
+    int y = rand() % 1024;
 
     // std::cout << "x: " << x << " y: " << y << std::endl;
 
@@ -60,7 +61,6 @@ std::vector<unsigned long long> ParticleFilter::getParticleWeights() {
 std::vector<Particle> ParticleFilter::getUpdatedParticles(int speedX,
                                                           int speedY) {
   std::vector<Particle> updatedParticles;
-  std::cout << "speedX: " << speedX << " speedY: " << speedY << std::endl;
   std::vector<unsigned long long> weights = getParticleWeights();
 
   std::random_device rd;
@@ -68,14 +68,14 @@ std::vector<Particle> ParticleFilter::getUpdatedParticles(int speedX,
   std::discrete_distribution<unsigned long long> distribution(weights.begin(),
                                                               weights.end());
 
-  std::uniform_int_distribution<std::mt19937::result_type> randomX(-25, 25);
-  std::uniform_int_distribution<std::mt19937::result_type> randomY(-25, 25);
+  std::uniform_int_distribution<std::mt19937::result_type> addedX(-20, 20);
+  std::uniform_int_distribution<std::mt19937::result_type> addedY(-20, 20);
 
   for (int i = 0; i < particles.size(); ++i) {
     int index = distribution(gen);
 
-    int x = particles.at(index).x + randomX(gen);
-    int y = particles.at(index).y + randomY(gen);
+    int x = particles.at(index).x + addedX(gen);
+    int y = particles.at(index).y + addedY(gen);
 
     std::shared_ptr<AbstractStimulus> stimulus =
         lidar->getStimulus((wxPoint(x, y)));
@@ -112,10 +112,6 @@ void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan,
     particles[i].weight = 0;
 
     for (int j = 0; j < iterationSize; ++j) {
-      //       //   double distance =
-      //       //
-      //       Utils::Shape2DUtils::distance(particles.at(i).lidarScan.stimuli.at(j).position,
-      //       // lidarScan[j].position);
 
       DistanceStimulus distanceStimulus =
           particles.at(i).lidarScan.stimuli.at(j);
@@ -137,15 +133,30 @@ void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan,
 
       particles[i].weight +=
           1 / sqrt(pow(particleDistance - lidarDistance, 2)) * 10000;
-
-      // std::cout << "weight: " << particles[i].weight << std::endl;
     }
 
     totalWeight += particles[i].weight;
-    // particles[i].weight += i;
-    // std::cout << "weight particle " << i << ": " << particles[i].weight
-    //           << std::endl;
   }
+}
+
+wxPoint ParticleFilter::getBelievedPosition() {
+  // get the average position of all particles
+  std::vector<unsigned long long> weights = getParticleWeights();
+
+  std::random_device rd;
+  std::mt19937 gen(rd());
+    std::discrete_distribution<unsigned long long> distribution(weights.begin(),
+                                                              weights.end());
+
+  int totalX = 0;
+  int totalY = 0;
+  for (int i = 0; i < weights.size(); ++i) {
+    int index = distribution(gen);
+    totalX += particles.at(index).x;
+    totalY += particles.at(index).y;
+  }
+
+  return wxPoint(totalX / weights.size(), totalY / weights.size());
 }
 
 } // namespace Model

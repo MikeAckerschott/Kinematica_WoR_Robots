@@ -66,7 +66,6 @@ std::shared_ptr<AbstractStimulus> LidarDistanceSensor::getStimulus() const {
       }
       stimuli.push_back(DistanceStimulus(angle, distance));
     }
-    std::cout << "Stimuli size: " << stimuli.size() << std::endl;
     return std::make_shared<DistanceStimuli>(stimuli);
   }
   //   return std::make_shared<DistanceStimuli>(stimulus);

@@ -96,6 +96,9 @@ namespace Application
 			void OnStartListening( wxCommandEvent& anEvent);
 			void OnSendMessage( wxCommandEvent& anEvent);
 			void OnStopListening( wxCommandEvent& anEvent);
+
+			void OnParticleFilterSelection( wxCommandEvent& anEvent);
+			void OnKalmanFilterSelection( wxCommandEvent& anEvent);
 	};
 	//	class MainFrameWindow
 } //namespace Application

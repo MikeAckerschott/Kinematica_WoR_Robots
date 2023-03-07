@@ -131,6 +131,12 @@ namespace View
 			 *
 			 */
 			void drawStartPosition( wxDC& dc);
+
+			/*
+			*
+			*/
+			void drawParticleFilter( wxDC& dc);
+
 			/**
 			 *
 			 */

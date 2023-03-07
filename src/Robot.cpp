@@ -36,7 +36,9 @@ Robot::Robot(const std::string &aName) : Robot(aName, wxDefaultPosition) {}
  */
 Robot::Robot(const std::string &aName, const wxPoint &aPosition)
     : name(aName), size(wxDefaultSize), position(aPosition), front(0, 0),
-      speed(0.0), acting(false), driving(false), communicating(false) {
+      speed(0.0), acting(false), driving(false), communicating(false),
+      particleFilterEnabled(false), kalmanFilterEnabled(false),
+      beliefOrientation(90.0), beliefPosition(wxPoint(0, 0)) {
   std::shared_ptr<AbstractSensor> laserSensor =
       std::make_shared<LaserDistanceSensor>(*this);
   std::shared_ptr<AbstractSensor> lidarSensor =
@@ -147,7 +149,13 @@ void Robot::startDriving() {
   goal = RobotWorld::getRobotWorld().getGoal("Goal");
   calculateRoute(goal);
 
-  drive();
+  if (particleFilterEnabled) {
+    driveWithParticlefilter();
+  } else if (kalmanFilterEnabled) {
+    // TODO add kalman filter
+  } else {
+    drive();
+  }
 }
 /**
  *
@@ -388,6 +396,9 @@ std::string Robot::asDebugString() const {
 /**
  *
  */
+/**
+ *
+ */
 void Robot::drive() {
   try {
     for (std::shared_ptr<AbstractSensor> sensor : sensors) {
@@ -400,24 +411,10 @@ void Robot::drive() {
     }
 
     // We use the real position for starters, not an estimated position.
-    startPosition = position;
 
     unsigned pathPoint = 0;
-
-    LidarDistanceSensor *lidarDistanceSensor =
-        dynamic_cast<LidarDistanceSensor *>(sensors[1].get());
-
-    // ParticleFilter particleFilter =
-
-    // this->particleFilter = ParticleFilter(100, lidarDistanceSensor);
-    // ParticleFilter temp = ParticleFilter(100, lidarDistanceSensor);
-
-    auto temp = ParticleFilter(500, lidarDistanceSensor);
-    auto pos = temp.getParticlePositions();
-    this->particlePositions = pos;
-
-    while (position.x > 0 && position.x < 1000 && position.y > 0 &&
-           position.y < 1000 &&
+    while (position.x > 0 && position.x < 1024 && position.y > 0 &&
+           position.y < 1024 &&
            pathPoint < path.size()) // @suppress("Avoid magic numbers")
     {
       // Do the update
@@ -439,22 +436,20 @@ void Robot::drive() {
           // We cannot dereference the percept in typeid() because clang-tidy
           // gives a warning: warning: expression with side effects will be
           // evaluated despite being used as an operand to 'typeid'
-          const AbstractPercept &tempAbstractPercept{*percept.value().get()};
+          const AbstractPercept &particleFilterAbstractPercept{
+              *percept.value().get()};
 
-          if (typeid(tempAbstractPercept) ==
+          if (typeid(particleFilterAbstractPercept) ==
               typeid(
                   DistancePercept)) // single percept, this comes from the laser
           {
             DistancePercept *distancePercept =
                 dynamic_cast<DistancePercept *>(percept.value().get());
             currentRadarPointCloud.push_back(*distancePercept);
-          } else if (typeid(tempAbstractPercept) == typeid(DistancePercepts)) {
-            DistancePercepts *distancePercepts =
-                dynamic_cast<DistancePercepts *>(percept.value().get());
-            currentLidarPointCloud = distancePercepts->pointCloud;
           } else {
-            Application::Logger::log(std::string("Unknown type of percept:") +
-                                     typeid(tempAbstractPercept).name());
+            Application::Logger::log(
+                std::string("Unknown type of percept:") +
+                typeid(particleFilterAbstractPercept).name());
           }
         } else {
           Application::Logger::log("Huh??");
@@ -463,7 +458,123 @@ void Robot::drive() {
 
       // Update the belief
 
-      temp.calculateWeight(currentLidarPointCloud, getPosition().x, getPosition().y);
+      // Stop on arrival or collision
+      if (arrived(goal) || collision()) {
+        Application::Logger::log(__PRETTY_FUNCTION__ +
+                                 std::string(": arrived or collision"));
+        driving = false;
+      }
+
+      notifyObservers();
+
+      // If there is no sleep_for here the robot will immediately be on its
+      // destination....
+      std::this_thread::sleep_for(
+          std::chrono::milliseconds(100)); // @suppress("Avoid magic numbers")
+
+      // this should be the last thing in the loop
+      if (driving == false) {
+        break;
+      }
+    } // while
+
+    for (std::shared_ptr<AbstractSensor> sensor : sensors) {
+      sensor->setOff();
+    }
+  } catch (std::exception &e) {
+    Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": ") +
+                             e.what());
+    std::cerr << __PRETTY_FUNCTION__ << ": " << e.what() << std::endl;
+  } catch (...) {
+    Application::Logger::log(__PRETTY_FUNCTION__ +
+                             std::string(": unknown exception"));
+    std::cerr << __PRETTY_FUNCTION__ << ": unknown exception" << std::endl;
+  }
+}
+
+void Robot::driveWithParticlefilter() {
+  try {
+    for (std::shared_ptr<AbstractSensor> sensor : sensors) {
+      sensor->setOn();
+    }
+
+    // Compare a float/double with another float/double: use epsilon...
+    if (std::fabs(speed - 0.0) <= std::numeric_limits<float>::epsilon()) {
+      setSpeed(10.0, false); // @suppress("Avoid magic numbers")
+    }
+
+    // We use the real position for starters, not an estimated position.
+    startPosition = position;
+    startPosition = position;
+    beliefPosition = position;
+    beliefRoute.push_back(position);
+
+    unsigned pathPoint = 0;
+
+    LidarDistanceSensor *lidarDistanceSensor =
+        dynamic_cast<LidarDistanceSensor *>(sensors[1].get());
+
+    // ParticleFilter particleFilter =
+
+    // this->particleFilter = ParticleFilter(100, lidarDistanceSensor);
+    // ParticleFilter particleFilter = ParticleFilter(100, lidarDistanceSensor);
+
+    auto particleFilter = ParticleFilter(500, lidarDistanceSensor);
+    auto pos = particleFilter.getParticlePositions();
+    this->particlePositions = pos;
+
+    while (position.x > 0 && position.x < 1024 && position.y > 0 &&
+           position.y < 1024 &&
+           pathPoint < path.size()) // @suppress("Avoid magic numbers")
+    {
+      // Do the update
+      const PathAlgorithm::Vertex &vertex =
+          path[pathPoint += static_cast<unsigned int>(speed)];
+      front = BoundedVector(vertex.asPoint(), position);
+      position.x = vertex.x;
+      position.y = vertex.y;
+
+      // Do the measurements / handle all percepts
+      // TODO There are race conditions here:
+      //			1. size() is not atomic
+      //			2. any percepts added after leaving the while
+      // will not be used during the belief update
+      while (perceptQueue.size() > 0) {
+        std::optional<std::shared_ptr<AbstractPercept>> percept =
+            perceptQueue.dequeue();
+        if (percept) {
+          // We cannot dereference the percept in typeid() because clang-tidy
+          // gives a warning: warning: expression with side effects will be
+          // evaluated despite being used as an operand to 'typeid'
+          const AbstractPercept &particleFilterAbstractPercept{
+              *percept.value().get()};
+
+          if (typeid(particleFilterAbstractPercept) ==
+              typeid(
+                  DistancePercept)) // single percept, this comes from the laser
+          {
+            DistancePercept *distancePercept =
+                dynamic_cast<DistancePercept *>(percept.value().get());
+            currentRadarPointCloud.push_back(*distancePercept);
+          } else if (typeid(particleFilterAbstractPercept) ==
+                     typeid(DistancePercepts)) {
+            DistancePercepts *distancePercepts =
+                dynamic_cast<DistancePercepts *>(percept.value().get());
+            currentLidarPointCloud = distancePercepts->pointCloud;
+          } else {
+            Application::Logger::log(
+                std::string("Unknown type of percept:") +
+                typeid(particleFilterAbstractPercept).name());
+          }
+        } else {
+          Application::Logger::log("Huh??");
+        }
+      }
+
+      // Update the belief
+
+      particleFilter.calculateWeight(currentLidarPointCloud, getPosition().x,
+                                     getPosition().y);
 
       int speed = this->getSpeed();
       double angle = Utils::Shape2DUtils::getAngle(getFront());
@@ -471,21 +582,15 @@ void Robot::drive() {
       int speedX = speed * cos(angle);
       int speedY = speed * sin(angle);
 
-      temp.getUpdatedParticles(speedX, speedY);
+      particleFilter.getUpdatedParticles(speedX, speedY);
 
       // add compass to get orientation of robot with errors
 
-      this->particlePositions = temp.getParticlePositions();
-
-      // std::cout << "particlePositions size: " << particlePositions.size()
-      // <<std::endl; std::cout<<temp.getParticlePositions().size()<<std::endl;
-
-      // auto pos = particleFilter.getParticlePositions();
-      // this->particlePositions = pos;
-
-      // Get the current scan
-      // simulate several scans and add into vector
-      // for each scan, calculate weight
+      this->particlePositions = particleFilter.getParticlePositions();
+      beliefPosition = particleFilter.getBelievedPosition();
+      beliefRoute.push_back(beliefPosition);
+      beliefOrientation = Utils::Shape2DUtils::getAngle(
+          BoundedVector(beliefPosition, beliefRoute[beliefRoute.size() - 2]));
 
       // Stop on arrival or collision
       if (arrived(goal) || collision()) {
@@ -579,5 +684,21 @@ bool Robot::collision() {
   }
   return false;
 }
+
+bool Robot::isKalmanFilterActive() const { return kalmanFilterEnabled; }
+
+void Robot::setKalmanFilterActive(bool kalmanFilterActive) {
+  this->kalmanFilterEnabled = kalmanFilterActive;
+}
+
+void Robot::setParticleFilterActive(bool particleFilterActive) {
+  this->particleFilterEnabled = particleFilterActive;
+}
+
+bool Robot::isParticleFilterActive() const { return particleFilterEnabled; }
+
+wxPoint Robot::getBelievedPosition() const { return beliefPosition; }
+
+std::vector<wxPoint> Robot::getBelievedRoute() const { return beliefRoute; }
 
 } // namespace Model
