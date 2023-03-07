@@ -251,7 +251,7 @@ void RobotShape::drawLaser(wxDC &dc) {
     dc.SetPen(wxPen("BLUE", borderWidth, wxPENSTYLE_SOLID));
     dc.DrawCircle(wxPoint(getRobot()->particlePositions[i].x,
                           getRobot()->particlePositions[i].y),
-                  6);
+                  3);
   }
 }
 

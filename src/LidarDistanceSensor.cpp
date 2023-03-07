@@ -33,9 +33,10 @@ std::shared_ptr<AbstractStimulus> LidarDistanceSensor::getStimulus() const {
     std::mt19937 gen{rd()};
     std::normal_distribution<> noise{0, LidarDistanceSensor::stddev};
 
-    double angle = Utils::Shape2DUtils::getAngle(robot->getFront());
+    double angle = 0;
 
     for (int i = 0; i < 180; ++i) {
+      double distance = 2000;
 
       angle += Utils::MathUtils::toRadians(2);
 
@@ -53,24 +54,32 @@ std::shared_ptr<AbstractStimulus> LidarDistanceSensor::getStimulus() const {
         wxPoint interSection = Utils::Shape2DUtils::getIntersection(
             wallPoint1, wallPoint2, robotLocation, laserEndpoint);
 
-        if (interSection != wxDefaultPosition) {
-          double distance =
-              Utils::Shape2DUtils::distance(robotLocation, interSection);
-          stimuli.push_back(DistanceStimulus(angle, distance));
+        if (interSection != wxDefaultPosition &&
+            Utils::Shape2DUtils::distance(robotLocation, interSection) <
+                distance) {
+          distance = Utils::Shape2DUtils::distance(robotLocation, interSection);
+          // stimuli.push_back(DistanceStimulus(angle, distance));
         }
       }
+      if (distance == 2000) {
+        distance = lidarBeamLength;
+      }
+      stimuli.push_back(DistanceStimulus(angle, distance));
     }
+    std::cout << "Stimuli size: " << stimuli.size() << std::endl;
     return std::make_shared<DistanceStimuli>(stimuli);
   }
   //   return std::make_shared<DistanceStimuli>(stimulus);
   return std::make_shared<DistanceStimuli>(stimuli);
 }
 
-std::shared_ptr<AbstractStimulus> LidarDistanceSensor::getStimulus(wxPoint position) const {
-  Robot *robot = dynamic_cast<Robot *>(agent);
+std::shared_ptr<AbstractStimulus>
+LidarDistanceSensor::getStimulus(wxPoint position) const {
+  
+  // Robot *robot = dynamic_cast<Robot *>(agent);
   std::vector<DistanceStimulus> stimuli;
 
-  if (robot) {
+  // if (robot) {
     std::random_device rd{};
     std::mt19937 gen{rd()};
     std::normal_distribution<> noise{0, LidarDistanceSensor::stddev};
@@ -78,6 +87,7 @@ std::shared_ptr<AbstractStimulus> LidarDistanceSensor::getStimulus(wxPoint posit
     double angle = 0;
 
     for (int i = 0; i < 180; ++i) {
+      double distance = 2000;
 
       angle += Utils::MathUtils::toRadians(2);
 
@@ -85,7 +95,6 @@ std::shared_ptr<AbstractStimulus> LidarDistanceSensor::getStimulus(wxPoint posit
       for (std::shared_ptr<Wall> wall : walls) {
         wxPoint wallPoint1 = wall->getPoint1();
         wxPoint wallPoint2 = wall->getPoint2();
-        // wxPoint robotLocation = robot->getPosition();
         wxPoint laserEndpoint{
             static_cast<int>(position.x +
                              std::cos(angle) * lidarBeamLength + noise(gen)),
@@ -95,17 +104,20 @@ std::shared_ptr<AbstractStimulus> LidarDistanceSensor::getStimulus(wxPoint posit
         wxPoint interSection = Utils::Shape2DUtils::getIntersection(
             wallPoint1, wallPoint2, position, laserEndpoint);
 
-        if (interSection != wxDefaultPosition) {
-          double distance =
-              Utils::Shape2DUtils::distance(position, interSection);
-          stimuli.push_back(DistanceStimulus(angle, distance));
+        if (interSection != wxDefaultPosition &&
+            Utils::Shape2DUtils::distance(position, interSection) <
+                distance) {
+          distance = Utils::Shape2DUtils::distance(position, interSection);
+          // stimuli.push_back(DistanceStimulus(angle, distance));
         }
       }
+      if (distance == 2000) {
+        distance = lidarBeamLength;
+      }
+      stimuli.push_back(DistanceStimulus(angle, distance));
     }
     return std::make_shared<DistanceStimuli>(stimuli);
-  }
-  //   return std::make_shared<DistanceStimuli>(stimulus);
-  return std::make_shared<DistanceStimuli>(stimuli);
+  // }
 }
 /**
  *

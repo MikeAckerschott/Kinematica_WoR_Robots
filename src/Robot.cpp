@@ -412,7 +412,7 @@ void Robot::drive() {
     // this->particleFilter = ParticleFilter(100, lidarDistanceSensor);
     // ParticleFilter temp = ParticleFilter(100, lidarDistanceSensor);
 
-    auto temp = ParticleFilter(100, lidarDistanceSensor);
+    auto temp = ParticleFilter(500, lidarDistanceSensor);
     auto pos = temp.getParticlePositions();
     this->particlePositions = pos;
 
@@ -463,29 +463,32 @@ void Robot::drive() {
 
       // Update the belief
 
-      temp.calculateWeight(currentLidarPointCloud);
+      temp.calculateWeight(currentLidarPointCloud, getPosition().x, getPosition().y);
 
-      for (int i = 0; i < temp.particles.size(); i++) {
-        // std::cout << temp.particles[i].weight << std::endl;
-        // particleFilter.particles[i].position.y += 1;
-      }
+      int speed = this->getSpeed();
+      double angle = Utils::Shape2DUtils::getAngle(getFront());
 
-      temp.getUpdatedParticles();
+      int speedX = speed * cos(angle);
+      int speedY = speed * sin(angle);
+
+      temp.getUpdatedParticles(speedX, speedY);
+
+      // add compass to get orientation of robot with errors
 
       this->particlePositions = temp.getParticlePositions();
 
-      // std::cout << "particlePositions size: " << particlePositions.size() <<std::endl;
-      // std::cout<<temp.getParticlePositions().size()<<std::endl;
+      // std::cout << "particlePositions size: " << particlePositions.size()
+      // <<std::endl; std::cout<<temp.getParticlePositions().size()<<std::endl;
 
-          // auto pos = particleFilter.getParticlePositions();
-          // this->particlePositions = pos;
+      // auto pos = particleFilter.getParticlePositions();
+      // this->particlePositions = pos;
 
-          // Get the current scan
-          // simulate several scans and add into vector
-          // for each scan, calculate weight
+      // Get the current scan
+      // simulate several scans and add into vector
+      // for each scan, calculate weight
 
-          // Stop on arrival or collision
-          if (arrived(goal) || collision()) {
+      // Stop on arrival or collision
+      if (arrived(goal) || collision()) {
         Application::Logger::log(__PRETTY_FUNCTION__ +
                                  std::string(": arrived or collision"));
         driving = false;

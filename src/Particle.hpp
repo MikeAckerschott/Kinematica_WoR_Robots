@@ -17,12 +17,12 @@ namespace Model {
 
     public:
         // Particle();
-        Particle(DistanceStimuli lidarScan, double weight, int x, int y);
+        Particle(DistanceStimuli lidarScan, unsigned long long weight, int x, int y);
         virtual ~Particle();
 
         Particle(const Particle &other);
 
-        double weight;
+        unsigned long long weight;
         DistanceStimuli lidarScan;
         int x;
         int y;
