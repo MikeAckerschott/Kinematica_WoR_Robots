@@ -16,6 +16,7 @@
 #include "Shape2DUtils.hpp"
 #include "Wall.hpp"
 #include "WayPoint.hpp"
+#include "Matrix.hpp"
 
 #include <chrono>
 #include <ctime>
@@ -400,6 +401,7 @@ std::string Robot::asDebugString() const {
  *
  */
 void Robot::drive() {
+
   try {
     for (std::shared_ptr<AbstractSensor> sensor : sensors) {
       sensor->setOn();
@@ -514,10 +516,6 @@ void Robot::driveWithParticlefilter() {
     LidarDistanceSensor *lidarDistanceSensor =
         dynamic_cast<LidarDistanceSensor *>(sensors[1].get());
 
-    // ParticleFilter particleFilter =
-
-    // this->particleFilter = ParticleFilter(100, lidarDistanceSensor);
-    // ParticleFilter particleFilter = ParticleFilter(100, lidarDistanceSensor);
 
     auto particleFilter = ParticleFilter(500, lidarDistanceSensor);
     auto pos = particleFilter.getParticlePositions();
