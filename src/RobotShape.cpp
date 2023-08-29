@@ -81,11 +81,11 @@ void RobotShape::draw(wxDC &dc) {
 
   drawLaser(dc);
 
-  if(getRobot()->isParticleFilterActive()){
+  if (getRobot()->isParticleFilterActive()) {
     drawParticleFilter(dc);
   }
 
-  if(getRobot()->isKalmanFilterActive()){
+  if (getRobot()->isKalmanFilterActive()) {
     drawKalmanFilter(dc);
   }
 }
@@ -158,20 +158,24 @@ void RobotShape::drawStartPosition(wxDC &dc) {
   dc.DrawCircle(getRobot()->startPosition, 3);
 }
 
-void RobotShape::drawParticleFilter(wxDC &dc){
-  //TODO: Draw the particle filter path
-  for(int i = 1; i < getRobot()->getBelievedRoute().size(); ++i){
-    //draw a line between the two points
+void RobotShape::drawParticleFilter(wxDC &dc) {
+  // TODO: Draw the particle filter path
+  for (int i = 1; i < getRobot()->getBelievedRoute().size(); ++i) {
+    // draw a line between the two points
     dc.SetPen(wxPen("Green", borderWidth + 5, wxPENSTYLE_SOLID));
-    dc.DrawLine(getRobot()->getBelievedRoute()[i-1], getRobot()->getBelievedRoute()[i]);
+    dc.DrawLine(getRobot()->getBelievedRoute()[i - 1],
+                getRobot()->getBelievedRoute()[i]);
   }
 }
 
-void RobotShape::drawKalmanFilter(wxDC &dc){
-  for(int i = 1; i < getRobot()->getBelievedRoute().size(); ++i){
-    //draw a line between the two points
+void RobotShape::drawKalmanFilter(wxDC &dc) {
+  std::cout << "from draw: " << getRobot()->getBelievedRoute().size()
+            << std::endl;
+  for (int i = 1; i < getRobot()->getBelievedRoute().size(); ++i) {
+    // draw a line between the two points
     dc.SetPen(wxPen("Green", borderWidth + 5, wxPENSTYLE_SOLID));
-    dc.DrawLine(getRobot()->getBelievedRoute()[i-1], getRobot()->getBelievedRoute()[i]);
+    dc.DrawLine(getRobot()->getBelievedRoute()[i - 1],
+                getRobot()->getBelievedRoute()[i]);
   }
 }
 /**
@@ -197,8 +201,6 @@ void RobotShape::drawPath(wxDC &dc) {
       dc.DrawPoint(vertex.asPoint());
     }
   }
-
-  
 }
 /**
  *
@@ -271,8 +273,6 @@ void RobotShape::drawLaser(wxDC &dc) {
                           getRobot()->particlePositions[i].y),
                   1);
   }
-
- 
 }
 
 } // namespace View

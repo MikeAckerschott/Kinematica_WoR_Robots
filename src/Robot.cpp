@@ -428,16 +428,8 @@ void Robot::driveWithKalmanfilter() {
       setSpeed(10.0, false); // @suppress("Avoid magic numbers")
     }
 
-    // We use the real position for starters, not an estimated position.
-    Matrix<double, 2, 1> belief = {this->position.x,
-                                   this->position.y}; // previous state vector
-    Matrix<double, 2, 2> error = {{100, 0},
-                                  {0, 100}}; // previous process covariance
-
-    const Matrix<double, 2, 2> A = {{1, 0}, {0, 1}};
-    const Matrix<double, 2, 2> R = {{1, 0}, {0, 1}}; // sensor covariance matrix
-
     unsigned pathPoint = 0;
+    KalmanFilter filter(this->position);
 
     previousPosition = position;
     while (position.x > 0 && position.x < 1024 && position.y > 0 &&
@@ -492,36 +484,18 @@ void Robot::driveWithKalmanfilter() {
         }
       }
 
-      Application::Logger::log(
-          std::string("BELIEF: ") + std::to_string(belief.at(0).at(0)) +
-          std::string(", ") + std::to_string(belief.at(1).at(0)));
-      beliefPosition = wxPoint(belief.at(0).at(0), belief.at(1).at(0));
-      beliefRoute.push_back(beliefPosition);
-
       if (currentCompassMeasurement != 90) {
 
-        double measuredX = this->currentOdomMeasurement *
-                               cos(this->currentCompassMeasurement) +
-                           belief.at(0).at(0);
-        double measuredY = this->currentOdomMeasurement *
-                               sin(this->currentCompassMeasurement) +
-                           belief.at(1).at(0);
+        auto beliefAsPoint = filter.iterateFilter(
+            this->position, this->previousPosition,
+            this->currentCompassMeasurement, this->currentOdomMeasurement);
 
-        Matrix<double, 2, 1> control = {measuredX - belief.at(0).at(0),
-                                        measuredY - belief.at(1).at(0)};
-        Matrix<double, 2, 1> measuredPosition = {measuredX, measuredY};
-        Matrix<double, 2, 1> predictedStateVector = belief + control;
-        Matrix<double, 2, 2> predictedProcessCovariance = A * error * A;
-        Matrix<double, 2, 2> kalmanGain =
-            (predictedProcessCovariance * A) *
-            (A * predictedProcessCovariance * A + R).inverse();
+        Application::Logger::log(
+            std::string("BELIEF: ") + std::to_string(beliefAsPoint.x) +
+            std::string(", ") + std::to_string(beliefAsPoint.y));
+        beliefRoute.push_back(beliefAsPoint);
 
-        belief = predictedStateVector +
-                 kalmanGain * (measuredPosition - predictedStateVector);
-
-        error = predictedProcessCovariance * (A - kalmanGain * A);
-      } else {
-        std::cout<<"no compass measurement"<<std::endl;
+        std::cout << "from drive: " << beliefRoute.size() << std::endl;
       }
 
       // Stop on arrival or collision
@@ -557,6 +531,9 @@ void Robot::driveWithKalmanfilter() {
                              std::string(": unknown exception"));
     std::cerr << __PRETTY_FUNCTION__ << ": unknown exception" << std::endl;
   }
+
+  std::cout << "belief: " << beliefRoute.at(beliefRoute.size() - 1)
+            << std::endl;
 }
 
 /**
