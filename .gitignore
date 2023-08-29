@@ -98,3 +98,5 @@ linux-build/src/robotworld-WayPointShape.o
 linux-build/src/robotworld-Widgets.o
 linux-build/src/robotworld-WidgetTraceFunction.o
 linux-build/src/stamp-h1
+*.o
+linux-build/src/robotworld-OdometerSensor.o

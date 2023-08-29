@@ -39,7 +39,7 @@ std::shared_ptr<AbstractStimulus> OdometerSensor::getStimulus() const {
     double distanceY = currentPos.y - previousPos.y;
     double distanceDriven =
         (std::sqrt(std::pow(distanceX, 2) + std::pow(distanceY, 2)));
-    distanceDriven += noise(gen) * distanceDriven / 10.0;
+    distanceDriven += (noise(gen) * distanceDriven / 10.0);
 
     std::cout << "distanceX: " << distanceX << " | distanceY: " << distanceY
               << " | distanceDriven: " << distanceDriven << std::endl;

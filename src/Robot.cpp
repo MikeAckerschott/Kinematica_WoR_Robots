@@ -479,18 +479,12 @@ void Robot::driveWithKalmanfilter() {
                 dynamic_cast<OdometerPercept *>(percept.value().get());
             this->currentOdomMeasurement = odomPercept->distanceDriven;
 
-            // std::cout << "ODOM MEASURED: " << odomPercept->distanceDriven
-            //           << std::endl;
-
           } else if (typeid(abstractPercept) == typeid(CompassPercept)) {
             CompassPercept *odomPercept =
                 dynamic_cast<CompassPercept *>(percept.value().get());
 
             Application::Logger::log(std::string("COMPASS MEASURED:") +
                                      typeid(abstractPercept).name());
-
-            // std::cout << "COMPASS MEASURED: " << odomPercept->angle
-            //           << std::endl;
             this->currentCompassMeasurement = odomPercept->angle;
           } else {
             Application::Logger::log(std::string("Unknown type of percept:") +
@@ -503,10 +497,8 @@ void Robot::driveWithKalmanfilter() {
         }
       }
 
-      // Update the belief
-
-      // std::cout<<"angle: "<<this->currentCompassMeasurement<<" | As Degrees:
-      // "<<this->currentCompassMeasurement*180/Utils::PI<<std::endl;
+      beliefPosition = wxPoint(belief.at(0).at(0), belief.at(1).at(0));
+      beliefRoute.push_back(beliefPosition);
 
       double measuredX =
           this->currentOdomMeasurement * cos(this->currentCompassMeasurement) +
@@ -517,26 +509,21 @@ void Robot::driveWithKalmanfilter() {
 
       Matrix<double, 2, 1> control = {measuredX - belief.at(0).at(0),
                                       measuredY - belief.at(1).at(0)};
-
       Matrix<double, 2, 1> measuredPosition = {measuredX, measuredY};
-
-      Matrix<double, 2, 1> predictedStateVector = (A * belief) + (A * control);
+      Matrix<double, 2, 1> predictedStateVector = belief + control;
       Matrix<double, 2, 2> predictedProcessCovariance = A * error * A;
-
       Matrix<double, 2, 2> kalmanGain =
           (predictedProcessCovariance * A) *
           (A * predictedProcessCovariance * A + R).inverse();
 
       belief = predictedStateVector +
                kalmanGain * (measuredPosition - predictedStateVector);
+
       error = predictedProcessCovariance * (A - kalmanGain * A);
 
-      // std::cout << "BELIEF: " << belief.at(0).at(0) << " " <<
-      // belief.at(1).at(0)
-      //           << std::endl;
-
-      beliefPosition = wxPoint(belief.at(0).at(0), belief.at(1).at(0));
-      beliefRoute.push_back(beliefPosition);
+      std::cout << "BELIEF: " << belief.at(0).at(0) << " " <<
+      belief.at(1).at(0)
+                << std::endl;
 
       // Stop on arrival or collision
       if (arrived(goal) || collision()) {
