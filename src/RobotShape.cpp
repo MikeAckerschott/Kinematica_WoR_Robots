@@ -84,6 +84,10 @@ void RobotShape::draw(wxDC &dc) {
   if(getRobot()->isParticleFilterActive()){
     drawParticleFilter(dc);
   }
+
+  if(getRobot()->isKalmanFilterActive()){
+    drawKalmanFilter(dc);
+  }
 }
 /**
  *
@@ -156,6 +160,14 @@ void RobotShape::drawStartPosition(wxDC &dc) {
 
 void RobotShape::drawParticleFilter(wxDC &dc){
   //TODO: Draw the particle filter path
+  for(int i = 1; i < getRobot()->getBelievedRoute().size(); ++i){
+    //draw a line between the two points
+    dc.SetPen(wxPen("Green", borderWidth + 5, wxPENSTYLE_SOLID));
+    dc.DrawLine(getRobot()->getBelievedRoute()[i-1], getRobot()->getBelievedRoute()[i]);
+  }
+}
+
+void RobotShape::drawKalmanFilter(wxDC &dc){
   for(int i = 1; i < getRobot()->getBelievedRoute().size(); ++i){
     //draw a line between the two points
     dc.SetPen(wxPen("Green", borderWidth + 5, wxPENSTYLE_SOLID));

@@ -453,12 +453,14 @@ Matrix<T, M, 1> Matrix<T, M, N>::solve() const {
  *
  */
 template<class T, std::size_t M, std::size_t N>
-Matrix<double, M, N> Matrix<T, M, N>::inverse() const
+Matrix<T, M, N> Matrix<T, M, N>::inverse() const
 {
-	Matrix<double, M, N> result(*this);
-	Matrix<double, M, N> identity = result.identity();
 
-	Matrix<double, M, M*2> calculationMatrix;
+
+	Matrix<T, M, N> result(*this);
+	Matrix<T, M, N> identity = result.identity();
+
+	Matrix<T, M, M*2> calculationMatrix;
 
 	for(int i = 0; i < result.getRows(); ++i){
 		for(int j = 0; j < result.getColumns(); ++j){
@@ -479,9 +481,6 @@ Matrix<double, M, N> Matrix<T, M, N>::inverse() const
 			result.at(i).at(j) = calculationMatrix.at(i).at(j+result.getColumns());
 		}
 	}
-
-	std::cout<<result<<std::endl;
-
 
 	return result;
 

@@ -85,6 +85,10 @@ public:
    *
    */
   void setPosition(const wxPoint &aPosition, bool aNotifyObservers = true);
+
+  wxPoint getPreviousPosition();
+
+  void setPreviousPosition(const wxPoint aPosition);
   /**
    *
    */
@@ -265,6 +269,8 @@ protected:
    *
    */
   void driveWithParticlefilter();
+
+  void driveWithKalmanfilter();
   /**
    *
    */
@@ -307,6 +313,8 @@ private:
    *
    */
   wxPoint position;
+
+  wxPoint previousPosition;
   /**
    *
    */
@@ -341,8 +349,11 @@ private:
   bool communicating;
 
   bool particleFilterEnabled;
-
   bool kalmanFilterEnabled;
+
+  double currentOdomMeasurement;
+  double currentCompassMeasurement;
+
   /**
    *
    */

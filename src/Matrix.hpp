@@ -204,7 +204,7 @@ class Matrix
 		/**
 		 * @see https://en.wikipedia.org/wiki/Invertible_matrix
 		 */
-		Matrix< double, M, N > inverse() const;
+		Matrix< T, M, N > inverse() const;
 		//@}
 		/**
 		 * @name Other methods

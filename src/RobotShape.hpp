@@ -137,6 +137,8 @@ namespace View
 			*/
 			void drawParticleFilter( wxDC& dc);
 
+			void drawKalmanFilter( wxDC& dc);
+
 			/**
 			 *
 			 */
