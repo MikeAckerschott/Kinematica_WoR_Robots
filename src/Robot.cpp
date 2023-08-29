@@ -482,13 +482,8 @@ void Robot::driveWithKalmanfilter() {
           } else if (typeid(abstractPercept) == typeid(CompassPercept)) {
             CompassPercept *odomPercept =
                 dynamic_cast<CompassPercept *>(percept.value().get());
-
-            Application::Logger::log(std::string("COMPASS MEASURED:") +
-                                     typeid(abstractPercept).name());
             this->currentCompassMeasurement = odomPercept->angle;
           } else {
-            Application::Logger::log(std::string("Unknown type of percept:") +
-                                     typeid(abstractPercept).name());
           }
           // std::cout << "get angle" << std::endl;
 
@@ -497,33 +492,37 @@ void Robot::driveWithKalmanfilter() {
         }
       }
 
+      Application::Logger::log(
+          std::string("BELIEF: ") + std::to_string(belief.at(0).at(0)) +
+          std::string(", ") + std::to_string(belief.at(1).at(0)));
       beliefPosition = wxPoint(belief.at(0).at(0), belief.at(1).at(0));
       beliefRoute.push_back(beliefPosition);
 
-      double measuredX =
-          this->currentOdomMeasurement * cos(this->currentCompassMeasurement) +
-          belief.at(0).at(0);
-      double measuredY =
-          this->currentOdomMeasurement * sin(this->currentCompassMeasurement) +
-          belief.at(1).at(0);
+      if (currentCompassMeasurement != 90) {
 
-      Matrix<double, 2, 1> control = {measuredX - belief.at(0).at(0),
-                                      measuredY - belief.at(1).at(0)};
-      Matrix<double, 2, 1> measuredPosition = {measuredX, measuredY};
-      Matrix<double, 2, 1> predictedStateVector = belief + control;
-      Matrix<double, 2, 2> predictedProcessCovariance = A * error * A;
-      Matrix<double, 2, 2> kalmanGain =
-          (predictedProcessCovariance * A) *
-          (A * predictedProcessCovariance * A + R).inverse();
+        double measuredX = this->currentOdomMeasurement *
+                               cos(this->currentCompassMeasurement) +
+                           belief.at(0).at(0);
+        double measuredY = this->currentOdomMeasurement *
+                               sin(this->currentCompassMeasurement) +
+                           belief.at(1).at(0);
 
-      belief = predictedStateVector +
-               kalmanGain * (measuredPosition - predictedStateVector);
+        Matrix<double, 2, 1> control = {measuredX - belief.at(0).at(0),
+                                        measuredY - belief.at(1).at(0)};
+        Matrix<double, 2, 1> measuredPosition = {measuredX, measuredY};
+        Matrix<double, 2, 1> predictedStateVector = belief + control;
+        Matrix<double, 2, 2> predictedProcessCovariance = A * error * A;
+        Matrix<double, 2, 2> kalmanGain =
+            (predictedProcessCovariance * A) *
+            (A * predictedProcessCovariance * A + R).inverse();
 
-      error = predictedProcessCovariance * (A - kalmanGain * A);
+        belief = predictedStateVector +
+                 kalmanGain * (measuredPosition - predictedStateVector);
 
-      std::cout << "BELIEF: " << belief.at(0).at(0) << " " <<
-      belief.at(1).at(0)
-                << std::endl;
+        error = predictedProcessCovariance * (A - kalmanGain * A);
+      } else {
+        std::cout<<"no compass measurement"<<std::endl;
+      }
 
       // Stop on arrival or collision
       if (arrived(goal) || collision()) {

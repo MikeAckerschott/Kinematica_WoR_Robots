@@ -100,3 +100,4 @@ linux-build/src/robotworld-WidgetTraceFunction.o
 linux-build/src/stamp-h1
 *.o
 linux-build/src/robotworld-OdometerSensor.o
+*.log
