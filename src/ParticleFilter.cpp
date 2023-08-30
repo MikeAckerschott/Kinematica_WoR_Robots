@@ -68,14 +68,20 @@ std::vector<Particle> ParticleFilter::getUpdatedParticles(int speedX,
   std::discrete_distribution<unsigned long long> distribution(weights.begin(),
                                                               weights.end());
 
-  std::uniform_int_distribution<std::mt19937::result_type> addedX(-20, 20);
-  std::uniform_int_distribution<std::mt19937::result_type> addedY(-20, 20);
+  std::uniform_int_distribution<std::mt19937::result_type> addedX(-10, 10);
+  std::uniform_int_distribution<std::mt19937::result_type> addedY(-10, 10);
 
   for (int i = 0; i < particles.size(); ++i) {
     int index = distribution(gen);
 
-    int x = particles.at(index).x + addedX(gen);
-    int y = particles.at(index).y + addedY(gen);
+    // int x = particles.at(index).x + addedX(gen);
+    // int y = particles.at(index).y + addedY(gen);
+
+    std::cout<<weights.at(i)<<std::endl;
+
+    //10000 * particles.size() = max weight
+    int x = particles.at(index).x + addedX(gen) + (1 - (particles.at(index).weight / (10000 * particles.size()))) * addedX(gen);
+    int y = particles.at(index).y + addedY(gen) + (1 - (particles.at(index).weight / (10000 * particles.size()))) * addedY(gen);
 
     std::shared_ptr<AbstractStimulus> stimulus =
         lidar->getStimulus((wxPoint(x, y)));
@@ -145,12 +151,12 @@ wxPoint ParticleFilter::getBelievedPosition() {
 
   std::random_device rd;
   std::mt19937 gen(rd());
-    std::discrete_distribution<unsigned long long> distribution(weights.begin(),
+  std::discrete_distribution<unsigned long long> distribution(weights.begin(),
                                                               weights.end());
 
   int totalX = 0;
   int totalY = 0;
-  for (int i = 0; i < weights.size(); ++i) {
+  for (int i = 0; i < weights.size() ; ++i) {
     int index = distribution(gen);
     totalX += particles.at(index).x;
     totalY += particles.at(index).y;
