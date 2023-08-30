@@ -254,9 +254,9 @@ void RobotWorld::populate(int UNUSEDPARAM(aNumberOfWalls)) {
   }
 
   static const wxPoint extraWalls[] = {
-      wxPoint(644, 153), wxPoint(802, 214), wxPoint(173, 439),
-      wxPoint(402, 417), wxPoint(616, 462), wxPoint(688, 652),
-      wxPoint(402, 744), wxPoint(342, 900),
+      wxPoint(759,517), wxPoint(688,652), wxPoint(402,744),
+      wxPoint(533,572), wxPoint(173,439), wxPoint(348,540),
+      wxPoint(600, 744), wxPoint(342, 900),
   };
 
   for (int i = 0; i <= 6; i += 2) {

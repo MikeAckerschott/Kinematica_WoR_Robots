@@ -29,7 +29,7 @@ public:
   virtual ~ParticleFilter();
 
   // calculate the particle filter
-  void calculateWeight(std::vector<DistancePercept> &lidarScan, int x, int y);
+  void calculateWeight(std::vector<DistancePercept> &lidarScan, int x, int y, wxPoint robotBelievedPosition);
 
   std::vector<Particle> getUpdatedParticles(int speedX, int speedY);
 
@@ -46,6 +46,8 @@ public:
   double totalWeight;
 
 private:
+
+const int weightMultiplier = 10000;
 };
 
 } // namespace Model

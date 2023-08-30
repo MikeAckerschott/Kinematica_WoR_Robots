@@ -1,5 +1,6 @@
 #include "ParticleFilter.hpp"
 #include "DistancePercept.hpp"
+#include "MathUtils.hpp"
 #include "Particle.hpp"
 #include "Shape2DUtils.hpp"
 
@@ -77,11 +78,17 @@ std::vector<Particle> ParticleFilter::getUpdatedParticles(int speedX,
     // int x = particles.at(index).x + addedX(gen);
     // int y = particles.at(index).y + addedY(gen);
 
-    std::cout<<weights.at(i)<<std::endl;
+    std::cout << weights.at(i) << std::endl;
 
-    //10000 * particles.size() = max weight
-    int x = particles.at(index).x + addedX(gen) + (1 - (particles.at(index).weight / (10000 * particles.size()))) * addedX(gen);
-    int y = particles.at(index).y + addedY(gen) + (1 - (particles.at(index).weight / (10000 * particles.size()))) * addedY(gen);
+    // weightMultiplier * particles.size() = max weight
+    int x = particles.at(index).x + addedX(gen) +
+            (1 - (particles.at(index).weight /
+                  (weightMultiplier * particles.size()))) *
+                addedX(gen);
+    int y = particles.at(index).y + addedY(gen) +
+            (1 - (particles.at(index).weight /
+                  (weightMultiplier * particles.size()))) *
+                addedY(gen);
 
     std::shared_ptr<AbstractStimulus> stimulus =
         lidar->getStimulus((wxPoint(x, y)));
@@ -101,7 +108,8 @@ std::vector<Particle> ParticleFilter::getUpdatedParticles(int speedX,
 }
 
 void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan,
-                                     int x, int y) {
+                                     int x, int y,
+                                     wxPoint robotBelievedPosition) {
 
   // std::cout << "lidarScan.size(): " << lidarScan.size() << std::endl;
   // std::cout << "particles.size(): " << particles.size() << std::endl;
@@ -137,8 +145,17 @@ void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan,
       double lidarDistance =
           Utils::Shape2DUtils::distance(wxPoint(x, y), lidarScan.at(j).point);
 
-      particles[i].weight +=
-          1 / sqrt(pow(particleDistance - lidarDistance, 2)) * 10000;
+      double distanceDifference = particleDistance - lidarDistance;
+
+      // Define the standard deviation for the Gaussian-like function
+      double stdDeviation = 5.0; // Adjust this value as needed
+
+      // Calculate the weight using the Gaussian-like function
+      double gaussianWeight =
+          std::exp(-0.5 * (distanceDifference * distanceDifference) /
+                   (stdDeviation * stdDeviation));
+
+      particles[i].weight += gaussianWeight * weightMultiplier;
     }
 
     totalWeight += particles[i].weight;
@@ -156,7 +173,7 @@ wxPoint ParticleFilter::getBelievedPosition() {
 
   int totalX = 0;
   int totalY = 0;
-  for (int i = 0; i < weights.size() ; ++i) {
+  for (int i = 0; i < weights.size(); ++i) {
     int index = distribution(gen);
     totalX += particles.at(index).x;
     totalY += particles.at(index).y;

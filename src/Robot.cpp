@@ -645,7 +645,6 @@ void Robot::driveWithParticlefilter() {
     // We use the real position for starters, not an estimated position.
     startPosition = position;
     beliefPosition = position;
-    beliefRoute.push_back(position);
 
     unsigned pathPoint = 0;
 
@@ -704,7 +703,7 @@ void Robot::driveWithParticlefilter() {
       // Update the belief
 
       particleFilter.calculateWeight(currentLidarPointCloud, getPosition().x,
-                                     getPosition().y);
+                                     getPosition().y, beliefPosition);
 
       int speed = this->getSpeed();
       double angle = Utils::Shape2DUtils::getAngle(getFront());
@@ -712,15 +711,18 @@ void Robot::driveWithParticlefilter() {
       int speedX = speed * cos(angle);
       int speedY = speed * sin(angle);
 
+
+
       particleFilter.getUpdatedParticles(speedX, speedY);
-
-      // add compass to get orientation of robot with errors
-
       this->particlePositions = particleFilter.getParticlePositions();
       beliefPosition = particleFilter.getBelievedPosition();
+
+
       beliefRoute.push_back(beliefPosition);
       beliefOrientation = Utils::Shape2DUtils::getAngle(
           BoundedVector(beliefPosition, beliefRoute[beliefRoute.size() - 2]));
+
+
 
       // Stop on arrival or collision
       if (arrived(goal) || collision()) {
