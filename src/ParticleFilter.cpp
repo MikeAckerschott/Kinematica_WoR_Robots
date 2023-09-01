@@ -8,14 +8,12 @@ namespace Model {
 
 ParticleFilter::ParticleFilter(int numberOfParticles,
                                LidarDistanceSensor *lidar)
-    : lidar(lidar) {
+    : lidar(lidar), totalWeight(0.0) {
   // TODO Auto-generated constructor stub
   srand((unsigned)time(NULL));
   for (int i = 0; i < numberOfParticles; i++) {
     int x = rand() % 1024;
     int y = rand() % 1024;
-
-    // std::cout << "x: " << x << " y: " << y << std::endl;
 
     std::shared_ptr<AbstractStimulus> stimulus =
         lidar->getStimulus((wxPoint(x, y)));
@@ -29,14 +27,6 @@ ParticleFilter::ParticleFilter(int numberOfParticles,
 
 ParticleFilter::~ParticleFilter() {
   // TODO Auto-generated destructor stub
-}
-
-ParticleFilter::ParticleFilter() {
-  // TODO Auto-generated constructor stub
-}
-
-ParticleFilter &ParticleFilter::operator=(const ParticleFilter &other) {
-  // TODO Auto-generated constructor stub
 }
 
 std::vector<wxPoint> ParticleFilter::getParticlePositions() {
@@ -75,11 +65,6 @@ std::vector<Particle> ParticleFilter::getUpdatedParticles(int speedX,
   for (int i = 0; i < particles.size(); ++i) {
     int index = distribution(gen);
 
-    // int x = particles.at(index).x + addedX(gen);
-    // int y = particles.at(index).y + addedY(gen);
-
-    std::cout << weights.at(i) << std::endl;
-
     // weightMultiplier * particles.size() = max weight
     int x = particles.at(index).x + addedX(gen) +
             (1 - (particles.at(index).weight /
@@ -111,9 +96,6 @@ void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan,
                                      int x, int y,
                                      wxPoint robotBelievedPosition) {
 
-  // std::cout << "lidarScan.size(): " << lidarScan.size() << std::endl;
-  // std::cout << "particles.size(): " << particles.size() << std::endl;
-
   totalWeight = 0.0;
 
   for (int i = 0; i < particles.size(); ++i) {
@@ -121,7 +103,6 @@ void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan,
 
     int iterationSize =
         std::min(particles.at(i).lidarScan.stimuli.size(), lidarScan.size());
-    // std::cout << iterationSize << std::endl;
 
     particles[i].weight = 0;
 
@@ -148,7 +129,7 @@ void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan,
       double distanceDifference = particleDistance - lidarDistance;
 
       // Define the standard deviation for the Gaussian-like function
-      double stdDeviation = 5.0; // Adjust this value as needed
+      double stdDeviation = 2.0; // Adjust this value as needed
 
       // Calculate the weight using the Gaussian-like function
       double gaussianWeight =

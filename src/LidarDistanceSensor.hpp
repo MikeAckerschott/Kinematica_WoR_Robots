@@ -27,9 +27,9 @@ namespace Model
 			/**
 			 *
 			 */
-			LidarDistanceSensor( Robot& aRobot);
+			explicit LidarDistanceSensor( Robot& aRobot);
 
-			LidarDistanceSensor(wxPoint aPosition);
+			explicit LidarDistanceSensor(wxPoint aPosition);
 			/**
 			 *
 			 */

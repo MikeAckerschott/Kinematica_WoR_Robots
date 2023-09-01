@@ -169,8 +169,6 @@ void RobotShape::drawParticleFilter(wxDC &dc) {
 }
 
 void RobotShape::drawKalmanFilter(wxDC &dc) {
-  std::cout << "from draw: " << getRobot()->getBelievedRoute().size()
-            << std::endl;
   for (int i = 1; i < getRobot()->getBelievedRoute().size(); ++i) {
     // draw a line between the two points
     dc.SetPen(wxPen("Green", borderWidth + 5, wxPENSTYLE_SOLID));
@@ -267,7 +265,6 @@ void RobotShape::drawLaser(wxDC &dc) {
   }
 
   for (int i = 0; i < getRobot()->particlePositions.size(); ++i) {
-    // std::cout << getRobot()->particlePositions.size() << std::endl;
     dc.SetPen(wxPen("BLUE", borderWidth, wxPENSTYLE_SOLID));
     dc.DrawCircle(wxPoint(getRobot()->particlePositions[i].x,
                           getRobot()->particlePositions[i].y),

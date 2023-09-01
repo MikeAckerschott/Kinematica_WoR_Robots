@@ -32,7 +32,6 @@ std::shared_ptr<AbstractStimulus> CompassSensor::getStimulus() const {
     std::normal_distribution<> noise{0, CompassSensor::stddev};
 
     auto test = robot->getFront();
-    auto testAsAngle = Utils::Shape2DUtils::getAngle(test);
 
     double angle = Utils::MathUtils::toRadians(
         Utils::MathUtils::toDegrees(
@@ -41,6 +40,8 @@ std::shared_ptr<AbstractStimulus> CompassSensor::getStimulus() const {
 
     return std::make_shared<CompassStimulus>(angle);
   }
+  Application::Logger::log("CompassSensor::getStimulus() - No robot provided!");
+  return std::make_shared<CompassStimulus>(666);
 }
 /**
  *
@@ -56,6 +57,9 @@ std::shared_ptr<AbstractPercept> CompassSensor::getPerceptFor(
       return std::make_shared<CompassPercept>(angle);
     }
   }
+  Application::Logger::log(
+      "CompassSensor::getPerceptFor() - No robot provided!");
+  return std::make_shared<CompassPercept>(666);
 }
 /**
  *

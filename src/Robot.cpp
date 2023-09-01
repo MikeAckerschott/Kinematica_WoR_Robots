@@ -44,10 +44,11 @@ Robot::Robot(const std::string &aName) : Robot(aName, wxDefaultPosition) {}
  *
  */
 Robot::Robot(const std::string &aName, const wxPoint &aPosition)
-    : name(aName), size(wxDefaultSize), position(aPosition), front(0, 0),
-      speed(0.0), acting(false), driving(false), communicating(false),
+    : beliefPosition(wxPoint(0, 0)), beliefOrientation(90.0), name(aName),
+      size(wxDefaultSize), position(aPosition), front(0, 0), speed(0.0),
+      acting(false), driving(false), communicating(false),
       particleFilterEnabled(false), kalmanFilterEnabled(false),
-      beliefOrientation(90.0), beliefPosition(wxPoint(0, 0)),
+
       currentOdomMeasurement(10), currentCompassMeasurement(90) {
   std::shared_ptr<AbstractSensor> laserSensor =
       std::make_shared<LaserDistanceSensor>(*this);
@@ -443,8 +444,6 @@ void Robot::driveWithKalmanfilter() {
       position.x = vertex.x;
       position.y = vertex.y;
 
-      // std::cout << "moving..." << std::endl;
-
       // Do the measurements / handle all percepts
       // TODO There are race conditions here:
       //			1. size() is not atomic
@@ -475,9 +474,7 @@ void Robot::driveWithKalmanfilter() {
             CompassPercept *odomPercept =
                 dynamic_cast<CompassPercept *>(percept.value().get());
             this->currentCompassMeasurement = odomPercept->angle;
-          } else {
           }
-          // std::cout << "get angle" << std::endl;
 
         } else {
           Application::Logger::log("Huh??");
@@ -495,7 +492,6 @@ void Robot::driveWithKalmanfilter() {
             std::string(", ") + std::to_string(beliefAsPoint.y));
         beliefRoute.push_back(beliefAsPoint);
 
-        std::cout << "from drive: " << beliefRoute.size() << std::endl;
       }
 
       // Stop on arrival or collision
@@ -531,9 +527,6 @@ void Robot::driveWithKalmanfilter() {
                              std::string(": unknown exception"));
     std::cerr << __PRETTY_FUNCTION__ << ": unknown exception" << std::endl;
   }
-
-  std::cout << "belief: " << beliefRoute.at(beliefRoute.size() - 1)
-            << std::endl;
 }
 
 /**
@@ -711,18 +704,13 @@ void Robot::driveWithParticlefilter() {
       int speedX = speed * cos(angle);
       int speedY = speed * sin(angle);
 
-
-
       particleFilter.getUpdatedParticles(speedX, speedY);
       this->particlePositions = particleFilter.getParticlePositions();
       beliefPosition = particleFilter.getBelievedPosition();
 
-
       beliefRoute.push_back(beliefPosition);
       beliefOrientation = Utils::Shape2DUtils::getAngle(
           BoundedVector(beliefPosition, beliefRoute[beliefRoute.size() - 2]));
-
-
 
       // Stop on arrival or collision
       if (arrived(goal) || collision()) {
@@ -834,9 +822,5 @@ wxPoint Robot::getBelievedPosition() const { return beliefPosition; }
 std::vector<wxPoint> Robot::getBelievedRoute() const { return beliefRoute; }
 
 wxPoint Robot::getPreviousPosition() { return previousPosition; }
-
-void Robot::setPreviousPosition(const wxPoint aPosition) {
-  previousPosition = aPosition;
-}
 
 } // namespace Model

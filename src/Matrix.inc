@@ -329,10 +329,8 @@ Matrix<T, M, N> Matrix<T, M, N>::gauss() const
 		int counter = 0;
 		while (result.at(i).at(i) == 0 && counter < result.getRows())
 		{
-//			std::cout << "swapping: " << std::endl;
 			++counter;
 			result.swap(i, counter);
-//			std::cout << result.to_string() << std::endl;
 		}
 
 		//whole column is 0; continue
@@ -345,9 +343,7 @@ Matrix<T, M, N> Matrix<T, M, N>::gauss() const
 		int valueToDivideWith = result.at(i).at(i);
 		for (int j = 0; j < result.getColumns(); ++j)
 		{
-//			std::cout << "Set first value to 1: " << std::endl;
 			result.at(i).at(j) = (result.at(i).at(j) / valueToDivideWith);
-//			std::cout << result.to_string() << std::endl;
 		}
 
 		for (int j = i + 1; j < result.getRows(); ++j)
@@ -355,10 +351,8 @@ Matrix<T, M, N> Matrix<T, M, N>::gauss() const
 			int valueToExtractWith = result.at(j).at(i);
 			for (int k = 0; k < result.getColumns(); ++k)
 			{
-//				std::cout << "set value to zero" << std::endl;
 				result.at(j).at(k) = result.at(j).at(k)
 						- (result.at(i).at(k) * valueToExtractWith);
-//				std::cout << result.to_string() << std::endl;
 			}
 		}
 	}
@@ -382,13 +376,7 @@ Matrix<T, M, N> Matrix<T, M, N>::gauss() const
 		result.at(result.getRows() - 1).at(p) =
 				result.at(result.getRows() - 1).at(p) / valueToDivideWith;
 	}
-
-//	printf("%lf\n", valueToExtractWith);
-
-//	std::cout << "done: " << std::endl;
-//	std::cout << result.to_string() << std::endl;
 	return result;
-
 }
 /**
  *
@@ -408,17 +396,13 @@ Matrix<T, M, N> Matrix<T, M, N>::gaussJordan() const {
 			}
 		}
 	}
-	//std::cout<<result<<std::endl;
 
 
 	for(int i = 0; i < result.getRows(); ++i){
 		double valueToDivideWith = result.at(i).at(i);
-		//std::cout<<result<<std::endl;
-		//std::cout<<valueToDivideWith<<std::endl;
 		for(int j = 0; j < result.getColumns(); ++j){
 			result.at(i).at(j) = (result.at(i).at(j) / valueToDivideWith);
 		}
-		//std::cout<<result<<std::endl;
 		for(int j = 0; j < result.getRows(); ++j){
 			if(j != i){
 				double valueToExtractWith = result.at(j).at(i);
@@ -428,10 +412,6 @@ Matrix<T, M, N> Matrix<T, M, N>::gaussJordan() const {
 			}
 		}
 	}
-
-
-
-	//std::cout<<result<<std::endl;
 	return result;
 }
 /**

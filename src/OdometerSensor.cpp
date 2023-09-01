@@ -43,6 +43,9 @@ std::shared_ptr<AbstractStimulus> OdometerSensor::getStimulus() const {
 
     return std::make_shared<OdometerStimulus>(distanceDriven);
   }
+  Application::Logger::log(
+      "OdometerSensor::getStimulus() - No robot provided!");
+  return std::make_shared<OdometerStimulus>(666);
 }
 /**
  *
@@ -58,6 +61,9 @@ std::shared_ptr<AbstractPercept> OdometerSensor::getPerceptFor(
       return std::make_shared<OdometerPercept>(distanceDriven);
     }
   }
+  Application::Logger::log(
+      "OdometerSensor::getPerceptFor() - No robot provided!");
+  return std::make_shared<OdometerPercept>(666);
 }
 /**
  *

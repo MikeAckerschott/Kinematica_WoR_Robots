@@ -15,7 +15,7 @@ namespace Model {
 class KalmanFilter {
 
 public:
-  KalmanFilter(wxPoint startPosition);
+  explicit KalmanFilter(wxPoint startPosition);
   virtual ~KalmanFilter();
 
       // We use the real position for starters, not an estimated position.

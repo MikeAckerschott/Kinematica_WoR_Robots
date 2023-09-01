@@ -250,11 +250,11 @@ public:
 
   bool isParticleFilterActive() const;
 
-  void setParticleFilterActive(bool active);
+  void setParticleFilterActive(bool particleFilterActive);
 
   bool isKalmanFilterActive() const;
 
-  void setKalmanFilterActive(bool active);
+  void setKalmanFilterActive(bool kalmanFilterActive);
 
   wxPoint getBelievedPosition() const;
 

@@ -16,7 +16,7 @@ public:
   /**
    *
    */
-  OdometerStimulus(double aDistance) : distance(aDistance) {}
+  explicit OdometerStimulus(double aDistance) : distance(aDistance) {}
   double distance;
   /**
    * @name Debug functions

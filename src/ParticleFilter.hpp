@@ -18,13 +18,9 @@ namespace Model {
 class ParticleFilter {
 
 public:
-  ParticleFilter();
-
   ParticleFilter(ParticleFilter &particleFilter);
 
   ParticleFilter(int numberOfParticles, LidarDistanceSensor *lidar);
-
-  ParticleFilter &operator=(const ParticleFilter &other);
 
   virtual ~ParticleFilter();
 

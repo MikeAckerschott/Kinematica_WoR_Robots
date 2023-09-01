@@ -16,7 +16,7 @@ public:
   /**
    *
    */
-  CompassStimulus(double angle) : angle(angle) {}
+  explicit CompassStimulus(double angle) : angle(angle) {}
   double angle;
   /**
    * @name Debug functions

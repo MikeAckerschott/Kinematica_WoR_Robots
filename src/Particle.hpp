@@ -12,22 +12,20 @@
 
 namespace Model {
 
-    class Particle{
+class Particle {
 
+public:
+  // Particle();
+  Particle(const DistanceStimuli &lidarScan, unsigned long long weight, int x, int y);
+  virtual ~Particle();
 
-    public:
-        // Particle();
-        Particle(DistanceStimuli lidarScan, unsigned long long weight, int x, int y);
-        virtual ~Particle();
+  Particle(const Particle &other);
 
-        Particle(const Particle &other);
-
-        unsigned long long weight;
-        DistanceStimuli lidarScan;
-        int x;
-        int y;
-
-    };
+  DistanceStimuli lidarScan;
+  unsigned long long weight;
+  int x;
+  int y;
+};
 
 } // namespace Model
 #endif /* PARTICLE_HPP_ */
