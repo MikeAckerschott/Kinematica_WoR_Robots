@@ -35,10 +35,6 @@ namespace Model {
 /**
  *
  */
-Robot::Robot() : Robot("", wxDefaultPosition) {}
-/**
- *
- */
 Robot::Robot(const std::string &aName) : Robot(aName, wxDefaultPosition) {}
 /**
  *
@@ -484,8 +480,7 @@ void Robot::driveWithKalmanfilter() {
       if (currentCompassMeasurement != 90) {
 
         auto beliefAsPoint = filter.iterateFilter(
-            this->position, this->previousPosition,
-            this->currentCompassMeasurement, this->currentOdomMeasurement);
+                        this->currentCompassMeasurement, this->currentOdomMeasurement);
 
         Application::Logger::log(
             std::string("BELIEF: ") + std::to_string(beliefAsPoint.x) +
@@ -696,15 +691,15 @@ void Robot::driveWithParticlefilter() {
       // Update the belief
 
       particleFilter.calculateWeight(currentLidarPointCloud, getPosition().x,
-                                     getPosition().y, beliefPosition);
+                                     getPosition().y);
 
-      int speed = this->getSpeed();
+			int speed = static_cast<int>((this->getSpeed()));
       double angle = Utils::Shape2DUtils::getAngle(getFront());
 
-      int speedX = speed * cos(angle);
-      int speedY = speed * sin(angle);
+			int speedX = static_cast<int>((speed * cos(angle)));
+			int speedY = static_cast<int>((speed * sin(angle)));
 
-      particleFilter.getUpdatedParticles(speedX, speedY);
+      particleFilter.getUpdatedParticles();
       this->particlePositions = particleFilter.getParticlePositions();
       beliefPosition = particleFilter.getBelievedPosition();
 

@@ -48,10 +48,6 @@ public:
   /**
    *
    */
-  Robot();
-  /**
-   *
-   */
   explicit Robot(const std::string &aName);
   /**
    *

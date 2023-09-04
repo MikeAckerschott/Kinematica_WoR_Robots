@@ -13,7 +13,7 @@ KalmanFilter::~KalmanFilter() {
   // TODO Auto-generated destructor stub
 }
 
-wxPoint KalmanFilter::iterateFilter(wxPoint position, wxPoint previousPosition,
+wxPoint KalmanFilter::iterateFilter(
                                     double compassMeasurement,
                                     double odometerMeasurement) {
 
@@ -36,7 +36,10 @@ wxPoint KalmanFilter::iterateFilter(wxPoint position, wxPoint previousPosition,
 
   error = predictedProcessCovariance * (A - kalmanGain * A);
 
-  return wxPoint(belief.at(0).at(0), belief.at(1).at(0));
+  int believedX = static_cast<int>(belief.at(0).at(0));
+  int believedY = static_cast<int>(belief.at(1).at(0));
+
+  return wxPoint(believedX, believedY);
 }
 
 } // namespace Model

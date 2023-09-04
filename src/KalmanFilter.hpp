@@ -25,7 +25,7 @@ public:
     const Matrix<double, 2, 2> A = {{1, 0}, {0, 1}};
     const Matrix<double, 2, 2> R = {{1, 0}, {0, 1}}; // sensor covariance matrix
 
-    wxPoint iterateFilter(wxPoint position, wxPoint previousPosition, double compassMeasurement, double odometerMeasurement);
+    wxPoint iterateFilter(double compassMeasurement, double odometerMeasurement);
 
   
 };

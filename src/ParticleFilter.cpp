@@ -10,7 +10,7 @@ ParticleFilter::ParticleFilter(int numberOfParticles,
                                LidarDistanceSensor *lidar)
     : lidar(lidar), totalWeight(0.0) {
   // TODO Auto-generated constructor stub
-  srand((unsigned)time(NULL));
+	srand(static_cast<unsigned>(time(NULL)));
   for (int i = 0; i < numberOfParticles; i++) {
     int x = rand() % 1024;
     int y = rand() % 1024;
@@ -32,7 +32,7 @@ ParticleFilter::~ParticleFilter() {
 std::vector<wxPoint> ParticleFilter::getParticlePositions() {
   std::vector<wxPoint> positions;
 
-  for (int i = 0; i < particles.size(); ++i) {
+  for (long unsigned int i = 0; i < particles.size(); ++i) {
     positions.push_back(wxPoint(particles.at(i).x, particles.at(i).y));
   }
 
@@ -42,15 +42,14 @@ std::vector<wxPoint> ParticleFilter::getParticlePositions() {
 std::vector<unsigned long long> ParticleFilter::getParticleWeights() {
   std::vector<unsigned long long> weights;
 
-  for (int i = 0; i < particles.size(); ++i) {
+  for (long unsigned int i = 0; i < particles.size(); ++i) {
     weights.push_back(particles.at(i).weight);
   }
 
   return weights;
 }
 
-std::vector<Particle> ParticleFilter::getUpdatedParticles(int speedX,
-                                                          int speedY) {
+std::vector<Particle> ParticleFilter::getUpdatedParticles() {
   std::vector<Particle> updatedParticles;
   std::vector<unsigned long long> weights = getParticleWeights();
 
@@ -62,18 +61,32 @@ std::vector<Particle> ParticleFilter::getUpdatedParticles(int speedX,
   std::uniform_int_distribution<std::mt19937::result_type> addedX(-10, 10);
   std::uniform_int_distribution<std::mt19937::result_type> addedY(-10, 10);
 
-  for (int i = 0; i < particles.size(); ++i) {
-    int index = distribution(gen);
+  for (long unsigned int i = 0; i < particles.size(); ++i) {
+    long long unsigned int index = distribution(gen);
 
     // weightMultiplier * particles.size() = max weight
-    int x = particles.at(index).x + addedX(gen) +
-            (1 - (particles.at(index).weight /
-                  (weightMultiplier * particles.size()))) *
-                addedX(gen);
-    int y = particles.at(index).y + addedY(gen) +
-            (1 - (particles.at(index).weight /
-                  (weightMultiplier * particles.size()))) *
-                addedY(gen);
+//    int x = (particles.at(index).x + addedX(gen) +
+//            (1 - (particles.at(index).weight /
+//                  (weightMultiplier * particles.size()))) *
+//                addedX(gen));
+//    int y = (particles.at(index).y + addedY(gen) +
+//            (1 - (particles.at(index).weight /
+//                  (weightMultiplier * particles.size()))) *
+//                addedY(gen));
+
+    long unsigned int x = particles.at(index).x + addedX(gen); //move particle around
+    long unsigned int y = particles.at(index).y + addedY(gen); //move particle around
+
+    //move particle more or less based on current weight
+    double totalParticles = static_cast<double>(particles.size());
+    double particleWeight = static_cast<double>(particles.at(index).weight);
+
+    x += 1-(static_cast<long unsigned int>(particleWeight /
+            (weightMultiplier * totalParticles)) *
+          addedX(gen));
+    y += 1-(static_cast<long unsigned int>(particleWeight /
+            (weightMultiplier * totalParticles)) *
+          addedY(gen));
 
     std::shared_ptr<AbstractStimulus> stimulus =
         lidar->getStimulus((wxPoint(x, y)));
@@ -93,30 +106,31 @@ std::vector<Particle> ParticleFilter::getUpdatedParticles(int speedX,
 }
 
 void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan,
-                                     int x, int y,
-                                     wxPoint robotBelievedPosition) {
+                                     int x, int y) {
 
   totalWeight = 0.0;
 
-  for (int i = 0; i < particles.size(); ++i) {
-    double weight = 0.0;
+  for (unsigned long long i = 0; i < particles.size(); ++i) {
 
-    int iterationSize =
+    long unsigned int iterationSize =
         std::min(particles.at(i).lidarScan.stimuli.size(), lidarScan.size());
 
     particles[i].weight = 0;
 
-    for (int j = 0; j < iterationSize; ++j) {
+    for (long unsigned int j = 0; j < iterationSize; ++j) {
 
       DistanceStimulus distanceStimulus =
           particles.at(i).lidarScan.stimuli.at(j);
 
       wxPoint beginpoint(particles.at(i).x, particles.at(i).y);
 
-      wxPoint endpoint{static_cast<int>(particles.at(i).x +
+      double x = static_cast<double>(particles.at(i).x);
+      double y = static_cast<double>(particles.at(i).y);
+
+      wxPoint endpoint{static_cast<int>(x +
                                         std::cos(distanceStimulus.angle) *
                                             distanceStimulus.distance),
-                       static_cast<int>(particles.at(i).y +
+                       static_cast<int>(y +
                                         std::sin(distanceStimulus.angle) *
                                             distanceStimulus.distance)};
 
@@ -136,7 +150,7 @@ void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan,
           std::exp(-0.5 * (distanceDifference * distanceDifference) /
                    (stdDeviation * stdDeviation));
 
-      particles[i].weight += gaussianWeight * weightMultiplier;
+      particles[i].weight += static_cast<unsigned long long>(gaussianWeight * weightMultiplier);
     }
 
     totalWeight += particles[i].weight;
@@ -152,10 +166,10 @@ wxPoint ParticleFilter::getBelievedPosition() {
   std::discrete_distribution<unsigned long long> distribution(weights.begin(),
                                                               weights.end());
 
-  int totalX = 0;
-  int totalY = 0;
-  for (int i = 0; i < weights.size(); ++i) {
-    int index = distribution(gen);
+  long unsigned int totalX = 0;
+  long unsigned int totalY = 0;
+  for (long long unsigned int i = 0; i < weights.size(); ++i) {
+    long long unsigned int index = distribution(gen);
     totalX += particles.at(index).x;
     totalY += particles.at(index).y;
   }

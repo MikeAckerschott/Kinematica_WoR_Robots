@@ -160,7 +160,7 @@ void RobotShape::drawStartPosition(wxDC &dc) {
 
 void RobotShape::drawParticleFilter(wxDC &dc) {
   // TODO: Draw the particle filter path
-  for (int i = 1; i < getRobot()->getBelievedRoute().size(); ++i) {
+  for (unsigned long long i = 1; i < getRobot()->getBelievedRoute().size(); ++i) {
     // draw a line between the two points
     dc.SetPen(wxPen("Green", borderWidth + 5, wxPENSTYLE_SOLID));
     dc.DrawLine(getRobot()->getBelievedRoute()[i - 1],
@@ -169,7 +169,7 @@ void RobotShape::drawParticleFilter(wxDC &dc) {
 }
 
 void RobotShape::drawKalmanFilter(wxDC &dc) {
-  for (int i = 1; i < getRobot()->getBelievedRoute().size(); ++i) {
+  for (unsigned long long i = 1; i < getRobot()->getBelievedRoute().size(); ++i) {
     // draw a line between the two points
     dc.SetPen(wxPen("Green", borderWidth + 5, wxPENSTYLE_SOLID));
     dc.DrawLine(getRobot()->getBelievedRoute()[i - 1],
@@ -264,7 +264,7 @@ void RobotShape::drawLaser(wxDC &dc) {
     }
   }
 
-  for (int i = 0; i < getRobot()->particlePositions.size(); ++i) {
+  for (unsigned long long i = 0; i < getRobot()->particlePositions.size(); ++i) {
     dc.SetPen(wxPen("BLUE", borderWidth, wxPENSTYLE_SOLID));
     dc.DrawCircle(wxPoint(getRobot()->particlePositions[i].x,
                           getRobot()->particlePositions[i].y),

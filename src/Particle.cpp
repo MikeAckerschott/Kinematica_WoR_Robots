@@ -4,7 +4,7 @@
 
 namespace Model {
 
-Particle::Particle(const DistanceStimuli &lidarScan, unsigned long long weight, int x, int y): lidarScan(lidarScan), weight(weight), x(x), y(y) {
+Particle::Particle(const DistanceStimuli &lidarScan, unsigned long long weight, long unsigned x, long unsigned y): lidarScan(lidarScan), weight(weight), x(x), y(y) {
 
 } // namespace Model
 

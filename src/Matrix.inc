@@ -263,12 +263,12 @@ Matrix<T, M, columns> Matrix<T, M, N>::operator*(
 {
 	Matrix < T, M, columns > temp;
 
-	for (int k = 0; k < this->getRows(); ++k)
+	for (long unsigned int k = 0; k < this->getRows(); ++k)
 	{
-		for (int j = 0; j < rhs.getColumns(); ++j)
+		for (long unsigned int j = 0; j < rhs.getColumns(); ++j)
 		{
 			int value = 0;
-			for (int i = 0; i < this->getColumns(); ++i)
+			for (long unsigned int i = 0; i < this->getColumns(); ++i)
 			{
 				value += this->at(k).at(i) * rhs.at(i).at(j);
 			}
@@ -385,10 +385,10 @@ template<class T, std::size_t M, std::size_t N>
 Matrix<T, M, N> Matrix<T, M, N>::gaussJordan() const {
 	Matrix < T, M, N > result(*this);
 
-	for(int i = 0; i < result.getRows(); ++i){
+	for(unsigned long long i = 0; i < result.getRows(); ++i){
 		//check if row has zero and swap it with different row untill it it isnt zero
 		if(result.at(i).at(i) == 0){
-			for(int j = i+1; j < result.getRows(); ++j){
+			for(unsigned long long j = i+1; j < result.getRows(); ++j){
 				if(result.at(j).at(i) != 0 && result.at(i).at(j) != 0){
 					result.swap(i, j);
 					break;
@@ -398,15 +398,15 @@ Matrix<T, M, N> Matrix<T, M, N>::gaussJordan() const {
 	}
 
 
-	for(int i = 0; i < result.getRows(); ++i){
+	for(unsigned long long i = 0; i < result.getRows(); ++i){
 		double valueToDivideWith = result.at(i).at(i);
-		for(int j = 0; j < result.getColumns(); ++j){
+		for(unsigned long long j = 0; j < result.getColumns(); ++j){
 			result.at(i).at(j) = (result.at(i).at(j) / valueToDivideWith);
 		}
-		for(int j = 0; j < result.getRows(); ++j){
+		for(unsigned long long j = 0; j < result.getRows(); ++j){
 			if(j != i){
 				double valueToExtractWith = result.at(j).at(i);
-				for(int k = 0; k < result.getColumns(); ++k){
+				for(unsigned long long k = 0; k < result.getColumns(); ++k){
 					result.at(j).at(k) = result.at(j).at(k) - (result.at(i).at(k) * valueToExtractWith);
 				}
 			}
@@ -423,7 +423,7 @@ Matrix<T, M, 1> Matrix<T, M, N>::solve() const {
 	result = result.gaussJordan();
 
 	Matrix < T, M, 1 > result2;
-	for(int i = 0; i < result.getRows(); ++i){
+	for(unsigned long long i = 0; i < result.getRows(); ++i){
 		result2.at(i).at(0) = result.at(i).at(result.getColumns()-1);
 	}
 
@@ -442,22 +442,22 @@ Matrix<T, M, N> Matrix<T, M, N>::inverse() const
 
 	Matrix<T, M, M*2> calculationMatrix;
 
-	for(int i = 0; i < result.getRows(); ++i){
-		for(int j = 0; j < result.getColumns(); ++j){
+	for(unsigned long long i = 0; i < result.getRows(); ++i){
+		for(unsigned long long j = 0; j < result.getColumns(); ++j){
 			calculationMatrix.at(i).at(j) = result.at(i).at(j);
 		}
 	}
 
-	for(int i = 0; i < identity.getRows(); ++i){
-		for(int j = 0; j < identity.getColumns(); ++j){
+	for(unsigned long long i = 0; i < identity.getRows(); ++i){
+		for(unsigned long long j = 0; j < identity.getColumns(); ++j){
 			calculationMatrix.at(i).at(j+result.getColumns()) = identity.at(i).at(j);
 		}
 	}
 
 	calculationMatrix = calculationMatrix.gaussJordan();
 
-	for(int i = 0; i < result.getRows(); ++i){
-		for(int j = 0; j < result.getColumns(); ++j){
+	for(unsigned long long i = 0; i < result.getRows(); ++i){
+		for(unsigned long long j = 0; j < result.getColumns(); ++j){
 			result.at(i).at(j) = calculationMatrix.at(i).at(j+result.getColumns());
 		}
 	}
