@@ -439,17 +439,11 @@ void MainFrameWindow::OnParticleFilterSelection(
     wxCommandEvent &UNUSEDPARAM(anEvent)) {
   Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot("Robot");
   if (robot) {
-    if (robot->isKalmanFilterActive()) {
-      robot->setKalmanFilterActive(false);
-      Logger::log("Kalman filter disabled");
-    }
+    robot->setParticleFilterActive(!robot->isParticleFilterActive());
     if (robot->isParticleFilterActive()) {
-      Logger::log("Particle filter disabled");
-      robot->setParticleFilterActive(false);
-
-    } else {
       Logger::log("Particle filter enabled");
-      robot->setParticleFilterActive(true);
+    } else {
+      Logger::log("Particle filter disabled");
     }
   }
 }
@@ -458,17 +452,11 @@ void MainFrameWindow::OnKalmanFilterSelection(
     wxCommandEvent &UNUSEDPARAM(anEvent)) {
   Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot("Robot");
   if (robot) {
-    if (robot->isParticleFilterActive()) {
-      Logger::log("Particle filter disabled");
-      robot->setParticleFilterActive(false);
-    }
+    robot->setKalmanFilterActive(!robot->isKalmanFilterActive());
     if (robot->isKalmanFilterActive()) {
-      Logger::log("Kalman filter disabled");
-      robot->setKalmanFilterActive(false);
-
-    } else {
       Logger::log("Kalman filter enabled");
-      robot->setKalmanFilterActive(true);
+    } else {
+      Logger::log("Kalman filter disabled");
     }
   }
 }

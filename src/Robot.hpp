@@ -252,9 +252,8 @@ public:
 
   void setKalmanFilterActive(bool kalmanFilterActive);
 
-  wxPoint getBelievedPosition() const;
-
-  std::vector<wxPoint> getBelievedRoute() const;
+  std::vector<wxPoint> getBelievedRouteParticle() const;
+  std::vector<wxPoint> getBelievedRouteKalman() const;
 
 protected:
   /**
@@ -263,10 +262,10 @@ protected:
   void drive();
     /**
    *
-   */
-  void driveWithParticlefilter();
+  //  */
+  // void driveWithParticlefilter();
 
-  void driveWithKalmanfilter();
+  // void driveWithKalmanfilter();
   /**
    *
    */
@@ -283,19 +282,34 @@ protected:
 private:
 
   /**
-   *The believed position of the robot calculated by the particle or kalman filter
+   *The believed position of the robot calculated by the  kalman filter
    */
-  wxPoint beliefPosition;
+  wxPoint beliefPositionKalman;
 
   /**
-  *The believed route of the robot calculated by the particle or kalman filter
+  *The believed route of the robot calculated by the  kalman filter
   */
-  std::vector<wxPoint> beliefRoute;
+  std::vector<wxPoint> beliefRouteKalman;
 
   /**
-  *The believed orientation of the robot calculated by particle or kalman filter in radians
+  *The believed orientation of the robot calculated by kalman filter in radians
   */
-  double beliefOrientation;
+  double beliefOrientationKalman;
+
+  /**
+   *The believed position of the robot calculated by the particle filter
+   */
+  wxPoint beliefPositionParticle;
+
+  /**
+  *The believed route of the robot calculated by the particle filter
+  */
+  std::vector<wxPoint> beliefRouteParticle;
+
+  /**
+  *The believed orientation of the robot calculated by particle filter in radians
+  */
+  double beliefOrientationParticle;
 
   /**
    *

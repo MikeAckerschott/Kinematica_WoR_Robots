@@ -6,6 +6,8 @@ KalmanFilter::KalmanFilter(wxPoint startPosition) {
   belief.at(0).at(0) = startPosition.x;
   belief.at(1).at(0) = startPosition.y;
 
+  std::cout << belief.at(0).at(0) << " " << belief.at(1).at(0) << std::endl;
+
   error = {{100, 0}, {0, 100}};
 }
 
@@ -13,14 +15,18 @@ KalmanFilter::~KalmanFilter() {
   // TODO Auto-generated destructor stub
 }
 
-wxPoint KalmanFilter::iterateFilter(
-                                    double compassMeasurement,
+wxPoint KalmanFilter::iterateFilter(double compassMeasurement,
                                     double odometerMeasurement) {
+
+  std::cout << "odom: " << odometerMeasurement << " " << compassMeasurement
+            << std::endl;
 
   double measuredX =
       odometerMeasurement * cos(compassMeasurement) + belief.at(0).at(0);
   double measuredY =
       odometerMeasurement * sin(compassMeasurement) + belief.at(1).at(0);
+
+  std::cout << "measured: " << measuredX << " " << measuredY << std::endl;
 
   Matrix<double, 2, 1> control = {measuredX - belief.at(0).at(0),
                                   measuredY - belief.at(1).at(0)};
