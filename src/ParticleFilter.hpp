@@ -25,7 +25,7 @@ public:
   virtual ~ParticleFilter();
 
   // calculate the particle filter
-  void calculateWeight(std::vector<DistancePercept> &lidarScan, int x, int y);
+  void calculateWeight(std::vector<DistancePercept> &lidarScan);
 
   std::vector<Particle> getUpdatedParticles();
 

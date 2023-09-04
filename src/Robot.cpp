@@ -690,14 +690,7 @@ void Robot::driveWithParticlefilter() {
 
       // Update the belief
 
-      particleFilter.calculateWeight(currentLidarPointCloud, getPosition().x,
-                                     getPosition().y);
-
-			int speed = static_cast<int>((this->getSpeed()));
-      double angle = Utils::Shape2DUtils::getAngle(getFront());
-
-			int speedX = static_cast<int>((speed * cos(angle)));
-			int speedY = static_cast<int>((speed * sin(angle)));
+      particleFilter.calculateWeight(currentLidarPointCloud);
 
       particleFilter.getUpdatedParticles();
       this->particlePositions = particleFilter.getParticlePositions();

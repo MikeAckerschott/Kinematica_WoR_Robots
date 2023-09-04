@@ -16,15 +16,15 @@ class Particle {
 
 public:
   // Particle();
-  Particle(const DistanceStimuli &lidarScan, unsigned long long weight, long unsigned x, long unsigned y);
+  Particle(const DistanceStimuli &lidarScan, unsigned long long weight, int x, int y);
   virtual ~Particle();
 
   Particle(const Particle &other);
 
   DistanceStimuli lidarScan;
   unsigned long long weight;
-  long unsigned x;
-  long unsigned y;
+  int x;
+  int y;
 };
 
 } // namespace Model

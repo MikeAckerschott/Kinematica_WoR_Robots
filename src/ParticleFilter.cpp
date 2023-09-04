@@ -74,19 +74,19 @@ std::vector<Particle> ParticleFilter::getUpdatedParticles() {
 //                  (weightMultiplier * particles.size()))) *
 //                addedY(gen));
 
-    long unsigned int x = particles.at(index).x + addedX(gen); //move particle around
-    long unsigned int y = particles.at(index).y + addedY(gen); //move particle around
+     int x = particles.at(index).x + static_cast<int>(addedX(gen)); //move particle around
+     int y = particles.at(index).y + static_cast<int>(addedY(gen)); //move particle around
 
     //move particle more or less based on current weight
     double totalParticles = static_cast<double>(particles.size());
     double particleWeight = static_cast<double>(particles.at(index).weight);
 
-    x += 1-(static_cast<long unsigned int>(particleWeight /
+    x += 1-(static_cast< int>(particleWeight /
             (weightMultiplier * totalParticles)) *
-          addedX(gen));
-    y += 1-(static_cast<long unsigned int>(particleWeight /
+          static_cast<int>(addedX(gen)));
+    y += 1-(static_cast<int>(particleWeight /
             (weightMultiplier * totalParticles)) *
-          addedY(gen));
+          static_cast<int>(addedY(gen)));
 
     std::shared_ptr<AbstractStimulus> stimulus =
         lidar->getStimulus((wxPoint(x, y)));
@@ -105,8 +105,7 @@ std::vector<Particle> ParticleFilter::getUpdatedParticles() {
   return updatedParticles;
 }
 
-void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan,
-                                     int x, int y) {
+void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan) {
 
   totalWeight = 0.0;
 
@@ -138,7 +137,7 @@ void ParticleFilter::calculateWeight(std::vector<DistancePercept> &lidarScan,
           Utils::Shape2DUtils::distance(beginpoint, endpoint);
 
       double lidarDistance =
-          Utils::Shape2DUtils::distance(wxPoint(x, y), lidarScan.at(j).point);
+          Utils::Shape2DUtils::distance(wxPoint(particles.at(i).x, particles.at(i).y), lidarScan.at(j).point);
 
       double distanceDifference = particleDistance - lidarDistance;
 
@@ -174,7 +173,11 @@ wxPoint ParticleFilter::getBelievedPosition() {
     totalY += particles.at(index).y;
   }
 
-  return wxPoint(totalX / weights.size(), totalY / weights.size());
+  int totalParticles = static_cast<int>(weights.size());
+  int believedX = static_cast<int>(totalX / totalParticles);
+  int believedY = static_cast<int>(totalY / totalParticles);
+
+  return wxPoint(believedX, believedY);
 }
 
 } // namespace Model
