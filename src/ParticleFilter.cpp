@@ -100,7 +100,6 @@ namespace Model
 
       // get current Compass scan
       double currentCompassScan = Model::RobotWorld::getRobotWorld().getRobot("Robot")->getCurrentCompassMeasurement();
-      std::cout << "currentCompassScan: " << currentCompassScan << std::endl;
       x += static_cast<int>(std::cos(currentCompassScan) * 8);
       y += static_cast<int>(std::sin(currentCompassScan) * 8);
 

@@ -140,7 +140,8 @@ am_robotworld_OBJECTS = robotworld-AbstractActuator.$(OBJEXT) \
 	robotworld-Particle.$(OBJEXT) \
 	robotworld-KalmanFilter.$(OBJEXT) \
 	robotworld-CompassSensor.$(OBJEXT) \
-	robotworld-OdometerSensor.$(OBJEXT)
+	robotworld-OdometerSensor.$(OBJEXT) \
+	robotworld-ConfigFileReader.$(OBJEXT)
 robotworld_OBJECTS = $(am_robotworld_OBJECTS)
 am__DEPENDENCIES_1 =
 robotworld_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -174,6 +175,7 @@ am__depfiles_remade = ./$(DEPDIR)/robotworld-AStar.Po \
 	./$(DEPDIR)/robotworld-BoundedVector.Po \
 	./$(DEPDIR)/robotworld-CommunicationService.Po \
 	./$(DEPDIR)/robotworld-CompassSensor.Po \
+	./$(DEPDIR)/robotworld-ConfigFileReader.Po \
 	./$(DEPDIR)/robotworld-FileTraceFunction.Po \
 	./$(DEPDIR)/robotworld-Goal.Po \
 	./$(DEPDIR)/robotworld-GoalShape.Po \
@@ -485,7 +487,8 @@ robotworld_SOURCES = AbstractActuator.cpp	\
 						Particle.cpp	\
 						KalmanFilter.cpp	\
 						CompassSensor.cpp	\
-						OdometerSensor.cpp	
+						OdometerSensor.cpp	\
+						ConfigFileReader.cpp
 
 robotworld_CPPFLAGS = $(AM_CPPFLAGS) $(ROBOTWORLD_CPPFLAGS) $(WX_CPPFLAGS)
 robotworld_CFLAGS = $(AM_CFLAGS)   $(ROBOTWORLD_CFLAGS)	  $(WX_CFLAGS)
@@ -608,6 +611,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-BoundedVector.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-CommunicationService.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-CompassSensor.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-ConfigFileReader.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-FileTraceFunction.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-Goal.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/robotworld-GoalShape.Po@am__quote@ # am--include-marker
@@ -1307,6 +1311,20 @@ robotworld-OdometerSensor.obj: OdometerSensor.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-OdometerSensor.obj `if test -f 'OdometerSensor.cpp'; then $(CYGPATH_W) 'OdometerSensor.cpp'; else $(CYGPATH_W) '$(srcdir)/OdometerSensor.cpp'; fi`
 
+robotworld-ConfigFileReader.o: ConfigFileReader.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-ConfigFileReader.o -MD -MP -MF $(DEPDIR)/robotworld-ConfigFileReader.Tpo -c -o robotworld-ConfigFileReader.o `test -f 'ConfigFileReader.cpp' || echo '$(srcdir)/'`ConfigFileReader.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-ConfigFileReader.Tpo $(DEPDIR)/robotworld-ConfigFileReader.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ConfigFileReader.cpp' object='robotworld-ConfigFileReader.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-ConfigFileReader.o `test -f 'ConfigFileReader.cpp' || echo '$(srcdir)/'`ConfigFileReader.cpp
+
+robotworld-ConfigFileReader.obj: ConfigFileReader.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -MT robotworld-ConfigFileReader.obj -MD -MP -MF $(DEPDIR)/robotworld-ConfigFileReader.Tpo -c -o robotworld-ConfigFileReader.obj `if test -f 'ConfigFileReader.cpp'; then $(CYGPATH_W) 'ConfigFileReader.cpp'; else $(CYGPATH_W) '$(srcdir)/ConfigFileReader.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/robotworld-ConfigFileReader.Tpo $(DEPDIR)/robotworld-ConfigFileReader.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ConfigFileReader.cpp' object='robotworld-ConfigFileReader.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(robotworld_CPPFLAGS) $(CPPFLAGS) $(robotworld_CXXFLAGS) $(CXXFLAGS) -c -o robotworld-ConfigFileReader.obj `if test -f 'ConfigFileReader.cpp'; then $(CYGPATH_W) 'ConfigFileReader.cpp'; else $(CYGPATH_W) '$(srcdir)/ConfigFileReader.cpp'; fi`
+
 mostlyclean-libtool:
 	-rm -f *.lo
 
@@ -1446,6 +1464,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/robotworld-BoundedVector.Po
 	-rm -f ./$(DEPDIR)/robotworld-CommunicationService.Po
 	-rm -f ./$(DEPDIR)/robotworld-CompassSensor.Po
+	-rm -f ./$(DEPDIR)/robotworld-ConfigFileReader.Po
 	-rm -f ./$(DEPDIR)/robotworld-FileTraceFunction.Po
 	-rm -f ./$(DEPDIR)/robotworld-Goal.Po
 	-rm -f ./$(DEPDIR)/robotworld-GoalShape.Po
@@ -1536,6 +1555,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/robotworld-BoundedVector.Po
 	-rm -f ./$(DEPDIR)/robotworld-CommunicationService.Po
 	-rm -f ./$(DEPDIR)/robotworld-CompassSensor.Po
+	-rm -f ./$(DEPDIR)/robotworld-ConfigFileReader.Po
 	-rm -f ./$(DEPDIR)/robotworld-FileTraceFunction.Po
 	-rm -f ./$(DEPDIR)/robotworld-Goal.Po
 	-rm -f ./$(DEPDIR)/robotworld-GoalShape.Po

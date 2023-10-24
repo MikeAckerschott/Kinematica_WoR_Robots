@@ -710,6 +710,5 @@ namespace Model
   double Robot::getCurrentCompassMeasurement() const
   {
     return currentCompassMeasurement;
-
-  } 
+  }
 } // namespace Model
