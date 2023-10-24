@@ -102,3 +102,4 @@ linux-build/src/stamp-h1
 linux-build/src/robotworld-OdometerSensor.o
 *.log
 *.o
+*.json

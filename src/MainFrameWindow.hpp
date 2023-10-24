@@ -4,6 +4,11 @@
 #include "Config.hpp"
 
 #include "Widgets.hpp"
+#include <wx/wx.h>
+
+#include "CompassSensor.hpp"
+#include "LidarDistanceSensor.hpp"
+#include "OdometerSensor.hpp"
 
 namespace Base
 {
@@ -24,83 +29,90 @@ namespace Application
 	 */
 	class MainFrameWindow : public wxFrame
 	{
-		public:
-			/**
-			 *
-			 * @param aTitle The title which is shown in the title bar
-			 */
-			explicit MainFrameWindow( const std::string& aTitle);
+	public:
+		/**
+		 *
+		 * @param aTitle The title which is shown in the title bar
+		 */
+		explicit MainFrameWindow(const std::string &aTitle);
 
-		protected:
-			/**
-			 *
-			 */
-			void initialise();
-			/**
-			 *
-			 */
-			wxMenuBar* initialiseMenuBar();
-			/**
-			 *
-			 */
-			wxPanel* initialiseClientPanel();
-			/**
-			 *
-			 */
-			wxSplitterWindow* initialiseSplitterWindow();
-			/**
-			 *
-			 */
-			wxPanel* initialiseLhsPanel();
-			/**
-			 *
-			 */
-			wxPanel* initialiseRhsPanel();
-			/**
-			 *
-			 */
-			wxPanel* initialiseLogPanel();
-			/**
-			 *
-			 */
-			wxPanel* initialiseButtonPanel();
+	protected:
+		/**
+		 *
+		 */
+		void initialise();
+		/**
+		 *
+		 */
+		wxMenuBar *initialiseMenuBar();
+		/**
+		 *
+		 */
+		wxPanel *initialiseClientPanel();
+		/**
+		 *
+		 */
+		wxSplitterWindow *initialiseSplitterWindow();
+		/**
+		 *
+		 */
+		wxPanel *initialiseLhsPanel();
+		/**
+		 *
+		 */
+		wxPanel *initialiseRhsPanel();
+		/**
+		 *
+		 */
+		wxPanel *initialiseLogPanel();
+		/**
+		 *
+		 */
+		wxPanel *initialiseButtonPanel();
 
-		protected:
+	protected:
+	private:
+		wxPanel *clientPanel;
+		wxMenuBar *menuBar;
+		wxSplitterWindow *splitterWindow;
 
-		private:
-			wxPanel* clientPanel;
-			wxMenuBar* menuBar;
-			wxSplitterWindow* splitterWindow;
+		wxStaticText *compassDeviationLabel;
+		wxStaticText *lidarDeviationLabel;
+		wxStaticText *odomDeviationLabel;
 
-			wxPanel* lhsPanel;
-			View::RobotWorldCanvas* robotWorldCanvas;
+		wxPanel *lhsPanel;
+		View::RobotWorldCanvas *robotWorldCanvas;
 
-			wxPanel* rhsPanel;
+		wxPanel *rhsPanel;
 
-			wxPanel* logPanel;
-			LogTextCtrl* logTextCtrl;
-			wxRadioBox* logDestination;
+		wxPanel *logPanel;
+		LogTextCtrl *logTextCtrl;
+		wxRadioBox *logDestination;
 
-			wxPanel* buttonPanel;
+		wxPanel *buttonPanel;
 
-			void OnQuit( wxCommandEvent& anEvent);
-			void OnWidgetTraceFunction( wxCommandEvent& anEvent);
-			void OnStdOutTraceFunction( wxCommandEvent& anEvent);
-			void OnFileTraceFunction( wxCommandEvent& anEvent);
-			void OnAbout( wxCommandEvent& anEvent);
+		void OnQuit(wxCommandEvent &anEvent);
+		void OnWidgetTraceFunction(wxCommandEvent &anEvent);
+		void OnStdOutTraceFunction(wxCommandEvent &anEvent);
+		void OnFileTraceFunction(wxCommandEvent &anEvent);
+		void OnAbout(wxCommandEvent &anEvent);
 
-			void OnStartRobot( wxCommandEvent& anEvent);
-			void OnStopRobot( wxCommandEvent& anEvent);
-			void OnPopulate( wxCommandEvent& anEvent);
-			void OnUnpopulate( wxCommandEvent& anEvent);
-			void OnStartListening( wxCommandEvent& anEvent);
-			void OnSendMessage( wxCommandEvent& anEvent);
-			void OnStopListening( wxCommandEvent& anEvent);
+		void OnStartRobot(wxCommandEvent &anEvent);
+		void OnStopRobot(wxCommandEvent &anEvent);
+		void OnPopulate(wxCommandEvent &anEvent);
+		void OnUnpopulate(wxCommandEvent &anEvent);
+		void OnStartListening(wxCommandEvent &anEvent);
+		void OnSendMessage(wxCommandEvent &anEvent);
+		void OnStopListening(wxCommandEvent &anEvent);
 
-			void OnParticleFilterSelection( wxCommandEvent& anEvent);
-			void OnKalmanFilterSelection( wxCommandEvent& anEvent);
+		void OnParticleFilterSelection(wxCommandEvent &anEvent);
+		void OnKalmanFilterSelection(wxCommandEvent &anEvent);
+
+		void OnCompassDeviationSlider(wxScrollEvent &anEvent);
+		void OnLidarDeviationSlider(wxScrollEvent &anEvent);
+		void OnOdomDeviationSlider(wxScrollEvent &anEvent);
 	};
 	//	class MainFrameWindow
-} //namespace Application
+} // namespace Application
 
 #endif // MAINFRAMEWINDOW_HPP_

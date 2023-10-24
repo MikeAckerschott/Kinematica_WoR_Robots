@@ -7,6 +7,8 @@
 #include "DistanceStimuli.hpp"
 #include "LidarDistanceSensor.hpp"
 #include "Particle.hpp"
+#include "RobotWorld.hpp"
+#include "Robot.hpp"
 
 #include <cstdlib>
 #include <iostream>
@@ -43,7 +45,7 @@ public:
 
 private:
 
-const double weightMultiplier = 10000;
+const double weightMultiplier = 100;
 };
 
 } // namespace Model

@@ -252,6 +252,8 @@ public:
 
   void setKalmanFilterActive(bool kalmanFilterActive);
 
+  double getCurrentCompassMeasurement() const;
+
   std::vector<wxPoint> getBelievedRouteParticle() const;
   std::vector<wxPoint> getBelievedRouteKalman() const;
 
