@@ -177,7 +177,7 @@ namespace Application
 
       sizer->Add(robotWorldCanvas = new View::RobotWorldCanvas(lhsPanel),
                  wxGBPosition(1, 1), wxGBSpan(1, 1), wxGROW);
-      robotWorldCanvas->SetMinSize(wxSize(1000, 1000));
+      robotWorldCanvas->SetMinSize(wxSize(1024, 1024));
 
       sizer->Add(5, 5, wxGBPosition(2, 2), wxGBSpan(1, 1), wxGROW);
 
